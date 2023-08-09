@@ -1,5 +1,6 @@
 .app {
   display: flex;
-  background: pink;
+  background: rgba(0, 0, 0, 0);
   height: 100vh;
+  font-family: sans-serif;
 }
