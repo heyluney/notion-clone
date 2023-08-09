@@ -1,10 +1,12 @@
-import './App.css';
+import styles from './App.module.css';
 import SideBar from './components/sidebar/SideBar';
+import Main from './components/main/Main';
 
 function App() {
   return (
-    <div className="App">
+    <div className={styles.app}>
           <SideBar/>
+          <Main/>
      </div>
   );
 }

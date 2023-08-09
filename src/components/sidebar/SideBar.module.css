@@ -1,3 +1,6 @@
 .sidebar {
     color: grey;
+    background-color: black;
+    width: 30%;
+    margin: 0;
 }
