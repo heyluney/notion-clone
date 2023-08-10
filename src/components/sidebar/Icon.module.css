@@ -1,0 +1,7 @@
+.main {
+    padding-right: 5px;
+}
+.active {
+    background-color: rgba(214, 214, 209, 1);
+    border-radius: 2px;
+}
