@@ -17,10 +17,6 @@ import { BsGearFill as Gear,
   BsFillPeopleFill as People,
 BsTrash2Fill as Trash } from 'react-icons/bs';
 
-import clark from './assets/clark_profile.jpg';
-
-
-
 const App = () => {
   const components = {
       "Search": [Search, false],
@@ -42,7 +38,7 @@ const App = () => {
       "Import": [Import, false],
       "Trash": [Trash, false]
   };
-  const [page, changePage] = useState("search");
+  const [page, changePage] = useState(["Search", Search]);
   return (
     <div className={styles.app}>
           <SideBar 

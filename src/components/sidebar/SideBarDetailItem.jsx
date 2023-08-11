@@ -3,7 +3,6 @@ import styles from './SideBarDetailItem.module.css';
 import Icon from './Icon';
 
 
-
 const SideBarDetailItem = ({icon, name, forward, dots, plus, changePage}) => {
     const [isHovered, updateHover] = useState(false);
     return (
@@ -11,7 +10,7 @@ const SideBarDetailItem = ({icon, name, forward, dots, plus, changePage}) => {
             className={`${styles.main} ${isHovered ? styles.active : styles.inactive}`}
             onMouseEnter={() => updateHover(!isHovered)}
             onMouseLeave={() => updateHover(!isHovered)}
-            onClick={() => changePage(name)}
+            onClick={() => changePage([name, icon])}
         >
 
             <div className={styles.left}>
