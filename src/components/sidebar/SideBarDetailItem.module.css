@@ -26,6 +26,12 @@
     color: rgba(124, 123, 117, 1);
 }
 
+.hover {
+    background-color: rgb(234, 234, 233);
+    color: rgba(55, 53, 47, 1);
+    cursor: pointer;
+}
+
 .active {
     background-color: rgb(241, 241, 240, 1);
     color: rgba(55, 53, 47, 1);

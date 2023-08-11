@@ -4,14 +4,13 @@ import Icon from './Icon';
 
 
 
-const SideBarItem = ({name, icon, changePage}) => {
+const SideBarItem = ({name, icon}) => {
     const [isHovered, updateHover] = useState(false);
     return (
         <div 
-            className={`${styles.main} ${isHovered ? styles.active : styles.inactive}`}
+            className={`${styles.main} ${isHovered ? styles.hover : styles.inactive}`}
             onMouseEnter={() => updateHover(!isHovered)}
             onMouseLeave={() => updateHover(!isHovered)}
-            onClick={() => changePage(name)}
         >
             <Icon icon={icon}/>
             <div>{name}</div>

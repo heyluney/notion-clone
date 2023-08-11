@@ -18,3 +18,7 @@
     color: rgba(55, 53, 47, 1);
     cursor: pointer;
 }
+
+img {
+    padding-right: 15px;
+}

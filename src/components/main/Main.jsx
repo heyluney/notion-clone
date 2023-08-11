@@ -1,15 +1,46 @@
-import React from 'react';
 import styles from './Main.module.css'
 
-// this is going to have props 
+import Banner from './Banner';
+import { Routes, Route } from 'react-router-dom';
 
-const Main = ({page}) => {
-    const [name, icon] = page;
-    const Icon = icon;
+import GettingStarted from '../../pages/GettingStarted'
+import QuickNote from '../../pages/QuickNote';
+import Journal from '../../pages/Journal';
+
+const routes = [
+    {
+        path: "/",
+        element: <GettingStarted />
+    },
+    {
+        path: "/getting_started",
+        element: <GettingStarted />
+    },
+    {
+        path: "/quick_note",
+        element: <QuickNote />
+    },
+    {
+        path: "/journal",
+        element: <Journal />
+    }
+]
+
+const Main = ({ page }) => {
     return (
-        <h1 className={styles.main }><Icon />{name}</h1>
+            <div className={styles.main}>
+                <Banner page={page} />
+                <Routes>
+                    {routes.map((route, index) => (
+                        <Route
+                            key={index}
+                            path={route.path}
+                            element={route.element}
+                        />
+                    ))}
+                </Routes>
+            </div>
     )
 }
-
 
 export default Main;

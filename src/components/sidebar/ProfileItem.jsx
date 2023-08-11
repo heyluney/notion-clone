@@ -4,7 +4,6 @@ import styles from './ProfileItem.module.css'; // Import css modules stylesheet 
 
 
 const ProfileItem = ({name, icon}) => {
-    console.log('icon', icon);
     const [isHovered, updateHover] = useState(false);
     return (
         <div 
