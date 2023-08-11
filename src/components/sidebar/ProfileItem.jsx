@@ -1,22 +1,22 @@
 import { useState } from 'react';
-import styles from './SideBarItem.module.css';
-import Icon from './Icon';
+import styles from './ProfileItem.module.css'; // Import css modules stylesheet as styles
 
 
 
-const SideBarItem = ({name, icon, changePage}) => {
+const ProfileItem = ({name, icon}) => {
+    console.log('icon', icon);
     const [isHovered, updateHover] = useState(false);
     return (
         <div 
             className={`${styles.main} ${isHovered ? styles.active : styles.inactive}`}
             onMouseEnter={() => updateHover(!isHovered)}
             onMouseLeave={() => updateHover(!isHovered)}
-            onClick={() => changePage(name)}
         >
-            <Icon icon={icon}/>
+            <div>{icon}</div>
             <div>{name}</div>
+
         </div>
     )
 }
 
-export default SideBarItem;
+export default ProfileItem;

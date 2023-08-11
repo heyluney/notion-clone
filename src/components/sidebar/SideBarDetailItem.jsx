@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import styles from './SideBarDetailItem.module.css';
 import Icon from './Icon';
 
-import {IoIosArrowForward as ForwardArrow } from 'react-icons/io';
-import { BsThreeDots as ThreeDots, 
-        BsPlus as Plus } from 'react-icons/bs';
 
-const SideBarDetailItem = ({name, emoji, changePage}) => {
+
+const SideBarDetailItem = ({icon, name, forward, dots, plus, changePage}) => {
     const [isHovered, updateHover] = useState(false);
     return (
         <div 
@@ -15,15 +13,16 @@ const SideBarDetailItem = ({name, emoji, changePage}) => {
             onMouseLeave={() => updateHover(!isHovered)}
             onClick={() => changePage(name)}
         >
+
             <div className={styles.left}>
-                <Icon icon={<ForwardArrow/>}/>
-                <Icon icon={emoji}/>
-                {name}
+                <Icon icon={forward}/>
+                <Icon icon={icon}/>
+                <div>{name}</div>
             </div>
             
             <div className={isHovered ? styles.right : styles.hidden}>
-                <Icon icon={<ThreeDots />}/>
-                <Icon icon={<Plus />}/>
+                <Icon icon={dots}/>
+                <Icon icon={plus}/>
             </div>
         </div>
     )
