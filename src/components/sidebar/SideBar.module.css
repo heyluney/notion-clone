@@ -7,3 +7,10 @@
     padding-right: 5px;
     padding-top: 15px;
 }
+
+.profile {
+    width: 35px;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2.5px;
+}

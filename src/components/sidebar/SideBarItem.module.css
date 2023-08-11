@@ -1,6 +1,7 @@
 .main {
     display: flex;
     flex-direction: horizontal;
+    align-items: center;
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 8px;

@@ -11,7 +11,7 @@ const SideBarItem = ({name, emoji}) => {
             onMouseLeave={() => updateHover(!isHovered)}
         >
             <Icon icon={emoji}/>
-            {name}
+            <div>{name}</div>
 
         </div>
     )
