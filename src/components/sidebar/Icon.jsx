@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styles from './Icon.module.css';
 
 const Icon = ({icon}) => {
+    const Icon = icon;
     const [isHovered, updateHover] = useState(false);
     return (
         <div 
@@ -9,7 +10,7 @@ const Icon = ({icon}) => {
             onMouseEnter={() => updateHover(!isHovered)}
             onMouseLeave={() => updateHover(!isHovered)}
             >
-            {icon}
+            <Icon />
         </div>
     )
 }

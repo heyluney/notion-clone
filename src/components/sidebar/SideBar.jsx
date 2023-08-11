@@ -25,32 +25,44 @@ const SideBar = ({changePage}) =>{
     return (
         <div className={`${styles.sidebar}`} >
 
-        {
-        arr.map(x => <SideBarItem emoji={`<${x[1]} />`} name={x[0]} />)
-        }
-        <SideBarItem emoji={ <img className={styles.profile} src={clark} />} name="Clark ButtButt's Notion"/>
+        {/* <SideBarItem emoji={<img className={styles.profile} src={clark}/>} name="Clark ButtButt's Notion"/> */}
 
-        <SideBarItem emoji={<Search />} name="Search"/>
-        <SideBarItem emoji={<Clock />} name="Updates"/>
-        <SideBarItem emoji={<Gear />} name="Settings & members"/>
-        <SideBarItem emoji={<Plus />} name="New page"/>
+        {/* <SideBarItem 
+            emoji={<Search />} name="Search"/> */}
+        <SideBarItem emoji="clock" name="Updates"/>
+        {/* <SideBarItem emoji={<Gear />} name="Settings & members"/>
+        <SideBarItem emoji={<Plus />} name="New page"/> */}
 
-        <SideBarDetailItem 
+        {/* <SideBarDetailItem 
             changePage={changePage}
             emoji={<Earmark/>} name="Getting Started"/>
-        <SideBarDetailItem emoji={<Earmark/>} name="Quick Note"/>
-        <SideBarDetailItem emoji={<Earmark/>} name="Personal Home"/>
-        <SideBarDetailItem emoji={<Scissors/>} name="Task List"/>
-        <SideBarDetailItem emoji={<Book/>} name="Journal"/>
-        <SideBarDetailItem emoji={<Book2/>} name="Reading List"/>
-        <SideBarDetailItem emoji={<Earmark/>} name="Untitled"/>
-        <SideBarDetailItem emoji={<Plus2/>} name="Add a page"/>
+        <SideBarDetailItem 
+            changePage={changePage}
+            emoji={<Earmark/>} name="Quick Note"/>
+        <SideBarDetailItem 
+            changePage={changePage}
+            emoji={<Earmark/>} name="Personal Home"/>
+        <SideBarDetailItem 
+            changePage={changePage}
+            emoji={<Scissors/>} name="Task List"/>
+        <SideBarDetailItem 
+            changePage={changePage}
+            emoji={<Book/>} name="Journal"/>
+        <SideBarDetailItem 
+            changePage={changePage}
+            emoji={<Book2/>} name="Reading List"/>
+        <SideBarDetailItem 
+            changePage={changePage}
+            emoji={<Earmark/>} name="Untitled"/>
+        <SideBarDetailItem 
+            changePage={changePage}
+            emoji={<Plus2/>} name="Add a page"/> */}
 
 
-        <SideBarItem emoji={<People/>} name="Create a teamspace"/>
+        {/* <SideBarItem emoji={<People/>} name="Create a teamspace"/>
         <SideBarItem emoji={<Shapes/>} name="Templates"/>
         <SideBarItem emoji={<Import />} name="Import"/>
-        <SideBarItem emoji={<Trash />} name="Trash"/>
+        <SideBarItem emoji={<Trash />} name="Trash"/> */}
 
         </div>
     )
