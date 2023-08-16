@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import GettingStarted from '../../pages/GettingStarted'
 import QuickNote from '../../pages/QuickNote';
+import PersonalHome from '../../pages/PersonalHome';
 import Journal from '../../pages/Journal';
 
 const routes = [
@@ -19,6 +20,10 @@ const routes = [
     {
         path: "/quick_note",
         element: <QuickNote />
+    },
+    {
+        path: "/personal_home",
+        element: <PersonalHome />
     },
     {
         path: "/journal",
