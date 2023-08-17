@@ -35,15 +35,18 @@ const Main = ({ page }) => {
     return (
             <div className={styles.main}>
                 <Banner page={page} />
-                <Routes>
-                    {routes.map((route, index) => (
-                        <Route
-                            key={index}
-                            path={route.path}
-                            element={route.element}
-                        />
-                    ))}
-                </Routes>
+                <div className={styles.right}>
+                    <Routes>
+                        {routes.map((route, index) => (
+                            <Route
+                                
+                                key={index}
+                                path={route.path}
+                                element={route.element}
+                            />
+                        ))}
+                    </Routes>
+                </div>
             </div>
     )
 }

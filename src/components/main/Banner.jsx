@@ -16,7 +16,6 @@ const Banner = ({page}) => {
             <div className={styles.right}>
                 <Message />
                 <Clock />
-                
                 <Star />
             </div>
         </div>
