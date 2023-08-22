@@ -18,20 +18,27 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+  line-height: 1;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
 body {
-	line-height: 1;
+  line-height: 1;
+}
+
+/* .inactive {
   opacity: 50%;
-  background-color: rgba(111, 111, 111, 1);
+  background-color: green;
 }
-body.active {
+.active {
   background-color: rgba(111, 111, 111, 1);
-}
+} */
+
+
 ol, ul {
 	list-style: none;
 }
