@@ -1,3 +1,8 @@
 .quicknote {
     height: 60%;
 }
+
+.textarea {
+    resize: none;
+    /* overflow-y: scroll; */
+}

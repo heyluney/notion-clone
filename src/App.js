@@ -47,11 +47,11 @@ const App = () => {
   const [page, changePage] = useState(["Search", Search]);
   return (
       <div className={styles.app}>
-        <SideBar
+          <SideBar
           components={components}
           activePage={page[0]}
           changePage={changePage} />
-        <Main page={page} />
+          <Main page={page} />
       </div>
   )
 }

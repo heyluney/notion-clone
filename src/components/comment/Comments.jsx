@@ -19,7 +19,7 @@ const Comments = () => {
     const [commentBeingEdited, changeEdit] = useState(-1);
 
     return (
-        <div>
+        <div className={styles.comments}>
             {Object.keys(comments).length == 0 ? "" : comments.map((comment, idx) => 
                 <div className={styles.comment} 
                     key={idx}
@@ -33,7 +33,7 @@ const Comments = () => {
                         <div className={styles.header}>
                             <div className={styles.meta}>
                                 <div className={styles.author}>Helen Yu</div>
-                                <div className={styles.date}>{getTimeString(comment.timestamp)}</div>
+                                <div className={styles.date}>{`${getTimeString(comment.timestamp)}${comment.edited ? " (edited)" : ""}`}</div>
                             </div>
                             {
                                 idx == commentBeingMousedOver ?
@@ -41,7 +41,10 @@ const Comments = () => {
                                     <button onClick={() => {
                                         changeEdit(idx);
                                     }}>Edit</button>
-                                    <button>Delete</button> 
+                                    <button onClick={() => {
+                                        comments.shift();
+                                        addComment(comments);
+                                    }}>Delete</button> 
                                 </div> : ""
                             }
                         </div>
@@ -50,8 +53,10 @@ const Comments = () => {
                                     className={styles.textarea}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter') {
-                                            comments[idx] = {timestamp: JSON.stringify(Date.now()), 
-                                                comment: e.target.value};
+                                            comments[idx] = {
+                                                timestamp: JSON.stringify(Date.now()), 
+                                                comment: e.target.value,
+                                                edited: true};
                                             addComment(comments);
                                             localStorage.setItem('quicknote-comments', JSON.stringify(comments));
                                             changeMouseOver(-1);
@@ -62,24 +67,27 @@ const Comments = () => {
                 </div>
             )}
 
-            <textarea 
-                name="postContent" 
-                value={currentComment}
-                onChange={(e) => {
-                    updateComment(e.target.value);
 
-                }}
-                onKeyDown={(e) => {
-                    console.log('hi')
-                    if (e.key === 'Enter') {
-                        const currentTimestamp = JSON.stringify(new Date());
-                        comments.push({timestamp: currentTimestamp, comment: currentComment});
-                        addComment(comments);
-                        localStorage.setItem('quicknote-comments', JSON.stringify(comments));
-                        updateComment("");
-                    }
-                }}
-                />
+            <div>
+                <textarea 
+                    name="postContent" 
+                    value={currentComment}
+                    onChange={(e) => {
+                        updateComment(e.target.value);
+
+                    }}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            console.log(comments);
+                            const currentTimestamp = JSON.stringify(new Date());
+                            comments.push({timestamp: currentTimestamp, comment: currentComment, edited: false});
+                            addComment(comments);
+                            localStorage.setItem('quicknote-comments', JSON.stringify(comments));
+                            updateComment("");
+                        }
+                    }}
+                    />
+            </div>
         </div>
     )
 }
