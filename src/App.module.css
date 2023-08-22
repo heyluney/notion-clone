@@ -13,6 +13,11 @@ a:link, a:visited, a:hover, a:active {
 textarea, textarea:focus {
   outline: none; 
   border: none; 
+  box-shadow: none;
+  overflow: auto;
+  
   width: 100%;
   height: 100%;
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
 }
