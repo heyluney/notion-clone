@@ -24,7 +24,7 @@ const Comments = () => {
                 <div className={styles.comment} 
                     key={idx}
                     onMouseEnter={() => {
-                        changeMouseOver(idx);
+                        if (commentBeingEdited == -1) changeMouseOver(idx);
                     }} 
                     >
                     
@@ -50,7 +50,6 @@ const Comments = () => {
                                     className={styles.textarea}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter') {
-                
                                             comments[idx] = {timestamp: JSON.stringify(Date.now()), 
                                                 comment: e.target.value};
                                             addComment(comments);
