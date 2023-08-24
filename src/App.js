@@ -51,19 +51,28 @@ const App = () => {
   const [page, changePage] = useState(["Search", Search]);
   const [popup, togglePopup] = useState(false);
 
+  // first we will only do comments for quicknote, but we will reverse this
+  
+  if (localStorage.getItem('quicknote-comments') == null)
+    localStorage.setItem('quicknote-comments', JSON.stringify({}));
+
+  const [comments, addComment] = useState(
+      JSON.parse(localStorage.getItem('quicknote-comments'))
+  );
   return (
     <PopupContext.Provider value={{popup, togglePopup}}>
-        <Fragment>
-        <div className={styles.app}>
-            <SideBar
-            components={components}
-            activePage={page[0]}
-            changePage={changePage} />
-            <Main page={page}
-                togglePopup={togglePopup} />
-        </div>
-        {popup == false ? null : <Popup  />}
-        </Fragment>
+      <CommentContext.Provider value={{comments, addComment}}>
+          <Fragment>
+          <div className={styles.app}>
+              <SideBar
+              components={components}
+              activePage={page[0]}
+              changePage={changePage} />
+              <Main page={page} />
+          </div>
+          {popup == false ? null : <Popup  />}
+          </Fragment>
+        </CommentContext.Provider>
       </PopupContext.Provider>
   )
 }
@@ -71,3 +80,4 @@ const App = () => {
 export default App;
 
 export const PopupContext = createContext();
+export const CommentContext = createContext();
