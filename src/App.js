@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef, Fragment, createContext } from 'react';
 import styles from './App.module.css';
 import SideBar from './components/sidebar/SideBar';
 import Main from './components/main/Main';
+
+import Popup from './components/popups/Popup';
 
 import {
   LuClock9 as Clock,
@@ -22,6 +24,8 @@ import {
   BsFillPeopleFill as People,
   BsTrash2Fill as Trash
 } from 'react-icons/bs';
+
+
 
 const App = () => {
   const components = {
@@ -45,15 +49,25 @@ const App = () => {
     "Trash": [Trash, false]
   };
   const [page, changePage] = useState(["Search", Search]);
+  const [popup, togglePopup] = useState(false);
+
   return (
-      <div className={styles.app}>
-          <SideBar
-          components={components}
-          activePage={page[0]}
-          changePage={changePage} />
-          <Main page={page} />
-      </div>
+    <PopupContext.Provider value={{popup, togglePopup}}>
+        <Fragment>
+        <div className={styles.app}>
+            <SideBar
+            components={components}
+            activePage={page[0]}
+            changePage={changePage} />
+            <Main page={page}
+                togglePopup={togglePopup} />
+        </div>
+        {popup == false ? null : <Popup  />}
+        </Fragment>
+      </PopupContext.Provider>
   )
 }
 
 export default App;
+
+export const PopupContext = createContext();
