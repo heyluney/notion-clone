@@ -6,7 +6,7 @@ import { CommentContext } from '../../App';
 
 
 const EditComment = ({ idx, readOnly, comment, changeEdit, changeMouseOver }) => {
-    const { comments, addComment } = useContext(CommentContext);
+    const { comments, changeComments } = useContext(CommentContext);
 
     return (
         <textarea readOnly={readOnly}
@@ -19,7 +19,7 @@ const EditComment = ({ idx, readOnly, comment, changeEdit, changeMouseOver }) =>
                                         comment: e.target.value,
                                         edited: true
                                     };
-                                    addComment(comments);
+                                    changeComments(comments);
                                     localStorage.setItem('quicknote-comments', JSON.stringify(comments));
                                     changeMouseOver(-1);
                                     changeEdit(-1);

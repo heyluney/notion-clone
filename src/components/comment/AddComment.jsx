@@ -4,7 +4,7 @@ import { CommentContext } from '../../App';
 import { calculateNextKey } from '../../utils/calculate_next_key';
 
 const AddComment = ({ currentComment, updateComment }) => {
-    const { comments, addComment } = useContext(CommentContext);
+    const { comments, changeComments } = useContext(CommentContext);
 
     return (
         <textarea
@@ -17,10 +17,9 @@ const AddComment = ({ currentComment, updateComment }) => {
                 if (e.key === 'Enter') {
                     const currentTimestamp = JSON.stringify(new Date());
                     const newIdx = calculateNextKey(comments);
-                    console.log(comments, newIdx);
                     comments[newIdx] =
                         { timestamp: currentTimestamp, comment: currentComment, edited: false };
-                    addComment(comments);
+                    changeComments(comments);
                     localStorage.setItem('quicknote-comments', JSON.stringify(comments));
                     updateComment("");
                 }

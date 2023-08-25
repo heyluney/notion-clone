@@ -3,8 +3,6 @@ import styles from './App.module.css';
 import SideBar from './components/sidebar/SideBar';
 import Main from './components/main/Main';
 
-import Popup from './components/popups/Popup';
-
 import {
   LuClock9 as Clock,
   LuImport as Import
@@ -24,8 +22,6 @@ import {
   BsFillPeopleFill as People,
   BsTrash2Fill as Trash
 } from 'react-icons/bs';
-
-
 
 const App = () => {
   const components = {
@@ -49,19 +45,16 @@ const App = () => {
     "Trash": [Trash, false]
   };
   const [page, changePage] = useState(["Search", Search]);
-  const [popup, togglePopup] = useState(false);
 
-  // first we will only do comments for quicknote, but we will reverse this
-  
   if (localStorage.getItem('quicknote-comments') == null)
     localStorage.setItem('quicknote-comments', JSON.stringify({}));
 
-  const [comments, addComment] = useState(
+  const [comments, changeComments] = useState(
       JSON.parse(localStorage.getItem('quicknote-comments'))
   );
+
   return (
-    <PopupContext.Provider value={{popup, togglePopup}}>
-      <CommentContext.Provider value={{comments, addComment}}>
+      <CommentContext.Provider value={{comments, changeComments}}>
           <Fragment>
           <div className={styles.app}>
               <SideBar
@@ -70,14 +63,11 @@ const App = () => {
               changePage={changePage} />
               <Main page={page} />
           </div>
-          {popup == false ? null : <Popup  />}
           </Fragment>
         </CommentContext.Provider>
-      </PopupContext.Provider>
   )
 }
 
 export default App;
 
-export const PopupContext = createContext();
 export const CommentContext = createContext();
