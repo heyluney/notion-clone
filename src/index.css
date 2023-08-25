@@ -30,5 +30,8 @@ code {
   z-index: 1; /* Specify a stack order in case you're using a different order for other elements */
 }
 
+textarea {
+  resize: none;
+}
 
 

@@ -30,7 +30,10 @@ const Popup = ({ togglePopup, idx }) => {
                 }}>
                 Delete
             </button>
-            <button>Cancel</button>
+            <button onClick={() => {
+                togglePopup(-1);
+                document.getElementById('overlay').style.display = "none";
+            }}>Cancel</button>
         </div>
     )
 }

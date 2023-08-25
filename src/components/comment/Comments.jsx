@@ -17,7 +17,7 @@ const Comments = () => {
     const [commentBeingMousedOver, changeMouseOver] = useState(-1);
 
     const [commentBeingEdited, changeEdit] = useState(-1);
-    const [currentComment, updateComment] = useState("");
+    const [currentComment, updateComment] = useState("Add a comment...");
 
     const [popup, togglePopup] = useState(-1);
     return (

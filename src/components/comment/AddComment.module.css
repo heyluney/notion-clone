@@ -1,0 +1,15 @@
+.new {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.new > textarea:hover {
+    cursor: pointer;
+    background: #eeeeee;
+}
+
+.content {
+    align-items: center;
+    display: flex;
+}
