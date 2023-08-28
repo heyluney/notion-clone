@@ -4,10 +4,10 @@ import Banner from './Banner';
 import { Routes, Route } from 'react-router-dom';
 
 import GettingStarted from '../../pages/GettingStarted'
-import QuickNote from '../../pages/QuickNote';
+import QuickNote from '../../pages/QuickNote/QuickNote';
 import PersonalHome from '../../pages/PersonalHome';
 import Journal from '../../pages/Journal';
-import TaskList from '../../pages/TaskList';
+import TaskList from '../../pages/TaskList/TaskList';
 
 const routes = [
     {

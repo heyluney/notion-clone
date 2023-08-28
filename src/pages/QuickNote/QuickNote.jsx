@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './QuickNote.module.css'
-import Comments from '../components/comment/Comments'
+import Comments from '../../components/comment/Comments'
 
 const QuickNote = () => {
     const [textarea, changeTextArea] = useState(localStorage.getItem('quicknote'));

@@ -21,7 +21,7 @@ const getTimeString = (stringified_date) => {
     const hours = Math.floor(minutes / 60);
 
     if (hours >= 12) {
-        return num_to_month_mapping[oldDate.getMonth()] + oldDate.getDate();
+        return num_to_month_mapping[oldDate.getMonth()] + " " + oldDate.getDate();
     } else if (minutes >= 60) {
         return `${hours} hour${hours == 1 ? "": "s"} ago`;
     } else if (minutes > 1) {
