@@ -7,6 +7,7 @@ import GettingStarted from '../../pages/GettingStarted'
 import QuickNote from '../../pages/QuickNote';
 import PersonalHome from '../../pages/PersonalHome';
 import Journal from '../../pages/Journal';
+import TaskList from '../../pages/TaskList';
 
 const routes = [
     {
@@ -28,6 +29,10 @@ const routes = [
     {
         path: "/journal",
         element: <Journal />
+    },
+    {
+        path: "/task_list",
+        element: <TaskList />
     }
 ]
 
