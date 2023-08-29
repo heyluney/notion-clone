@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './SideBarItem.module.css';
-import Icon from './Icon';
+import Icon from '../popups/Icon';
 
 
 

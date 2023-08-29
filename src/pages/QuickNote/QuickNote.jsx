@@ -1,14 +1,21 @@
-import { useState } from 'react';
-import styles from './QuickNote.module.css'
-import Comments from '../../components/comment/Comments'
+import { useState, useContext } from 'react';
+import styles from './QuickNote.module.css';
 
-const QuickNote = ({name, icon}) => {
-    const Icon = icon;
+import Icon from '../../components/popups/Icon';
+import Comments from '../../components/comment/Comments';
+
+import { PageContext } from '../../App';
+
+const QuickNote = () => {
+    const {pages, changePages} = useContext(PageContext);
+    const [allPages, active] = pages;
+    const [name, _, icon, __] = allPages[active];
+
     const [textarea, changeTextArea] = useState(localStorage.getItem('quicknote'));
     return (
         <div className={styles.quicknote}>
             <div>{name}</div>
-            <Icon />
+            <Icon icon={icon}/>
 
             <Comments />
             <div>

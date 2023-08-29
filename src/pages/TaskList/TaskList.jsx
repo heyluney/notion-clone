@@ -1,11 +1,18 @@
 
 
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styles from './TaskList.module.css';
 
-import Emoji from '../../components/popups/Emoji';
+import Icon from '../../components/popups/Icon';
+import EmojiSelector from '../../components/popups/EmojiSelector';
 
-const TaskList = ({name, icon}) => {
+import { PageContext } from '../../App';
+
+const TaskList = () => {
+    const {pages, changePages} = useContext(PageContext);
+    const [allPages, active] = pages;
+    const [name, _, icon, __] = allPages[active];
+
     const onDrop = (e, category) => {
         const draggedTaskCategory = draggedTask.category;
         todos[draggedTaskCategory] =
@@ -13,7 +20,6 @@ const TaskList = ({name, icon}) => {
         delete draggedTask["category"];
         todos[category] = [...todos[category], draggedTask];
         updateDraggedTask({});
-        console.log('todos', todos);
         updateTodos(todos);
     }
 
@@ -49,8 +55,6 @@ const TaskList = ({name, icon}) => {
 
     const [draggedTask, updateDraggedTask] = useState({});
     const [displayEmoji, updateDisplayEmoji] = useState(false);
-    console.log("INSIDE TASK LIST", icon);
-    const Icon = icon;
     return (
         <div className={styles.page}>
             <div className={styles.title}>
@@ -61,9 +65,9 @@ const TaskList = ({name, icon}) => {
                 }
                 >
                         {/* {String.fromCodePoint(icon)} */}
-                        {<Icon />}
+                        {<Icon icon={icon}/>}
                         </div>
-                {displayEmoji ? <Emoji/> : null}
+                {displayEmoji ? <EmojiSelector /> : null}
                 <div>{name}</div>
             </div>
             <div className={styles.description}>
@@ -99,35 +103,3 @@ const TaskList = ({name, icon}) => {
 }
 
 export default TaskList;
-
-
-
-{/* <div className={styles.todos1}
-                    onDragOver={e => e.preventDefault()}
-                    onDrop={e => onDrop(e, "undone")}>
-                    {todos["undone"].map(todo =>
-                        <div key={todo.taskId}
-                            draggable
-                            onDrag={e => onDrag(e, todo, "undone")}>
-                            {todo.task}
-                        </div>)}</div>
-                <div className={styles.todos2}
-                    onDragOver={e => e.preventDefault()}
-                    onDrop={e => onDrop(e, "doing")}>
-                    {todos["doing"].map(todo =>
-                        <div key={todo.taskId}
-                            draggable
-                            onDrag={e => onDrag(e, todo, "doing")}>
-                            {todo.task}
-                        </div>)}
-                </div>
-                <div className={styles.todos3}
-                    onDragOver={e => e.preventDefault()}
-                    onDrop={e => onDrop(e, "complete")}>
-                    {todos["complete"].map(todo =>
-                        <div key={todo.taskId}
-                            draggable
-                            onDrag={e => onDrag(e, todo, "complete")}>
-                            {todo.task}
-                        </div>)}
-                </div> */}

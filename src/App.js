@@ -26,13 +26,14 @@ import {
 import QuickNote from './pages/QuickNote/QuickNote';
 import TaskList from './pages/TaskList/TaskList';
 
-// Component, Icon, isDetailItem
 const App = () => {
-  const pages = {
-    "Quick Note": ["Quick Note", "/quick_note", Earmark, QuickNote],
-    "Task List": ["Task List", "/task_list", Scissors, TaskList],
+  // used to be Earmark, Scissors
+  const allPages = {
+    "Quick Note": ["Quick Note", "/quick_note", '0x1F9A1', QuickNote],
+    "Task List": ["Task List", "/task_list", '0x1F32D', TaskList],
   };
-  const [currentPage, changePage] = useState(pages["Task List"]);
+  // all pages and the currentPage (represented by key) are encapsulated
+  const [pages, changePages] = useState([allPages, "Task List"]);
 
   if (localStorage.getItem('quicknote-comments') == null)
     localStorage.setItem('quicknote-comments', JSON.stringify({}));
@@ -41,28 +42,26 @@ const App = () => {
       JSON.parse(localStorage.getItem('quicknote-comments'))
   );
   return (
+    <PageContext.Provider value={{pages, changePages}}>
       <CommentContext.Provider value={{comments, changeComments}}>
           <Fragment>
           <div className={styles.app}>
               <SideBar
-              pages={pages}
-              currentPage={currentPage}
-              changePage={changePage} />
+              pages={pages} />
 
               <Main 
-              pages={pages}
-              currentPage={currentPage} 
-              />
+              pages={pages} />
           </div>
           </Fragment>
         </CommentContext.Provider>
+      </PageContext.Provider>
   )
 }
 
 export default App;
 
 export const CommentContext = createContext();
-
+export const PageContext = createContext();
 
 
     // "Search": [Search, false],

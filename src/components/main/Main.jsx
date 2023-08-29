@@ -1,28 +1,25 @@
 import styles from './Main.module.css'
 
 import Banner from './Banner';
-import { useState } from 'react';
+import { useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import GettingStarted from '../../pages/GettingStarted'
-import QuickNote from '../../pages/QuickNote/QuickNote';
-import PersonalHome from '../../pages/PersonalHome';
-import Journal from '../../pages/Journal';
-import TaskList from '../../pages/TaskList/TaskList';
+import { PageContext } from '../../App';
 
-
-// ["Quick Note", "/quick_note", Earmark, QuickNote]
-const Main = ({ currentPage, pages }) => {
+// if a page has 
+const Main = () => {
+    const { pages, _ } = useContext(PageContext);
+    const [allPages, active] = pages;
     return (
         <div className={styles.main}>
-            <Banner currentPage={currentPage} />
+            <Banner currentPage={allPages[active]} />
             <div className={styles.right}>
                 <Routes>
-                    {Object.entries(pages).map(([key, [currentName, path, icon, Component]]) => (
+                    {Object.entries(allPages).map(([key, [_, path, __, Component]]) => (
                         <Route
                             key={key}
                             path={path}
-                            element={<Component name={currentName} icon={icon}/>}
+                            element={<Component />}
                         />
                     ))}
                 </Routes>
@@ -35,6 +32,12 @@ export default Main;
 
 
 
+
+// import GettingStarted from '../../pages/GettingStarted'
+// import QuickNote from '../../pages/QuickNote/QuickNote';
+// import PersonalHome from '../../pages/PersonalHome';
+// import Journal from '../../pages/Journal';
+// import TaskList from '../../pages/TaskList/TaskList';
 // const routes = [
 //     {
 //         path: "/",

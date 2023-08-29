@@ -1,10 +1,11 @@
-import React from 'react';
+import { useContext } from 'react';
 import styles from './SideBar.module.css'; // Import css modules stylesheet as styles
 
 import ProfileItem from './ProfileItem';
 import SideBarItem from './SideBarItem';
 import SideBarDetailItem from './SideBarDetailItem';
 
+import { PageContext } from '../../App';
 
 import {IoIosArrowForward as ForwardArrow } from 'react-icons/io';
 import { BsThreeDots as ThreeDots, 
@@ -12,20 +13,21 @@ import { BsThreeDots as ThreeDots,
 
 import clark from '../../assets/clark_profile.jpg';
 
-const SideBar = ({pages, currentPage, changePage}) =>{
-    console.log(Object.entries(pages))
+
+const SideBar = () =>{
+    const { pages, _ } = useContext(PageContext);
+    const [allPages, active] = pages;
     return (
         <div className={`${styles.sidebar}`} >
 
             <ProfileItem 
                 icon={<img className={styles.profile} src={clark}/>} 
-                name="Clark ButtButt's Notion"/>
+                name="Clarkie ButtButt's Notion"/>
             
-            {Object.values(pages).map(([name, path, icon, Component]) => (
+            {Object.values(allPages).map(([name, path, icon, Component]) => (
                         <SideBarDetailItem
                             key={name}
                             currentPage={[name, path, icon, Component]}
-                            changePage={changePage}
                         />
                     ))}
         </div>
