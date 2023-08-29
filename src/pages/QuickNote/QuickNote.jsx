@@ -2,10 +2,14 @@ import { useState } from 'react';
 import styles from './QuickNote.module.css'
 import Comments from '../../components/comment/Comments'
 
-const QuickNote = () => {
+const QuickNote = ({name, icon}) => {
+    const Icon = icon;
     const [textarea, changeTextArea] = useState(localStorage.getItem('quicknote'));
     return (
         <div className={styles.quicknote}>
+            <div>{name}</div>
+            <Icon />
+
             <Comments />
             <div>
             <textarea 

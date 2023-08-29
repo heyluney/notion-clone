@@ -23,28 +23,16 @@ import {
   BsTrash2Fill as Trash
 } from 'react-icons/bs';
 
+import QuickNote from './pages/QuickNote/QuickNote';
+import TaskList from './pages/TaskList/TaskList';
+
+// Component, Icon, isDetailItem
 const App = () => {
-  const components = {
-    "Search": [Search, false],
-    "Updates": [Clock, false],
-    "Settings & members": [Gear, false],
-    "New page": [Plus, false],
-
-    "Getting Started": [Earmark, true],
-    "Quick Note": [Earmark, true],
-    "Personal Home": [Earmark, true],
-    "Task List": [Scissors, true],
-    "Journal": [Book, true],
-    "Reading List": [Book2, true],
-    "Untitled": [Earmark, true],
-    "Add a page": [Plus2, true],
-
-    "Create a teamspace": [People, false],
-    "Templates": [Shapes, false],
-    "Import": [Import, false],
-    "Trash": [Trash, false]
+  const pages = {
+    "Quick Note": ["Quick Note", "/quick_note", Earmark, QuickNote],
+    "Task List": ["Task List", "/task_list", Scissors, TaskList],
   };
-  const [page, changePage] = useState(["Search", Search]);
+  const [currentPage, changePage] = useState(pages["Task List"]);
 
   if (localStorage.getItem('quicknote-comments') == null)
     localStorage.setItem('quicknote-comments', JSON.stringify({}));
@@ -52,16 +40,19 @@ const App = () => {
   const [comments, changeComments] = useState(
       JSON.parse(localStorage.getItem('quicknote-comments'))
   );
-
   return (
       <CommentContext.Provider value={{comments, changeComments}}>
           <Fragment>
           <div className={styles.app}>
               <SideBar
-              components={components}
-              activePage={page[0]}
+              pages={pages}
+              currentPage={currentPage}
               changePage={changePage} />
-              <Main page={page} />
+
+              <Main 
+              pages={pages}
+              currentPage={currentPage} 
+              />
           </div>
           </Fragment>
         </CommentContext.Provider>
@@ -71,3 +62,23 @@ const App = () => {
 export default App;
 
 export const CommentContext = createContext();
+
+
+
+    // "Search": [Search, false],
+    // "Updates": [Clock, false],
+    // "Settings & members": [Gear, false],
+    // "New page": [Plus, false],
+
+    // "Getting Started": [Earmark, true],
+    // "Personal Home": [Earmark, true],
+
+    // "Journal": [Book, true],
+    // "Reading List": [Book2, true],
+    // "Untitled": [Earmark, true],
+    // "Add a page": [Plus2, true],
+
+    // "Create a teamspace": [People, false],
+    // "Templates": [Shapes, false],
+    // "Import": [Import, false],
+    // "Trash": [Trash, false]

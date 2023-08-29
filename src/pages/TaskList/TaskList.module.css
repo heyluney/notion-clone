@@ -1,23 +1,69 @@
-.tasklistpage {
+.page {
     display: flex;
     flex-direction: column;
 }
 
+.title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.emoji {
+    margin: 5px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.emoji:hover {
+    cursor: pointer;
+    background: rgb(241, 241, 240, 1);
+    border-radius: 4px;
+}
+
+.description {
+    margin-bottom: 15px;
+}
+
 .tasklist {
     display: flex;
-    width: 100%;
-    height: 100vh;
+    flex-direction: row;
+    overflow-x: scroll;
 }
 
 .category {
-    background: orange;
-    width: 30%;
+    flex-shrink: 0;
+    margin: 15px;
+    width: 260px;
     margin: 1px;
 }
+.header {
+    margin-bottom: 10px;
+}
+.name {
+    background: rgba(255, 226, 221, 1);
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+}
 .todo {
-    background: pink;
-    padding: 5px;
-    margin: 1px;
+    background: white;
+    border: 1px solid #eaeae9;
+    border-radius: 4px;
+    box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
+             rgba(15, 15, 15, 0.1) 0px 2px 4px;
+    outline: none;
+    padding: 8px 10px 6px 6px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+}
+
+.todo:hover {
+    cursor: pointer;
+    background: rgb(241, 241, 240, 1);
 }
 
 

@@ -3,24 +3,9 @@
 import { useState } from 'react';
 import styles from './TaskList.module.css';
 
-const TaskList = () => {
-    const [todos, updateTodos] = useState({
-        "undone": [{
-            taskId: 1,
-            task: "buy milk"
-        }, {
-            taskId: 2,
-            task: "take Clark out"
-        }, {
-            taskId: 3,
-            task: "go climbing"
-        }],
-        "doing": [],
-        "complete": []
-    })
+import Emoji from '../../components/popups/Emoji';
 
-    const [draggedTask, updateDraggedTask] = useState({});
-
+const TaskList = ({name, icon}) => {
     const onDrop = (e, category) => {
         const draggedTaskCategory = draggedTask.category;
         todos[draggedTaskCategory] =
@@ -38,10 +23,48 @@ const TaskList = () => {
         updateDraggedTask(todo);
     }
 
+    const [todos, updateTodos] = useState({
+        "undone": [{
+            taskId: 1,
+            task: "buy milk"
+        }, {
+            taskId: 2,
+            task: "take Clark out"
+        }, {
+            taskId: 3,
+            task: "go climbing"
+        }, {
+            taskId: 4,
+            task: "go to Yosemite"
+        }],
+        "doing": [],
+        "complete": [],
+        "category4": [],
+        "category5": [],
+        "category6": [],
+        "category7": [],
+        "category8": [],
+        "category9": []
+    })
+
+    const [draggedTask, updateDraggedTask] = useState({});
+    const [displayEmoji, updateDisplayEmoji] = useState(false);
+    console.log("INSIDE TASK LIST", icon);
+    const Icon = icon;
     return (
-        <div className={styles.tasklistpage}>
+        <div className={styles.page}>
             <div className={styles.title}>
-                Task List
+                <div 
+                className={styles.emoji} 
+                onClick={
+                    () => updateDisplayEmoji(!displayEmoji)
+                }
+                >
+                        {/* {String.fromCodePoint(icon)} */}
+                        {<Icon />}
+                        </div>
+                {displayEmoji ? <Emoji/> : null}
+                <div>{name}</div>
             </div>
             <div className={styles.description}>
                 Use this template to track your personal tasks.
@@ -56,6 +79,7 @@ const TaskList = () => {
                         onDragOver={e => e.preventDefault()}
                         onDrop={e => onDrop(e, category)}
                     >
+                        <div className={styles.header}><span className={styles.name}>{category}</span></div>
                         {
                             todos.map(todo =>
                             <div

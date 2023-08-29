@@ -4,29 +4,14 @@ import Icon from './Icon';
 
 import { Link } from 'react-router-dom';
 
-const SideBarDetailItem = ({icon, name, forward, dots, plus, changePage, activePage}) => {
-    const [isHovered, updateHover] = useState(false);
-    const link_name = name.toLowerCase().split(' ').join('_');
+const SideBarDetailItem = ({currentPage, changePage}) => {
+    const [name, path, icon, Component] = currentPage;
     return (
-        <Link to={`/${link_name}`}>
-            <div 
-                className={`${styles.main} 
-                    ${activePage == name ? styles.active : styles.inactive} 
-                    ${isHovered ? styles.hover : styles.inactive}`}
-                onMouseEnter={() => updateHover(!isHovered)}
-                onMouseLeave={() => updateHover(!isHovered)}
-                onClick={() => changePage([name, icon])}
-            >
-
+        <Link to={path}>
+            <div onClick={() => changePage([name, path, icon, Component])}>
                 <div className={styles.left}>
-                    <Icon icon={forward}/>
                     <Icon icon={icon}/>
                     <div>{name}</div>
-                </div>
-                
-                <div className={isHovered ? styles.right : styles.hidden}>
-                    <Icon icon={dots}/>
-                    <Icon icon={plus}/>
                 </div>
             </div>
         </Link>

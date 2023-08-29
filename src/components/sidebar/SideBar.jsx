@@ -12,8 +12,8 @@ import { BsThreeDots as ThreeDots,
 
 import clark from '../../assets/clark_profile.jpg';
 
-const SideBar = ({components, activePage, changePage}) =>{
-
+const SideBar = ({pages, currentPage, changePage}) =>{
+    console.log(Object.entries(pages))
     return (
         <div className={`${styles.sidebar}`} >
 
@@ -21,25 +21,13 @@ const SideBar = ({components, activePage, changePage}) =>{
                 icon={<img className={styles.profile} src={clark}/>} 
                 name="Clark ButtButt's Notion"/>
             
-            {Object.keys(components).map((key, idx) => {
-                const [icon, is_detail_item] = components[key];
-                return is_detail_item ? 
-                    <SideBarDetailItem 
-                        key={idx}
-                        icon={icon}
-                        name={key} 
-                        forward={ForwardArrow}
-                        dots={ThreeDots}
-                        plus={Plus}
-                        activePage={activePage}
-                        changePage={changePage}
+            {Object.values(pages).map(([name, path, icon, Component]) => (
+                        <SideBarDetailItem
+                            key={name}
+                            currentPage={[name, path, icon, Component]}
+                            changePage={changePage}
                         />
-                    :
-                    <SideBarItem 
-                        key={idx}
-                        icon={icon} 
-                        name={key} />
-            })}
+                    ))}
         </div>
     )
 }
