@@ -5,6 +5,8 @@ import styles from './AddComment.module.css';
 import clark from '../../assets/clark_profile.jpg';
 
 import { calculateNextKey } from '../../utils/calculate_next_key';
+import { saveItem } from '../../utils/local_storage';
+
 
 const AddComment = ({ currentComment, updateComment }) => {
     const { comments, changeComments } = useContext(CommentContext);
@@ -23,12 +25,16 @@ const AddComment = ({ currentComment, updateComment }) => {
             }}
             onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                    const currentTimestamp = JSON.stringify(new Date());
-                    const newIdx = calculateNextKey(comments);
-                    comments[newIdx] =
-                        { timestamp: currentTimestamp, comment: currentComment, edited: false };
-                    changeComments(comments);
-                    localStorage.setItem('quicknote-comments', JSON.stringify(comments));
+                    const newComments = {
+                        ...comments,
+                        [calculateNextKey(comments)]: {
+                            timestamp: JSON.stringify(new Date()),
+                            comment: currentComment,
+                            edited: false
+                        }
+                    }
+                    changeComments(newComments);
+                    saveItem('quicknote-comments', newComments);
                     updateComment("");
                 }
             }}

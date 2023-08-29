@@ -39,7 +39,9 @@ const EmojiSelector = () => {
                                 return x;
                             }
                         })};
-                        changePages([{...allPages, ...newPage}, active]);
+                        const newState = [{...allPages, ...newPage}, active];
+                        changePages(newState);
+                        localStorage.setItem('pages', JSON.stringify(newState));
                     }}>
                         {String.fromCodePoint(emoji)}
                     </div>)}

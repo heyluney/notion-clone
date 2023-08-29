@@ -23,38 +23,52 @@ import {
   BsTrash2Fill as Trash
 } from 'react-icons/bs';
 
-import QuickNote from './pages/QuickNote/QuickNote';
-import TaskList from './pages/TaskList/TaskList';
+import { saveItem, getItem } from './utils/local_storage';
 
 const App = () => {
+  const defaultComments = {};
+  if (getItem('quicknote-comments') === null) saveItem('quicknote-comments', defaultComments);
+  const [comments, changeComments] = useState(getItem('quicknote-comments'));
+
   // used to be Earmark, Scissors
-  const allPages = {
-    "Quick Note": ["Quick Note", "/quick_note", '0x1F9A1', QuickNote],
-    "Task List": ["Task List", "/task_list", '0x1F32D', TaskList],
-  };
-  // all pages and the currentPage (represented by key) are encapsulated
-  const [pages, changePages] = useState([allPages, "Task List"]);
+  const defaultPages = [{
+    "Quick Note": ["Quick Note", "/quick_note", '0x1F9A1', "QuickNote"],
+    "Task List": ["Task List", "/task_list", '0x1F32D', "TaskList"]
+  }, "Quick Note"];
 
-  if (localStorage.getItem('quicknote-comments') == null)
-    localStorage.setItem('quicknote-comments', JSON.stringify({}));
+  if (getItem('pages') === null) saveItem('pages', defaultPages);
+  const [pages, changePages] = useState(getItem('pages'));
 
-  const [comments, changeComments] = useState(
-      JSON.parse(localStorage.getItem('quicknote-comments'))
-  );
+  function faviconTemplate(icon) {
+    return `data:image/svg+xml,
+    <svg xmlns=%22http://www.w3.org/2000/svg%22 
+    viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>
+      ${String.fromCodePoint(icon)}
+    </text></svg>`
+  }
+
+  const link = document.querySelector("link[rel~='icon']");
+  if (!link) {
+    link = document.createElement('link');
+    link.rel = 'icon';
+    document.head.appendChild(link);
+  }
+
+  const [allPages, active] = pages;
+  const [_, __, emoji, ___] = allPages[active];
+  link.href = faviconTemplate(emoji);
+
   return (
-    <PageContext.Provider value={{pages, changePages}}>
-      <CommentContext.Provider value={{comments, changeComments}}>
-          <Fragment>
+    <PageContext.Provider value={{ pages, changePages }}>
+      <CommentContext.Provider value={{ comments, changeComments }}>
+        <Fragment>
           <div className={styles.app}>
-              <SideBar
-              pages={pages} />
-
-              <Main 
-              pages={pages} />
+            <SideBar />
+            <Main />
           </div>
-          </Fragment>
-        </CommentContext.Provider>
-      </PageContext.Provider>
+        </Fragment>
+      </CommentContext.Provider>
+    </PageContext.Provider>
   )
 }
 

@@ -6,13 +6,16 @@ import styles from './Popup.module.css';
 import { useRef } from 'react';
 import { CommentContext } from '../../App';
 
+import { saveItem } from '../../utils/local_storage';
 
+// This popup component is specific to comments as of now, not sure if I want
+// to make this more specific (e.g. CommentPopup) or broaden this component to make it 
+// a more general popup component
 const Popup = ({ togglePopup, idx }) => {
     const { comments, changeComments } = useContext(CommentContext);
 
     const wrapperRef = useRef();
     useOutsideAlerter(wrapperRef, togglePopup);
-
     return (
         <div
             className={styles.popup}
@@ -22,9 +25,10 @@ const Popup = ({ togglePopup, idx }) => {
             <button
                 className={styles.delete}
                 onClick={() => {
-                    delete comments[idx];
-                    changeComments(comments);
-                    localStorage.setItem('quicknote-comments', JSON.stringify(comments));
+                    const newComments = {...comments};
+                    delete newComments[idx];
+                    changeComments(newComments);
+                    saveItem('quicknote-comments', newComments);
                     togglePopup(-1);
                     document.getElementById('overlay').style.display = "none";
                 }}>

@@ -16,6 +16,7 @@ import clark from '../../assets/clark_profile.jpg';
 
 const SideBar = () =>{
     const { pages, _ } = useContext(PageContext);
+    console.log('pages INSIDEBAR', pages);
     const [allPages, active] = pages;
     return (
         <div className={`${styles.sidebar}`} >

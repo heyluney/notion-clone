@@ -5,8 +5,8 @@ import { useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import { PageContext } from '../../App';
+import map from '../../utils/string_to_component_map';
 
-// if a page has 
 const Main = () => {
     const { pages, _ } = useContext(PageContext);
     const [allPages, active] = pages;
@@ -15,13 +15,16 @@ const Main = () => {
             <Banner currentPage={allPages[active]} />
             <div className={styles.right}>
                 <Routes>
-                    {Object.entries(allPages).map(([key, [_, path, __, Component]]) => (
+                    {Object.entries(allPages).map(([key, [_, path, __, component]]) => {
+                        const Component = map[component];
+                        return (
                         <Route
                             key={key}
                             path={path}
                             element={<Component />}
                         />
-                    ))}
+                        )
+                })}
                 </Routes>
             </div>
         </div>
