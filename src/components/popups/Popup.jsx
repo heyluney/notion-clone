@@ -20,7 +20,6 @@ const Popup = ({ togglePopup, idx }) => {
         <div
             className={styles.popup}
             ref={wrapperRef}>
-
             <div className={styles.question}>Would you like to delete this comment?</div>
             <button
                 className={styles.delete}

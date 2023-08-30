@@ -9,24 +9,24 @@ import EmojiSelector from '../../components/popups/EmojiSelector';
 import { PageContext } from '../../App';
 
 const TaskList = () => {
-    const {pages, changePages} = useContext(PageContext);
+    const { pages, _ } = useContext(PageContext);
     const [allPages, active] = pages;
-    const [name, _, icon, __] = allPages[active];
+    const [name, __, icon, ___] = allPages[active];
 
-    const onDrop = (e, category) => {
-        const draggedTaskCategory = draggedTask.category;
-        todos[draggedTaskCategory] =
-            [...todos[draggedTaskCategory].filter(todo => todo.taskId != draggedTask.taskId)];
-        delete draggedTask["category"];
-        todos[category] = [...todos[category], draggedTask];
+    const onDrop = (_, category) => {
+        const newTodos = {...todos};
+        newTodos[draggedTask.category] =
+            [...todos[draggedTask.category]
+                .filter(todo => todo.taskId != draggedTask.taskId)];
+        newTodos[category] = [...todos[category], draggedTask];
         updateDraggedTask({});
-        updateTodos(todos);
+        updateTodos(newTodos);
     }
 
     const onDrag = (e, todo, category) => {
         e.preventDefault();
-        todo["category"] = category;
-        updateDraggedTask(todo);
+        const newTodo = {...todo, ...{"category": category}};
+        updateDraggedTask(newTodo);
     }
 
     const [todos, updateTodos] = useState({
@@ -58,16 +58,15 @@ const TaskList = () => {
     return (
         <div className={styles.page}>
             <div className={styles.title}>
-                <div 
-                className={styles.emoji} 
-                onClick={
-                    () => updateDisplayEmoji(!displayEmoji)
-                }
+                <div
+                    className={styles.emoji}
+                    onClick={
+                        () => updateDisplayEmoji(!displayEmoji)
+                    }
                 >
-                        {/* {String.fromCodePoint(icon)} */}
-                        {<Icon icon={icon}/>}
-                        </div>
-                {displayEmoji ? <EmojiSelector /> : null}
+                    <Icon icon={icon} />
+                </div>
+                {displayEmoji ? <EmojiSelector updateDisplayEmoji={updateDisplayEmoji}/> : null}
                 <div>{name}</div>
             </div>
             <div className={styles.description}>
@@ -86,13 +85,13 @@ const TaskList = () => {
                         <div className={styles.header}><span className={styles.name}>{category}</span></div>
                         {
                             todos.map(todo =>
-                            <div
-                                key={todo.taskId}
-                                className={styles.todo}
-                                draggable={true}
-                                onDrag={e => onDrag(e, todo, category)}>
-                                {todo.task}
-                            </div>)
+                                <div
+                                    key={todo.taskId}
+                                    className={styles.todo}
+                                    draggable={true}
+                                    onDrag={e => onDrag(e, todo, category)}>
+                                    {todo.task}
+                                </div>)
                         }
                     </div>
                 ))}

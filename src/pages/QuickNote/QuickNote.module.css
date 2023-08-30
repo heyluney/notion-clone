@@ -2,6 +2,21 @@
     height: 60%;
 }
 
+.title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.emoji {
+    margin: 5px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
 .textarea {
     resize: none;
     /* overflow-y: scroll; */

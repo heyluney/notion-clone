@@ -2,6 +2,8 @@ import { useState, useContext } from 'react';
 import styles from './QuickNote.module.css';
 
 import Icon from '../../components/popups/Icon';
+import EmojiSelector from '../../components/popups/EmojiSelector';
+
 import Comments from '../../components/comment/Comments';
 
 import { PageContext } from '../../App';
@@ -12,11 +14,23 @@ const QuickNote = () => {
     const [name, _, icon, __] = allPages[active];
 
     const [textarea, changeTextArea] = useState(localStorage.getItem('quicknote'));
+    const [displayEmoji, updateDisplayEmoji] = useState(false);
+
     return (
         <div className={styles.quicknote}>
-            <div>{name}</div>
-            <Icon icon={icon}/>
-
+            <div className={styles.title}>
+                <div
+                    className={styles.emoji}
+                    onClick={
+                        () => updateDisplayEmoji(!displayEmoji)
+                    }
+                >
+                    <Icon icon={icon} />
+                </div>
+                {displayEmoji ? <EmojiSelector updateDisplayEmoji={updateDisplayEmoji}/> : null}
+                <div>{name}</div>
+            </div>
+            
             <Comments />
             <div>
             <textarea 
