@@ -1,15 +1,28 @@
-.emoji {
-    font-size: 15px;
+.emojis {
     border: 1px solid #eaeae9;
     border-radius: 4px;
     box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
              rgba(15, 15, 15, 0.1) 0px 2px 4px;
-    display: flex;
-    flex-direction: column;
+    position: absolute;
+    top: 55px;
+    font-size: 25px;
+    background: white;
+    padding: 10px;
+    height: 325px;
+    overflow-y: scroll;
 }
 
 .row {
     display: flex;
     flex-direction: row;
-    font-size: 60px;
+}
+
+.emoji {
+    padding: 3px;
+}
+
+.emoji:hover {
+    background: rgb(239, 239, 239, 1);
+    border-radius: 4px;
+    cursor: pointer;
 }

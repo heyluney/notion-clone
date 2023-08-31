@@ -1,5 +1,6 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import styles from './Icon.module.css';
+import { computeEmoji } from '../../utils/compute_emoji';
 
 const Icon = ({icon}) => {
     const Icon = icon;
@@ -11,7 +12,7 @@ const Icon = ({icon}) => {
             onMouseEnter={() => updateHover(!isHovered)}
             onMouseLeave={() => updateHover(!isHovered)}
             >
-            {typeof icon === "string" ? String.fromCodePoint(icon) : <Icon />}
+            {typeof icon === "string" ? computeEmoji(icon) : <Icon />}
         </div>
     )
 }
