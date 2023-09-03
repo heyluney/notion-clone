@@ -3,22 +3,60 @@
     border-radius: 4px;
     box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
              rgba(15, 15, 15, 0.1) 0px 2px 4px;
+    display: flex;
+    flex-direction: column;
     position: absolute;
     top: 55px;
-    font-size: 25px;
+    left: 15px;
+    font-size: 24px;
     background: white;
-    padding: 10px;
-    height: 325px;
+    height: 250px;
+    width: 380px;
+    line-height: 1.5;
+    overflow: hidden;
+}
+
+.top {
+    box-sizing: border-box;
+    padding: 2px;
+    margin-right: 5px;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    width: inherit;
+    z-index: 1;
+}
+
+.bottom {
     overflow-y: scroll;
+    height: inherit;
+}
+
+.section {
+    padding-top: 6px;
+    padding-bottom: 6px;
 }
 
 .row {
     display: flex;
     flex-direction: row;
+    flex: 1;
+    justify-content: left;
+    align-items: center;
 }
 
 .emoji {
-    padding: 3px;
+    font-size: 24px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.active {
+    background: rgb(239, 239, 239, 1);
+    border-radius: 4px;
 }
 
 .emoji:hover {
@@ -26,3 +64,43 @@
     border-radius: 4px;
     cursor: pointer;
 }
+
+
+.categories {
+    /* position: fixed; */
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 10px;
+}
+
+.category {
+    display: flex;
+    margin-top: 6px;
+    margin-bottom: 8px;
+    line-height: 120%;
+    padding-left: 6px;
+    justify-content: flex-start;
+    text-transform: uppercase;
+    color: rgba(55, 53, 47, 0.65);
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.wrapper {
+    margin: 2px;
+}
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    cursor: text;
+    height: 28px;
+    background: rgba(242, 241, 238, 0.6);
+    box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px inset;
+    width: 95%;
+}
+

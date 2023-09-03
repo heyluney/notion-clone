@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './Icon.module.css';
-import { computeEmoji } from '../../utils/compute_emoji';
+import { computeEmoji } from '../../utils/compute_emojis';
 
 const Icon = ({icon}) => {
     const Icon = icon;

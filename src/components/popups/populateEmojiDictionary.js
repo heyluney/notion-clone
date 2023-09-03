@@ -21,6 +21,7 @@ function asyncCallback(data) {
             }
         } else {
             if (line.includes('unqualified')) continue;
+            if (line.includes('minimally-qualified')) continue;
             const hexcode = line.split(';')[0].trim();
 
             // Edge case is if the emoji itself is a '#'.
