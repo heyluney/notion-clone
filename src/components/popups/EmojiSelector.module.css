@@ -11,7 +11,7 @@
     left: -75px;
     font-size: 24px;
     background: white;
-    height: 250px;
+    height: 300px;
     line-height: 1.5;
 }
 
@@ -59,7 +59,7 @@
     padding-top: 5px;
     padding-bottom: 5px;
     box-sizing: border-box;
-
+    transition: 0.3s;
 }
 .emoji:hover {
     cursor: pointer;

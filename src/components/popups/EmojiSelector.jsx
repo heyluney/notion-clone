@@ -24,7 +24,9 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
 
     // emojiDictionary is an object that contains all the emojis on default, we can reset
     // arrayifiedEmojiDictionary to emojiDictionary after search.
-    const [emojiLength, changeEmojiLength] = useState(5000);
+    const [emojiLength, changeEmojiLength] = useState(100);
+
+    // Stores search term in emoji search bar.
     const [prefix, changePrefix] = useState("");
 
     const [currentCategory, changeCategory] = useState("Smileys & Emotion");
@@ -33,9 +35,6 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
     const [arrayifiedEmojiDictionary, updateArrayifiedEmojiDictionary] = useState(
         truncateEmojiDictionary(emojiDictionary, "", emojiLength)
     )
-
-    // Stores search term in emoji search bar.
-    const [searchTerm, updateSearchTerm] = useState("");
 
     // Where should the responsibility be for changing the type of emoji be? 
     const createEmojiSelector = (emojiArray, perRow) => {
@@ -57,6 +56,9 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                         }}
                         onMouseOver={() => {
                             changeHoveredEmoji(name)
+                        }}
+                        onMouseLeave={() => {
+                            changeHoveredEmoji(false)
                         }}>
                         {computeEmoji(hexcode)}
                         {hoveredEmoji === name && <div className={styles.descriptor}>{`:${name}:`}</div>}
@@ -68,19 +70,20 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
 
     const categoryRefs = useRef({});
     const categoryBodyRefs = useRef({});
+    const formRef = useRef();
     const intersectingCategory = useOnScreen(categoryRefs);
 
     const handleScroll = (e) => {
         if (intersectingCategory != "No intersection exists.") {
             changeCategory(intersectingCategory);
         }
-        // const scrollDifference = e.target.scrollHeight - e.target.scrollTop;
-        // if (Math.abs(e.target.clientHeight - scrollDifference) < 350) {
-        //     changeEmojiLength(2 * emojiLength);
-        //     updateArrayifiedEmojiDictionary(
-        //         truncateEmojiDictionary(emojiDictionary, "", emojiLength)
-        //     )
-        // }
+        const scrollDifference = e.target.scrollHeight - e.target.scrollTop;
+        if (Math.abs(e.target.clientHeight - scrollDifference) < 350) {
+            changeEmojiLength(2 * emojiLength);
+            updateArrayifiedEmojiDictionary(
+                truncateEmojiDictionary(emojiDictionary, "", emojiLength)
+            )
+        }
     }
 
     const handleScrollToView = (category) => {
@@ -120,6 +123,7 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
             <div className={styles.top}>
                 <div className={styles.wrapper}>
                     <input className={styles.search}
+                        ref={formRef}
                         onClick={e => e.stopPropagation()}
                         onKeyUp={e => {
                             if (e.target.value === "") {
@@ -130,16 +134,21 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                             changePrefix(e.target.value);
                         }
                         }
-                        value={searchTerm}
                         placeholder="Filter..." />
+                </div>
+
+                <div className={styles.category}>
+                    Categories
                 </div>
                 <div className={styles.categories}>
                     {Object.entries(arrayifiedEmojiDictionary).map(([category, pairs]) =>
                         <div key={category}
                             className={category === currentCategory ? `${styles.emoji} ${styles.active}` : styles.emoji}
                             onClick={() => {
-                                updateArrayifiedEmojiDictionary(truncateEmojiDictionary(emojiDictionary, "", emojiLength));
+                                changeEmojiLength(5000);
+                                updateArrayifiedEmojiDictionary(truncateEmojiDictionary(emojiDictionary, "", 5000));
                                 changePrefix("");
+                                formRef.current.value = "";
                                 handleCategoryChange(category);
                             }}>
                             {computeEmoji(/*First emoji currently chosen
