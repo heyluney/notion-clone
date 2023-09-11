@@ -1,3 +1,4 @@
+
 .emojis {
     border: 1px solid #eaeae9;
     border-radius: 4px;
@@ -7,29 +8,30 @@
     flex-direction: column;
     position: absolute;
     top: 55px;
-    left: 15px;
+    left: -75px;
     font-size: 24px;
     background: white;
     height: 250px;
-    width: 380px;
     line-height: 1.5;
-    overflow: hidden;
 }
+
 
 .top {
     box-sizing: border-box;
-    padding: 2px;
-    margin-right: 5px;
     display: flex;
     flex-direction: column;
     background: white;
-    width: inherit;
     z-index: 1;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .bottom {
+    box-sizing: border-box;
     overflow-y: scroll;
-    height: inherit;
+    padding-left: 10px;
+    padding-right: 10px;
+    min-height: 145px;
 }
 
 .section {
@@ -50,35 +52,60 @@
     width: 32px;
     height: 32px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    text-align: center;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+
 }
+.emoji:hover {
+    cursor: pointer;
+}
+
+.descriptor {
+    text-align: center;
+    background:	#343d46;
+    color: white;
+    border-radius: 4px;
+    margin-top: 5px;
+    width: 30px;
+    overflow-wrap: break-word;
+    padding: 2px 4px 2px 4px;
+    font-size: 12px;
+    opacity: 85%;
+    z-index: 10;
+}
+
+
 .active {
     background: rgb(239, 239, 239, 1);
     border-radius: 4px;
 }
 
 .emoji:hover {
-    background: rgb(239, 239, 239, 1);
+    background: rgb(228, 228, 228);
     border-radius: 4px;
     cursor: pointer;
 }
 
 
+.cluster {
+    padding-bottom: 10px;
+}
 .categories {
-    /* position: fixed; */
     display: flex;
     flex-direction: row;
-    padding-bottom: 10px;
+    padding-bottom: 15px;
 }
 
 .category {
     display: flex;
-    margin-top: 6px;
-    margin-bottom: 8px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     line-height: 120%;
-    padding-left: 6px;
     justify-content: flex-start;
     text-transform: uppercase;
     color: rgba(55, 53, 47, 0.65);
@@ -87,20 +114,32 @@
 }
 
 .wrapper {
-    margin: 2px;
+    display: flex;
+    flex-direction: column;
 }
 .search {
+    color: rgb(55, 53, 47);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 14px;
-    line-height: 20px;
-    padding: 3px 6px;
+    outline: 0;
+    border: 1px solid #eaeae9;
+    padding-left: 5px;
+    padding-right: 5px;
     border-radius: 4px;
     cursor: text;
     height: 28px;
     background: rgba(242, 241, 238, 0.6);
-    box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px inset;
-    width: 95%;
+    width: inherit;
+    margin-bottom: 15px;
+    margin-top: 7px;
+}
+.search:focus {
+    outline: 0;
+}
+
+.search:active {
+    outline: none;
 }
 
