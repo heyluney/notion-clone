@@ -17,26 +17,21 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
     const { pages, changePages } = useContext(PageContext);
     const [allPages, active] = pages;
 
+    // const {emojiDictionary, changeEmojiDictionary } = useContext(EmojiContext);
     // Determines whether the emoji popup window is open or closed.
     const wrapperRef = useRef();
     useOutsideEmojiAlerter(wrapperRef, updateDisplayEmoji);
+
+    // Lists which emoji is currently being hovered.
     const [hoveredEmoji, changeHoveredEmoji] = useState(false);
 
-    // emojiDictionary is an object that contains all the emojis on default, we can reset
-    // arrayifiedEmojiDictionary to emojiDictionary after search.
+    // Emoji being stored, and the three factors which update visual configuration.
+    const [emojiDictionary, changeEmojiDictionary] = useState(getItem('emoji_dictionary'));
     const [emojiLength, changeEmojiLength] = useState(100);
-
-    // Stores search term in emoji search bar.
     const [prefix, changePrefix] = useState("");
-
     const [currentCategory, changeCategory] = useState("Smileys & Emotion");
 
-    const emojiDictionary = flattenEmojiDictionary(getItem('emoji_dictionary'));
-    const [arrayifiedEmojiDictionary, updateArrayifiedEmojiDictionary] = useState(
-        truncateEmojiDictionary(emojiDictionary, "", emojiLength)
-    )
-
-    // Where should the responsibility be for changing the type of emoji be? 
+    const arrayifiedEmojiDictionary = truncateEmojiDictionary(flattenEmojiDictionary(emojiDictionary), prefix, emojiLength);
     const createEmojiSelector = (emojiArray, perRow) => {
         return chunkify(emojiArray, perRow).map((emojis, idx) =>
             <div key={idx} className={styles.row}>
@@ -44,6 +39,7 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                     isVisible && <div className={styles.emoji}
                         key={name}
                         onClick={(e) => {
+                            e.preventDefault();
                             const newPage = {
                                 [active]:
                                     allPages[active].map((x, idx) => idx == 2 ? hexcode : x)
@@ -51,7 +47,17 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                             const newPages = [{ ...allPages, ...newPage }, active];
                             changePages(newPages);
                             saveItem('pages', newPages);
-                            e.stopPropagation();
+                        
+                            const newEmojiDictionary = {
+                                ...emojiDictionary, 
+                                "recent": {
+                                    [`${name}`]: hexcode,
+                                ...emojiDictionary['recent'], 
+                                    
+                                }
+                            };
+                            changeEmojiDictionary(newEmojiDictionary);
+                            saveItem('emoji_dictionary', newEmojiDictionary);
                             updateDisplayEmoji(false);
                         }}
                         onMouseOver={() => {
@@ -69,35 +75,23 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
     }
 
     const categoryRefs = useRef({});
-    const categoryBodyRefs = useRef({});
     const formRef = useRef();
     const intersectingCategory = useOnScreen(categoryRefs);
 
     const handleScroll = (e) => {
-        if (intersectingCategory != "No intersection exists.") {
+        if (intersectingCategory != "No intersection exists.")
             changeCategory(intersectingCategory);
-        }
-        const scrollDifference = e.target.scrollHeight - e.target.scrollTop;
-        if (Math.abs(e.target.clientHeight - scrollDifference) < 350) {
-            changeEmojiLength(2 * emojiLength);
-            updateArrayifiedEmojiDictionary(
-                truncateEmojiDictionary(emojiDictionary, "", emojiLength)
-            )
-        }
-    }
 
-    const handleScrollToView = (category) => {
-        if (categoryBodyRefs.current[category]) {
-            requestAnimationFrame(() => categoryBodyRefs.current[category]
-                .scrollIntoView({ block: "start", behavior: "smooth" }));
+        const scrollDifference = e.target.scrollHeight - e.target.scrollTop;
+        if (Math.abs(e.target.clientHeight - scrollDifference) < 250) {
+            changeEmojiLength(2*emojiLength);
         }
     }
 
     const handleCategoryChange = (category) => {
-        if (categoryRefs.current[category]) {
-            changeCategory(category);
-            handleScrollToView(category);
-        }
+        changeCategory(category);
+        requestAnimationFrame(() => categoryRefs.current[category]
+            .scrollIntoView({ block: "start", behavior: "smooth" }));
     }
 
     const categoryRefsCB = useCallback(node => {
@@ -109,14 +103,6 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
         }
     }, []);
 
-    const categoryBodyRefsCB = useCallback(node => {
-        if (node !== null) {
-            const category =
-                node.firstElementChild.innerText.split(' ')
-                    .map(word => word[0].toUpperCase() + word.slice(1).toLowerCase()).join(' ');
-            categoryBodyRefs.current[category] = node;
-        }
-    }, []);
 
     return (
         <div className={styles.emojis} ref={wrapperRef} >
@@ -125,15 +111,7 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                     <input className={styles.search}
                         ref={formRef}
                         onClick={e => e.stopPropagation()}
-                        onKeyUp={e => {
-                            if (e.target.value === "") {
-                                updateArrayifiedEmojiDictionary(truncateEmojiDictionary(emojiDictionary, "", emojiLength));
-                            } else {
-                                updateArrayifiedEmojiDictionary(truncateEmojiDictionary(arrayifiedEmojiDictionary, e.target.value, -1));
-                            }
-                            changePrefix(e.target.value);
-                        }
-                        }
+                        onKeyUp={e => changePrefix(e.target.value)}
                         placeholder="Filter..." />
                 </div>
 
@@ -141,12 +119,14 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                     Categories
                 </div>
                 <div className={styles.categories}>
-                    {Object.entries(arrayifiedEmojiDictionary).map(([category, pairs]) =>
+                    {Object.entries(arrayifiedEmojiDictionary)
+                        .filter(([category, _]) => category !== 'recent')
+                        .map(([category, pairs]) =>
                         <div key={category}
                             className={category === currentCategory ? `${styles.emoji} ${styles.active}` : styles.emoji}
                             onClick={() => {
                                 changeEmojiLength(5000);
-                                updateArrayifiedEmojiDictionary(truncateEmojiDictionary(emojiDictionary, "", 5000));
+                                // updateArrayifiedEmojiDictionary(truncateEmojiDictionary(flattenEmojiDictionary(getItem('emoji_dictionary')), "", 5000));
                                 changePrefix("");
                                 formRef.current.value = "";
                                 handleCategoryChange(category);
@@ -158,9 +138,17 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
             </div>
 
             <div className={styles.bottom} onScroll={handleScroll}>
-                {prefix === "" ? Object.entries(arrayifiedEmojiDictionary).map(([category, _]) =>
-                    <div key={category} className={styles.cluster} ref={
-                        categoryBodyRefsCB}>
+                <div key="recent" className={styles.cluster}>
+                    <div className={styles.category}>Recently Used</div>
+                    <div className={styles.section}>
+                        {createEmojiSelector(arrayifiedEmojiDictionary['recent'], 12)}
+                    </div>
+                </div>
+
+                {prefix === "" ? Object.entries(arrayifiedEmojiDictionary)
+                    .filter(([category, _]) => category !== 'recent')
+                    .map(([category, _]) =>
+                    <div key={category} className={styles.cluster}>
 
                         <div ref={categoryRefsCB}
                             className={styles.category}>

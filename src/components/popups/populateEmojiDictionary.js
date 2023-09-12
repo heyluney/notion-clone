@@ -38,6 +38,7 @@ function asyncCallback(data) {
             dictionary[currentGroupName][currentSubgroupName][desc] = hexcode;
         }
     }
+    dictionary['recent'] = {};
     saveItem('emoji_dictionary', dictionary);
 }
 
