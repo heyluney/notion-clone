@@ -43,10 +43,12 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
         prefix, 
         emojiLength);
     const createEmojiSelector = (emojiArray, perRow, isRecent) => {
-        return chunkify(emojiArray, perRow).map((emojis, idx) =>
-            <div key={idx} className={styles.row}>
-                {emojis.map(([name, hexcode, isVisible]) => (
-                    isVisible && <div className={styles.emoji}
+        return chunkify(emojiArray, perRow).map((emojis, rowIdx) =>
+            <div key={rowIdx} className={styles.row}>
+                {emojis.map(([name, hexcode, isVisible], columnIdx) => (
+                    isVisible && 
+                    <div className={`${styles.emoji} ${columnIdx % 12 == 0 ? styles.left :
+                                                        columnIdx % 12 == 11 ? styles.right : ""}`}
                         key={name}
                         onClick={(e) => {
                             e.preventDefault();
@@ -156,12 +158,12 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
             </div>
 
             <div className={styles.bottom} onScroll={handleScroll}>
-                <div key="recent" className={styles.cluster}>
+                {prefix === "" && <div key="recent" className={styles.cluster}>
                     <div className={styles.category}>Recently Used</div>
                     <div className={styles.section}>
                         {createEmojiSelector(arrayifiedEmojiDictionary['recent'], 12, true)}
                     </div>
-                </div>
+                </div>}
 
                 {prefix === "" ? Object.entries(arrayifiedEmojiDictionary)
                     .filter(([category, _]) => category !== 'recent')

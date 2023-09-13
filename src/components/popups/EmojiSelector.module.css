@@ -13,6 +13,7 @@
     background: white;
     height: 300px;
     line-height: 1.5;
+    min-width: 200px;
 }
 
 
@@ -55,6 +56,14 @@
     text-align: center;
     flex-direction: column;
     align-items: center;
+}
+/* Allows descriptors to be centered left and right depending on whether the emoji
+is first or last in the row, respectively. */
+.left {
+    align-items: start;
+}
+.right {
+    align-items: end;
 }
 .actual {
     padding: 5px;
