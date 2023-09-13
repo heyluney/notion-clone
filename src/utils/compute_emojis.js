@@ -3,13 +3,11 @@ export const computeEmoji = hexcode => {
     return String.fromCodePoint(...codes);
 }
 
-// Object.entries(emojiDict)
-// .filter(([category, _]) => category != 'recent')
-// .map(([category, subCategoryHash]) => [
-//         category,
-//         Object.entries(subCategoryHash)
-//             .map(([_, hexCodePairs]) => Object.entries(hexCodePairs)).flat().map(x => [x[0], x[1], true])
-// ])
+export const getSkinToneEmoji = emojiDict => {
+    return emojiDict['People & Body']
+    ['hand-fingers-open']
+    ['hand with fingers splayed'];
+}
 export const getRepresentativeEmojis = emojiDict => {
     return Object.entries(emojiDict)
                 .filter(([category, _]) => category != 'recent')

@@ -34,6 +34,10 @@ function asyncCallback(data) {
             if (desc == "smiling face") continue;
             if (desc == "dotted line face") continue;
             if (desc == "frowning face") continue;
+
+            if (desc.includes("light")) {
+                console.log('desc')
+            }
             
             dictionary[currentGroupName][currentSubgroupName][desc] = hexcode;
         }

@@ -52,41 +52,51 @@
     width: 32px;
     height: 32px;
     display: flex;
-    flex-direction: column;
     text-align: center;
+    flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    box-sizing: border-box;
-    transition: 0.3s;
-}
-.emoji:hover {
-    cursor: pointer;
 }
 
 /* Shifts the descriptors of the first and last emojis, so they don't exceed
 the boundaries of the emoji component. */
-.emoji:first-child > .descriptor {
-    transform: translateX(10px);
+
+/* .emoji:first-child > .descriptor {
+    transform: translateX(8px);
+} */
+
+/* .emoji:last-child > .descriptor {
+    transform: translateX(-8px);
+} */
+
+.actual {
+    padding: 5px;
+    box-sizing: border-box;
+    transition: 0.3s;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
 }
-.emoji:last-child > .descriptor {
-    transform: translateX(-10px);
+.actual:hover {
+    background: rgb(228, 228, 228);
+    border-radius: 4px;
+    cursor: pointer;
 }
+
 .descriptor {
     text-align: center;
     background:	#343d46;
     color: white;
     border-radius: 4px;
-    margin-top: 5px;
+    margin-top: 3px;
     width: 30px;
     padding: 2px 4px 2px 4px;
     font-size: 12px;
     opacity: 85%;
-    z-index: 10;
-    width: 50px;
+    width: 60px;
+    max-width: fit-content;
+    display: inline-block;
     word-wrap: break-word;
-    hyphens: auto;
 }
 
 
@@ -94,13 +104,6 @@ the boundaries of the emoji component. */
     background: rgb(239, 239, 239, 1);
     border-radius: 4px;
 }
-
-.emoji:hover {
-    background: rgb(228, 228, 228);
-    border-radius: 4px;
-    cursor: pointer;
-}
-
 
 .cluster {
     padding-bottom: 10px;

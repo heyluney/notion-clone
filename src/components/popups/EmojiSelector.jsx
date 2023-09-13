@@ -12,7 +12,8 @@ import { computeEmoji } from '../../utils/compute_emojis';
 import { flattenEmojiDictionary, 
         truncateEmojiDictionary, 
         filterEmojiDictionary,
-    getRepresentativeEmojis } from '../../utils/compute_emojis';
+    getRepresentativeEmojis,
+    getSkinToneEmoji } from '../../utils/compute_emojis';
 import { useOnScreen } from '../../hooks/OnscreenAlert';
 
 import { FaShuffle as Shuffle } from 'react-icons/fa6';
@@ -75,10 +76,14 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                         onMouseLeave={() => {
                             changeHoveredEmoji([false, false])
                         }}>
-                        {computeEmoji(hexcode)}
-                        {hoveredEmoji[0] === isRecent && 
-                        hoveredEmoji[1] === name && <div className={styles.descriptor}>{`:${name}:`}</div>}
-
+                        <div className={styles.actual}>
+                            {computeEmoji(hexcode)}
+                        </div>
+                        {
+                            hoveredEmoji[0] === isRecent && 
+                            hoveredEmoji[1] === name && 
+                            <div className={styles.descriptor}>{`:${name}:`}</div>
+                        }
                     </div>)
                 )}
             </div>);
@@ -93,7 +98,7 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
             changeCategory(intersectingCategory);
 
         const scrollDifference = e.target.scrollHeight - e.target.scrollTop;
-        if (Math.abs(e.target.clientHeight - scrollDifference) < 250) {
+        if (Math.abs(e.target.clientHeight - scrollDifference) < 400) {
             changeEmojiLength(2*emojiLength);
         }
     }
@@ -126,7 +131,7 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                         <Shuffle/>
                     </div>
                     <div className={styles.button}>
-                        {computeEmoji(emojiDictionary['People & Body']['hand-fingers-open']['hand with fingers splayed'])}
+                        {computeEmoji(getSkinToneEmoji(emojiDictionary))}
                     </div>
                 </div>
 
