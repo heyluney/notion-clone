@@ -65,6 +65,14 @@
     cursor: pointer;
 }
 
+/* Shifts the descriptors of the first and last emojis, so they don't exceed
+the boundaries of the emoji component. */
+.emoji:first-child > .descriptor {
+    transform: translateX(10px);
+}
+.emoji:last-child > .descriptor {
+    transform: translateX(-10px);
+}
 .descriptor {
     text-align: center;
     background:	#343d46;
@@ -72,12 +80,13 @@
     border-radius: 4px;
     margin-top: 5px;
     width: 30px;
-    overflow-wrap: break-word;
     padding: 2px 4px 2px 4px;
     font-size: 12px;
     opacity: 85%;
     z-index: 10;
     width: 50px;
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 

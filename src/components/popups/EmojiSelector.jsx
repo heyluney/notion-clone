@@ -9,7 +9,10 @@ import { getItem, saveItem } from '../../utils/local_storage';
 import { useOutsideEmojiAlerter } from '../../hooks/OutsideAlert';
 import { computeEmoji } from '../../utils/compute_emojis';
 
-import { flattenEmojiDictionary, truncateEmojiDictionary } from '../../utils/compute_emojis';
+import { flattenEmojiDictionary, 
+        truncateEmojiDictionary, 
+        filterEmojiDictionary,
+    getRepresentativeEmojis } from '../../utils/compute_emojis';
 import { useOnScreen } from '../../hooks/OnscreenAlert';
 
 import { FaShuffle as Shuffle } from 'react-icons/fa6';
@@ -32,7 +35,12 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
     const [prefix, changePrefix] = useState("");
     const [currentCategory, changeCategory] = useState("Smileys & Emotion");
 
-    const arrayifiedEmojiDictionary = truncateEmojiDictionary(flattenEmojiDictionary(emojiDictionary), prefix, emojiLength);
+    const arrayifiedEmojiDictionary = truncateEmojiDictionary(
+        flattenEmojiDictionary(
+            filterEmojiDictionary(emojiDictionary, prefix)
+        ), 
+        prefix, 
+        emojiLength);
     const createEmojiSelector = (emojiArray, perRow, isRecent) => {
         return chunkify(emojiArray, perRow).map((emojis, idx) =>
             <div key={idx} className={styles.row}>
@@ -105,7 +113,6 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
         }
     }, []);
 
-
     return (
         <div className={styles.emojis} ref={wrapperRef} >
             <div className={styles.top}>
@@ -127,20 +134,18 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                     Categories
                 </div>
                 <div className={styles.categories}>
-                    {Object.entries(arrayifiedEmojiDictionary)
-                        .filter(([category, _]) => category !== 'recent')
-                        .map(([category, pairs]) =>
-                        <div key={category}
-                            className={category === currentCategory ? `${styles.emoji} ${styles.active}` : styles.emoji}
-                            onClick={() => {
-                                changeEmojiLength(5000);
-                                changePrefix("");
-                                formRef.current.value = "";
-                                handleCategoryChange(category);
-                            }}>
-                            {computeEmoji(/*First emoji currently chosen
-                                to represent the category of emojis.*/pairs[0][1])}
-                        </div>)}
+                    {getRepresentativeEmojis(emojiDictionary).map(
+                        ([category, representativeEmoji]) => 
+                    <div key={category}
+                        className={category === currentCategory ? `${styles.emoji} ${styles.active}` : styles.emoji}
+                        onClick={() => {
+                            changeEmojiLength(5000);
+                            changePrefix("");
+                            formRef.current.value = "";
+                            handleCategoryChange(category);
+                        }}>
+                        {computeEmoji(representativeEmoji)}
+                    </div>)}
                 </div>
             </div>
 
@@ -171,8 +176,10 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                     :
                     <div>
                         {createEmojiSelector(
-                            Object.values(arrayifiedEmojiDictionary).flat().filter((
-                                [desc, _, __]) => desc.includes(prefix)), 
+                            Object.entries(arrayifiedEmojiDictionary)
+                                .filter(([category, _]) => category !== 'recent')
+                                .map(x => x[1])
+                                .flat(), 
                             12, false
                         )}
                     </div>
