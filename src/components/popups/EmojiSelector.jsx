@@ -142,8 +142,9 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                     {getRepresentativeEmojis(emojiDictionary).map(
                         ([category, representativeEmoji]) => 
                     <div key={category}
-                        className={category === currentCategory ? `${styles.emoji} ${styles.active}` : styles.emoji}
-                        onClick={() => {
+                        className={`${styles.actual} ${category === currentCategory ? styles.active : ""}`}
+                        onClick={(e) => {
+                            e.stopPropagation();
                             changeEmojiLength(5000);
                             changePrefix("");
                             formRef.current.value = "";

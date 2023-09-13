@@ -56,18 +56,6 @@
     flex-direction: column;
     align-items: center;
 }
-
-/* Shifts the descriptors of the first and last emojis, so they don't exceed
-the boundaries of the emoji component. */
-
-/* .emoji:first-child > .descriptor {
-    transform: translateX(8px);
-} */
-
-/* .emoji:last-child > .descriptor {
-    transform: translateX(-8px);
-} */
-
 .actual {
     padding: 5px;
     box-sizing: border-box;
