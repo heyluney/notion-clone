@@ -12,12 +12,13 @@ import { computeEmoji } from '../../utils/compute_emojis';
 import { flattenEmojiDictionary, truncateEmojiDictionary } from '../../utils/compute_emojis';
 import { useOnScreen } from '../../hooks/OnscreenAlert';
 
+import { FaShuffle as Shuffle } from 'react-icons/fa6';
+
 const EmojiSelector = ({ updateDisplayEmoji }) => {
     // This allows synchronization of emoji update across multiple pages.
     const { pages, changePages } = useContext(PageContext);
     const [allPages, active] = pages;
 
-    // const {emojiDictionary, changeEmojiDictionary } = useContext(EmojiContext);
     // Determines whether the emoji popup window is open or closed.
     const wrapperRef = useRef();
     useOutsideEmojiAlerter(wrapperRef, updateDisplayEmoji);
@@ -114,6 +115,12 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                         onClick={e => e.stopPropagation()}
                         onKeyUp={e => changePrefix(e.target.value)}
                         placeholder="Filter..." />
+                    <div className={styles.button}>
+                        <Shuffle/>
+                    </div>
+                    <div className={styles.button}>
+                        {computeEmoji(emojiDictionary['People & Body']['hand-fingers-open']['hand with fingers splayed'])}
+                    </div>
                 </div>
 
                 <div className={styles.category}>
@@ -127,7 +134,6 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                             className={category === currentCategory ? `${styles.emoji} ${styles.active}` : styles.emoji}
                             onClick={() => {
                                 changeEmojiLength(5000);
-                                // updateArrayifiedEmojiDictionary(truncateEmojiDictionary(flattenEmojiDictionary(getItem('emoji_dictionary')), "", 5000));
                                 changePrefix("");
                                 formRef.current.value = "";
                                 handleCategoryChange(category);
