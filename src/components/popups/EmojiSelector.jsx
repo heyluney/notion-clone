@@ -23,7 +23,7 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
     useOutsideEmojiAlerter(wrapperRef, updateDisplayEmoji);
 
     // Lists which emoji is currently being hovered.
-    const [hoveredEmoji, changeHoveredEmoji] = useState(false);
+    const [hoveredEmoji, changeHoveredEmoji] = useState([/*isRecent?*/false, /*emoji name*/false]);
 
     // Emoji being stored, and the three factors which update visual configuration.
     const [emojiDictionary, changeEmojiDictionary] = useState(getItem('emoji_dictionary'));
@@ -32,7 +32,7 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
     const [currentCategory, changeCategory] = useState("Smileys & Emotion");
 
     const arrayifiedEmojiDictionary = truncateEmojiDictionary(flattenEmojiDictionary(emojiDictionary), prefix, emojiLength);
-    const createEmojiSelector = (emojiArray, perRow) => {
+    const createEmojiSelector = (emojiArray, perRow, isRecent) => {
         return chunkify(emojiArray, perRow).map((emojis, idx) =>
             <div key={idx} className={styles.row}>
                 {emojis.map(([name, hexcode, isVisible]) => (
@@ -61,13 +61,14 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                             updateDisplayEmoji(false);
                         }}
                         onMouseOver={() => {
-                            changeHoveredEmoji(name)
+                            changeHoveredEmoji([isRecent, name])
                         }}
                         onMouseLeave={() => {
-                            changeHoveredEmoji(false)
+                            changeHoveredEmoji([false, false])
                         }}>
                         {computeEmoji(hexcode)}
-                        {hoveredEmoji === name && <div className={styles.descriptor}>{`:${name}:`}</div>}
+                        {hoveredEmoji[0] === isRecent && 
+                        hoveredEmoji[1] === name && <div className={styles.descriptor}>{`:${name}:`}</div>}
 
                     </div>)
                 )}
@@ -141,7 +142,7 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                 <div key="recent" className={styles.cluster}>
                     <div className={styles.category}>Recently Used</div>
                     <div className={styles.section}>
-                        {createEmojiSelector(arrayifiedEmojiDictionary['recent'], 12)}
+                        {createEmojiSelector(arrayifiedEmojiDictionary['recent'], 12, true)}
                     </div>
                 </div>
 
@@ -158,7 +159,7 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                         <div className={styles.section}>
                             {createEmojiSelector(
                                 arrayifiedEmojiDictionary[category],
-                                12)}
+                                12, false)}
                         </div>
                     </div>)
                     :
@@ -166,7 +167,7 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                         {createEmojiSelector(
                             Object.values(arrayifiedEmojiDictionary).flat().filter((
                                 [desc, _, __]) => desc.includes(prefix)), 
-                            12
+                            12, false
                         )}
                     </div>
                 }
