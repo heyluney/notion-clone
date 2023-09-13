@@ -1,4 +1,5 @@
-.page {
+.tasklist {
+    height: 100%;
     display: flex;
     flex-direction: column;
 }
@@ -10,13 +11,18 @@
     font-size: 40px;
     font-weight: 700;
     margin-bottom: 15px;
+    position: relative;
 }
 
 .emoji {
     margin: 5px;
-    padding: 5px;
+    display: flex;
     box-sizing: border-box;
+    position: relative;
+    align-items: center;
+    justify-content: center;
 }
+
 
 .emoji:hover {
     cursor: pointer;
@@ -28,7 +34,7 @@
     margin-bottom: 15px;
 }
 
-.tasklist {
+.list {
     display: flex;
     flex-direction: row;
     overflow-x: scroll;

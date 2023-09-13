@@ -1,5 +1,6 @@
 .quicknote {
-    height: 60%;
+    display: flex;
+    flex-direction: column;
 }
 
 .title {
@@ -9,15 +10,25 @@
     font-size: 40px;
     font-weight: 700;
     margin-bottom: 15px;
+    position: relative;
 }
 
 .emoji {
     margin: 5px;
-    padding: 5px;
+    display: flex;
     box-sizing: border-box;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.emoji:hover {
+    cursor: pointer;
+    background: rgb(241, 241, 240, 1);
+    border-radius: 4px;
 }
 
 .textarea {
     resize: none;
-    /* overflow-y: scroll; */
 }

@@ -14,7 +14,7 @@ const TaskList = () => {
     const [name, __, icon, ___] = allPages[active];
 
     const onDrop = (_, category) => {
-        const newTodos = {...todos};
+        const newTodos = { ...todos };
         newTodos[draggedTask.category] =
             [...todos[draggedTask.category]
                 .filter(todo => todo.taskId != draggedTask.taskId)];
@@ -25,7 +25,7 @@ const TaskList = () => {
 
     const onDrag = (e, todo, category) => {
         e.preventDefault();
-        const newTodo = {...todo, ...{"category": category}};
+        const newTodo = { ...todo, ...{ "category": category } };
         updateDraggedTask(newTodo);
     }
 
@@ -56,17 +56,20 @@ const TaskList = () => {
     const [draggedTask, updateDraggedTask] = useState({});
     const [displayEmoji, updateDisplayEmoji] = useState(false);
     return (
-        <div className={styles.page}>
+        <div className={styles.tasklist}>
             <div className={styles.title}>
                 <div
                     className={styles.emoji}
                     onClick={
-                        () => updateDisplayEmoji(!displayEmoji)
+                        (e) => {
+                            e.preventDefault();
+                            updateDisplayEmoji(!displayEmoji)
+                        }
                     }
                 >
-                    <Icon icon={icon} />
+                    <Icon icon={icon}/>
+                    {displayEmoji ? <EmojiSelector updateDisplayEmoji={updateDisplayEmoji} /> : null}
                 </div>
-                {displayEmoji ? <EmojiSelector updateDisplayEmoji={updateDisplayEmoji}/> : null}
                 <div>{name}</div>
             </div>
             <div className={styles.description}>
@@ -75,7 +78,7 @@ const TaskList = () => {
                 Click an existing task to add additional context or subtasks.
             </div>
 
-            <div className={styles.tasklist}>
+            <div className={styles.list}>
                 {Object.entries(todos).map(([category, todos]) => (
                     <div key={category}
                         className={styles.category}

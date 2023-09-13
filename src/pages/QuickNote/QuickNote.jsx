@@ -15,7 +15,6 @@ const QuickNote = () => {
 
     const [textarea, changeTextArea] = useState(localStorage.getItem('quicknote'));
     const [displayEmoji, updateDisplayEmoji] = useState(false);
-
     return (
         <div className={styles.quicknote}>
             <div className={styles.title}>
@@ -25,7 +24,7 @@ const QuickNote = () => {
                         () => updateDisplayEmoji(!displayEmoji)
                     }
                 >
-                    <Icon icon={icon} />
+                <Icon icon={icon} />
                 </div>
                 {displayEmoji ? <EmojiSelector updateDisplayEmoji={updateDisplayEmoji}/> : null}
                 <div>{name}</div>
