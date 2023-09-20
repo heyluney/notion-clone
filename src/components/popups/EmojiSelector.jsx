@@ -14,6 +14,7 @@ import { flattenEmojiDictionary,
         filterEmojiDictionary,
     getRepresentativeEmojis,
     getSkinToneEmoji,
+    filterEmojiDictionaryBySkintone,
     getRandomEmoji
     } from '../../utils/compute_emojis';
 import { useOnScreen } from '../../hooks/OnscreenAlert';
@@ -36,12 +37,15 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
     const [emojiDictionary, changeEmojiDictionary] = useState(getItem('emoji_dictionary'));
     const [emojiLength, changeEmojiLength] = useState(100);
     const [prefix, changePrefix] = useState("");
+    const [skintone, changeSkintone] = useState(getItem('emoji_dictionary_skintone'));
+    const [skintonePopup, toggleSkintonePopup] = useState(false);
     const [currentCategory, changeCategory] = useState("Smileys & Emotion");
 
-    console.log(getRandomEmoji(emojiDictionary))
-    const arrayifiedEmojiDictionary = truncateEmojiDictionary(
+    let arrayifiedEmojiDictionary = truncateEmojiDictionary(
         flattenEmojiDictionary(
-            filterEmojiDictionary(emojiDictionary, prefix)
+            filterEmojiDictionary(
+                filterEmojiDictionaryBySkintone(emojiDictionary, skintone), 
+                prefix)
         ), 
         prefix, 
         emojiLength);
@@ -69,7 +73,6 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                                 "recent": {
                                     [`${name}`]: hexcode,
                                 ...emojiDictionary['recent'], 
-                                    
                                 }
                             };
                             changeEmojiDictionary(newEmojiDictionary);
@@ -102,7 +105,6 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
     const handleScroll = (e) => {
         if (intersectingCategory != "No intersection exists.")
             changeCategory(intersectingCategory);
-
         const scrollDifference = e.target.scrollHeight - e.target.scrollTop;
         if (Math.abs(e.target.clientHeight - scrollDifference) < 400) {
             changeEmojiLength(2*emojiLength);
@@ -110,6 +112,7 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
     }
 
     const handleCategoryChange = (category) => {
+        changeEmojiLength(getTotalEmojiCount(emojiDictionary));
         changeCategory(category);
         requestAnimationFrame(() => categoryRefs.current[category]
             .scrollIntoView({ block: "start", behavior: "smooth" }));
@@ -147,8 +150,28 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                         }}>
                         <Shuffle/>
                     </div>
-                    <div className={styles.button}>
-                        {computeEmoji(getSkinToneEmoji(emojiDictionary))}
+                    <div className={styles.button} onClick={() => {
+                        toggleSkintonePopup(!skintonePopup);
+                    }}>
+                        <div>
+                        {computeEmoji(getSkinToneEmoji(emojiDictionary, skintone))}
+                        </div>
+                        {skintonePopup && 
+                        <div className={styles.skintone_popup}>
+                            {["none", 
+                            "light skin tone",
+                            "medium-light skin tone", 
+                            "medium skin tone",
+                            "medium-dark skin tone",
+                            "dark skin tone"].map(skintone => 
+                            <div key={skintone} onClick={() => {
+                                changeSkintone(skintone);
+                                saveItem('emoji_dictionary_skintone', skintone);
+                            }}>
+                                {computeEmoji(getSkinToneEmoji(emojiDictionary, skintone))}
+                            </div>)}
+                        
+                        </div>}
                     </div>
                 </div>
 

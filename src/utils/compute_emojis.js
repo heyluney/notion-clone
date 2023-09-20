@@ -3,10 +3,10 @@ export const computeEmoji = hexcode => {
     return String.fromCodePoint(...codes);
 }
 
-export const getSkinToneEmoji = emojiDict => {
+export const getSkinToneEmoji = (emojiDict, skintone) => {
     return emojiDict['People & Body']
     ['hand-fingers-open']
-    ['hand with fingers splayed'];
+    [`raised hand${skintone === "none" ? "" : ": " + skintone}`];
 }
 
 export const getTotalEmojiCount = emojiDict => {
@@ -40,8 +40,56 @@ export const getRandomEmoji = emojiDict => {
     const reverseDict = getReverseDictionary(emojiDict);
     const totalEmojiCount = getTotalEmojiCount(emojiDict);
     const random = Math.floor(Math.random()*totalEmojiCount);
-    console.log(reverseDict);
     return reverseDict[random];
+}
+
+// Function is going to categorize skintones as nother key
+export const getSkinToneCategories = emojiDictPeople => {
+    const newEmojiDictPeople = {
+        'none': {},
+        'light skin tone': {},
+        'medium-light skin tone': {},
+        'medium skin tone': {},
+        'medium-dark skin tone': {},
+        'dark skin tone': {}
+    };
+    for (let subcategory in emojiDictPeople) {
+        for (let name in emojiDictPeople[subcategory]) {
+            if (name.includes('medium-light')) {
+                if (newEmojiDictPeople['medium-light skin tone'][subcategory] === undefined) {
+                    newEmojiDictPeople['medium-light skin tone'][subcategory] = {};
+                }
+                newEmojiDictPeople['medium-light skin tone']
+                    [name] = emojiDictPeople[subcategory][name];
+            } else if (name.includes('medium ')) {
+                if (newEmojiDictPeople['medium skin tone'][subcategory] === undefined) {
+                    newEmojiDictPeople['medium skin tone'][subcategory] = {};
+                }
+                newEmojiDictPeople['medium skin tone'][subcategory][name] = emojiDictPeople[subcategory][name];
+            } else if (name.includes('medium-dark')) {
+                if (newEmojiDictPeople['medium-dark skin tone'][subcategory] === undefined) {
+                    newEmojiDictPeople['medium-dark skin tone'][subcategory] = {};
+                }
+                newEmojiDictPeople['medium-dark skin tone'][subcategory][name] = emojiDictPeople[subcategory][name];
+            } else if (name.includes('light ')) {
+                if (newEmojiDictPeople['light skin tone'][subcategory] === undefined) {
+                    newEmojiDictPeople['light skin tone'][subcategory] = {};
+                }
+                newEmojiDictPeople['light skin tone'][subcategory][name] = emojiDictPeople[subcategory][name];
+            } else if (name.includes('dark ')) {
+                if (newEmojiDictPeople['dark skin tone'][subcategory] === undefined) {
+                    newEmojiDictPeople['dark skin tone'][subcategory] = {};
+                }
+                newEmojiDictPeople['dark skin tone'][subcategory][name] = emojiDictPeople[subcategory][name];
+            } else {
+                if (newEmojiDictPeople['none'][subcategory] === undefined) {
+                    newEmojiDictPeople['none'][subcategory] = {};
+                }
+                newEmojiDictPeople['none'][subcategory][name] = emojiDictPeople[subcategory][name];
+            }
+        }
+    }
+    return newEmojiDictPeople;
 }
 
 export const getRepresentativeEmojis = emojiDict => {
@@ -53,9 +101,21 @@ export const getRepresentativeEmojis = emojiDict => {
                             .map(([_, hexCodePairs]) => Object.entries(hexCodePairs)).flat()[0][1]]);
 }
 
-export const filterEmojiDictionary = (emojiDict, prefix) => {
-    if (prefix === "") return emojiDict;
+export const filterEmojiDictionaryBySkintone = (emojiDict, skintone) => {
+    const newEmojiDict = {};
 
+    for (let category in emojiDict) {
+        if (category === 'People & Body') {
+            newEmojiDict['People & Body'] = 
+            getSkinToneCategories(emojiDict['People & Body'])[skintone];
+        } else {
+            newEmojiDict[category] = emojiDict[category];
+        }
+    }
+
+    return newEmojiDict;
+}
+export const filterEmojiDictionary = (emojiDict, prefix) => {
     const newEmojiDict = {};
     for (let category in emojiDict) {
         if (category === 'recent') continue;
@@ -66,7 +126,7 @@ export const filterEmojiDictionary = (emojiDict, prefix) => {
     
                 if (name.includes(prefix)) {
                     newEmojiDict[category][subcategory][name] =
-                        emojiDict[category][subcategory][name];
+                    emojiDict[category][subcategory][name];
                 }
             }
         }

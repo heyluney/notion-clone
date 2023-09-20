@@ -163,6 +163,29 @@ is first or last in the row, respectively. */
     box-sizing: inherit;
     width: 28px;
     margin-left: 9px;
+    position: relative;
+}
+.skintone_popup {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    transform: translateY(40px);
+    border: 1px solid #eaeae9;
+    border-radius: 4px;
+    box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
+             rgba(15, 15, 15, 0.1) 0px 2px 4px;
+    padding: 5px;
+    background: white;
+    font-size: 28px;
+}
+
+.skintone_popup > * {
+    padding: 4px;
+}
+.skintone_popup > *:hover {
+    background: rgba(223, 222, 222, 0.6);
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .search:focus {
