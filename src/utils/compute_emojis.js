@@ -8,6 +8,42 @@ export const getSkinToneEmoji = emojiDict => {
     ['hand-fingers-open']
     ['hand with fingers splayed'];
 }
+
+export const getTotalEmojiCount = emojiDict => {
+    let count = 0;
+    for (let category in emojiDict) {
+        for (let subcategory in emojiDict[category]) {
+            count += Object.entries(emojiDict[category][subcategory]).length;
+        }
+    }
+    return count;
+}
+
+export const getReverseDictionary = emojiDict => {
+    const reverseDict = {};
+    let count = 0;
+    for (let category in emojiDict) {
+        for (let subcategory in emojiDict[category]) {
+            for (let name in emojiDict[category][subcategory]) {
+                reverseDict[count] = {
+                    description: name,
+                    hexcode: emojiDict[category][subcategory][name]
+                };
+                count++;
+            }
+        }
+    }
+    return reverseDict;
+}
+
+export const getRandomEmoji = emojiDict => {
+    const reverseDict = getReverseDictionary(emojiDict);
+    const totalEmojiCount = getTotalEmojiCount(emojiDict);
+    const random = Math.floor(Math.random()*totalEmojiCount);
+    console.log(reverseDict);
+    return reverseDict[random];
+}
+
 export const getRepresentativeEmojis = emojiDict => {
     return Object.entries(emojiDict)
                 .filter(([category, _]) => category != 'recent')

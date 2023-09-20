@@ -7,13 +7,15 @@ import { chunkify } from '../../utils/chunkify';
 import { getItem, saveItem } from '../../utils/local_storage';
 
 import { useOutsideEmojiAlerter } from '../../hooks/OutsideAlert';
-import { computeEmoji } from '../../utils/compute_emojis';
+import { computeEmoji, getTotalEmojiCount } from '../../utils/compute_emojis';
 
 import { flattenEmojiDictionary, 
         truncateEmojiDictionary, 
         filterEmojiDictionary,
     getRepresentativeEmojis,
-    getSkinToneEmoji } from '../../utils/compute_emojis';
+    getSkinToneEmoji,
+    getRandomEmoji
+    } from '../../utils/compute_emojis';
 import { useOnScreen } from '../../hooks/OnscreenAlert';
 
 import { FaShuffle as Shuffle } from 'react-icons/fa6';
@@ -36,6 +38,7 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
     const [prefix, changePrefix] = useState("");
     const [currentCategory, changeCategory] = useState("Smileys & Emotion");
 
+    console.log(getRandomEmoji(emojiDictionary))
     const arrayifiedEmojiDictionary = truncateEmojiDictionary(
         flattenEmojiDictionary(
             filterEmojiDictionary(emojiDictionary, prefix)
@@ -52,6 +55,7 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                         key={name}
                         onClick={(e) => {
                             e.preventDefault();
+                            // Updates the emoji being displayed. 
                             const newPage = {
                                 [active]:
                                     allPages[active].map((x, idx) => idx == 2 ? hexcode : x)
@@ -129,7 +133,18 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                         onClick={e => e.stopPropagation()}
                         onKeyUp={e => changePrefix(e.target.value)}
                         placeholder="Filter..." />
-                    <div className={styles.button}>
+                    <div className={styles.button}
+                        onClick={() => {
+                            const {description, hexcode} = getRandomEmoji(emojiDictionary);
+                            const newPage = {
+                                [active]:
+                                    allPages[active].map((x, idx) => idx == 2 ? hexcode : x)
+                            };
+                            const newPages = [{ ...allPages, ...newPage }, active];
+                            changePages(newPages);
+                            saveItem('pages', newPages);
+                            updateDisplayEmoji(false);
+                        }}>
                         <Shuffle/>
                     </div>
                     <div className={styles.button}>
@@ -147,7 +162,7 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                         className={`${styles.actual} ${category === currentCategory ? styles.active : ""}`}
                         onClick={(e) => {
                             e.stopPropagation();
-                            changeEmojiLength(5000);
+                            changeEmojiLength(getTotalEmojiCount());
                             changePrefix("");
                             formRef.current.value = "";
                             handleCategoryChange(category);
