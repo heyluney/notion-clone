@@ -1,5 +1,4 @@
 export const computeEmoji = hexcode => {
-    console.log('hexcode', hexcode);
     const codes = hexcode.split(' ').map(code => "0x" + code);
     return String.fromCodePoint(...codes);
 }

@@ -4,12 +4,12 @@ import { useState, useContext } from 'react';
 import styles from './TaskList.module.css';
 
 import Icon from '../../components/popups/Icon';
-import EmojiSelector from '../../components/popups/EmojiSelector';
+import { saveItem } from '../../utils/local_storage';
 
 import { PageContext } from '../../App';
 
 const TaskList = () => {
-    const { pages, _ } = useContext(PageContext);
+    const { pages, changePages } = useContext(PageContext);
     const [allPages, active] = pages;
     const [name, __, icon, ___] = allPages[active];
 
@@ -53,24 +53,38 @@ const TaskList = () => {
         "category9": []
     })
 
+    const [isUpdatingTitle, updatingTitle] = useState(false);
     const [draggedTask, updateDraggedTask] = useState({});
-    // const [displayEmoji, updateDisplayEmoji] = useState(false);
     return (
         <div className={styles.tasklist}>
             <div className={styles.title}>
-                <div
-                    // className={styles.emoji}
-                    // onClick={
-                    //     (e) => {
-                    //         e.preventDefault();
-                    //         updateDisplayEmoji(!displayEmoji)
-                    //     }
-                    // }
+                <div className={styles.emoji}
                 >
                     <Icon icon={icon}/>
-                    {/* {displayEmoji ? <EmojiSelector updateDisplayEmoji={updateDisplayEmoji} /> : null} */}
                 </div>
-                <div>{name}</div>
+                <textarea
+                    readOnly={!isUpdatingTitle}
+                    defaultValue={name}
+                    onClick={() => {
+                        updatingTitle(true);
+                    }}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            const newPageTitle = e.target.value;
+                            const newPage = {
+                                [e.target.value]:
+                                    allPages[active]
+                                    .map((x, idx) => idx == 0 ? newPageTitle : x)
+                            };
+                            const { [active]: value, ...allPagesWithOldRemoved } = allPages;
+                            const newPages = [{ ...allPagesWithOldRemoved, ...newPage }, newPageTitle];
+                            changePages(newPages);
+                            saveItem('pages', newPages);
+                            updatingTitle(false);
+                        }
+                    }}
+                />
+                {/* <div>{name}</div> */}
             </div>
             <div className={styles.description}>
                 Use this template to track your personal tasks.
