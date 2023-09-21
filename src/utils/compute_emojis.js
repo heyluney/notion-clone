@@ -1,4 +1,5 @@
 export const computeEmoji = hexcode => {
+    console.log('hexcode', hexcode);
     const codes = hexcode.split(' ').map(code => "0x" + code);
     return String.fromCodePoint(...codes);
 }
@@ -43,7 +44,6 @@ export const getRandomEmoji = emojiDict => {
     return reverseDict[random];
 }
 
-// Function is going to categorize skintones as nother key
 export const getSkinToneCategories = emojiDictPeople => {
     const newEmojiDictPeople = {
         'none': {},

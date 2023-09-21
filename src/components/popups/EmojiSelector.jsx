@@ -49,6 +49,7 @@ const EmojiSelector = ({ updateDisplayEmoji, displayEmoji }) => {
         ), 
         prefix, 
         emojiLength);
+
     const createEmojiSelector = (emojiArray, perRow, isRecent) => {
         return chunkify(emojiArray, perRow).map((emojis, rowIdx) =>
             <div key={rowIdx} className={styles.row}>
@@ -127,7 +128,6 @@ const EmojiSelector = ({ updateDisplayEmoji, displayEmoji }) => {
         }
     }, []);
 
-    console.log('INSIDE EMOJI SELECTOR', displayEmoji)
     return (
         <div 
             className={`${styles.emojis} 

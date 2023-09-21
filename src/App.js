@@ -31,6 +31,9 @@ import { computeEmoji } from './utils/compute_emojis';
 const App = () => {
   // I don't want populateemojiDictionary to run every single time
   if (getItem('emoji_dictionary') === null) populateEmojiDictionary();
+  if (getItem('emoji_dictionary_skintone') === null) {
+    saveItem('emoji_dictionary_skintone', 'none');
+  }
 
   const defaultComments = {};
   if (getItem('quicknote-comments') === null) saveItem('quicknote-comments', defaultComments);
