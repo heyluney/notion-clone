@@ -7,13 +7,22 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 55px;
-    left: -75px;
+    top: 120px;
+    left: -120px;
     font-size: 24px;
     background: white;
     height: 300px;
     line-height: 1.5;
     min-width: 200px;
+}
+
+.emojis.open {
+    opacity: 1;
+    transition: 500ms;
+}
+.emojis.closed {
+    opacity: 0;
+    transition: 500ms;
 }
 
 

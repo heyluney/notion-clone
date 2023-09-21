@@ -21,7 +21,7 @@ import { useOnScreen } from '../../hooks/OnscreenAlert';
 
 import { FaShuffle as Shuffle } from 'react-icons/fa6';
 
-const EmojiSelector = ({ updateDisplayEmoji }) => {
+const EmojiSelector = ({ updateDisplayEmoji, displayEmoji }) => {
     // This allows synchronization of emoji update across multiple pages.
     const { pages, changePages } = useContext(PageContext);
     const [allPages, active] = pages;
@@ -127,8 +127,12 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
         }
     }, []);
 
+    console.log('INSIDE EMOJI SELECTOR', displayEmoji)
     return (
-        <div className={styles.emojis} ref={wrapperRef} >
+        <div 
+            className={`${styles.emojis} 
+                ${displayEmoji ? styles.open : styles.closed}`} 
+            ref={wrapperRef}>
             <div className={styles.top}>
                 <div className={styles.wrapper}>
                     <input className={styles.search}
@@ -150,7 +154,8 @@ const EmojiSelector = ({ updateDisplayEmoji }) => {
                         }}>
                         <Shuffle/>
                     </div>
-                    <div className={styles.button} onClick={() => {
+                    <div className={styles.button} onClick={(e) => {
+                        e.stopPropagation();
                         toggleSkintonePopup(!skintonePopup);
                     }}>
                         <div>

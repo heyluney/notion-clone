@@ -2,7 +2,9 @@ import { useEffect } from 'react';
 
 
 export const useOutsideEmojiAlerter = (ref, toggle) => {
+    
     const handleClickOutside = event => {
+        if (event.target.className.includes('Icon')) return;
         if (ref.current && !ref.current.contains(event.target)) {
             toggle(false);
         }
@@ -10,6 +12,7 @@ export const useOutsideEmojiAlerter = (ref, toggle) => {
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside);
+
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };

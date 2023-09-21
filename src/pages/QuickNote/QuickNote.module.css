@@ -5,12 +5,17 @@
 
 .title {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
     font-size: 40px;
-    font-weight: 700;
     margin-bottom: 15px;
     position: relative;
+    line-height: 40px;
+}
+.title > textarea {
+    font-size: inherit;
+    font-weight: 700;
 }
 
 .emoji {
@@ -20,6 +25,7 @@
     position: relative;
     align-items: center;
     justify-content: center;
+    font-size: 100px;
 }
 
 

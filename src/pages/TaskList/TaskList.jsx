@@ -54,21 +54,21 @@ const TaskList = () => {
     })
 
     const [draggedTask, updateDraggedTask] = useState({});
-    const [displayEmoji, updateDisplayEmoji] = useState(false);
+    // const [displayEmoji, updateDisplayEmoji] = useState(false);
     return (
         <div className={styles.tasklist}>
             <div className={styles.title}>
                 <div
-                    className={styles.emoji}
-                    onClick={
-                        (e) => {
-                            e.preventDefault();
-                            updateDisplayEmoji(!displayEmoji)
-                        }
-                    }
+                    // className={styles.emoji}
+                    // onClick={
+                    //     (e) => {
+                    //         e.preventDefault();
+                    //         updateDisplayEmoji(!displayEmoji)
+                    //     }
+                    // }
                 >
                     <Icon icon={icon}/>
-                    {displayEmoji ? <EmojiSelector updateDisplayEmoji={updateDisplayEmoji} /> : null}
+                    {/* {displayEmoji ? <EmojiSelector updateDisplayEmoji={updateDisplayEmoji} /> : null} */}
                 </div>
                 <div>{name}</div>
             </div>

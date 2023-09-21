@@ -11,7 +11,7 @@ const SideBarDetailItem = ({currentPage}) => {
     const [allPages, _] = pages;
 
     const [name, path, icon, Component] = currentPage;
-
+    // console.log('path', path);
     return (
         <Link to={path} >
             <div onClick={() => changePages([{...allPages}, name])}>
