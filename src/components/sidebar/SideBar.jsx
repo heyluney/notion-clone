@@ -15,8 +15,9 @@ import clark from '../../assets/clark_profile.jpg';
 
 
 const SideBar = () =>{
-    const { pages, _ } = useContext(PageContext);
+    const { pages } = useContext(PageContext);
     const [allPages, active] = pages;
+    console.log(Object.values(allPages).sort((a,b) => a[0] - b[0]));
     return (
         <div className={`${styles.sidebar}`} >
 
@@ -24,7 +25,7 @@ const SideBar = () =>{
                 icon={<img className={styles.profile} src={clark}/>} 
                 name="Clarkie ButtButt's Notion"/>
             
-            {Object.values(allPages).map(([name, path, icon, Component]) => (
+            {Object.values(allPages).sort((a,b) => a[0] - b[0]).map(([idx, name, path, icon, Component]) => (
                         <SideBarDetailItem
                             key={name}
                             currentPage={[name, path, icon, Component]}

@@ -41,8 +41,8 @@ const App = () => {
 
   // used to be Earmark, Scissors
   const defaultPages = [{
-    "Quick Note": ["Quick Note", "/quick_note", '1F9A1', "QuickNote"],
-    "Task List": ["Task List", "/task_list", '1F32D', "TaskList"]
+    "Quick Note": [0, "Quick Note", "/quick_note", '1F9A1', "QuickNote"],
+    "Task List": [1, "Task List", "/task_list", '1F32D', "TaskList"]
   }, "Quick Note"];
 
   if (getItem('pages') === null) saveItem('pages', defaultPages);
@@ -64,12 +64,11 @@ const App = () => {
   }
 
   const [allPages, active] = pages;
-  const [_, __, hex, ___] = allPages[active];
+  const [_, __, ___, hex, ____] = allPages[active];
   link.href = faviconTemplate(hex);
 
-
   return (
-    <PageContext.Provider value={{ pages, changePages }}>
+    <PageContext.Provider value={{ pages, changePages, icon: hex }}>
       <CommentContext.Provider value={{ comments, changeComments }}>
           <Fragment>
             <div className={styles.app}>

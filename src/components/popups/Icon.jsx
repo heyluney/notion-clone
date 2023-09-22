@@ -7,7 +7,6 @@ import EmojiSelector from '../../components/popups/EmojiSelector';
 
 const Icon = ({icon}) => {
     const Icon = icon;
-
     const [displayEmoji, updateDisplayEmoji] = useState(false);
     const [isHovered, updateHover] = useState(false);
 

@@ -7,7 +7,7 @@ import {BiMessageDots as Message } from 'react-icons/bi';
 import {BsStar as Star} from 'react-icons/bs';
 
 const Banner = ({currentPage}) => {
-    const [currentName, path, icon, Component] = currentPage;
+    const [idx, currentName, path, icon, Component] = currentPage;
     return (
         <div className={styles.banner}>
             <div className={styles.left}>
