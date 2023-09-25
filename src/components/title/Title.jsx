@@ -4,9 +4,8 @@ import { PageContext } from '../../App';
 
 
 const Title = () => {
-    const { pages, changePages } = useContext(PageContext);
+    const { pages, changePages, name } = useContext(PageContext);
     const [allPages, active] = pages;
-    const [idx, name, _, icon, __] = allPages[active];
 
     const [isUpdatingTitle, updatingTitle] = useState(false);
     return (

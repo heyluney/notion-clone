@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext, useRef, useCallback } from 'react';
 
 import styles from './EmojiSelector.module.css';
-import { PageContext } from '../../App';
+import { PageContext, CommentContext } from '../../App';
 
 import { chunkify } from '../../utils/chunkify';
 import { getItem, saveItem } from '../../utils/local_storage';
@@ -21,9 +21,11 @@ import { useOnScreen } from '../../hooks/OnscreenAlert';
 
 import { FaShuffle as Shuffle } from 'react-icons/fa6';
 
-const EmojiSelector = ({ updateDisplayEmoji, displayEmoji }) => {
+const EmojiSelector = ({ updateDisplayEmoji, displayEmoji, 
+    relatedToComments, currentCommentIdx }) => {
     // This allows synchronization of emoji update across multiple pages.
     const { pages, changePages } = useContext(PageContext);
+    const { comments, changeComments } = useContext(CommentContext);
     const [allPages, active] = pages;
 
     // Determines whether the emoji popup window is open or closed.
@@ -50,7 +52,9 @@ const EmojiSelector = ({ updateDisplayEmoji, displayEmoji }) => {
         prefix, 
         emojiLength);
 
+    
     const createEmojiSelector = (emojiArray, perRow, isRecent) => {
+        
         return chunkify(emojiArray, perRow).map((emojis, rowIdx) =>
             <div key={rowIdx} className={styles.row}>
                 {emojis.map(([name, hexcode, isVisible], columnIdx) => (
@@ -60,25 +64,42 @@ const EmojiSelector = ({ updateDisplayEmoji, displayEmoji }) => {
                         key={name}
                         onClick={(e) => {
                             e.preventDefault();
-                            // Updates the emoji being displayed. 
+                            if (relatedToComments) {
+                                const newEmojiPair = {[hexcode]: name};
+                                const newComments = {
+                                    ...comments,
+                                    ...{
+                                        [currentCommentIdx]:
+                                        {
+                                            timestamp: JSON.stringify(Date.now()),
+                                            comment: comments[currentCommentIdx].comment,
+                                            edited: true,
+                                            emojis: {...comments[currentCommentIdx].emojis, ...newEmojiPair }
+                                        }
+                                    }
+                                }
+                                changeComments(newComments);
+                                saveItem('quicknote-comments', newComments);
+                            } else {
                             const newPage = {
                                 [active]:
-                                    allPages[active].map((x, idx) => idx == 2 ? hexcode : x)
-                            };
-                            const newPages = [{ ...allPages, ...newPage }, active];
-                            changePages(newPages);
-                            saveItem('pages', newPages);
-                        
-                            const newEmojiDictionary = {
-                                ...emojiDictionary, 
-                                "recent": {
-                                    [`${name}`]: hexcode,
-                                ...emojiDictionary['recent'], 
-                                }
-                            };
-                            changeEmojiDictionary(newEmojiDictionary);
-                            saveItem('emoji_dictionary', newEmojiDictionary);
-                            updateDisplayEmoji(false);
+                                    allPages[active].map((x, idx) => idx == 3 ? hexcode : x)
+                                };
+                                const newPages = [{ ...allPages, ...newPage }, active];
+                                changePages(newPages);
+                                saveItem('pages', newPages);
+                            
+                                const newEmojiDictionary = {
+                                    ...emojiDictionary, 
+                                    "recent": {
+                                        [`${name}`]: hexcode,
+                                    ...emojiDictionary['recent'], 
+                                    }
+                                };
+                                changeEmojiDictionary(newEmojiDictionary);
+                                saveItem('emoji_dictionary', newEmojiDictionary);
+                                updateDisplayEmoji(false);
+                            }
                         }}
                         onMouseOver={() => {
                             changeHoveredEmoji([isRecent, name])

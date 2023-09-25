@@ -10,9 +10,14 @@ import AddComment from './AddComment';
 import EditComment from './EditComment';
 
 import Popup from '../../components/popups/Popup';
+import { MdOutlineEmojiEmotions as AddEmoji } from 'react-icons/md';
+import { FaPlus } from 'react-icons/fa';
+import { computeEmoji } from '../../utils/compute_emojis';
+import Icon
+ from '../popups/Icon';
 
 const Comments = () => {
-    const { comments, _} = useContext(CommentContext);
+    const { comments } = useContext(CommentContext);
 
     const [commentBeingMousedOver, changeMouseOver] = useState(-1);
 
@@ -60,6 +65,22 @@ const Comments = () => {
                                 readOnly={!(idx == commentBeingEdited)}
                                 changeEdit={changeEdit}
                                 changeMouseOver={changeMouseOver} />
+
+                        <div className={styles.emojis}>
+                        
+                            {Object.entries(comment.emojis)
+                                .map(([emoji, description]) => 
+                                <div key={emoji} className={`${styles.emoji} ${styles.active}`}>
+                                    {computeEmoji(emoji)} 1
+                                    </div>)
+                                }
+                            <div className={`${styles.emoji} ${styles.opaque}`}>
+                                <Icon icon={"1F6A7"} 
+                                relatedToComments={true} currentCommentIdx={idx}/>
+                            </div>
+
+                        </div>
+                      
                         </div>
                     </div>
                 )}

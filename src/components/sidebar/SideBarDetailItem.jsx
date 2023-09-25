@@ -10,8 +10,7 @@ const SideBarDetailItem = ({currentPage}) => {
     const { pages, changePages } = useContext(PageContext);
     const [allPages, _] = pages;
 
-    const [name, path, icon, Component] = currentPage;
-    // console.log('path', path);
+    const [idx, name, path, icon, Component] = currentPage;
     return (
         <Link to={path} >
             <div onClick={() => changePages([{...allPages}, name])}>

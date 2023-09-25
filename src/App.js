@@ -35,13 +35,30 @@ const App = () => {
     saveItem('emoji_dictionary_skintone', 'none');
   }
 
-  const defaultComments = {};
+  const defaultComments = {
+    1: {
+      comment: "Hi",
+      edited: false,
+      emojis:  
+      {"1F923": 'rolling on the floor laughing',
+      "1F62B": 'tired face'
+      },
+      timestamp: "1695669947591"
+    },
+    2: {
+      comment: "Hello",
+      edited: false,
+      emojis:  
+      {"1F923": 'rolling on the floor laughing'},
+      timestamp: "1693348898325"
+    }
+  };
   if (getItem('quicknote-comments') === null) saveItem('quicknote-comments', defaultComments);
   const [comments, changeComments] = useState(getItem('quicknote-comments'));
 
   // used to be Earmark, Scissors
   const defaultPages = [{
-    "Quick Note": [0, "Quick Note", "/quick_note", '1F9A1', "QuickNote"],
+    "Quick Note": [0, "Quick Note", "/quick_note", '1F32D', "QuickNote"],
     "Task List": [1, "Task List", "/task_list", '1F32D', "TaskList"]
   }, "Quick Note"];
 
@@ -64,11 +81,11 @@ const App = () => {
   }
 
   const [allPages, active] = pages;
-  const [_, __, ___, hex, ____] = allPages[active];
+  const [_, name, ___, hex, ____] = allPages[active];
   link.href = faviconTemplate(hex);
 
   return (
-    <PageContext.Provider value={{ pages, changePages, icon: hex }}>
+    <PageContext.Provider value={{ pages, changePages, icon: hex, name }}>
       <CommentContext.Provider value={{ comments, changeComments }}>
           <Fragment>
             <div className={styles.app}>

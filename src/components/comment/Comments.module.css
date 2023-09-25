@@ -49,4 +49,37 @@ img {
     color: rgba(154, 154, 151, 1);
 }
 
+.emojis {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.emoji {
+    border-radius: 8px;
+    width: 37px;
+    margin-left: 2px;
+    margin-right: 2px;
+
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: center;
+}
+.emoji:hover {
+    background: rgb(239, 239, 239, 1);
+    cursor: pointer;
+}
+.active {
+    background: rgba(239, 245, 253, 1);
+    color: rgba(36, 131, 226, 1);
+    border: 1px solid rgba(172, 206, 245, 1);
+}
+.opaque {
+    border: 1px solid rgba(237, 237, 236, 1);
+    color: rgba(165, 164, 161, 1);
+}
+.active:hover {
+    background: rgb(222, 233, 249);
+    cursor: pointer;
+}
 

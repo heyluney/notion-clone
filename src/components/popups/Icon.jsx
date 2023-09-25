@@ -5,7 +5,7 @@ import { computeEmoji } from '../../utils/compute_emojis';
 import EmojiSelector from '../../components/popups/EmojiSelector';
 
 
-const Icon = ({icon}) => {
+const Icon = ({icon, relatedToComments, currentCommentIdx}) => {
     const Icon = icon;
     const [displayEmoji, updateDisplayEmoji] = useState(false);
     const [isHovered, updateHover] = useState(false);
@@ -21,7 +21,9 @@ const Icon = ({icon}) => {
 
             <EmojiSelector 
                     updateDisplayEmoji={updateDisplayEmoji} 
-                    displayEmoji={displayEmoji}/>
+                    displayEmoji={displayEmoji}
+                    relatedToComments={relatedToComments}
+                    currentCommentIdx={currentCommentIdx}/>
         </div>
     )
 }

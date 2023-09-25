@@ -9,7 +9,6 @@ import Title from '../../components/title/Title';
 import { PageContext } from '../../App';
 
 const QuickNote = () => {
-    // console.log('icon', icon);
     const {icon} = useContext(PageContext);
 
     const [textarea, changeTextArea] = useState(localStorage.getItem('quicknote'));
