@@ -11,6 +11,7 @@ import EditComment from './EditComment';
 
 import Popup from '../../components/popups/Popup';
 import { MdOutlineEmojiEmotions as AddEmoji } from 'react-icons/md';
+import { AiFillEdit as Edit, AiFillDelete as Delete } from 'react-icons/ai';
 import { FaPlus } from 'react-icons/fa';
 import { computeEmoji } from '../../utils/compute_emojis';
 import Icon
@@ -45,15 +46,19 @@ const Comments = () => {
                                 {
                                     idx == !commentBeingMousedOver ?
                                         null :
-                                        <div>
-                                            <button onClick={() => {
+                                        <div className={styles.buttons}>
+                                            <button className={styles.button}
+                                                onClick={() => {
                                                 changeEdit(idx);
-                                            }}>Edit</button>
-                                            <button onClick={() => {
+                                            }}>
+                                                <Edit /> Edit Comment
+                                            </button>
+                                            <button className={styles.button}
+                                                onClick={() => {
                                                 togglePopup(idx);
                                                 document.getElementById('overlay').style.display = "block";
                                             }}>
-                                                Delete
+                                                <Delete /> Delete Comment
                                             </button>
                                         </div>
                                 }
@@ -88,13 +93,12 @@ const Comments = () => {
                 <AddComment
                     currentComment={currentComment}
                     updateComment={updateComment} />
-                <div id="overlay"></div>
 
                 
-                {popup == -1 ? null : <Popup 
+                <Popup 
                                             popup={popup} 
                                             togglePopup={togglePopup}
-                                            idx={popup} />}
+                                            idx={popup} />
             </div>
     )
 }

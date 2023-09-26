@@ -19,6 +19,7 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
   line-height: 1;
+  /* overflow: hidden; */
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -46,8 +47,6 @@ table {
 .app {
   display: flex;
   flex-direction: row;
-  overflow: auto;
-  flex: 1;
   font-family: 'Roboto', sans-serif;
   margin: 0;
 }
@@ -64,4 +63,3 @@ textarea, textarea:focus {
   cursor: pointer;
   font-family: 'Roboto', sans-serif;
 }
-

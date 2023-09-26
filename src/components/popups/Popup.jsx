@@ -8,17 +8,14 @@ import { CommentContext } from '../../App';
 
 import { saveItem } from '../../utils/local_storage';
 
-// This popup component is specific to comments as of now, not sure if I want
-// to make this more specific (e.g. CommentPopup) or broaden this component to make it 
-// a more general popup component
-const Popup = ({ togglePopup, idx }) => {
+const Popup = ({ popup, togglePopup, idx }) => {
     const { comments, changeComments } = useContext(CommentContext);
 
     const wrapperRef = useRef();
     useOutsideAlerter(wrapperRef, togglePopup);
     return (
         <div
-            className={styles.popup}
+            className={`${styles.none} ${idx !== -1 && popup === idx ? styles.popup : null}`}
             ref={wrapperRef}>
             <div className={styles.question}>Would you like to delete this comment?</div>
             <button

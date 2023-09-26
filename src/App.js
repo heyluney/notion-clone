@@ -29,7 +29,6 @@ import { saveItem, getItem } from './utils/local_storage';
 import { computeEmoji } from './utils/compute_emojis';
 
 const App = () => {
-  // I don't want populateemojiDictionary to run every single time
   if (getItem('emoji_dictionary') === null) populateEmojiDictionary();
   if (getItem('emoji_dictionary_skintone') === null) {
     saveItem('emoji_dictionary_skintone', 'none');
@@ -65,6 +64,8 @@ const App = () => {
   if (getItem('pages') === null) saveItem('pages', defaultPages);
   const [pages, changePages] = useState(getItem('pages'));
 
+  const [popup, updatePopup] = useState(false);
+
   function faviconTemplate(hexcode) {
     return `data:image/svg+xml,
     <svg xmlns=%22http://www.w3.org/2000/svg%22 
@@ -84,15 +85,18 @@ const App = () => {
   const [_, name, ___, hex, ____] = allPages[active];
   link.href = faviconTemplate(hex);
 
+  // only one popup can exist
   return (
     <PageContext.Provider value={{ pages, changePages, icon: hex, name }}>
       <CommentContext.Provider value={{ comments, changeComments }}>
+        <PopupContext.Provider value={{ popup, updatePopup }}>
           <Fragment>
-            <div className={styles.app}>
+            <div className={`${styles.app}`}>
               <SideBar />
               <Main />
             </div>
           </Fragment>
+        </PopupContext.Provider>
       </CommentContext.Provider>
     </PageContext.Provider>
   )
@@ -102,7 +106,7 @@ export default App;
 
 export const CommentContext = createContext();
 export const PageContext = createContext();
-
+export const PopupContext = createContext();
 
     // "Search": [Search, false],
     // "Updates": [Clock, false],

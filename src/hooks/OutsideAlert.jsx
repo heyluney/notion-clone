@@ -7,6 +7,7 @@ export const useOutsideEmojiAlerter = (ref, toggle) => {
         if (event.target.className.includes('Icon')) return;
         if (ref.current && !ref.current.contains(event.target)) {
             toggle(false);
+            document.getElementById('overlay2').style.display = "none";
         }
     }
 
