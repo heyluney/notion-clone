@@ -3,7 +3,6 @@ import styles from './Icon.module.css';
 import { computeEmoji } from '../../utils/compute_emojis';
 
 import EmojiSelector from '../../components/popups/EmojiSelector';
-import { PopupContext } from '../../App';
 
 const Icon = ({icon, relatedToComments, currentCommentIdx}) => {
     const Icon = icon;
@@ -14,10 +13,8 @@ const Icon = ({icon, relatedToComments, currentCommentIdx}) => {
         <div 
             className={`${styles.main} ${isHovered ? styles.active : null}`}
             onClick={() => {
-                // updatePopup(!displayEmoji);
                 updateDisplayEmoji(!displayEmoji);
                 document.getElementById('overlay2').style.display = "block";
-
             }}
             onMouseEnter={() => updateHover(!isHovered)}
             onMouseLeave={() => updateHover(!isHovered)}

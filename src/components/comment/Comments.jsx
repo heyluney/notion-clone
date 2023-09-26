@@ -79,7 +79,7 @@ const Comments = () => {
                                     {computeEmoji(emoji)} 1
                                     </div>)
                                 }
-                            <div className={`${styles.emoji} ${styles.opaque}`}>
+                            <div className={styles.add_emoji}>
                                 <Icon icon={"1F6A7"} 
                                 relatedToComments={true} currentCommentIdx={idx}/>
                             </div>

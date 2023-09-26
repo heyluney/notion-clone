@@ -11,6 +11,7 @@ import { saveItem } from '../../utils/local_storage';
 const AddComment = ({ currentComment, updateComment }) => {
     const { comments, changeComments } = useContext(CommentContext);
 
+    console.log('comments', comments);
     return (
         <div className={styles.new}>
         <img className={styles.pic} src={clark} />
@@ -30,9 +31,11 @@ const AddComment = ({ currentComment, updateComment }) => {
                         [calculateNextKey(comments)]: {
                             timestamp: JSON.stringify(new Date()),
                             comment: currentComment,
-                            edited: false
+                            edited: false,
+                            emojis: {}
                         }
                     }
+                    console.log('newComments', newComments);
                     changeComments(newComments);
                     saveItem('quicknote-comments', newComments);
                     updateComment("");

@@ -80,6 +80,7 @@ const EmojiSelector = ({ updateDisplayEmoji, displayEmoji,
                                 }
                                 changeComments(newComments);
                                 saveItem('quicknote-comments', newComments);
+                                document.getElementById('overlay2').style.display = 'none';
                             } else {
                             const newPage = {
                                 [active]:
@@ -99,6 +100,7 @@ const EmojiSelector = ({ updateDisplayEmoji, displayEmoji,
                                 changeEmojiDictionary(newEmojiDictionary);
                                 saveItem('emoji_dictionary', newEmojiDictionary);
                                 updateDisplayEmoji(false);
+                                document.getElementById('overlay2').style.display = 'none';
                             }
                         }}
                         onMouseOver={() => {
