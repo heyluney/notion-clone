@@ -88,7 +88,11 @@ const App = () => {
   // only one popup can exist
   return (
     
-    <PageContext.Provider value={{ pages, changePages, icon: hex, name }}>
+    <PageContext.Provider value={{ 
+        pages, 
+        changePages, 
+        icon: hex, 
+        name }}>
       <CommentContext.Provider value={{ comments, changeComments }}>
         <PopupContext.Provider value={{ popup, updatePopup }}>
           <Fragment>

@@ -13,6 +13,14 @@ const Icon = ({icon, idx, relatedToComments, emojiPopup, toggleEmojiPopup}) => {
             onMouseEnter={() => updateHover(!isHovered)}
             onMouseLeave={() => updateHover(!isHovered)}
             onClick={() => {
+                // If it's already open, wnat to close it 
+                // if (idx === -1) {
+                //     // open it 
+                //     relatedToComments ? toggleEmojiPopup(idx) : toggleEmojiPopup(1);
+                // } else {
+                //     // It's open, close it
+                //     toggleEmojiPopup(-1);
+                // }
                 if (relatedToComments) {
                     toggleEmojiPopup(idx);
                 } else {

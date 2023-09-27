@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState,useContext } from 'react';
 import styles from './SideBarDetailItem.module.css';
 import Icon from '../popups/Icon';
 
@@ -16,18 +16,16 @@ const SideBarDetailItem = ({currentPage}) => {
 
     const [idx, name, path, icon, Component] = currentPage;
     return (
-        <Link to={path} >
-            <div onClick={() => changePages([{...allPages}, name])}>
-                <div className={styles.left}>
-                    <Icon icon={icon}
-                    
-                    relatedToComments={false} 
-                    emojiPopup={emojiPopup} 
-                    toggleEmojiPopup={toggleEmojiPopup}/>
-                    <div>{name}</div>
-                </div>
-            </div>
-        </Link>
+        <div className={styles.left}>
+            <Icon icon={icon}
+            
+            relatedToComments={false} 
+            emojiPopup={emojiPopup} 
+            toggleEmojiPopup={toggleEmojiPopup}/>
+            <Link onClick={() => changePages([{...allPages}, name])}>
+                {name}
+            </Link>
+        </div>
     )
 }
     

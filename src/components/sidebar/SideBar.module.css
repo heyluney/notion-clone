@@ -17,6 +17,8 @@
     border-radius: 2.5px;
 }
 
+/* Removes sidebar if the window shrinks too much. Maybe should make it 
+able to pop back out like in a hamburger menu style? */
 @media (max-width: 800px) {
     .sidebar {
         display: none;
