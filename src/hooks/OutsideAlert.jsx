@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 
 
-export const useOutsideEmojiAlerter = (ref, toggle) => {
-    
+export const useOutsideEmojiAlerter = (ref, toggleEmojiPopup) => {
     const handleClickOutside = event => {
         if (event.target.className.includes('Icon')) return;
         if (ref.current && !ref.current.contains(event.target)) {
-            toggle(false);
+            toggleEmojiPopup(-1);
             document.getElementById('overlay2').style.display = "none";
         }
     }

@@ -2,14 +2,9 @@ import { useContext } from 'react';
 import styles from './SideBar.module.css'; // Import css modules stylesheet as styles
 
 import ProfileItem from './ProfileItem';
-import SideBarItem from './SideBarItem';
 import SideBarDetailItem from './SideBarDetailItem';
 
 import { PageContext } from '../../App';
-
-import {IoIosArrowForward as ForwardArrow } from 'react-icons/io';
-import { BsThreeDots as ThreeDots, 
-        BsPlus as Plus } from 'react-icons/bs';
 
 import clark from '../../assets/clark_profile.jpg';
 

@@ -4,28 +4,40 @@ import { computeEmoji } from '../../utils/compute_emojis';
 
 import EmojiSelector from '../../components/popups/EmojiSelector';
 
-const Icon = ({icon, relatedToComments, currentCommentIdx}) => {
+const Icon = ({icon, idx, relatedToComments, emojiPopup, toggleEmojiPopup}) => {
     const Icon = icon;
-    const [displayEmoji, updateDisplayEmoji] = useState(false);
     const [isHovered, updateHover] = useState(false);
-
     return (
         <div 
             className={`${styles.main} ${isHovered ? styles.active : null}`}
-            onClick={() => {
-                updateDisplayEmoji(!displayEmoji);
-                document.getElementById('overlay2').style.display = "block";
-            }}
             onMouseEnter={() => updateHover(!isHovered)}
             onMouseLeave={() => updateHover(!isHovered)}
+            onClick={() => {
+                if (relatedToComments) {
+                    toggleEmojiPopup(idx);
+                } else {
+                    toggleEmojiPopup(1);
+                }
+            }}
             >
             {typeof icon === "string" ? computeEmoji(icon) : <Icon />}
 
-            <EmojiSelector 
-                    updateDisplayEmoji={updateDisplayEmoji} 
-                    displayEmoji={displayEmoji}
+            {relatedToComments ? (
+                idx === emojiPopup && <EmojiSelector 
+                    idx={idx}
                     relatedToComments={relatedToComments}
-                    currentCommentIdx={currentCommentIdx}/>
+                    emojiPopup={emojiPopup}
+                    toggleEmojiPopup={toggleEmojiPopup}                     
+                    />
+            ) : (
+                emojiPopup !== -1 && <EmojiSelector 
+                idx={idx}
+                relatedToComments={relatedToComments}
+                emojiPopup={emojiPopup}
+                toggleEmojiPopup={toggleEmojiPopup}                     
+                />
+            )}
+            
         </div>
     )
 }

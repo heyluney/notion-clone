@@ -21,8 +21,7 @@ import { useOnScreen } from '../../hooks/OnscreenAlert';
 
 import { FaShuffle as Shuffle } from 'react-icons/fa6';
 
-const EmojiSelector = ({ updateDisplayEmoji, displayEmoji, 
-    relatedToComments, currentCommentIdx }) => {
+const EmojiSelector = ({ idx, relatedToComments, emojiPopup, toggleEmojiPopup }) => {
     // This allows synchronization of emoji update across multiple pages.
     const { pages, changePages } = useContext(PageContext);
     const { comments, changeComments } = useContext(CommentContext);
@@ -30,7 +29,7 @@ const EmojiSelector = ({ updateDisplayEmoji, displayEmoji,
 
     // Determines whether the emoji popup window is open or closed.
     const wrapperRef = useRef();
-    useOutsideEmojiAlerter(wrapperRef, updateDisplayEmoji);
+    useOutsideEmojiAlerter(wrapperRef, toggleEmojiPopup);
 
     // Lists which emoji is currently being hovered.
     const [hoveredEmoji, changeHoveredEmoji] = useState([/*isRecent?*/false, /*emoji name*/false]);
@@ -69,18 +68,19 @@ const EmojiSelector = ({ updateDisplayEmoji, displayEmoji,
                                 const newComments = {
                                     ...comments,
                                     ...{
-                                        [currentCommentIdx]:
+                                        [idx]:
                                         {
                                             timestamp: JSON.stringify(Date.now()),
-                                            comment: comments[currentCommentIdx].comment,
+                                            comment: comments[idx].comment,
                                             edited: true,
-                                            emojis: {...comments[currentCommentIdx].emojis, ...newEmojiPair }
+                                            emojis: {...comments[idx].emojis, ...newEmojiPair }
                                         }
                                     }
                                 }
                                 changeComments(newComments);
                                 saveItem('quicknote-comments', newComments);
                                 document.getElementById('overlay2').style.display = 'none';
+                                toggleEmojiPopup(-1);
                             } else {
                             const newPage = {
                                 [active]:
@@ -99,7 +99,7 @@ const EmojiSelector = ({ updateDisplayEmoji, displayEmoji,
                                 };
                                 changeEmojiDictionary(newEmojiDictionary);
                                 saveItem('emoji_dictionary', newEmojiDictionary);
-                                updateDisplayEmoji(false);
+                                if (toggleEmojiPopup !== undefined) toggleEmojiPopup(-1);
                                 document.getElementById('overlay2').style.display = 'none';
                             }
                         }}
@@ -154,7 +154,7 @@ const EmojiSelector = ({ updateDisplayEmoji, displayEmoji,
     return (
         <div 
             className={`${styles.emojis} 
-                ${displayEmoji ? styles.open : styles.closed}`} 
+                ${emojiPopup ? styles.open : styles.closed}`} 
             ref={wrapperRef}>
             <div className={styles.top}>
                 <div className={styles.wrapper}>
@@ -173,7 +173,7 @@ const EmojiSelector = ({ updateDisplayEmoji, displayEmoji,
                             const newPages = [{ ...allPages, ...newPage }, active];
                             changePages(newPages);
                             saveItem('pages', newPages);
-                            updateDisplayEmoji(false);
+                            if (toggleEmojiPopup !== undefined) toggleEmojiPopup(-1);
                         }}>
                         <Shuffle/>
                     </div>

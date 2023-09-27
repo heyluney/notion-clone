@@ -9,10 +9,9 @@ import { CommentContext } from '../../App';
 import AddComment from './AddComment';
 import EditComment from './EditComment';
 
+import EmojiSelector from '../popups/EmojiSelector';
 import Popup from '../../components/popups/Popup';
-import { MdOutlineEmojiEmotions as AddEmoji } from 'react-icons/md';
 import { AiFillEdit as Edit, AiFillDelete as Delete } from 'react-icons/ai';
-import { FaPlus } from 'react-icons/fa';
 import { computeEmoji } from '../../utils/compute_emojis';
 import Icon
  from '../popups/Icon';
@@ -26,6 +25,8 @@ const Comments = () => {
     const [currentComment, updateComment] = useState("Add a comment...");
 
     const [popup, togglePopup] = useState(-1);
+    const [emojiPopup, toggleEmojiPopup] = useState(-1);
+
     return (
             <div className={styles.comments}>
                 {Object.keys(comments).length == 0 ? "" : Object.entries(comments).map(([idx, comment]) =>
@@ -79,13 +80,19 @@ const Comments = () => {
                                     {computeEmoji(emoji)} 1
                                     </div>)
                                 }
-                            <div className={styles.add_emoji}>
+                            <div className={styles.add_emoji} 
+                                onClick={() => {
+                                    toggleEmojiPopup(idx);
+                                    document.getElementById('overlay2').style.display = "block";
+                                }}>
                                 <Icon icon={"1F6A7"} 
-                                relatedToComments={true} currentCommentIdx={idx}/>
+                                idx={idx}
+                                relatedToComments={true} 
+                                emojiPopup={emojiPopup} 
+                                toggleEmojiPopup={toggleEmojiPopup}
+                                />
                             </div>
-
                         </div>
-                      
                         </div>
                     </div>
                 )}
@@ -95,10 +102,9 @@ const Comments = () => {
                     updateComment={updateComment} />
 
                 
-                <Popup 
-                                            popup={popup} 
-                                            togglePopup={togglePopup}
-                                            idx={popup} />
+                <Popup idx={popup}
+                    popup={popup} 
+                    togglePopup={togglePopup} />
             </div>
     )
 }
