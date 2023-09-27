@@ -82,16 +82,14 @@ const App = () => {
   }
 
   const [allPages, active] = pages;
-  const [_, name, ___, hex, ____] = allPages[active];
-  link.href = faviconTemplate(hex);
+  const [_, name, ___, icon, ____] = allPages[active];
+  link.href = faviconTemplate(icon);
 
-  // only one popup can exist
   return (
-    
     <PageContext.Provider value={{ 
         pages, 
         changePages, 
-        icon: hex, 
+        icon, 
         name }}>
       <CommentContext.Provider value={{ comments, changeComments }}>
         <PopupContext.Provider value={{ popup, updatePopup }}>

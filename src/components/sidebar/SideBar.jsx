@@ -18,7 +18,9 @@ const SideBar = () =>{
                 icon={<img className={styles.profile} src={clark}/>} 
                 name="Clarkie ButtButt's Notion"/>
             
-            {Object.values(allPages).sort((a,b) => a[0] - b[0]).map(([idx, name, path, icon, Component]) => (
+            {Object.values(allPages)
+                .sort((a,b) => a[0] - b[0])
+                .map(([idx, name, path, icon, Component]) => (
                         <SideBarDetailItem
                             key={name}
                             currentPage={[idx, name, path, icon, Component]}

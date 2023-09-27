@@ -18,23 +18,6 @@
     font-weight: 700;
 }
 
-.emoji {
-    margin: 5px;
-    display: flex;
-    box-sizing: border-box;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    font-size: 80px;
-}
-
-
-.emoji:hover {
-    cursor: pointer;
-    background: rgb(241, 241, 240, 1);
-    border-radius: 4px;
-}
-
 .textarea {
     resize: none;
 }

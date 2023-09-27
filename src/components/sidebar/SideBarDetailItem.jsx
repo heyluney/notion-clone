@@ -12,9 +12,11 @@ const SideBarDetailItem = ({currentPage}) => {
     const [emojiPopup, toggleEmojiPopup] = useState(-1);
 
     const { pages, changePages } = useContext(PageContext);
-    const [allPages, _] = pages;
+    const [allPages, active] = pages;
 
+    console.log('pages', pages);
     const [idx, name, path, icon, Component] = currentPage;
+ 
     return (
         <div className={styles.left}>
             <Icon icon={icon}
@@ -22,7 +24,9 @@ const SideBarDetailItem = ({currentPage}) => {
             relatedToComments={false} 
             emojiPopup={emojiPopup} 
             toggleEmojiPopup={toggleEmojiPopup}/>
-            <Link onClick={() => changePages([{...allPages}, name])}>
+            <Link to={allPages[name][2]} onClick={
+                () => changePages([{...allPages}, name])
+                }>
                 {name}
             </Link>
         </div>

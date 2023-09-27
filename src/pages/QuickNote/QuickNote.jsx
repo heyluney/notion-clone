@@ -19,13 +19,11 @@ const QuickNote = () => {
     return (
         <div className={styles.quicknote}>
             <div className={styles.title}>
-                <div className={styles.emoji}>
-                    <Icon icon={icon} 
-                         relatedToComments={false} 
-                         emojiPopup={emojiPopup} 
-                         toggleEmojiPopup={toggleEmojiPopup}
-                    />
-                </div>
+                <Icon icon={icon} 
+                        relatedToComments={false} 
+                        emojiPopup={emojiPopup} 
+                        toggleEmojiPopup={toggleEmojiPopup}
+                />
                 <Title />
             </div>
             <Comments />
