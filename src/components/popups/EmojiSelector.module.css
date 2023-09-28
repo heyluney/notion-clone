@@ -25,7 +25,6 @@
 .emojis.closed {
     opacity: 0;
     transition: 500ms;
-    transform: translateY(-100vh);
 }
 
 
@@ -106,6 +105,7 @@ is first or last in the row, respectively. */
     max-width: fit-content;
     display: inline-block;
     word-wrap: break-word;
+    line-height: 15px;
 }
 
 

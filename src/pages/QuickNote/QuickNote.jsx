@@ -20,6 +20,7 @@ const QuickNote = () => {
         <div className={styles.quicknote}>
             <div className={styles.title}>
                 <Icon icon={icon} 
+                        idx={-1}
                         relatedToComments={false} 
                         emojiPopup={emojiPopup} 
                         toggleEmojiPopup={toggleEmojiPopup}

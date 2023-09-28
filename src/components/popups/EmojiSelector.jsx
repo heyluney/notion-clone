@@ -33,8 +33,7 @@ const EmojiSelector = ({ idx, relatedToComments, emojiPopup, toggleEmojiPopup })
 
     // Lists which emoji is currently being hovered.
     const [hoveredEmoji, changeHoveredEmoji] = useState([/*isRecent?*/false, /*emoji name*/false]);
-    console.log('hoveredEmoji', hoveredEmoji);
-    console.log('changeHoveredEmoji', changeHoveredEmoji)
+
     // Emoji being stored, and the three factors which update visual configuration.
     const [emojiDictionary, changeEmojiDictionary] = useState(getItem('emoji_dictionary'));
     const [emojiLength, changeEmojiLength] = useState(100);
@@ -82,6 +81,7 @@ const EmojiSelector = ({ idx, relatedToComments, emojiPopup, toggleEmojiPopup })
                                 saveItem('quicknote-comments', newComments);
                                 document.getElementById('overlay2').style.display = 'none';
                                 toggleEmojiPopup(-1);
+                                console.log('emoji popup?', emojiPopup)
                             } else {
                             const newPage = {
                                 [active]:
@@ -100,7 +100,7 @@ const EmojiSelector = ({ idx, relatedToComments, emojiPopup, toggleEmojiPopup })
                                 };
                                 changeEmojiDictionary(newEmojiDictionary);
                                 saveItem('emoji_dictionary', newEmojiDictionary);
-                                if (toggleEmojiPopup !== undefined) toggleEmojiPopup(-1);
+                                toggleEmojiPopup(-1);
                                 document.getElementById('overlay2').style.display = 'none';
                             }
                         }}

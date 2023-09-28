@@ -62,6 +62,7 @@ const TaskList = () => {
                 <div className={styles.emoji}
                 >
                     <Icon icon={icon}
+                        idx={-1}
                         relatedToComments={false} 
                         emojiPopup={emojiPopup} 
                         toggleEmojiPopup={toggleEmojiPopup}

@@ -7,24 +7,19 @@ import EmojiSelector from '../../components/popups/EmojiSelector';
 const Icon = ({icon, idx, relatedToComments, emojiPopup, toggleEmojiPopup}) => {
     const Icon = icon;
     const [isHovered, updateHover] = useState(false);
-    console.log('idx', idx);
+    console.log("enmojiPopup state??", emojiPopup)
     return (
         <div 
             className={`${styles.main} ${isHovered ? styles.active : null}`}
             onMouseEnter={() => updateHover(!isHovered)}
             onMouseLeave={() => updateHover(!isHovered)}
             onClick={() => {
-                // if (idx === -1 || idx === undefined) {
-                //     relatedToComments ? toggleEmojiPopup(idx) : toggleEmojiPopup(1);
-                // } else {
-                //     toggleEmojiPopup(-1);
-                // }
-                document.getElementById('overlay2').style.display = "block";
-
-                if (relatedToComments) {
-                    toggleEmojiPopup(idx);
+                if (emojiPopup === -1) {
+                    document.getElementById('overlay2').style.display = "block";
+                    relatedToComments ? toggleEmojiPopup(idx) : toggleEmojiPopup(1);
                 } else {
-                    toggleEmojiPopup(1);
+                    document.getElementById('overlay2').style.display = "none";
+                    toggleEmojiPopup(-1);
                 }
             }}
             >

@@ -18,7 +18,7 @@ const SideBarDetailItem = ({currentPage}) => {
     return (
         <div className={styles.left}>
             <Icon icon={icon}
-            
+            idx={-1}
             relatedToComments={false} 
             emojiPopup={emojiPopup} 
             toggleEmojiPopup={toggleEmojiPopup}/>
