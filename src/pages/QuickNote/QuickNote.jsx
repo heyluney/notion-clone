@@ -37,7 +37,7 @@ const QuickNote = () => {
                         localStorage.setItem('quicknote', e.target.value);
                     }}/>
             </div>
-            <div>
+            <div className={styles.list}>
                 TODO LIST!
                 TODO LIST!
                 TODO LIST!

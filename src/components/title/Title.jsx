@@ -6,8 +6,6 @@ import { PageContext } from '../../App';
 const Title = () => {
     const { pages, changePages, name } = useContext(PageContext);
     const [allPages, active] = pages;
-
-    console.log('IN TITLE', 'name', name, 'active', active)
     const [isUpdatingTitle, updatingTitle] = useState(false);
     return (
         <textarea

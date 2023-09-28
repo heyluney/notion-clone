@@ -10,7 +10,6 @@ import map from '../../utils/string_to_component_map';
 const Main = () => {
     const { pages } = useContext(PageContext);
     const [allPages, active] = pages;
-    console.log('activepage', active);
     return (
         <div className={styles.main}>
             <Banner currentPage={allPages[active]} />

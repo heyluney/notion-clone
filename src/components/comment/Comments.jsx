@@ -9,7 +9,6 @@ import { CommentContext } from '../../App';
 import AddComment from './AddComment';
 import EditComment from './EditComment';
 
-import EmojiSelector from '../popups/EmojiSelector';
 import Popup from '../../components/popups/Popup';
 import { AiFillEdit as Edit, AiFillDelete as Delete } from 'react-icons/ai';
 import { computeEmoji } from '../../utils/compute_emojis';
@@ -44,8 +43,7 @@ const Comments = () => {
                                     <div className={styles.author}>Helen Yu</div>
                                     <div className={styles.date}>{`${getTimeString(comment.timestamp)}${comment.edited ? " (edited)" : ""}`}</div>
                                 </div>
-                                {
-                                    idx == !commentBeingMousedOver ?
+                                {idx == !commentBeingMousedOver ?
                                         null :
                                         <div className={styles.buttons}>
                                             <button className={styles.button}
@@ -61,8 +59,7 @@ const Comments = () => {
                                             }}>
                                                 <Delete /> Delete Comment
                                             </button>
-                                        </div>
-                                }
+                                        </div>}
                             </div>
 
                             <EditComment
@@ -82,14 +79,14 @@ const Comments = () => {
                                 }
                             <div className={styles.add_emoji} 
                                 onClick={() => {
-                                    toggleEmojiPopup(idx);
-                                    document.getElementById('overlay2').style.display = "block";
+                                    // toggleEmojiPopup(idx);
+                                    // document.getElementById('overlay2').style.display = "block";
                                 }}>
                                 <Icon icon={"1F6A7"} 
-                                idx={idx}
-                                relatedToComments={true} 
-                                emojiPopup={emojiPopup} 
-                                toggleEmojiPopup={toggleEmojiPopup}
+                                    idx={idx}
+                                    relatedToComments={true} 
+                                    emojiPopup={emojiPopup} 
+                                    toggleEmojiPopup={toggleEmojiPopup}
                                 />
                             </div>
                         </div>

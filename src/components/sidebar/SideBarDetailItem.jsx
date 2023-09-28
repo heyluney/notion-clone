@@ -13,8 +13,6 @@ const SideBarDetailItem = ({currentPage}) => {
 
     const { pages, changePages } = useContext(PageContext);
     const [allPages, active] = pages;
-
-    console.log('pages', pages);
     const [idx, name, path, icon, Component] = currentPage;
  
     return (

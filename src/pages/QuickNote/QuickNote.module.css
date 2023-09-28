@@ -21,3 +21,7 @@
 .textarea {
     resize: none;
 }
+
+.list {
+    padding-bottom: 300px;
+}

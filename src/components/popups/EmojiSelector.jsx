@@ -33,7 +33,8 @@ const EmojiSelector = ({ idx, relatedToComments, emojiPopup, toggleEmojiPopup })
 
     // Lists which emoji is currently being hovered.
     const [hoveredEmoji, changeHoveredEmoji] = useState([/*isRecent?*/false, /*emoji name*/false]);
-
+    console.log('hoveredEmoji', hoveredEmoji);
+    console.log('changeHoveredEmoji', changeHoveredEmoji)
     // Emoji being stored, and the three factors which update visual configuration.
     const [emojiDictionary, changeEmojiDictionary] = useState(getItem('emoji_dictionary'));
     const [emojiLength, changeEmojiLength] = useState(100);
