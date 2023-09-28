@@ -26,7 +26,6 @@ const Comments = () => {
 
     const [popup, togglePopup] = useState(-1);
     const [emojiPopup, toggleEmojiPopup] = useState(-1);
-    console.log('emoji popup from comments', emojiPopup);
     // Need idx of comment and idx of emoji in order to toggle one description at a time.
     const [descriptor, toggleDescriptor] = useState("-1_-1");
 

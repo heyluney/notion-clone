@@ -7,7 +7,6 @@ import EmojiSelector from '../../components/popups/EmojiSelector';
 const Icon = ({icon, idx, relatedToComments, emojiPopup, toggleEmojiPopup}) => {
     const Icon = icon;
     const [isHovered, updateHover] = useState(false);
-    console.log("enmojiPopup state??", emojiPopup)
     return (
         <div 
             className={`${styles.main} ${isHovered ? styles.active : null}`}

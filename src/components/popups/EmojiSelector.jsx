@@ -70,9 +70,9 @@ const EmojiSelector = ({ idx, relatedToComments, emojiPopup, toggleEmojiPopup })
                                     ...{
                                         [idx]:
                                         {
-                                            timestamp: JSON.stringify(Date.now()),
+                                            timestamp: comments[idx].timestamp,
                                             comment: comments[idx].comment,
-                                            edited: true,
+                                            edited: false,
                                             emojis: {...comments[idx].emojis, ...newEmojiPair }
                                         }
                                     }
@@ -81,7 +81,6 @@ const EmojiSelector = ({ idx, relatedToComments, emojiPopup, toggleEmojiPopup })
                                 saveItem('quicknote-comments', newComments);
                                 document.getElementById('overlay2').style.display = 'none';
                                 toggleEmojiPopup(-1);
-                                console.log('emoji popup?', emojiPopup)
                             } else {
                             const newPage = {
                                 [active]:
