@@ -21,23 +21,12 @@
     flex-direction: horizontal;
 }
 
-.inactive {
-    background-color: rgba(251, 251, 250, 1);
-    color: rgba(124, 123, 117, 1);
-}
-
-.hover {
+.left:hover {
     background-color: rgb(234, 234, 233);
     color: rgba(55, 53, 47, 1);
     cursor: pointer;
 }
 
-.active {
-    background-color: rgb(241, 241, 240, 1);
-    color: rgba(55, 53, 47, 1);
-    cursor: pointer;
-}
-
-.hidden {
-    display: none;
+.link {
+    text-decoration: none;
 }

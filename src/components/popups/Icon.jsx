@@ -16,9 +16,11 @@ const Icon = ({icon, idx, relatedToComments, emojiPopup, toggleEmojiPopup}) => {
                 if (emojiPopup === -1) {
                     document.getElementById('overlay2').style.display = "block";
                     relatedToComments ? toggleEmojiPopup(idx) : toggleEmojiPopup(1);
+                    // updateHover(!isHovered);
                 } else {
                     document.getElementById('overlay2').style.display = "none";
                     toggleEmojiPopup(-1);
+                    // updateHover(!isHovered);
                 }
             }}
             >

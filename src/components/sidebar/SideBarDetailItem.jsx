@@ -22,7 +22,9 @@ const SideBarDetailItem = ({currentPage}) => {
             relatedToComments={false} 
             emojiPopup={emojiPopup} 
             toggleEmojiPopup={toggleEmojiPopup}/>
-            <Link to={allPages[name][2]} onClick={
+            <Link to={allPages[name][2]} 
+                className={styles.link}
+                onClick={
                 () => changePages([{...allPages}, name])
                 }>
                 {name}

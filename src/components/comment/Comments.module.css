@@ -70,7 +70,7 @@ img {
     font-weight: 500;
     color: rgba(154, 154, 151, 1);
 }
-
+/* 
 .emojis {
     display: flex;
     flex-direction: row;
@@ -118,4 +118,4 @@ img {
     max-width: fit-content;
     display: inline-block;
     word-wrap: break-word;
-}
+} */
