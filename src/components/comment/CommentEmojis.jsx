@@ -10,6 +10,7 @@ import Icon
 
 
 const CommentEmojis = ({idx, comment}) => {
+    const plusIcon = "2795";
     const { comments, changeComments } = useContext(CommentContext);
 
     const [emojiPopup, toggleEmojiPopup] = useState(-1);
@@ -39,7 +40,7 @@ const CommentEmojis = ({idx, comment}) => {
                     </div>)
             }
             <div className={styles.add_emoji}>
-                <Icon icon={"1F6A7"}
+                <Icon icon={plusIcon}
                     idx={idx}
                     relatedToComments={true}
                     emojiPopup={emojiPopup}

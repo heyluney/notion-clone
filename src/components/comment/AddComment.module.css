@@ -6,7 +6,8 @@
 
 .new > textarea:hover {
     cursor: pointer;
-    background: #eeeeee;
+    /* background: #eeeeee; */
+    background: red;
 }
 
 .content {

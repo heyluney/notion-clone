@@ -7,6 +7,9 @@ import EmojiSelector from '../../components/popups/EmojiSelector';
 const Icon = ({icon, idx, relatedToComments, emojiPopup, toggleEmojiPopup}) => {
     const Icon = icon;
     const [isHovered, updateHover] = useState(false);
+
+    const emojiSelectorOpen = relatedToComments ? idx === emojiPopup : 
+        emojiPopup !== -1;
     return (
         <div 
             className={`${styles.main} ${isHovered ? styles.active : null}`}
@@ -16,32 +19,21 @@ const Icon = ({icon, idx, relatedToComments, emojiPopup, toggleEmojiPopup}) => {
                 if (emojiPopup === -1) {
                     document.getElementById('overlay2').style.display = "block";
                     relatedToComments ? toggleEmojiPopup(idx) : toggleEmojiPopup(1);
-                    // updateHover(!isHovered);
                 } else {
                     document.getElementById('overlay2').style.display = "none";
                     toggleEmojiPopup(-1);
-                    // updateHover(!isHovered);
                 }
             }}
             >
             {typeof icon === "string" ? computeEmoji(icon) : <Icon />}
 
-            {relatedToComments ? (
-                idx === emojiPopup && <EmojiSelector 
+            {emojiSelectorOpen && <EmojiSelector 
                     idx={idx}
                     relatedToComments={relatedToComments}
                     emojiPopup={emojiPopup}
                     toggleEmojiPopup={toggleEmojiPopup}                     
                     />
-            ) : (
-                emojiPopup !== -1 && <EmojiSelector 
-                idx={idx}
-                relatedToComments={relatedToComments}
-                emojiPopup={emojiPopup}
-                toggleEmojiPopup={toggleEmojiPopup}                     
-                />
-            )}
-            
+            }
         </div>
     )
 }

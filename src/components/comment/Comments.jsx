@@ -20,7 +20,7 @@ const Comments = () => {
 
     const [commentBeingMousedOver, changeMouseOver] = useState(-1);
 
-    const [commentBeingEdited, changeEdit] = useState(-1);
+    const [commentBeingEdited, changeCommentBeingEdited] = useState(-1);
     const [currentComment, updateComment] = useState("Add a comment...");
 
     const [popup, togglePopup] = useState(-1);
@@ -48,19 +48,18 @@ const Comments = () => {
                         <EditComment
                             idx={idx}
                             comment={comment.comment}
-                            readOnly={!(idx == commentBeingEdited)}
-                            changeEdit={changeEdit}
+                            commentBeingEdited={commentBeingEdited}
+                            changeCommentBeingEdited={changeCommentBeingEdited}
                             changeMouseOver={changeMouseOver} />
 
                         <CommentEmojis idx={idx} comment={comment}/>
                     </div>
 
-                    {idx == !commentBeingMousedOver ?
-                                null :
+                    {idx === commentBeingMousedOver ?
                                 <div className={styles.buttons}>
                                     <button className={styles.button}
                                         onClick={() => {
-                                            changeEdit(idx);
+                                            changeCommentBeingEdited(idx);
                                         }}>
                                         <Edit /> Edit Comment
                                     </button>
@@ -71,7 +70,7 @@ const Comments = () => {
                                         }}>
                                         <Delete /> Delete Comment
                                     </button>
-                                </div>}
+                                </div> : null}
                 </div>
             )}
             <AddComment

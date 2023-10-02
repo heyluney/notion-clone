@@ -1,4 +1,8 @@
 .textarea {
     font-weight: 300;
-    /* line-height: 10px; */
+    height: 20px;
+}
+
+.active {
+    height: 50px;
 }

@@ -38,8 +38,9 @@ const AddComment = ({ currentComment, updateComment }) => {
                     updateComment("");
                 }
             }}
-        ><div className={styles.content}>
-        </div></textarea>
+        >
+            <div className={styles.content}></div>
+        </textarea>
         </div>
     )
 }

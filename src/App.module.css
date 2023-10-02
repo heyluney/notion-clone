@@ -16,4 +16,6 @@ textarea, textarea:focus {
   width: 100%;
   cursor: pointer;
   font-family: 'Roboto', sans-serif;
+  resize: none;
+  /* background: red; */
 }

@@ -17,9 +17,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-textarea {
-  resize: none;
-}
+
 
 #overlay {
   position: fixed; /* Sit on top of the page content */
