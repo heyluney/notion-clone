@@ -168,7 +168,7 @@ const EmojiSelector = ({ idx, relatedToComments, emojiPopup, toggleEmojiPopup })
                             const {description, hexcode} = getRandomEmoji(emojiDictionary);
                             const newPage = {
                                 [active]:
-                                    allPages[active].map((x, idx) => idx == 2 ? hexcode : x)
+                                    allPages[active].map((x, idx) => idx == 3 ? hexcode : x)
                             };
                             const newPages = [{ ...allPages, ...newPage }, active];
                             changePages(newPages);
