@@ -12,7 +12,7 @@ const Popup = ({ popup, togglePopup, idx }) => {
     const { comments, changeComments } = useContext(CommentContext);
 
     const wrapperRef = useRef();
-    useOutsideAlerter(wrapperRef, togglePopup);
+    useOutsideAlerter(wrapperRef, togglePopup, 'overlay');
     return (
         <div
             className={`${styles.none} ${idx !== -1 && popup === idx ? styles.popup : null}`}

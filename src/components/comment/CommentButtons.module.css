@@ -1,0 +1,61 @@
+.buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.button {
+    display: flex;
+    outline: none;
+    border: none;
+    background: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    font-size: 20px;
+}
+.edit_inactive {
+    opacity: 0;
+    transition: 400ms;
+}
+.edit_active {
+    color: rgba(154, 154, 151, 1);
+    cursor: pointer;
+    transition: 400ms;
+    opacity: 1;
+}
+.edit_active:hover {
+    color: #00ab41;
+}
+.delete_inactive {
+    opacity: 0;
+    transition: 400ms;
+}
+.delete_active {
+    color: rgba(154, 154, 151, 1);
+    cursor: pointer;
+    transition: 400ms;
+    opacity: 1;
+}
+.delete_active:hover {
+   color: #ff5252;
+}
+
+.descriptor {
+    position: absolute;
+    transform: translateX(25px) translateY(-10px);
+    text-align: center;
+    background:	#343d46;
+    color: white;
+    border-radius: 4px;
+    margin-top: 3px;
+    width: 30px;
+    padding: 2px 4px 2px 4px;
+    font-size: 12px;
+    opacity: 85%;
+    width: 60px;
+    max-width: fit-content;
+    display: inline-block;
+    word-wrap: break-word;
+}

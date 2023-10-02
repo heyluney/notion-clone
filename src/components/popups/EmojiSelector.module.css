@@ -77,7 +77,8 @@ is first or last in the row, respectively. */
     align-items: end;
 }
 .actual {
-    padding: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
     box-sizing: border-box;
     transition: 0.3s;
     display: flex;
@@ -201,11 +202,12 @@ is first or last in the row, respectively. */
 }
 
 .search:focus {
-    outline: 0;
-}
-
-.search:active {
+    border: none;
     outline: none;
+    box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px inset;
+    background: rgba(242, 241, 238, 0.6);
+    cursor: text;
+    box-sizing: border-box;
 }
 
 .button:hover {

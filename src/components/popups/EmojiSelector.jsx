@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef, useCallback } from 'react';
+import { useState, useContext, useRef, useCallback } from 'react';
 
 import styles from './EmojiSelector.module.css';
 import { PageContext, CommentContext } from '../../App';
@@ -6,7 +6,7 @@ import { PageContext, CommentContext } from '../../App';
 import { chunkify } from '../../utils/chunkify';
 import { getItem, saveItem } from '../../utils/local_storage';
 
-import { useOutsideEmojiAlerter } from '../../hooks/OutsideAlert';
+import useOutsideAlerter from '../../hooks/OutsideAlert';
 import { computeEmoji, getTotalEmojiCount } from '../../utils/compute_emojis';
 
 import { flattenEmojiDictionary, 
@@ -29,7 +29,7 @@ const EmojiSelector = ({ idx, relatedToComments, emojiPopup, toggleEmojiPopup })
 
     // Determines whether the emoji popup window is open or closed.
     const wrapperRef = useRef();
-    useOutsideEmojiAlerter(wrapperRef, toggleEmojiPopup);
+    useOutsideAlerter(wrapperRef, toggleEmojiPopup, 'overlay2');
 
     // Lists which emoji is currently being hovered.
     const [hoveredEmoji, changeHoveredEmoji] = useState([/*isRecent?*/false, /*emoji name*/false]);
@@ -162,7 +162,8 @@ const EmojiSelector = ({ idx, relatedToComments, emojiPopup, toggleEmojiPopup })
                         ref={formRef}
                         onClick={e => e.stopPropagation()}
                         onKeyUp={e => changePrefix(e.target.value)}
-                        placeholder="Filter..." />
+                        placeholder="Filter..." 
+                        autoFocus={true} />
                     <div className={styles.button}
                         onClick={() => {
                             const {description, hexcode} = getRandomEmoji(emojiDictionary);
@@ -173,7 +174,8 @@ const EmojiSelector = ({ idx, relatedToComments, emojiPopup, toggleEmojiPopup })
                             const newPages = [{ ...allPages, ...newPage }, active];
                             changePages(newPages);
                             saveItem('pages', newPages);
-                            if (toggleEmojiPopup !== undefined) toggleEmojiPopup(-1);
+                            // console.log('toggleEmojiPopup', toggleEmojiPopup);
+                            toggleEmojiPopup(-1);
                         }}>
                         <Shuffle/>
                     </div>

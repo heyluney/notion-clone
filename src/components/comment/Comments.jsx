@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import styles from './Comments.module.css';
 
 import clark from '../../assets/clark_profile.jpg';
@@ -10,10 +10,9 @@ import AddComment from './AddComment';
 import EditComment from './EditComment';
 
 import Popup from '../../components/popups/Popup';
-import { AiFillEdit as Edit, AiFillDelete as Delete } from 'react-icons/ai';
 
 import CommentEmojis from './CommentEmojis';
-
+import CommentButtons from './CommentButtons';
 
 const Comments = () => {
     const { comments } = useContext(CommentContext);
@@ -25,16 +24,33 @@ const Comments = () => {
 
     const [popup, togglePopup] = useState(-1);
 
+    const commentRef = useRef();
+
+    const useOutsideCommentAlerter = (ref, toggleComment) => {
+        const handleClickOutside = event => {
+            if (ref.current && !ref.current.contains(event.target)) {
+                toggleComment(-1);
+            }
+        }
+    
+        useEffect(() => {
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+    useOutsideCommentAlerter(commentRef, changeCommentBeingEdited);
     return (
         <div className={styles.comments}>
             {Object.keys(comments).length == 0 ? "" : Object.entries(comments).map(([idx, comment]) =>
                 <div className={styles.comment}
+                    ref={commentRef}
                     key={idx}
                     onMouseEnter={() => {
                         if (commentBeingEdited == -1) changeMouseOver(idx);
                     }}
                 >
-
                     <img className={styles.pic} src={clark} />
                     <div className={styles.text}>
                         <div className={styles.header}>
@@ -54,23 +70,11 @@ const Comments = () => {
 
                         <CommentEmojis idx={idx} comment={comment}/>
                     </div>
-
-                    {idx === commentBeingMousedOver ?
-                                <div className={styles.buttons}>
-                                    <button className={styles.button}
-                                        onClick={() => {
-                                            changeCommentBeingEdited(idx);
-                                        }}>
-                                        <Edit /> Edit Comment
-                                    </button>
-                                    <button className={styles.button}
-                                        onClick={() => {
-                                            togglePopup(idx);
-                                            document.getElementById('overlay').style.display = "block";
-                                        }}>
-                                        <Delete /> Delete Comment
-                                    </button>
-                                </div> : null}
+                    <CommentButtons 
+                        idx={idx}
+                        commentBeingMousedOver={commentBeingMousedOver}
+                        changeCommentBeingEdited={changeCommentBeingEdited}
+                        togglePopup={togglePopup}/>
                 </div>
             )}
             <AddComment

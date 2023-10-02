@@ -49,11 +49,7 @@
 
 
  .delete {
-  background: white;
-  border: 1px solid rgb(235, 87, 87);
- }
-
- .delete:hover {
   background: rgba(254, 238, 238, 1);
+  border: 1px solid rgb(235, 87, 87);
  }
  

@@ -7,8 +7,14 @@ import { CommentContext } from '../../App';
 import { saveItem } from '../../utils/local_storage';
 
 
-const EditComment = ({ idx, commentBeingEdited, comment, changeCommentBeingEdited, changeMouseOver }) => {
+const EditComment = ({ idx, 
+                commentBeingEdited, 
+                comment, 
+                changeCommentBeingEdited, 
+                changeMouseOver }) => {
     const { comments, changeComments } = useContext(CommentContext);
+    // console.log('comment', comment) 
+    // need to save value of comment 
     return (
         <textarea readOnly={!commentBeingEdited}
                             defaultValue={comment}

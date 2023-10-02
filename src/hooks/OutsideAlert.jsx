@@ -1,30 +1,13 @@
 import { useEffect } from 'react';
+// if (event.target.className.includes('Icon')) return;
 
-
-export const useOutsideEmojiAlerter = (ref, toggleEmojiPopup) => {
-    const handleClickOutside = event => {
-        if (event.target.className.includes('Icon')) return;
-        if (ref.current && !ref.current.contains(event.target)) {
-            toggleEmojiPopup(-1);
-            document.getElementById('overlay2').style.display = "none";
-        }
-    }
-
-    useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [ref]);
-}
-
-
-const useOutsideAlerter = (ref, togglePopup) => {
+// If we detect a click outside the popup (event.target location is not contained)
+// in ref.current, which is the popup -> then we trigger the popup to be closed.
+export const useOutsideAlerter = (ref, togglePopup, overlay) => {
     const handleClickOutside = event => {
         if (ref.current && !ref.current.contains(event.target)) {
             togglePopup(-1);
-            document.getElementById('overlay').style.display = "none";
+            document.getElementById(overlay).style.display = "none";
         }
     }
 
@@ -35,6 +18,5 @@ const useOutsideAlerter = (ref, togglePopup) => {
         };
     }, [ref]);
 }
-
 
 export default useOutsideAlerter;
