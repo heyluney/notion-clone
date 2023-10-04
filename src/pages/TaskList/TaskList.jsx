@@ -9,10 +9,6 @@ import Title from '../../components/title/Title';
 import { PageContext } from '../../App';
 
 const TaskList = () => {
-    // In all other contexts except comments, the emoji selector isn't associated with a particuular numbered emoji
-    // so the emojiPopup (the toggle) is between -1 (not showing) and 1 (showing) rather than a list of numbers.
-    const [emojiPopup, toggleEmojiPopup] = useState(-1);
-
     const { icon } = useContext(PageContext);
 
     const onDrop = (_, category) => {
@@ -62,10 +58,7 @@ const TaskList = () => {
                 <div className={styles.emoji}
                 >
                     <Icon icon={icon}
-                        idx={-1}
-                        relatedToComments={false} 
-                        emojiPopup={emojiPopup} 
-                        toggleEmojiPopup={toggleEmojiPopup}
+                        component="Title"
                     />
                 </div>
                 <Title />

@@ -1,39 +1,32 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect, Fragment, useRef } from 'react';
 import styles from './Icon.module.css';
 import { computeEmoji } from '../../utils/compute_emojis';
 
+import { PopupContext } from '../../App';
+
 import EmojiSelector from '../../components/popups/EmojiSelector';
 
-const Icon = ({icon, idx, relatedToComments, emojiPopup, toggleEmojiPopup}) => {
+// "component" allows us to toggle EmojiSelector only under the appropriately clicked icon.
+const Icon = ({icon, component}) => {
     const Icon = icon;
     const [isHovered, updateHover] = useState(false);
 
-    const emojiSelectorOpen = relatedToComments ? idx === emojiPopup : 
-        emojiPopup !== -1;
+    const { popup, togglePopup } = useContext(PopupContext);
     return (
-        <div 
-            className={`${styles.main} ${isHovered ? styles.active : null}`}
-            onMouseEnter={() => updateHover(!isHovered)}
-            onMouseLeave={() => updateHover(!isHovered)}
-            onClick={() => {
-                if (emojiPopup === -1) {
-                    document.getElementById('overlay2').style.display = "block";
-                    relatedToComments ? toggleEmojiPopup(idx) : toggleEmojiPopup(1);
-                } else {
-                    document.getElementById('overlay2').style.display = "none";
-                    toggleEmojiPopup(-1);
-                }
-            }}
-            >
-            {typeof icon === "string" ? computeEmoji(icon) : <Icon />}
-
-            {emojiSelectorOpen && <EmojiSelector 
-                    idx={idx}
-                    relatedToComments={relatedToComments}
-                    emojiPopup={emojiPopup}
-                    toggleEmojiPopup={toggleEmojiPopup}                     
-                    />
-            }
+        <div className={styles.group}>
+            <div 
+                className={`${styles.main} ${isHovered ? styles.active : null}`}
+                onMouseEnter={() => updateHover(!isHovered)}
+                onMouseLeave={() => updateHover(!isHovered)}
+                onMouseUp={() => {
+                        togglePopup(popup === null ? component : null)
+                    }}
+                >
+                {typeof icon === "string" ? 
+                    computeEmoji(icon) : 
+                    <Icon />}
+            </div>
+            {popup === component && <EmojiSelector />}
         </div>
     )
 }

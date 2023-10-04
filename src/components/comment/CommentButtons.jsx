@@ -1,18 +1,21 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
+import { PopupContext } from '../../App';
 import { AiFillEdit as Edit, AiFillDelete as Delete } from 'react-icons/ai';
 
 import styles from './CommentButtons.module.css';
 
 const CommentEmojis = ({idx, 
         commentBeingMousedOver,
+        commentBeingEdited,
         changeCommentBeingEdited,
-        togglePopup
     }) => {
     const [descriptor, changeDescriptor] = useState([null, -1]);
+    const { togglePopup } = useContext(PopupContext);
 
     return (        
-    <div className={styles.buttons}>
+    commentBeingEdited !== idx
+        &&   <div className={styles.buttons}>
         <button 
             className={`${styles.button} 
                 ${commentBeingMousedOver === idx ?
@@ -44,16 +47,15 @@ const CommentEmojis = ({idx,
                 changeDescriptor([null, -1])
             }}
             onClick={() => {
-                togglePopup(idx);
-                document.getElementById('overlay')
-                    .style.display = "block";
+                togglePopup(`Delete ${idx}`);
             }}>
                 <Delete /> 
             {descriptor[0] === 'delete' && descriptor[1] === idx && <div className={styles.descriptor}>
                 Delete Comment
             </div>}
         </button>
-    </div>);
+    </div>
+    );
 }
 
 export default CommentEmojis;

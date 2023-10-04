@@ -3,8 +3,9 @@ import styles from './App.module.css';
 import SideBar from './components/sidebar/SideBar';
 import Main from './components/main/Main';
 
+import { generateFavicon } from './utils/generate_favicon';
 import populateEmojiDictionary from './components/popups/populateEmojiDictionary';
-
+import Popup from './components/popups/Popup';
 import {
   LuClock9 as Clock,
   LuImport as Import
@@ -64,15 +65,8 @@ const App = () => {
   if (getItem('pages') === null) saveItem('pages', defaultPages);
   const [pages, changePages] = useState(getItem('pages'));
 
-  const [popup, updatePopup] = useState(false);
-
-  function faviconTemplate(hexcode) {
-    return `data:image/svg+xml,
-    <svg xmlns=%22http://www.w3.org/2000/svg%22 
-    viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>
-      ${computeEmoji(hexcode)}
-    </text></svg>`
-  }
+  // Determines global state for whether a popup is currently open or not.
+  const [popup, togglePopup] = useState(null);
 
   const link = document.querySelector("link[rel~='icon']");
   if (!link) {
@@ -83,8 +77,9 @@ const App = () => {
 
   const [allPages, active] = pages;
   const [_, name, ___, icon, ____] = allPages[active];
-  link.href = faviconTemplate(icon);
+  link.href = generateFavicon(icon);
 
+  console.log('popup', popup)
   return (
     <PageContext.Provider value={{ 
         pages, 
@@ -92,12 +87,20 @@ const App = () => {
         icon, 
         name }}>
       <CommentContext.Provider value={{ comments, changeComments }}>
-        <PopupContext.Provider value={{ popup, updatePopup }}>
+        <PopupContext.Provider value={{ popup, togglePopup }}>
           <Fragment>
             <div className={`${styles.app}`}>
               <SideBar />
               <Main />
             </div>
+              {popup && <Popup />}
+              <div className={styles.emoji_overlay} 
+                  style={{display: popup === null  || popup.startsWith('Delete') ? 'none': 'block'}}>
+              </div>
+               <div className={styles.popup_overlay}
+                  style={{display: popup === null || !popup.startsWith('Delete') ? 'none' : 'block'}}
+                >
+              </div>
           </Fragment>
         </PopupContext.Provider>
       </CommentContext.Provider>

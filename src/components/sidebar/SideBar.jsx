@@ -23,6 +23,7 @@ const SideBar = () =>{
                 .map(([idx, name, path, icon, Component]) => (
                         <SideBarDetailItem
                             key={name}
+                            idx={idx}
                             currentPage={[idx, name, path, icon, Component]}
                         />
                     ))}

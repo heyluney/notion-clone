@@ -13,7 +13,6 @@ const CommentEmojis = ({idx, comment}) => {
     const plusIcon = "2795";
     const { comments, changeComments } = useContext(CommentContext);
 
-    const [emojiPopup, toggleEmojiPopup] = useState(-1);
     // Need idx of comment and idx of emoji in order to toggle one description at a time.
     const [descriptor, toggleDescriptor] = useState("-1_-1");
     return (
@@ -41,10 +40,7 @@ const CommentEmojis = ({idx, comment}) => {
             }
             <div className={styles.add_emoji}>
                 <Icon icon={plusIcon}
-                    idx={idx}
-                    relatedToComments={true}
-                    emojiPopup={emojiPopup}
-                    toggleEmojiPopup={toggleEmojiPopup}
+                    component={`${"Comment"}_${idx}`}
                 />
             </div>
         </div>

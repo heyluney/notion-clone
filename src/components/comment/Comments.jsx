@@ -9,8 +9,6 @@ import { CommentContext } from '../../App';
 import AddComment from './AddComment';
 import EditComment from './EditComment';
 
-import Popup from '../../components/popups/Popup';
-
 import CommentEmojis from './CommentEmojis';
 import CommentButtons from './CommentButtons';
 
@@ -22,30 +20,10 @@ const Comments = () => {
     const [commentBeingEdited, changeCommentBeingEdited] = useState(-1);
     const [currentComment, updateComment] = useState("Add a comment...");
 
-    const [popup, togglePopup] = useState(-1);
-
-    const commentRef = useRef();
-
-    const useOutsideCommentAlerter = (ref, toggleComment) => {
-        const handleClickOutside = event => {
-            if (ref.current && !ref.current.contains(event.target)) {
-                toggleComment(-1);
-            }
-        }
-    
-        useEffect(() => {
-            document.addEventListener("mousedown", handleClickOutside);
-            return () => {
-                document.removeEventListener("mousedown", handleClickOutside);
-            };
-        }, [ref]);
-    }
-    useOutsideCommentAlerter(commentRef, changeCommentBeingEdited);
     return (
         <div className={styles.comments}>
             {Object.keys(comments).length == 0 ? "" : Object.entries(comments).map(([idx, comment]) =>
                 <div className={styles.comment}
-                    ref={commentRef}
                     key={idx}
                     onMouseEnter={() => {
                         if (commentBeingEdited == -1) changeMouseOver(idx);
@@ -66,7 +44,8 @@ const Comments = () => {
                             comment={comment.comment}
                             commentBeingEdited={commentBeingEdited}
                             changeCommentBeingEdited={changeCommentBeingEdited}
-                            changeMouseOver={changeMouseOver} />
+                            changeMouseOver={changeMouseOver}
+                             />
 
                         <CommentEmojis idx={idx} comment={comment}/>
                     </div>
@@ -74,16 +53,12 @@ const Comments = () => {
                         idx={idx}
                         commentBeingMousedOver={commentBeingMousedOver}
                         changeCommentBeingEdited={changeCommentBeingEdited}
-                        togglePopup={togglePopup}/>
+                        commentBeingEdited={commentBeingEdited} />
                 </div>
             )}
             <AddComment
                 currentComment={currentComment}
                 updateComment={updateComment} />
-
-            <Popup idx={popup}
-                popup={popup}
-                togglePopup={togglePopup} />
         </div>
     )
 }

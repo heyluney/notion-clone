@@ -1,3 +1,12 @@
+.group {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+.group:hover {
+    cursor: pointer;
+}
+
 .main {
     padding: 4px;
     display: flex;
@@ -5,7 +14,9 @@
     position: relative;
     color: rgba(165, 164, 161, 1);
     min-width: 22px;
+    z-index: 2;
 }
+
 .active {
     background-color: rgb(239, 239, 239, 1);
     border-radius: 4px;

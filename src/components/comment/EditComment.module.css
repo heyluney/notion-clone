@@ -1,3 +1,6 @@
+.edit_comment {
+    display: flex;
+}
 .textarea {
     font-weight: 300;
     height: 20px;
@@ -5,4 +8,22 @@
 
 .active {
     height: 50px;
+}
+
+.button {
+    display: flex;
+    outline: none;
+    border: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    font-size: 20px;
+    color: rgba(154, 154, 151, 1);
+    background: none;
+}
+.button:hover {
+    color: rgb(133, 133, 132);
+    cursor: pointer;
 }

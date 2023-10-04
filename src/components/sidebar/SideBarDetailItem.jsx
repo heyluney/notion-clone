@@ -6,22 +6,16 @@ import { Link } from 'react-router-dom';
 import { PageContext } from '../../App';
 
 
-const SideBarDetailItem = ({currentPage}) => {
-    // In all other contexts except comments, the emoji selector isn't associated with a particuular numbered emoji
-    // so the emojiPopup (the toggle) is between -1 (not showing) and 1 (showing) rather than a list of numbers.
-    const [emojiPopup, toggleEmojiPopup] = useState(-1);
-
+const SideBarDetailItem = ({currentPage, idx}) => {
     const { pages, changePages } = useContext(PageContext);
     const [allPages, active] = pages;
-    const [idx, name, path, icon, Component] = currentPage;
+    const [_, name, path, icon, Component] = currentPage;
  
     return (
         <div className={styles.left}>
-            <Icon icon={icon}
-            idx={-1}
-            relatedToComments={false} 
-            emojiPopup={emojiPopup} 
-            toggleEmojiPopup={toggleEmojiPopup}/>
+            <Icon icon={icon} 
+                component={`${"SideBarDetailItem"}_${idx}`}
+            />
             <Link to={allPages[name][2]} 
                 className={styles.link}
                 onClick={

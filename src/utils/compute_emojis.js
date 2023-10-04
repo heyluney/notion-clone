@@ -4,9 +4,10 @@ export const computeEmoji = hexcode => {
 }
 
 export const getSkinToneEmoji = (emojiDict, skintone) => {
-    return emojiDict['People & Body']
+    const newSkinTone = emojiDict['People & Body']
     ['hand-fingers-open']
     [`raised hand${skintone === "none" ? "" : ": " + skintone}`];
+    return newSkinTone;
 }
 
 export const getTotalEmojiCount = emojiDict => {

@@ -1,13 +1,22 @@
-import { useEffect } from 'react';
-// if (event.target.className.includes('Icon')) return;
+import { useContext, useEffect } from 'react';
 
+import { PopupContext } from '../App';
 // If we detect a click outside the popup (event.target location is not contained)
 // in ref.current, which is the popup -> then we trigger the popup to be closed.
-export const useOutsideAlerter = (ref, togglePopup, overlay) => {
+export const useOutsideAlerter = ref => {
+    const { popup, togglePopup } = useContext(PopupContext);
     const handleClickOutside = event => {
         if (ref.current && !ref.current.contains(event.target)) {
-            togglePopup(-1);
-            document.getElementById(overlay).style.display = "none";
+            if(typeof(event.target.className) === 'object') return;
+
+            if (event.target && event.target.className.includes("Icon_main")) return;
+
+            if (ref.current.className.includes('Popup') && popup && !popup.startsWith('Delete')) {
+                // Allows the non-interference of the two popups (otherwise popup will interfere)
+                // with emoji selector popup.
+                return;
+            }
+            togglePopup(null);
         }
     }
 

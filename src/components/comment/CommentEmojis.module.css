@@ -4,12 +4,12 @@
     align-items: center;
 }
 .emoji {
-    border-radius: 8px;
+    border-radius: 10px;
     width: 37px;
     margin-left: 2px;
     margin-right: 2px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
     display: flex;
     justify-content: center;
     position: relative;
@@ -44,4 +44,5 @@
     max-width: fit-content;
     display: inline-block;
     word-wrap: break-word;
+    z-index: 2;
 }

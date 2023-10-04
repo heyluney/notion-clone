@@ -1,7 +1,7 @@
 import { useState, useContext, useRef, useCallback } from 'react';
 
 import styles from './EmojiSelector.module.css';
-import { PageContext, CommentContext } from '../../App';
+import { PageContext, CommentContext, PopupContext } from '../../App';
 
 import { chunkify } from '../../utils/chunkify';
 import { getItem, saveItem } from '../../utils/local_storage';
@@ -21,15 +21,17 @@ import { useOnScreen } from '../../hooks/OnscreenAlert';
 
 import { FaShuffle as Shuffle } from 'react-icons/fa6';
 
-const EmojiSelector = ({ idx, relatedToComments, emojiPopup, toggleEmojiPopup }) => {
+const EmojiSelector = ({ idx, relatedToComments }) => {
     // This allows synchronization of emoji update across multiple pages.
     const { pages, changePages } = useContext(PageContext);
     const { comments, changeComments } = useContext(CommentContext);
+    const { popup, togglePopup } = useContext(PopupContext);
+
     const [allPages, active] = pages;
 
     // Determines whether the emoji popup window is open or closed.
     const wrapperRef = useRef();
-    useOutsideAlerter(wrapperRef, toggleEmojiPopup, 'overlay2');
+    useOutsideAlerter(wrapperRef);
 
     // Lists which emoji is currently being hovered.
     const [hoveredEmoji, changeHoveredEmoji] = useState([/*isRecent?*/false, /*emoji name*/false]);
@@ -51,9 +53,7 @@ const EmojiSelector = ({ idx, relatedToComments, emojiPopup, toggleEmojiPopup })
         prefix, 
         emojiLength);
 
-    
     const createEmojiSelector = (emojiArray, perRow, isRecent) => {
-        
         return chunkify(emojiArray, perRow).map((emojis, rowIdx) =>
             <div key={rowIdx} className={styles.row}>
                 {emojis.map(([name, hexcode, isVisible], columnIdx) => (
@@ -79,8 +79,7 @@ const EmojiSelector = ({ idx, relatedToComments, emojiPopup, toggleEmojiPopup })
                                 }
                                 changeComments(newComments);
                                 saveItem('quicknote-comments', newComments);
-                                document.getElementById('overlay2').style.display = 'none';
-                                toggleEmojiPopup(-1);
+                                togglePopup(null);
                             } else {
                             const newPage = {
                                 [active]:
@@ -99,8 +98,7 @@ const EmojiSelector = ({ idx, relatedToComments, emojiPopup, toggleEmojiPopup })
                                 };
                                 changeEmojiDictionary(newEmojiDictionary);
                                 saveItem('emoji_dictionary', newEmojiDictionary);
-                                toggleEmojiPopup(-1);
-                                document.getElementById('overlay2').style.display = 'none';
+                                togglePopup(null);
                             }
                         }}
                         onMouseOver={() => {
@@ -154,7 +152,7 @@ const EmojiSelector = ({ idx, relatedToComments, emojiPopup, toggleEmojiPopup })
     return (
         <div 
             className={`${styles.emojis} 
-                ${emojiPopup ? styles.open : styles.closed}`} 
+                ${popup ? styles.open : styles.closed}`} 
             ref={wrapperRef}>
             <div className={styles.top}>
                 <div className={styles.wrapper}>
@@ -174,8 +172,7 @@ const EmojiSelector = ({ idx, relatedToComments, emojiPopup, toggleEmojiPopup })
                             const newPages = [{ ...allPages, ...newPage }, active];
                             changePages(newPages);
                             saveItem('pages', newPages);
-                            // console.log('toggleEmojiPopup', toggleEmojiPopup);
-                            toggleEmojiPopup(-1);
+                            togglePopup(null);
                         }}>
                         <Shuffle/>
                     </div>
