@@ -18,6 +18,7 @@ const QuickNote = () => {
             <div className={styles.title}>
                 <Icon icon={icon} 
                     component="Title"
+                    relatedToComments={false}
                 />
                 <Title />
             </div>

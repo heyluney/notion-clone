@@ -23,7 +23,8 @@ const Popup = () => {
                 className={styles.delete}
                 onClick={() => {
                     const newComments = {...comments};
-                    delete newComments[popup];
+                    const idx = parseInt(popup.split('_')[1]);
+                    delete newComments[idx];
                     changeComments(newComments);
                     saveItem('quicknote-comments', newComments);
                     togglePopup(null);

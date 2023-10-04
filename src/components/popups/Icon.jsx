@@ -7,7 +7,7 @@ import { PopupContext } from '../../App';
 import EmojiSelector from '../../components/popups/EmojiSelector';
 
 // "component" allows us to toggle EmojiSelector only under the appropriately clicked icon.
-const Icon = ({icon, component}) => {
+const Icon = ({icon, component, relatedToComments}) => {
     const Icon = icon;
     const [isHovered, updateHover] = useState(false);
 
@@ -26,7 +26,9 @@ const Icon = ({icon, component}) => {
                     computeEmoji(icon) : 
                     <Icon />}
             </div>
-            {popup === component && <EmojiSelector />}
+            {popup === component && <EmojiSelector 
+                component={component}
+                relatedToComments={relatedToComments}/>}
         </div>
     )
 }

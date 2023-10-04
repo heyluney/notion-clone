@@ -47,7 +47,7 @@ const CommentEmojis = ({idx,
                 changeDescriptor([null, -1])
             }}
             onClick={() => {
-                togglePopup(`Delete ${idx}`);
+                togglePopup(`Delete_${idx}`);
             }}>
                 <Delete /> 
             {descriptor[0] === 'delete' && descriptor[1] === idx && <div className={styles.descriptor}>

@@ -41,6 +41,7 @@ const CommentEmojis = ({idx, comment}) => {
             <div className={styles.add_emoji}>
                 <Icon icon={plusIcon}
                     component={`${"Comment"}_${idx}`}
+                    relatedToComments={true}
                 />
             </div>
         </div>

@@ -15,6 +15,7 @@ const SideBarDetailItem = ({currentPage, idx}) => {
         <div className={styles.left}>
             <Icon icon={icon} 
                 component={`${"SideBarDetailItem"}_${idx}`}
+                relatedToComments={false}
             />
             <Link to={allPages[name][2]} 
                 className={styles.link}

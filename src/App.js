@@ -78,8 +78,6 @@ const App = () => {
   const [allPages, active] = pages;
   const [_, name, ___, icon, ____] = allPages[active];
   link.href = generateFavicon(icon);
-
-  console.log('popup', popup)
   return (
     <PageContext.Provider value={{ 
         pages, 

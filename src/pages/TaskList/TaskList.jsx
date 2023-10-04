@@ -59,6 +59,7 @@ const TaskList = () => {
                 >
                     <Icon icon={icon}
                         component="Title"
+                        relatedToComments={false}
                     />
                 </div>
                 <Title />

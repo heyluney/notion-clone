@@ -13,7 +13,9 @@ const Banner = ({currentPage}) => {
     return (
         <div className={styles.banner}>
             <div className={styles.left}>
-                <Icon component="banner" icon={icon}/>
+                <Icon component="banner" 
+                icon={icon}
+                relatedToComments={false}/>
                 <div>{currentName}</div>
             </div>
             <div className={styles.right}>

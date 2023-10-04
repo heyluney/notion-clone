@@ -21,7 +21,7 @@ import { useOnScreen } from '../../hooks/OnscreenAlert';
 
 import { FaShuffle as Shuffle } from 'react-icons/fa6';
 
-const EmojiSelector = ({ idx, relatedToComments }) => {
+const EmojiSelector = ({ component, relatedToComments }) => {
     // This allows synchronization of emoji update across multiple pages.
     const { pages, changePages } = useContext(PageContext);
     const { comments, changeComments } = useContext(CommentContext);
@@ -64,6 +64,7 @@ const EmojiSelector = ({ idx, relatedToComments }) => {
                         onClick={(e) => {
                             e.preventDefault();
                             if (relatedToComments) {
+                                const idx = parseInt(component.split('_')[1]);
                                 const newEmojiPair = {[hexcode]: name};
                                 const newComments = {
                                     ...comments,
