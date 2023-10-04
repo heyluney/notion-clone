@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { saveItem } from '../../utils/local_storage';
 import { PageContext } from '../../App';
-
+import styles from './Title.module.css';
 
 const Title = () => {
     const { pages, changePages, name } = useContext(PageContext);
@@ -9,6 +9,7 @@ const Title = () => {
     const [isUpdatingTitle, updatingTitle] = useState(false);
     return (
         <textarea
+            className={styles.title}
             readOnly={!isUpdatingTitle}
             defaultValue={name}
             onClick={() => {

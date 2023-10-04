@@ -16,6 +16,7 @@
 .title > textarea {
     font-size: inherit;
     font-weight: 700;
+    cursor: text;
 }
 
 .textarea {
