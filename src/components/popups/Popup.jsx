@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 
 import useOutsideAlerter from '../../hooks/OutsideAlert';
 import styles from './Popup.module.css';
@@ -15,12 +15,17 @@ const Popup = () => {
 
     const wrapperRef = useRef();
     useOutsideAlerter(wrapperRef);
+
+    const [ cancelIsHovered, toggleCancelIsHovered ] = useState(false);
     return (
         <div className={`${styles.none} ${popup && popup.includes("Delete") && styles.popup}`}
             ref={wrapperRef}>
-            <div className={styles.question}>Would you like to delete this comment?</div>
+            <div className={styles.question}>
+                Would you like to delete this comment?
+            </div>
             <button
-                className={styles.delete}
+                className={`${styles.delete} 
+                    ${cancelIsHovered ? styles.active : null}`}
                 onClick={() => {
                     const newComments = {...comments};
                     const idx = parseInt(popup.split('_')[1]);
@@ -31,7 +36,9 @@ const Popup = () => {
                 }}>
                 Delete
             </button>
-            <button onClick={() => togglePopup(null)}>
+            <button onClick={() => togglePopup(null)}
+                onMouseEnter={() => toggleCancelIsHovered(!cancelIsHovered)}
+                onMouseLeave={() => toggleCancelIsHovered(!cancelIsHovered)}>
                 Cancel
             </button>
         </div>
