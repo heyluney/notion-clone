@@ -3,7 +3,7 @@ import { useContext, useEffect } from 'react';
 import { PopupContext } from '../App';
 // If we detect a click outside the popup (event.target location is not contained)
 // in ref.current, which is the popup -> then we trigger the popup to be closed.
-export const useOutsideAlerter = ref => {
+const useOutsideAlerter = ref => {
     const { popup, togglePopup } = useContext(PopupContext);
     const handleClickOutside = event => {
         if (ref.current && !ref.current.contains(event.target)) {

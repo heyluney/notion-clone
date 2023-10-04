@@ -31,9 +31,6 @@ const CommentEmojis = ({idx,
                 changeCommentBeingEdited(idx);
             }}>
             <Edit/> 
-            {descriptor[0] === 'edit' && descriptor[1] === idx && <div className={styles.descriptor}>
-                Edit Comment
-            </div>}
         </button>
         <button 
             className={`${styles.button} ${
@@ -50,9 +47,6 @@ const CommentEmojis = ({idx,
                 togglePopup(`Delete_${idx}`);
             }}>
                 <Delete /> 
-            {descriptor[0] === 'delete' && descriptor[1] === idx && <div className={styles.descriptor}>
-                Delete Comment
-            </div>}
         </button>
     </div>
     );

@@ -22,3 +22,15 @@
     border-radius: 4px;
     cursor: pointer;
 }
+
+.main_large {
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: rgba(165, 164, 161, 1);
+    font-size: 100px;
+    z-index: 2; 
+}

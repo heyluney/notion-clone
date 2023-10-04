@@ -3,10 +3,14 @@ import { useContext, useState, useRef, useEffect } from 'react';
 import styles from './EditComment.module.css'
 
 import { CommentContext } from '../../App';
+import useOutsideCommentAlerter from '../../hooks/OutsideCommentAlert'; 
+import resizableTextArea
+ from '../../hooks/ResizableTextArea';
 
 import { saveItem } from '../../utils/local_storage';
 import { MdCancel as Cancel } from 'react-icons/md'
 import { AiFillCheckCircle as Check } from 'react-icons/ai';
+
 const EditComment = ({ idx,
     commentBeingEdited,
     comment,
@@ -14,38 +18,38 @@ const EditComment = ({ idx,
     changeMouseOver }) => {
     const { comments, changeComments } = useContext(CommentContext);
 
-    const [currentComment, changeCurrentComment] = useState(comment);
+    console.log('fromEditComment', commentBeingEdited);
+    const bigCommentRef = useRef(null);
+    useOutsideCommentAlerter(bigCommentRef, changeCommentBeingEdited);
 
-    const commentRef = useRef();
+    const textareaRef = useRef(null);
+    const [currentComment, editCurrentComment] = useState(comment);
 
-    const useOutsideCommentAlerter = (ref, toggleComment) => {
-        const handleClickOutside = event => {
-            if (ref.current && !ref.current.contains(event.target)) {
-                toggleComment(-1);
-            }
-        }
 
+    const useAutosizeTextArea = (ref, value, commentBeingEdited) => {
         useEffect(() => {
-            document.addEventListener("mousedown", handleClickOutside);
-            return () => {
-                document.removeEventListener("mousedown", handleClickOutside);
-            };
-        }, [ref]);
+            if (ref.current) {
+                console.log('commentBeingEdited', commentBeingEdited)
+                ref.current.style.height = "0px";
+                ref.current.style.height = commentBeingEdited === idx ?  
+                    (ref.current.scrollHeight + 50) + "px" : ref.current.scrollHeight + "px";
+            }
+        }, [ref, value, commentBeingEdited]);
     }
-    useOutsideCommentAlerter(commentRef, changeCommentBeingEdited);
+    useAutosizeTextArea(textareaRef, currentComment, commentBeingEdited);
     return (
-        <div ref={commentRef} className={styles.edit_comment}>
+        <div ref={bigCommentRef} className={styles.edit_comment}>
             <textarea 
+            ref={textareaRef}
                 readOnly={!commentBeingEdited}
                 defaultValue={comment}
-                className={commentBeingEdited === idx ? styles.active : styles.textarea}
+                className={commentBeingEdited === idx ? 
+                    styles.active : styles.textarea}
                 onClick={() => {
-                    changeCommentBeingEdited(idx);
-                }}
-                onChange={(e) => {
-                    changeCurrentComment(e.target.value)
+                    changeCommentBeingEdited(idx)
                 }}
                 onKeyDown={(e) => {
+                    editCurrentComment(e.target.value);
                     if (e.key === 'Enter') {
                         const newComments = {
                             ...comments,
@@ -61,24 +65,16 @@ const EditComment = ({ idx,
                         changeComments(newComments);
                         saveItem('quicknote-comments', newComments);
                         changeMouseOver(-1);
-                        changeCommentBeingEdited(-1);
+                        // changeCommentBeingEdited(-1);
                     }
                 }} />
             {commentBeingEdited === idx &&
-                <button className={styles.button}
-                    onClick={
-                        (e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            console.log('CLICK DA BUTTON')
-                        }}>
+                <button className={styles.button}>
                     <Cancel />
                 </button>
             }
             {commentBeingEdited === idx &&
-                <button className={styles.button} onClick={() => {
-                    console.log('check clicked')
-                }}>
+                <button className={styles.button}>
                     <Check />
                 </button>}
         </div>

@@ -36,7 +36,6 @@ const Comments = () => {
                                 <div className={styles.author}>Helen Yu</div>
                                 <div className={styles.date}>{`${getTimeString(comment.timestamp)}${comment.edited ? " (edited)" : ""}`}</div>
                             </div>
-                            
                         </div>
 
                         <EditComment

@@ -1,6 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
 
-export const useOnScreen = categoryRefs => {
+// Allows the "hovered over" effect to be applied to the correct emoji category
+// when the category is scrolled to.
+const useOnScreen = categoryRefs => {
     const [isIntersecting, setIntersecting] = useState("")
 
     const observer =  useMemo(() => new IntersectionObserver(observerCallback, {}), [categoryRefs]);
@@ -31,3 +33,5 @@ export const useOnScreen = categoryRefs => {
   
     return isIntersecting;
   }
+
+  export default useOnScreen;

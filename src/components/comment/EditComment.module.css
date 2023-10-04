@@ -1,14 +1,21 @@
 .edit_comment {
     display: flex;
 }
+.active {
+    resize: none;
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 300;
+}
 .textarea {
     font-weight: 300;
-    height: 20px;
+    resize: none;
+    overflow: hidden;
+    font-size: 14px;
+
 }
 
-.active {
-    height: 50px;
-}
+
 
 .button {
     display: flex;

@@ -17,7 +17,7 @@ import { flattenEmojiDictionary,
     filterEmojiDictionaryBySkintone,
     getRandomEmoji
     } from '../../utils/compute_emojis';
-import { useOnScreen } from '../../hooks/OnscreenAlert';
+import useOnScreen from '../../hooks/OnscreenAlert';
 
 import { FaShuffle as Shuffle } from 'react-icons/fa6';
 

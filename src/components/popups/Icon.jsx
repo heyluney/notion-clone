@@ -7,7 +7,7 @@ import { PopupContext } from '../../App';
 import EmojiSelector from '../../components/popups/EmojiSelector';
 
 // "component" allows us to toggle EmojiSelector only under the appropriately clicked icon.
-const Icon = ({icon, component, relatedToComments}) => {
+const Icon = ({isLarge, icon, component, relatedToComments}) => {
     const Icon = icon;
     const [isHovered, updateHover] = useState(false);
 
@@ -15,7 +15,7 @@ const Icon = ({icon, component, relatedToComments}) => {
     return (
         <div className={styles.group}>
             <div 
-                className={`${styles.main} ${isHovered ? styles.active : null}`}
+                className={`${isLarge ? styles.main_large : styles.main} ${isHovered ? styles.active : null}`}
                 onMouseEnter={() => updateHover(!isHovered)}
                 onMouseLeave={() => updateHover(!isHovered)}
                 onMouseUp={() => {
