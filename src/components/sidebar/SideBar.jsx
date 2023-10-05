@@ -8,25 +8,24 @@ import { PageContext } from '../../App';
 
 import clark from '../../assets/clark_profile.jpg';
 
-
 const SideBar = () =>{
     const { pages } = useContext(PageContext);
-    const [allPages, active] = pages;
+
     return (
         <div className={`${styles.sidebar}`} >
             <ProfileItem 
                 icon={<img className={styles.profile} src={clark}/>} 
                 name="Clarkie ButtButt's Notion"/>
             
-            {Object.values(allPages)
-                .sort((a,b) => a[0] - b[0])
-                .map(([idx, name, path, icon, Component]) => (
-                        <SideBarDetailItem
+            {Object.values(pages)
+                        .sort((a,b) => a.idx - b.idx)
+                        .map(({name, path, icon}, idx) => 
+                        <SideBarDetailItem 
                             key={name}
                             idx={idx}
-                            currentPage={[idx, name, path, icon, Component]}
-                        />
-                    ))}
+                            name={name}
+                            icon={icon}
+                            path={path} />)} 
         </div>
     )
 }

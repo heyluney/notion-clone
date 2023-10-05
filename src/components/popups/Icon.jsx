@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, Fragment, useRef } from 'react';
+import { useState, useContext } from 'react';
 import styles from './Icon.module.css';
 import { computeEmoji } from '../../utils/compute_emojis';
 

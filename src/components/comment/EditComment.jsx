@@ -1,11 +1,11 @@
-import { useContext, useState, useRef, useEffect } from 'react';
+import { useContext, useState, useRef } from 'react';
 
 import styles from './EditComment.module.css'
 
 import { CommentContext } from '../../App';
 import useOutsideCommentAlerter from '../../hooks/OutsideCommentAlert'; 
-import resizableTextArea
- from '../../hooks/ResizableTextArea';
+import useAutosizeTextArea
+ from '../../hooks/AutosizeTextArea';
 
 import { saveItem } from '../../utils/local_storage';
 import { MdCancel as Cancel } from 'react-icons/md'
@@ -18,30 +18,18 @@ const EditComment = ({ idx,
     changeMouseOver }) => {
     const { comments, changeComments } = useContext(CommentContext);
 
-    console.log('fromEditComment', commentBeingEdited);
     const bigCommentRef = useRef(null);
     useOutsideCommentAlerter(bigCommentRef, changeCommentBeingEdited);
 
     const textareaRef = useRef(null);
     const [currentComment, editCurrentComment] = useState(comment);
 
-
-    const useAutosizeTextArea = (ref, value, commentBeingEdited) => {
-        useEffect(() => {
-            if (ref.current) {
-                console.log('commentBeingEdited', commentBeingEdited)
-                ref.current.style.height = "0px";
-                ref.current.style.height = commentBeingEdited === idx ?  
-                    (ref.current.scrollHeight + 50) + "px" : ref.current.scrollHeight + "px";
-            }
-        }, [ref, value, commentBeingEdited]);
-    }
-    useAutosizeTextArea(textareaRef, currentComment, commentBeingEdited);
+    useAutosizeTextArea(idx, textareaRef, currentComment, commentBeingEdited);
     return (
         <div ref={bigCommentRef} className={styles.edit_comment}>
             <textarea 
             ref={textareaRef}
-                readOnly={!commentBeingEdited}
+                readOnly={commentBeingEdited === -1}
                 defaultValue={comment}
                 className={commentBeingEdited === idx ? 
                     styles.active : styles.textarea}
@@ -58,14 +46,15 @@ const EditComment = ({ idx,
                                 {
                                     timestamp: JSON.stringify(Date.now()),
                                     comment: e.target.value,
-                                    edited: true
+                                    edited: true,
+                                    emojis: comments[idx].emojis
                                 }
                             }
                         }
                         changeComments(newComments);
                         saveItem('quicknote-comments', newComments);
                         changeMouseOver(-1);
-                        // changeCommentBeingEdited(-1);
+                        changeCommentBeingEdited(-1);
                     }
                 }} />
             {commentBeingEdited === idx &&

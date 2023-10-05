@@ -8,23 +8,19 @@ import { PageContext } from '../../App';
 import map from '../../utils/string_to_component_map';
 
 const Main = () => {
-    const { pages } = useContext(PageContext);
-    const [allPages, active] = pages;
+    const { currentPageName, pages } = useContext(PageContext);
     return (
         <div className={styles.main}>
-            <Banner currentPage={allPages[active]} />
+            <Banner currentPage={pages[currentPageName]} />
             <div className={styles.right}>
                 <Routes>
-                    {Object.entries(allPages).map(([key, [_, __, path, ___, component]]) => {
-                        const Component = map[component];
-                        return (
-                        <Route
-                            key={key}
-                            path={path}
-                            element={<Component />}
-                        />
-                        )
-                })}
+                    {Object.values(pages)
+                        .map(({name, component, path}) => {
+                            const Component = map[component];
+                            return <Route key={name}
+                                            path={path}
+                                            element={<Component/>} />
+                        })}
                 </Routes>
             </div>
         </div>

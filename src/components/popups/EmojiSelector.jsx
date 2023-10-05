@@ -23,11 +23,11 @@ import { FaShuffle as Shuffle } from 'react-icons/fa6';
 
 const EmojiSelector = ({ component, relatedToComments }) => {
     // This allows synchronization of emoji update across multiple pages.
-    const { pages, changePages } = useContext(PageContext);
+    const { pages, changePages, currentPageName } = useContext(PageContext);
+    const currentPage = pages[currentPageName];
+
     const { comments, changeComments } = useContext(CommentContext);
     const { popup, togglePopup } = useContext(PopupContext);
-
-    const [allPages, active] = pages;
 
     // Determines whether the emoji popup window is open or closed.
     const wrapperRef = useRef();
@@ -82,11 +82,10 @@ const EmojiSelector = ({ component, relatedToComments }) => {
                                 saveItem('quicknote-comments', newComments);
                                 togglePopup(null);
                             } else {
-                            const newPage = {
-                                [active]:
-                                    allPages[active].map((x, idx) => idx == 3 ? hexcode : x)
+                                const newPages = {...pages};
+                                newPages[currentPageName] = {
+                                    ...currentPage, icon: hexcode 
                                 };
-                                const newPages = [{ ...allPages, ...newPage }, active];
                                 changePages(newPages);
                                 saveItem('pages', newPages);
                             
@@ -150,6 +149,13 @@ const EmojiSelector = ({ component, relatedToComments }) => {
         }
     }, []);
 
+    const skintones = ["none", 
+    "light skin tone",
+    "medium-light skin tone", 
+    "medium skin tone",
+    "medium-dark skin tone",
+    "dark skin tone"];
+
     return (
         <div 
             className={`${styles.emojis} 
@@ -165,12 +171,11 @@ const EmojiSelector = ({ component, relatedToComments }) => {
                         autoFocus={true} />
                     <div className={styles.button}
                         onClick={() => {
-                            const {description, hexcode} = getRandomEmoji(emojiDictionary);
-                            const newPage = {
-                                [active]:
-                                    allPages[active].map((x, idx) => idx == 3 ? hexcode : x)
+                            const {_, hexcode} = getRandomEmoji(emojiDictionary);
+                            const newPages = {...pages};
+                            newPages[currentPageName] = {
+                                ...currentPage, icon: hexcode 
                             };
-                            const newPages = [{ ...allPages, ...newPage }, active];
                             changePages(newPages);
                             saveItem('pages', newPages);
                             togglePopup(null);
@@ -186,12 +191,7 @@ const EmojiSelector = ({ component, relatedToComments }) => {
                         </div>
                         {skintonePopup && 
                         <div className={styles.skintone_popup}>
-                            {["none", 
-                            "light skin tone",
-                            "medium-light skin tone", 
-                            "medium skin tone",
-                            "medium-dark skin tone",
-                            "dark skin tone"].map(skintone => 
+                            {skintones.map(skintone => 
                             <div key={skintone} onClick={() => {
                                 changeSkintone(skintone);
                                 saveItem('emoji_dictionary_skintone', skintone);

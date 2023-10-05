@@ -5,22 +5,21 @@ import Icon from '../popups/Icon';
 import { Link } from 'react-router-dom';
 import { PageContext } from '../../App';
 
-
-const SideBarDetailItem = ({currentPage, idx}) => {
-    const { pages, changePages } = useContext(PageContext);
-    const [allPages, active] = pages;
-    const [_, name, path, icon, Component] = currentPage;
- 
+// Index is necessary to trigger the correct emoji selector popup 
+// for the right page in the sidebar (otherwise multiple popups will be)
+// triggered.
+const SideBarDetailItem = ({idx, name, icon, path}) => {
+    const { changeCurrentPageName } = useContext(PageContext);
     return (
         <div className={styles.left}>
             <Icon icon={icon} 
                 component={`${"SideBarDetailItem"}_${idx}`}
                 relatedToComments={false}
             />
-            <Link to={allPages[name][2]} 
+            <Link to={path} 
                 className={styles.link}
                 onClick={
-                () => changePages([{...allPages}, name])
+                    () => changeCurrentPageName(name)
                 }>
                 {name}
             </Link>

@@ -6,14 +6,12 @@ import styles from './Title.module.css';
 import Icon from '../../components/popups/Icon';
 
 const Title = () => {
-    const {icon} = useContext(PageContext);
-
-    const { pages, changePages, name } = useContext(PageContext);
-    const [allPages, active] = pages;
+    const { pages, changePages, currentPageName, changeCurrentPageName } = useContext(PageContext);
+    const currentPage = pages[currentPageName];
     const [isUpdatingTitle, updatingTitle] = useState(false);
     return (
         <div className={styles.title}>
-            <Icon icon={icon}
+            <Icon icon={currentPage.icon}
                 isLarge={true}
                 component="Title"
                 relatedToComments={false}
@@ -21,21 +19,19 @@ const Title = () => {
             <textarea
                 className={styles.title}
                 readOnly={!isUpdatingTitle}
-                defaultValue={name}
+                defaultValue={currentPage.name}
                 onClick={() => {
                     updatingTitle(true);
                 }}
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
-                        const newPageTitle = e.target.value;
-                        const newPage = {
-                            [e.target.value]:
-                                allPages[active]
-                                    .map((x, idx) => idx == 1 ? newPageTitle : x)
-                        };
-                        const { [active]: value, ...allPagesWithOldRemoved } = allPages;
-                        const newPages = [{ ...allPagesWithOldRemoved, ...newPage }, newPageTitle];
+                        const newTitle = e.target.value;
+                        const newPages = {...pages};
+                        newPages[newTitle] = {...currentPage, name: newTitle};
+                        delete newPages[currentPageName];
                         changePages(newPages);
+                        changeCurrentPageName(e.target.value);
+                        saveItem('current_page_name', newTitle);
                         saveItem('pages', newPages);
                         updatingTitle(false);
                     }

@@ -9,8 +9,6 @@ import Title from '../../components/title/Title';
 import { PageContext } from '../../App';
 
 const TaskList = () => {
-    const { icon } = useContext(PageContext);
-
     const onDrop = (_, category) => {
         const newTodos = { ...todos };
         newTodos[draggedTask.category] =

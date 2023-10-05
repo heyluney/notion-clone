@@ -3,7 +3,7 @@ import styles from './App.module.css';
 import SideBar from './components/sidebar/SideBar';
 import Main from './components/main/Main';
 
-import { generateFavicon } from './utils/generate_favicon';
+import { generateFavicon, addFaviconToPage } from './utils/generate_favicon';
 import populateEmojiDictionary from './components/popups/populateEmojiDictionary';
 import Popup from './components/popups/Popup';
 import {
@@ -27,7 +27,6 @@ import {
 } from 'react-icons/bs';
 
 import { saveItem, getItem } from './utils/local_storage';
-import { computeEmoji } from './utils/compute_emojis';
 
 const App = () => {
   if (getItem('emoji_dictionary') === null) populateEmojiDictionary();
@@ -56,34 +55,36 @@ const App = () => {
   if (getItem('quicknote-comments') === null) saveItem('quicknote-comments', defaultComments);
   const [comments, changeComments] = useState(getItem('quicknote-comments'));
 
-  // used to be Earmark, Scissors
-  const defaultPages = [{
-    "Quick Note": [0, "Quick Note", "/quick_note", '1F32D', "QuickNote"],
-    "Task List": [1, "Task List", "/task_list", '1F32D', "TaskList"]
-  }, "Quick Note"];
-
+  // TODO(helen): Double check that icons also work to substitute traditional emojis.
+  const defaultPages = {
+    "Quick Note": {
+      idx: 0, 
+      name: "Quick Note", // Title of the page, must equal the key in defaultPages hash.
+      path: "/quick_note", 
+      icon: '1F32D', 
+      component: "QuickNote" // Stringified name of React component.
+    },
+    "Task List": {
+      idx: 1,
+      name: "Task List",
+      path: "/task_list",
+      icon: '1F32D',
+      component: "TaskList"
+    },
+  }
   if (getItem('pages') === null) saveItem('pages', defaultPages);
   const [pages, changePages] = useState(getItem('pages'));
 
+  const defaultCurrentPageName = "Task List";
+  if (getItem('current_page_name') === null) saveItem('current_page_name', defaultCurrentPageName);
+  const [currentPageName, changeCurrentPageName] = useState(getItem('current_page_name'));
+
   // Determines global state for whether a popup is currently open or not.
   const [popup, togglePopup] = useState(null);
-
-  const link = document.querySelector("link[rel~='icon']");
-  if (!link) {
-    link = document.createElement('link');
-    link.rel = 'icon';
-    document.head.appendChild(link);
-  }
-
-  const [allPages, active] = pages;
-  const [_, name, ___, icon, ____] = allPages[active];
-  link.href = generateFavicon(icon);
+  addFaviconToPage(pages[currentPageName].icon);
   return (
-    <PageContext.Provider value={{ 
-        pages, 
-        changePages, 
-        icon, 
-        name }}>
+    <PageContext.Provider value={{ currentPageName, changeCurrentPageName, 
+                                      pages, changePages }}>
       <CommentContext.Provider value={{ comments, changeComments }}>
         <PopupContext.Provider value={{ popup, togglePopup }}>
           <Fragment>

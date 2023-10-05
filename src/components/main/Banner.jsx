@@ -9,14 +9,14 @@ import {BiMessageDots as Message } from 'react-icons/bi';
 import {BsStar as Star} from 'react-icons/bs';
 
 const Banner = ({currentPage}) => {
-    const [idx, currentName, path, icon, Component] = currentPage;
+    const {name, icon} = currentPage;
     return (
         <div className={styles.banner}>
             <div className={styles.left}>
                 <Icon component="banner" 
                 icon={icon}
                 relatedToComments={false}/>
-                <div>{currentName}</div>
+                <div>{name}</div>
             </div>
             <div className={styles.right}>
                 <Message />
