@@ -46,3 +46,15 @@ textarea, textarea:focus {
   background-color: rgba(0,0,0,0.5); /* Black background with opacity */
   z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
 }
+
+.right {
+  background: green;
+  width: 0px;
+  transition: 2s;
+}
+
+.active_right {
+  background: red;
+  width: 400px;
+  transition: 2s;
+}

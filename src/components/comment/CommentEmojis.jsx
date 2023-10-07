@@ -1,20 +1,21 @@
 import { useState, useContext } from 'react';
 import styles from './CommentEmojis.module.css';
 
-import { CommentContext } from '../../App';
+import { PageContext } from '../../App';
 import { saveItem } from '../../utils/local_storage';
+import { computeEmoji } from '../../data/compute_emojis';
+import Icon from '../popups/Icon';
 
-import { computeEmoji } from '../../utils/compute_emojis';
-import Icon
-    from '../popups/Icon';
-
+import { removeEmoji } from '../../data/pages_helper_functions';
 
 const CommentEmojis = ({idx, comment}) => {
     const plusIcon = "2795";
-    const { comments, changeComments } = useContext(CommentContext);
-
-    // Need idx of comment and idx of emoji in order to toggle one description at a time.
+    const { pages, changePages, currentPageName } = useContext(PageContext);
+    
+    // Need idx of comment and idx of emoji in order 
+    // to toggle one description at a time.
     const [descriptor, toggleDescriptor] = useState("-1_-1");
+
     return (
         <div className={styles.emojis}>
             {comment.emojis && Object.entries(comment.emojis)
@@ -28,10 +29,10 @@ const CommentEmojis = ({idx, comment}) => {
                             toggleDescriptor("-1_-1")
                         }}
                         onClick={() => {
-                            const newComments = { ...comments };
-                            delete newComments[idx]['emojis'][emoji];
-                            changeComments(newComments);
-                            saveItem('quicknote-comments', newComments);
+                            const newPages = 
+                            removeEmoji(pages, "Quick Note", idx, emoji);
+                            changePages(newPages);
+                            saveItem('pages', newPages);
                         }}
                     >
                         {computeEmoji(emoji)} 1

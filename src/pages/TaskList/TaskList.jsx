@@ -52,7 +52,7 @@ const TaskList = () => {
     const [draggedTask, updateDraggedTask] = useState({});
     return (
         <div className={styles.tasklist}>
-             <Title />
+             <Title horizontal={true}/>
             <div className={styles.description}>
                 Use this template to track your personal tasks.
                 Click + New to create a new task directly on this board.

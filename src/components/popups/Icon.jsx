@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import styles from './Icon.module.css';
-import { computeEmoji } from '../../utils/compute_emojis';
+import { computeEmoji } from '../../data/compute_emojis';
 
 import { PopupContext } from '../../App';
 

@@ -1,5 +1,5 @@
 
-import { saveItem } from "../../utils/local_storage";
+import { getItem, saveItem } from "../utils/local_storage";
 const myMarkdownFile = require("./emojis.txt");
 
 function asyncCallback(data) {
@@ -48,4 +48,8 @@ const populateEmojiDictionary = () => {
         .then(text => asyncCallback(text));
 }
 
-export default populateEmojiDictionary;
+export const seedEmojiDictionary = () => {
+    if (getItem('emoji_dictionary') === null) populateEmojiDictionary();
+    if (getItem('emoji_dictionary_skintone') === null) {saveItem('emoji_dictionary_skintone', 'none');}
+}
+

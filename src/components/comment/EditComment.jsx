@@ -2,7 +2,7 @@ import { useContext, useState, useRef } from 'react';
 
 import styles from './EditComment.module.css'
 
-import { CommentContext } from '../../App';
+import { PageContext } from '../../App';
 import useOutsideCommentAlerter from '../../hooks/OutsideCommentAlert'; 
 import useAutosizeTextArea
  from '../../hooks/AutosizeTextArea';
@@ -11,12 +11,14 @@ import { saveItem } from '../../utils/local_storage';
 import { MdCancel as Cancel } from 'react-icons/md'
 import { AiFillCheckCircle as Check } from 'react-icons/ai';
 
+import { editComment } from '../../data/pages_helper_functions';
+
 const EditComment = ({ idx,
     commentBeingEdited,
     comment,
     changeCommentBeingEdited,
     changeMouseOver }) => {
-    const { comments, changeComments } = useContext(CommentContext);
+    const { pages, changePages, currentPageName } = useContext(PageContext);
 
     const bigCommentRef = useRef(null);
     useOutsideCommentAlerter(bigCommentRef, changeCommentBeingEdited);
@@ -39,20 +41,10 @@ const EditComment = ({ idx,
                 onKeyDown={(e) => {
                     editCurrentComment(e.target.value);
                     if (e.key === 'Enter') {
-                        const newComments = {
-                            ...comments,
-                            ...{
-                                [idx]:
-                                {
-                                    timestamp: JSON.stringify(Date.now()),
-                                    comment: e.target.value,
-                                    edited: true,
-                                    emojis: comments[idx].emojis
-                                }
-                            }
-                        }
-                        changeComments(newComments);
-                        saveItem('quicknote-comments', newComments);
+                        const newPages = editComment(pages, 
+                            currentPageName, e.target.value, idx);
+                        changePages(newPages);
+                        saveItem('pages', newPages);
                         changeMouseOver(-1);
                         changeCommentBeingEdited(-1);
                     }

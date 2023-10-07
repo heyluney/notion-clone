@@ -1,15 +1,16 @@
 import { useContext } from 'react';
-import { CommentContext } from '../../App';
+import { PageContext } from '../../App';
 
 import styles from './AddComment.module.css';
 import clark from '../../assets/clark_profile.jpg';
 
-import { calculateNextKey } from '../../utils/calculate_next_key';
+import { addComment } from '../../data/pages_helper_functions';
+
 import { saveItem } from '../../utils/local_storage';
 
 
 const AddComment = ({ currentComment, updateComment }) => {
-    const { comments, changeComments } = useContext(CommentContext);
+    const { pages, changePages, currentPageName } = useContext(PageContext);
     return (
         <div className={styles.new}>
         <img className={styles.pic} src={clark} />
@@ -24,17 +25,9 @@ const AddComment = ({ currentComment, updateComment }) => {
             }}
             onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                    const newComments = {
-                        ...comments,
-                        [calculateNextKey(comments)]: {
-                            timestamp: JSON.stringify(new Date()),
-                            comment: currentComment,
-                            edited: false,
-                            emojis: {}
-                        }
-                    }
-                    changeComments(newComments);
-                    saveItem('quicknote-comments', newComments);
+                    const newPages = addComment(pages, currentPageName, e.target.value);
+                    changePages(newPages);
+                    saveItem('pages', newPages);
                     updateComment("");
                 }
             }}

@@ -173,3 +173,13 @@ export const truncateEmojiDictionary = (emojiDict, prefix, length) => {
     newEmojiDict['recent'] = emojiDict['recent'];
     return newEmojiDict;
 }
+
+export const addCommentToRecent = (emojiDict, newEmojiPair) => {
+    return {
+        ...emojiDict,
+        "recent": {
+            ...emojiDict["recent"],
+            ...newEmojiPair
+        }
+    }
+}

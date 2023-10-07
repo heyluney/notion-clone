@@ -5,14 +5,14 @@ import styles from './Title.module.css';
 
 import Icon from '../../components/popups/Icon';
 
-const Title = () => {
+const Title = ({isLarge, horizontal}) => {
     const { pages, changePages, currentPageName, changeCurrentPageName } = useContext(PageContext);
     const currentPage = pages[currentPageName];
     const [isUpdatingTitle, updatingTitle] = useState(false);
     return (
-        <div className={styles.title}>
+        <div className={horizontal ? styles.title_horizontal : styles.title}>
             <Icon icon={currentPage.icon}
-                isLarge={true}
+                isLarge={isLarge}
                 component="Title"
                 relatedToComments={false}
             />

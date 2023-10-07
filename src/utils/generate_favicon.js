@@ -1,4 +1,4 @@
-import { computeEmoji } from "./compute_emojis";
+import { computeEmoji } from "../data/compute_emojis";
  
 
 // Updates the tab to display emoji as a favicon.

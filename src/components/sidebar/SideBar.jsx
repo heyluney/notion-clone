@@ -10,7 +10,7 @@ import clark from '../../assets/clark_profile.jpg';
 
 const SideBar = () =>{
     const { pages } = useContext(PageContext);
-
+    
     return (
         <div className={`${styles.sidebar}`} >
             <ProfileItem 

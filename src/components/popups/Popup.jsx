@@ -3,15 +3,17 @@ import { useState, useContext } from 'react';
 import useOutsideAlerter from '../../hooks/OutsideAlert';
 import styles from './Popup.module.css';
 
+import { PageContext } from '../../App';
 import { useRef } from 'react';
 import { PopupContext, CommentContext } from '../../App';
 
+import { deleteComment } from '../../data/pages_helper_functions';
 import { saveItem } from '../../utils/local_storage';
 
 // Need comment idx in order to figure out which comment to delete.
 const Popup = () => {
-    const { comments, changeComments } = useContext(CommentContext);
     const { popup, togglePopup } = useContext(PopupContext);
+    const { pages, changePages, currentPageName } = useContext(PageContext);
 
     const wrapperRef = useRef();
     useOutsideAlerter(wrapperRef);
@@ -27,11 +29,10 @@ const Popup = () => {
                 className={`${styles.delete} 
                     ${cancelIsHovered ? styles.active : null}`}
                 onClick={() => {
-                    const newComments = {...comments};
                     const idx = parseInt(popup.split('_')[1]);
-                    delete newComments[idx];
-                    changeComments(newComments);
-                    saveItem('quicknote-comments', newComments);
+                    const newPages = deleteComment(pages, currentPageName, idx);
+                    changePages(newPages);
+                    saveItem('pages', newPages);
                     togglePopup(null);
                 }}>
                 Delete

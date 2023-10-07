@@ -7,6 +7,13 @@
     position: relative;
 }
 
+.title_horizontal {
+    display: flex;
+    flex-direction: row;
+    font-size: 50px;
+    position: relative;
+}
+
 .title > textarea {
     font-size: inherit;
     font-weight: 700;

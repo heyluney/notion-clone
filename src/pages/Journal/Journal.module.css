@@ -1,0 +1,17 @@
+.journal {
+    display: row;
+    flex-direction: row;
+    font-weight: 300;
+}
+
+
+/* .right {
+    background: red;
+    display: block;
+    position: relative;
+    
+} */
+
+/* .bold {
+        font-weight: 700;
+} */

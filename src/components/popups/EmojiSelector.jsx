@@ -6,8 +6,10 @@ import { PageContext, CommentContext, PopupContext } from '../../App';
 import { chunkify } from '../../utils/chunkify';
 import { getItem, saveItem } from '../../utils/local_storage';
 
+import { skintones } from '../../data/emoji_data';
+import { addEmoji, updateEmoji } from '../../data/pages_helper_functions';
 import useOutsideAlerter from '../../hooks/OutsideAlert';
-import { computeEmoji, getTotalEmojiCount } from '../../utils/compute_emojis';
+import { computeEmoji, getTotalEmojiCount, addCommentToRecent } from '../../data/compute_emojis';
 
 import { flattenEmojiDictionary, 
         truncateEmojiDictionary, 
@@ -16,7 +18,7 @@ import { flattenEmojiDictionary,
     getSkinToneEmoji,
     filterEmojiDictionaryBySkintone,
     getRandomEmoji
-    } from '../../utils/compute_emojis';
+    } from '../../data/compute_emojis';
 import useOnScreen from '../../hooks/OnscreenAlert';
 
 import { FaShuffle as Shuffle } from 'react-icons/fa6';
@@ -26,7 +28,6 @@ const EmojiSelector = ({ component, relatedToComments }) => {
     const { pages, changePages, currentPageName } = useContext(PageContext);
     const currentPage = pages[currentPageName];
 
-    const { comments, changeComments } = useContext(CommentContext);
     const { popup, togglePopup } = useContext(PopupContext);
 
     // Determines whether the emoji popup window is open or closed.
@@ -63,43 +64,19 @@ const EmojiSelector = ({ component, relatedToComments }) => {
                         key={name}
                         onClick={(e) => {
                             e.preventDefault();
-                            if (relatedToComments) {
-                                const idx = parseInt(component.split('_')[1]);
-                                const newEmojiPair = {[hexcode]: name};
-                                const newComments = {
-                                    ...comments,
-                                    ...{
-                                        [idx]:
-                                        {
-                                            timestamp: comments[idx].timestamp,
-                                            comment: comments[idx].comment,
-                                            edited: false,
-                                            emojis: {...comments[idx].emojis, ...newEmojiPair }
-                                        }
-                                    }
-                                }
-                                changeComments(newComments);
-                                saveItem('quicknote-comments', newComments);
-                                togglePopup(null);
-                            } else {
-                                const newPages = {...pages};
-                                newPages[currentPageName] = {
-                                    ...currentPage, icon: hexcode 
-                                };
-                                changePages(newPages);
-                                saveItem('pages', newPages);
+                            const idx = parseInt(component.split('_')[1]);
                             
-                                const newEmojiDictionary = {
-                                    ...emojiDictionary, 
-                                    "recent": {
-                                        [`${name}`]: hexcode,
-                                    ...emojiDictionary['recent'], 
-                                    }
-                                };
-                                changeEmojiDictionary(newEmojiDictionary);
-                                saveItem('emoji_dictionary', newEmojiDictionary);
-                                togglePopup(null);
-                            }
+                            const newEmojiDict = addCommentToRecent(emojiDictionary, {[name]: hexcode});
+                            changeEmojiDictionary(newEmojiDict);
+                            saveItem('emoji_dictionary', newEmojiDict);
+
+                            const newPages = 
+                                relatedToComments ? 
+                                    addEmoji(pages, currentPageName, idx, {[hexcode]: name}) :
+                                    updateEmoji(pages, currentPageName, hexcode);
+                            changePages(newPages);
+                            saveItem('pages', newPages);
+                            togglePopup(null);
                         }}
                         onMouseOver={() => {
                             changeHoveredEmoji([isRecent, name])
@@ -149,12 +126,6 @@ const EmojiSelector = ({ component, relatedToComments }) => {
         }
     }, []);
 
-    const skintones = ["none", 
-    "light skin tone",
-    "medium-light skin tone", 
-    "medium skin tone",
-    "medium-dark skin tone",
-    "dark skin tone"];
 
     return (
         <div 

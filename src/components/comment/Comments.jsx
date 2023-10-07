@@ -5,7 +5,7 @@ import clark from '../../assets/clark_profile.jpg';
 
 import getTimeString from '../../utils/calculate_time_elapsed';
 
-import { CommentContext } from '../../App';
+import { PageContext } from '../../App';
 import AddComment from './AddComment';
 import EditComment from './EditComment';
 
@@ -13,7 +13,8 @@ import CommentEmojis from './CommentEmojis';
 import CommentButtons from './CommentButtons';
 
 const Comments = () => {
-    const { comments } = useContext(CommentContext);
+    const { pages, currentPageName } = useContext(PageContext);
+    const comments = pages[currentPageName].comments;
 
     const [commentBeingMousedOver, changeMouseOver] = useState(-1);
 
@@ -22,7 +23,9 @@ const Comments = () => {
 
     return (
         <div className={styles.comments}>
-            {Object.keys(comments).length == 0 ? "" : Object.entries(comments).map(([idx, comment]) =>
+            {Object.keys(comments).length == 0 ? "" : 
+            
+            Object.entries(comments).map(([idx, comment]) =>
                 <div className={styles.comment}
                     key={idx}
                     onMouseEnter={() => {
@@ -43,8 +46,7 @@ const Comments = () => {
                             comment={comment.comment}
                             commentBeingEdited={commentBeingEdited}
                             changeCommentBeingEdited={changeCommentBeingEdited}
-                            changeMouseOver={changeMouseOver}
-                             />
+                            changeMouseOver={changeMouseOver} />
 
                         <CommentEmojis idx={idx} comment={comment}/>
                     </div>
