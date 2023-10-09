@@ -174,7 +174,7 @@ export const truncateEmojiDictionary = (emojiDict, prefix, length) => {
     return newEmojiDict;
 }
 
-export const addCommentToRecent = (emojiDict, newEmojiPair) => {
+export const addEmojiToRecent = (emojiDict, newEmojiPair) => {
     return {
         ...emojiDict,
         "recent": {

@@ -1,3 +1,5 @@
+@import '../../standard.module.css';
+
 .main {
     display: flex;
     justify-content: space-between;
@@ -21,7 +23,7 @@
 }
 
 .left:hover {
-    background-color: rgb(234, 234, 233);
+    background: var(--highlight-grey);
     color: rgba(55, 53, 47, 1);
     cursor: pointer;
 }
@@ -32,6 +34,9 @@
     flex-grow: 1;
     display: flex;
     align-items: center;
+}
+.name {
+    color: var(--medium-grey);
 }
 .link:visited {
     color: rgb(55, 53, 47);

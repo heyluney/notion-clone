@@ -1,0 +1,35 @@
+@import '../../standard.module.css';
+
+.slideout {
+    width: 0px; 
+    transition: 0s;
+    display: flex;
+    flex-direction: column;
+}
+
+.active {
+    width: 500px;
+    transition: 2s;
+    box-shadow: var(--box-shadow);
+}
+
+.main {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.desc {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 200px 200px;
+    max-width: 400px;
+    row-gap: 20px;
+}
+
+.desc_item {
+    justify-content: flex-start;
+    box-sizing: border-box;
+    color: var(--light-grey);
+    font-weight: 300;
+}

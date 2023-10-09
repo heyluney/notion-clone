@@ -1,6 +1,6 @@
 .main {
     display: flex;
-    flex-direction: horizontal;
+    flex-direction: row;
     align-items: center;
     padding-left: 15px;
     padding-right: 15px;
@@ -10,7 +10,7 @@
 
 .inactive {
     background-color: rgba(251, 251, 250, 1);
-    color: rgba(124, 123, 117, 1);
+    color: rgba(55, 53, 47, 1);
 }
 
 .active {

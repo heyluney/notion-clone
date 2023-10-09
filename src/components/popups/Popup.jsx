@@ -5,7 +5,7 @@ import styles from './Popup.module.css';
 
 import { PageContext } from '../../App';
 import { useRef } from 'react';
-import { PopupContext, CommentContext } from '../../App';
+import { PopupContext } from '../../App';
 
 import { deleteComment } from '../../data/pages_helper_functions';
 import { saveItem } from '../../utils/local_storage';
@@ -18,7 +18,7 @@ const Popup = () => {
     const wrapperRef = useRef();
     useOutsideAlerter(wrapperRef);
 
-    const [ cancelIsHovered, toggleCancelIsHovered ] = useState(false);
+    const [cancelIsHovered, toggleCancelIsHovered] = useState(false);
     return (
         <div className={`${styles.none} ${popup && popup.includes("Delete") && styles.popup}`}
             ref={wrapperRef}>

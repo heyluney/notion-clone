@@ -4,7 +4,7 @@ import styles from './EditComment.module.css'
 
 import { PageContext } from '../../App';
 import useOutsideCommentAlerter from '../../hooks/OutsideCommentAlert'; 
-import useAutosizeTextArea
+import { useAutosizeTextArea }
  from '../../hooks/AutosizeTextArea';
 
 import { saveItem } from '../../utils/local_storage';

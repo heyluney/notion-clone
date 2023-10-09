@@ -1,31 +1,29 @@
 
-import { useState, useRef, createElement } from 'react';
+import { useContext} from 'react';
 
 import Title from '../../components/title/Title';
 import styles from './Journal.module.css';
 
+import { PageContext } from '../../App';
+
+import JournalEntry from './JournalEntry';
 const Journal = () => {
-    const journalRef = useRef();
-    const captureText = () => {
-        if (journalRef.current) {
-            console.log(journalRef.current.textContent)
-        }
-    }
+    const { pages } = useContext(PageContext);
+    const journalEntries = pages['Journal'].entries;
 
     return (
         <div className={styles.journal}>
-            <div className={styles.left}>
-                <Title horizontal={true} />
-                <div className={styles.list} 
-                    contentEditable={true}
-                    suppressContentEditableWarning={true}
-                    ref={journalRef}
-                    onInput={captureText}
-                    >
-                    Todo placeholder. Lorem ipsum.
-                </div>
+            <Title horizontal={true} />
+
+            <div className={styles.journal_entries}>
+                {Object.entries(journalEntries)
+                    .map(([idx, entry]) => 
+                    <JournalEntry 
+                        key={idx}
+                        idx={idx}
+                        entry={entry}/>
+                )}
             </div>
-            {/* <div className={styles.right}>Right sliding</div> */}
         </div>
     )
 }

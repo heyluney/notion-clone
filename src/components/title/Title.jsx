@@ -1,25 +1,33 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useRef } from 'react';
 import { saveItem } from '../../utils/local_storage';
 import { PageContext } from '../../App';
 import styles from './Title.module.css';
 
 import Icon from '../../components/popups/Icon';
 
-const Title = ({isLarge, horizontal}) => {
+import { useAutosizeDefaultTextArea }
+ from '../../hooks/AutosizeTextArea';
+
+const Title = ({isLarge, horizontal, title, emoji}) => {
     const { pages, changePages, currentPageName, changeCurrentPageName } = useContext(PageContext);
     const currentPage = pages[currentPageName];
     const [isUpdatingTitle, updatingTitle] = useState(false);
+
+    const titleRef = useRef(null);
+    // useAutosizeDefaultTextArea(titleRef);
+
     return (
         <div className={horizontal ? styles.title_horizontal : styles.title}>
-            <Icon icon={currentPage.icon}
+            <Icon icon={emoji !== undefined ? emoji : currentPage.icon}
                 isLarge={isLarge}
                 component="Title"
                 relatedToComments={false}
             />
             <textarea
-                className={styles.title}
+                ref={titleRef}
+                className={styles.textarea}
                 readOnly={!isUpdatingTitle}
-                defaultValue={currentPage.name}
+                value={title !== undefined ? title : currentPage.name}
                 onClick={() => {
                     updatingTitle(true);
                 }}

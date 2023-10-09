@@ -1,0 +1,25 @@
+@import '../../standard.module.css';
+
+.journal_entry {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.journal_entry:hover{
+    background: var(--highlight-grey);
+    cursor: pointer;
+}
+
+.journal_entry_title {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.left {
+    display: flex;
+    flex-direction: row;
+}
+.right {
+    display: flex;
+    flex-direction: row;
+}

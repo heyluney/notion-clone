@@ -4,7 +4,7 @@ import { computeEmoji } from '../../data/compute_emojis';
 
 import { PopupContext } from '../../App';
 
-import EmojiSelector from '../../components/popups/EmojiSelector';
+import Emoji from './Emoji';
 
 // "component" allows us to toggle EmojiSelector only under the appropriately clicked icon.
 const Icon = ({isLarge, icon, component, relatedToComments}) => {
@@ -26,7 +26,7 @@ const Icon = ({isLarge, icon, component, relatedToComments}) => {
                     computeEmoji(icon) : 
                     <Icon />}
             </div>
-            {popup === component && <EmojiSelector 
+            {popup === component && <Emoji 
                 component={component}
                 relatedToComments={relatedToComments}/>}
         </div>

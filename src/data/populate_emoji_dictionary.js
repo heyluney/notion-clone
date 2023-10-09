@@ -53,3 +53,10 @@ export const seedEmojiDictionary = () => {
     if (getItem('emoji_dictionary_skintone') === null) {saveItem('emoji_dictionary_skintone', 'none');}
 }
 
+export const skintones = ["none", 
+    "light skin tone",
+    "medium-light skin tone", 
+    "medium skin tone",
+    "medium-dark skin tone",
+    "dark skin tone"
+];

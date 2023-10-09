@@ -34,6 +34,28 @@ const defaultComments = {
     }
 };
 
+const defaultJournal = {
+    1: {
+      title: "Going backpacking with Taylor <3",
+      emoji: "1F923",
+      tags: ["Canada", "backpacking", "hiking", "blah", "blah1", "blah2",
+      "blah3", "blah4", "blah5", "blah6", "blah7", "blah8", "blah9"],
+      timestamp: "1693348898325"
+    },
+    2: {
+      title: "Taking Clark on a walk!",
+      emoji: "1F415",
+      tags: ["dogs", "Clark"],
+      timestamp: "1893348898325"
+    },
+    3: {
+      title: "Checking out a new flavor at Salt & Straw",
+      emoji: "1F366",
+      tags: ["cinnamon snickerdoodle"],
+      timestamp: "1893348894825"
+    }
+}
+
 const defaultPages = {
     "Quick Note": {
         idx: 0,
@@ -55,7 +77,8 @@ const defaultPages = {
         name: "Journal",
         path: "/journal",
         icon: '1F4D8',
-        component: "Journal"
+        component: "Journal",
+        entries: defaultJournal
     }
 }
 
@@ -66,27 +89,4 @@ export const seedPages = () => {
 
 
 
-
-// const defaultJournal = {
-//     1: {
-//       title: "Going backpacking with Taylor <3",
-//       emoji: "1F923",
-//       tags: new Set(["Canada", "backpacking", "hiking"]),
-//       timestamp: "1693348898325"
-//     },
-//     2: {
-//       title: "Taking Clark on a walk!",
-//       emoji: "1F415",
-//       tags: new Set(["dogs", "Clark"]),
-//       timestamp: "1893348898325"
-//     },
-//     3: {
-//       title: "Checking out a new flavor at Salt & Straw",
-//       emoji: "1F366",
-//       tags: new Set(["cinnamon snickerdoodle"]),
-//       timestamp: "1893348894825"
-//     }
-//   }
-//   if (getItem('journal') === null) saveItem('journal', defaultJournal);
-//   const [journal, changeJournal] = useState(getItem('journal'));
 

@@ -4,14 +4,7 @@
     font-weight: 300;
 }
 
-
-/* .right {
-    background: red;
-    display: block;
-    position: relative;
-    
-} */
-
-/* .bold {
-        font-weight: 700;
-} */
+.journal_entries {
+    display: flex;
+    flex-direction: column;
+}
