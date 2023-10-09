@@ -3,7 +3,7 @@ import styles from './Comments.module.css';
 
 import clark from '../../assets/clark_profile.jpg';
 
-import getTimeString from '../../utils/calculate_time_elapsed';
+import { getTimeString } from '../../utils/calculate_date';
 
 import { PageContext } from '../../App';
 import AddComment from './AddComment';

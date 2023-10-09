@@ -34,7 +34,6 @@ const App = () => {
             <div className={`${styles.app}`}>
               <SideBar />
               <Main />
-              <SlideOut/>
             </div>
             {popup && <Popup />}
             <div className={styles.emoji_overlay}

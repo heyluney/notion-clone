@@ -1,7 +1,14 @@
 .tags {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+    /* flex-wrap: wrap; */
+    overflow-x: hidden;
+    max-width: 250px;
+}
+
+.tags_full {
     flex-wrap: wrap;
 }
 

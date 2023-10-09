@@ -1,19 +1,25 @@
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 
 import styles from './SlideOut.module.css';
 import { SlideOutContext } from "../../App";
 import { BiSolidChevronsRight as Chevron } from 'react-icons/bi';
-import getTimeString from '../../utils/calculate_time_elapsed';
+import { getTimeString } from '../../utils/calculate_date';
 import Tags from './Tags';
 import Title
  from '../../components/title/Title';
+
+ import { useSlideOutOutsideAlerter } from '../../hooks/OutsideAlert';
+
 const SlideOut = () => {
     const { slideOut, toggleSlideOut } = useContext(SlideOutContext);
     const { title, emoji, tags, timestamp } 
         = slideOut === null ? {} : slideOut;
 
+    const wrapperRef = useRef();
+    useSlideOutOutsideAlerter(wrapperRef);
+
     return (
-        <div className={`${styles.slideout} ${slideOut === null ? null : styles.active}`}>
+        <div ref={wrapperRef} className={`${styles.slideout} ${slideOut === null ? null : styles.active}`}>
             <Chevron onClick = {() => toggleSlideOut(null)}/>
 
             {slideOut !== null ? <div className={styles.main}>
@@ -22,7 +28,7 @@ const SlideOut = () => {
                     <div className={styles.desc_item}>Date Created</div>
                     <div className={styles.desc_item}>{getTimeString(timestamp)}</div>
                     <div className={styles.desc_item}>Tags</div>
-                    <Tags tags={tags}/>
+                    <Tags tags={tags} full={true}/>
                 </div>
             </div> : null}
         </div>

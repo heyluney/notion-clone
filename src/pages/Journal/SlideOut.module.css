@@ -2,7 +2,12 @@
 
 .slideout {
     width: 0px; 
-    transition: 0s;
+    transition: 2s;
+    right: 0;
+    top: 0;
+    position: fixed;
+    height: 100vh;
+    background: white;
     display: flex;
     flex-direction: column;
 }
@@ -11,6 +16,10 @@
     width: 500px;
     transition: 2s;
     box-shadow: var(--box-shadow);
+    right: 0;
+    top: 0;
+    position: fixed;
+    height: 100vh;
 }
 
 .main {

@@ -1,10 +1,11 @@
 
-import { useContext} from 'react';
+import { useContext, Fragment } from 'react';
 
 import Title from '../../components/title/Title';
 import styles from './Journal.module.css';
 
 import { PageContext } from '../../App';
+import SlideOut from './SlideOut';
 
 import JournalEntry from './JournalEntry';
 const Journal = () => {
@@ -12,6 +13,7 @@ const Journal = () => {
     const journalEntries = pages['Journal'].entries;
 
     return (
+        <Fragment>
         <div className={styles.journal}>
             <Title horizontal={true} />
 
@@ -25,6 +27,8 @@ const Journal = () => {
                 )}
             </div>
         </div>
+        <SlideOut/> 
+        </Fragment>
     )
 }
 

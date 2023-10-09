@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import styles from './JournalEntry.module.css';
 
-import getTimeString from '../../utils/calculate_time_elapsed';
+import { getFullTimeString } from '../../utils/calculate_date';
 import Icon from '../../components/popups/Icon';
 
 import { SlideOutContext } from '../../App';
@@ -25,7 +25,9 @@ const JournalEntry = ({ idx, entry }) => {
             </div>
             <div className={styles.right}>
                 <Tags tags={tags} />
-                <div className={styles.timestamp}>{getTimeString(timestamp)}</div>
+                <div className={styles.timestamp}>
+                    {getFullTimeString(timestamp)}
+                </div>
             </div>
         </div>
     )
