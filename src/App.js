@@ -11,6 +11,7 @@ import { seedEmojiDictionary } from './data/populate_emoji_dictionary';
 import { seedPages } from './data/populate_pages'
 
 import { getItem } from './utils/local_storage';
+import Overlay from './Overlay';
 
 const App = () => {
   seedEmojiDictionary();
@@ -23,6 +24,8 @@ const App = () => {
   addFaviconToPage(pages[currentPageName].icon);
 
   const [slideOut, toggleSlideOut] = useState(null);
+
+ 
   return (
     <PageContext.Provider value={{
       currentPageName, changeCurrentPageName,
@@ -35,14 +38,20 @@ const App = () => {
               <SideBar />
               <Main />
             </div>
-            {popup && <Popup />}
-            <div className={styles.emoji_overlay}
-              style={{ display: popup === null || popup.startsWith('Delete') ? 'none' : 'block' }}>
+            {/* <Popup /> */}
+            
+            
+            {/* <div className={styles.emoji_overlay}
+              style={{ display: 
+                  popup === null ? 'none' : 'block' 
+                }}>
             </div>
             <div className={styles.popup_overlay}
-              style={{ display: popup === null || !popup.startsWith('Delete') ? 'none' : 'block' }}
+              style={{ 
+                display: (popup && popup.startsWith('Delete')) ? 'block' : 'none' }}
             >
-            </div>
+            </div> */}
+            {popup && <Overlay/>}
           </Fragment>
         </SlideOutContext.Provider>
       </PopupContext.Provider>

@@ -27,7 +27,6 @@
 }
 .edit_active:hover {
     color: #00ab41;
-    /* z-index: 1; */
 }
 .delete_inactive {
     opacity: 0;
@@ -41,7 +40,6 @@
 }
 .delete_active:hover {
    color: #ff5252;
-   /* z-index: 1; */
 }
 
 .descriptor {

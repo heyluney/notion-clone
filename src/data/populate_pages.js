@@ -53,6 +53,12 @@ const defaultJournal = {
       emoji: "1F366",
       tags: ["cinnamon snickerdoodle"],
       timestamp: "1893348894825"
+    },
+    4: {
+      title: "Just chekcing how asjd f;alskdj f;laksjd f;laksj df;lkasj df;klasj df;kaljsd f;aksjd fa;sjdf a;slkdj fa;lksjd f;aslkdj f;askdj fa;sdkj fa;lskd jfa;slkd jf;aslk jdf;alskd jfasdf",
+      emoji: "1F366",
+      tags: ["b1", "b2"],
+      timestamp: "1893348894855"
     }
 }
 

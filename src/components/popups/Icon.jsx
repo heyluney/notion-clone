@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import styles from './Icon.module.css';
 import { computeEmoji } from '../../data/compute_emojis';
 
@@ -18,7 +18,7 @@ const Icon = ({isLarge, icon, component, relatedToComments}) => {
                 className={`${isLarge ? styles.main_large : styles.main} ${isHovered ? styles.active : null}`}
                 onMouseEnter={() => updateHover(!isHovered)}
                 onMouseLeave={() => updateHover(!isHovered)}
-                onMouseUp={() => {
+                onClick={() => {
                         togglePopup(popup === null ? component : null)
                     }}
                 >

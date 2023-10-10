@@ -81,7 +81,6 @@ const Emoji = ({ component, relatedToComments }) => {
         }
     }, []);
 
-
     return (
         <div 
             className={`${styles.emojis} 
@@ -135,15 +134,16 @@ const Emoji = ({ component, relatedToComments }) => {
                 <div className={styles.categories}>
                     {getRepresentativeEmojis(emojiDictionary).map(
                         ([category, representativeEmoji]) => 
-                    <div key={category}
-                        className={`${styles.actual} ${category === currentCategory ? styles.active : ""}`}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            changeEmojiLength(getTotalEmojiCount());
-                            changePrefix("");
-                            formRef.current.value = "";
-                            handleCategoryChange(category);
-                        }}>
+                        <div key={category}
+                            className={`${styles.actual} ${category === 
+                                    currentCategory ? styles.active : ""}`}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                changeEmojiLength(getTotalEmojiCount());
+                                changePrefix("");
+                                formRef.current.value = "";
+                                handleCategoryChange(category);
+                            }}>
                         {computeEmoji(representativeEmoji)}
                     </div>)}
                 </div>

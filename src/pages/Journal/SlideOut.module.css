@@ -10,6 +10,8 @@
     background: white;
     display: flex;
     flex-direction: column;
+    z-index: 3;
+    overflow-y: scroll;
 }
 
 .active {

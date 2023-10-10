@@ -7,19 +7,17 @@ import Icon from '../../components/popups/Icon';
 import { SlideOutContext } from '../../App';
 import Tags from './Tags';
 const JournalEntry = ({ idx, entry }) => {
-    const { slideOut, toggleSlideOut } = useContext(SlideOutContext);
+    const { toggleSlideOut } = useContext(SlideOutContext);
     const { title, emoji, tags, timestamp } = entry;
     return (
-        <div onClick={() =>
-                toggleSlideOut(entry)}
+        <div onClick={() => toggleSlideOut(entry)}
             className={styles.journal_entry}>
             <div className={styles.left}>
                 <Icon icon={emoji}
                     component={`${"Journal"}_${idx}`}
                     relatedToComments={false}
                 />
-                <div
-                    className={styles.journal_entry_title}>
+                <div className={styles.journal_entry_title}>
                     {title}
                 </div>
             </div>

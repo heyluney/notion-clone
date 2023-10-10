@@ -3,10 +3,12 @@ import { useContext, useEffect } from 'react';
 import { PopupContext, SlideOutContext } from '../App';
 
 export const useSlideOutOutsideAlerter = ref => {
+    const { togglePopup } = useContext(PopupContext);
     const { toggleSlideOut } = useContext(SlideOutContext);
     const handleClickOutside = event => {
         if (ref.current && !ref.current.contains(event.target)) {
             toggleSlideOut(null);
+            togglePopup(null);
         }
     }
 
