@@ -26,7 +26,10 @@ const SlideOut = () => {
 
             {slideOut !== null &&
                 <div className={styles.main}>
-                <Title horizontal={true} title={title} emoji={emoji} />
+                <Title horizontal={true} 
+                    title={title} 
+                    emoji={emoji}
+                    type={"journal"} />
 
                 <div className={styles.desc}>
                     <div className={styles.desc_item}>Date Created</div>

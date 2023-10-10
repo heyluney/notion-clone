@@ -4,23 +4,28 @@ import styles from './EmojiSelector.module.css';
 
 
 import { chunkify } from '../../utils/chunkify';
-import { addEmoji, updateEmoji } from '../../data/pages_helper_functions';
-import { PageContext, PopupContext } from '../../App';
+import { addEmoji, updateEmoji, editJournalEmoji } from '../../data/pages_helper_functions';
+import { PageContext, PopupContext, SlideOutContext } from '../../App';
 import { computeEmoji, addEmojiToRecent } from '../../data/compute_emojis';
 
 import { saveItem } from '../../utils/local_storage';
 
 const EmojiSelector = ({
-        component, relatedToComments, changeEmojiDictionary, emojiDictionary,
-        emojiArray, perRow, isRecent}) => {
+        component, 
+        type, 
+        changeEmojiDictionary, 
+        emojiDictionary,
+        emojiArray, 
+        isRecent}) => {
     const { togglePopup } = useContext(PopupContext);
+    const { slideOut, toggleSlideOut } = useContext(SlideOutContext);
 
     // Lists which emoji is currently being hovered.
     const [hoveredEmoji, changeHoveredEmoji] = useState([/*isRecent?*/false, /*emoji name*/false]);
 
     const { pages, changePages, currentPageName } = useContext(PageContext);
 
-    return chunkify(emojiArray, perRow).map((emojis, rowIdx) =>
+    return chunkify(emojiArray, 12).map((emojis, rowIdx) =>
         <div key={rowIdx} className={styles.row}>
             {emojis.map(([name, hexcode, isVisible], columnIdx) => (
                 isVisible && 
@@ -29,6 +34,7 @@ const EmojiSelector = ({
                     key={name}
                     onClick={(e) => {
                         e.preventDefault();
+                        e.stopPropagation();
                         const idx = parseInt(component.split('_')[1]);
                         
                         const newEmojiDict = addEmojiToRecent(emojiDictionary, {[name]: hexcode});
@@ -37,10 +43,22 @@ const EmojiSelector = ({
 
                         // Depending on the context the emoji selector is used, have different
                         // updating logic.
-                        const newPages = 
-                            relatedToComments ? 
-                                addEmoji(pages, currentPageName, idx, {[hexcode]: name}) :
-                                updateEmoji(pages, currentPageName, hexcode);
+                        let newPages;
+                        switch(type) {
+                            case 'comments': 
+                                newPages = addEmoji(pages, currentPageName, idx, {[hexcode]: name});
+                                break;
+                            case 'journal': 
+                                newPages = editJournalEmoji(pages, currentPageName, slideOut.idx, hexcode);
+                                toggleSlideOut({...pages[currentPageName].entries[slideOut.idx], 
+                                                emoji: hexcode, idx: slideOut.idx})
+                                console.log('newPages', newPages);
+                                break;
+                            default: 
+                                // Default is to update the emoji associated with the page.
+                                newPages = updateEmoji(pages, currentPageName, hexcode);
+                                break;
+                        }
                         changePages(newPages);
                         saveItem('pages', newPages);
                         togglePopup(null);

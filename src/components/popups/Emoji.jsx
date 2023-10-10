@@ -7,7 +7,7 @@ import { getItem, saveItem } from '../../utils/local_storage';
 
 import { skintones } from '../../data/populate_emoji_dictionary';
 import useOutsideAlerter from '../../hooks/OutsideAlert';
-import { computeEmoji, getTotalEmojiCount, addCommentToRecent } from '../../data/compute_emojis';
+import { computeEmoji, getTotalEmojiCount } from '../../data/compute_emojis';
 
 import { flattenEmojiDictionary, 
         truncateEmojiDictionary, 
@@ -23,7 +23,7 @@ import EmojiSelector from './EmojiSelector';
 
 import { FaShuffle as Shuffle } from 'react-icons/fa6';
 
-const Emoji = ({ component, relatedToComments }) => {
+const Emoji = ({ component, type }) => {
     // This allows synchronization of emoji update across multiple pages.
     const { pages, changePages, currentPageName } = useContext(PageContext);
     const currentPage = pages[currentPageName];
@@ -156,14 +156,12 @@ const Emoji = ({ component, relatedToComments }) => {
 
                         <EmojiSelector 
                             emojiArray={arrayifiedEmojiDictionary['recent']}
-                            perRow={12}
                             isRecent={true}
-                            relatedToComments={relatedToComments}
+                            type={type}
                             emojiDictionary={emojiDictionary}
                             changeEmojiDictionary={changeEmojiDictionary}
                             component={component}
                             />
-                        {/* {createEmojiSelector(arrayifiedEmojiDictionary['recent'], 12, true)} */}
                     </div>
                 </div>}
 
@@ -181,16 +179,12 @@ const Emoji = ({ component, relatedToComments }) => {
                             
                         <EmojiSelector 
                             emojiArray={arrayifiedEmojiDictionary[category]}
-                            perRow={12}
                             isRecent={false}
-                            relatedToComments={relatedToComments}
+                            type={type}
                             emojiDictionary={emojiDictionary}
                             changeEmojiDictionary={changeEmojiDictionary}
                             component={component}
                             />
-                            {/* {createEmojiSelector(
-                                arrayifiedEmojiDictionary[category],
-                                12, false)} */}
                         </div>
                     </div>)
                     :
@@ -200,20 +194,12 @@ const Emoji = ({ component, relatedToComments }) => {
                                 .filter(([category, _]) => category !== 'recent')
                                 .map(x => x[1])
                                 .flat()}
-                            perRow={12}
                             isRecent={false}
-                            relatedToComments={relatedToComments}
+                            type={type}
                             emojiDictionary={emojiDictionary}
                             changeEmojiDictionary={changeEmojiDictionary}
                             component={component}
                             />
-                        {/* {createEmojiSelector(
-                            Object.entries(arrayifiedEmojiDictionary)
-                                .filter(([category, _]) => category !== 'recent')
-                                .map(x => x[1])
-                                .flat(), 
-                            12, false
-                        )} */}
                     </div>
                 }
             </div>

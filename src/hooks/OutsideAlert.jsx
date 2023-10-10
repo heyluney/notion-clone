@@ -4,8 +4,9 @@ import { PopupContext, SlideOutContext } from '../App';
 
 export const useSlideOutOutsideAlerter = ref => {
     const { togglePopup } = useContext(PopupContext);
-    const { toggleSlideOut } = useContext(SlideOutContext);
+    const { slideOut, toggleSlideOut } = useContext(SlideOutContext);
     const handleClickOutside = event => {
+        if (!slideOut) return;
         if (ref.current && !ref.current.contains(event.target)) {
             toggleSlideOut(null);
             togglePopup(null);
@@ -17,7 +18,7 @@ export const useSlideOutOutsideAlerter = ref => {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [ref]);
+    }, [ref, slideOut]);
 }
 
 // If we detect a click outside the popup (event.target location is not contained)
@@ -35,6 +36,8 @@ const useOutsideAlerter = ref => {
                 // with emoji selector popup.
                 return;
             }
+            console.log('we are outside???')
+
             togglePopup(null);
         }
     }

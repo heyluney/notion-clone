@@ -9,8 +9,8 @@ import SlideOut from './SlideOut';
 
 import JournalEntry from './JournalEntry';
 const Journal = () => {
-    const { pages } = useContext(PageContext);
-    const journalEntries = pages['Journal'].entries;
+    const { pages, currentPageName } = useContext(PageContext);
+    const journalEntries = pages[currentPageName].entries;
 
     return (
         <Fragment>

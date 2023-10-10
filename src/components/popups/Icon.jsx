@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import styles from './Icon.module.css';
 import { computeEmoji } from '../../data/compute_emojis';
 
@@ -7,7 +7,7 @@ import { PopupContext } from '../../App';
 import Emoji from './Emoji';
 
 // "component" allows us to toggle EmojiSelector only under the appropriately clicked icon.
-const Icon = ({isLarge, icon, component, relatedToComments}) => {
+const Icon = ({isLarge, icon, component, type}) => {
     const Icon = icon;
     const [isHovered, updateHover] = useState(false);
 
@@ -26,9 +26,10 @@ const Icon = ({isLarge, icon, component, relatedToComments}) => {
                     computeEmoji(icon) : 
                     <Icon />}
             </div>
-            {popup === component && <Emoji 
+            {popup === component && 
+            <Emoji 
                 component={component}
-                relatedToComments={relatedToComments}/>}
+                type={type}/>}
         </div>
     )
 }

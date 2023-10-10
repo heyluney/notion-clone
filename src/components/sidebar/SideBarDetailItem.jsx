@@ -23,7 +23,6 @@ const SideBarDetailItem = ({idx, name, icon, path}) => {
         <div className={styles.left}>
             <Icon icon={icon} 
                 component={`${"SideBarDetailItem"}_${idx}`}
-                relatedToComments={false}
             />
             <Link to={path} 
                 className={styles.link}

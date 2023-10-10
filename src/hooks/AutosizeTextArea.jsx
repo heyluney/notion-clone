@@ -1,5 +1,4 @@
-import { useEffect, useContext } from 'react';
-import { SlideOutContext } from '../App';
+import { useEffect } from 'react';
 
 export const useAutosizeTextArea = (idx, ref, value, commentBeingEdited) => {
     useEffect(() => {
@@ -24,6 +23,6 @@ export const useAutosizeDefaultTextArea = (ref) => {
                 ref.current.style.height = "0px";
                 ref.current.style.height = ref.current.scrollHeight + "px";
             }
-        }, 1000);
+        }, 800);
     }, [ref]);
 }

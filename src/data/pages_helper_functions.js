@@ -117,6 +117,50 @@ export const deleteComment = (pages, pageName, commentIdx) => {
     }
 }
 
+export const editTitle = (pages, pageName, newTitle) => {
+    const {[pageName]: pageToDelete, ...restOfPages} = pages; 
+    return {
+        ...restOfPages,
+        [newTitle]: {
+            ...pageToDelete,
+            name: newTitle
+        }
+    }
+}
+
+export const editJournalTitle = (pages, pageName, journalIdx, newTitle) => {
+    const page = pages[pageName];
+    return {
+        ...pages,
+        [pageName]: {
+            ...page,
+            entries: {
+                ...page.entries,
+                [journalIdx]: {
+                    ...page.entries[journalIdx],
+                    title: newTitle
+                }
+            }
+        }
+    };
+}
+
+export const editJournalEmoji = (pages, pageName, journalIdx, newEmoji) => {
+    const page = pages[pageName];
+    return {
+        ...pages,
+        [pageName]: {
+            ...page,
+            entries: {
+                ...page.entries,
+                [journalIdx]: {
+                    ...page.entries[journalIdx],
+                    emoji: newEmoji
+                }
+            }
+        }
+    }
+}
 
 
 

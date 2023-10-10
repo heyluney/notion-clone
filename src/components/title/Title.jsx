@@ -1,21 +1,23 @@
-import { useState, useContext, useEffect, useRef, useReducer } from 'react';
+import { useState, useContext, useRef } from 'react';
 import { saveItem } from '../../utils/local_storage';
-import { PageContext } from '../../App';
+import { PageContext, SlideOutContext } from '../../App';
 import styles from './Title.module.css';
 
 import Icon from '../../components/popups/Icon';
+import { editTitle, editJournalTitle } from '../../data/pages_helper_functions';
+
 
 import { useAutosizeDefaultTextArea }
  from '../../hooks/AutosizeTextArea';
 
-const Title = ({isLarge, horizontal, title, emoji}) => {
+const Title = ({isLarge, horizontal, title, emoji, type}) => {
 
+    const { slideOut, toggleSlideOut } = useContext(SlideOutContext);
     const { pages, changePages, currentPageName, changeCurrentPageName } = useContext(PageContext);
     const currentPage = pages[currentPageName];
     const [isUpdatingTitle, updatingTitle] = useState(false);
 
     const titleRef = useRef();
-
     useAutosizeDefaultTextArea(titleRef);
 
     return (
@@ -23,7 +25,7 @@ const Title = ({isLarge, horizontal, title, emoji}) => {
             <Icon icon={emoji !== undefined ? emoji : currentPage.icon}
                 isLarge={isLarge}
                 component={title === undefined ? "Title" : title}
-                relatedToComments={false}
+                type={type}
             />
             <textarea
                 ref={titleRef}
@@ -34,16 +36,18 @@ const Title = ({isLarge, horizontal, title, emoji}) => {
                     updatingTitle(true);
                 }}
                 onKeyDown={(e) => {
-                    // Updating this should normally update the page title, but
-                    // if 
                     if (e.key === 'Enter') {
-                        const newTitle = e.target.value;
-                        const newPages = {...pages};
-                        newPages[newTitle] = {...currentPage, name: newTitle};
-                        delete newPages[currentPageName];
+                        let newPages;
+                        if (type === 'journal') {
+                            newPages = 
+                            editJournalTitle(pages, currentPageName, slideOut.idx, e.target.value);
+                            toggleSlideOut(null);
+                        } else {
+                            newPages = editTitle(pages, currentPageName, e.target.value);
+                            changeCurrentPageName(e.target.value);
+                            saveItem('current_page_name', e.target.value);
+                        }
                         changePages(newPages);
-                        changeCurrentPageName(e.target.value);
-                        saveItem('current_page_name', newTitle);
                         saveItem('pages', newPages);
                         updatingTitle(false);
                     }
