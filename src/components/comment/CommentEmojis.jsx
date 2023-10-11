@@ -6,9 +6,9 @@ import { saveItem } from '../../utils/local_storage';
 import { computeEmoji } from '../../data/compute_emojis';
 import Icon from '../popups/Icon';
 
-import { removeEmoji } from '../../data/pages_helper_functions';
+import { removeEmojiFromComment } from '../../data/pages_helper_functions';
 
-const CommentEmojis = ({idx, comment}) => {
+const CommentEmojis = ({idx, comment, type}) => {
     const plusIcon = "2795";
     const { pages, changePages, currentPageName } = useContext(PageContext);
     
@@ -30,7 +30,7 @@ const CommentEmojis = ({idx, comment}) => {
                         }}
                         onClick={() => {
                             const newPages = 
-                            removeEmoji(pages, "Quick Note", idx, emoji);
+                            removeEmojiFromComment(pages, currentPageName, idx, emoji);
                             changePages(newPages);
                             saveItem('pages', newPages);
                         }}
@@ -42,7 +42,7 @@ const CommentEmojis = ({idx, comment}) => {
             <div className={styles.add_emoji}>
                 <Icon icon={plusIcon}
                     component={`${"Comment"}_${idx}`}
-                    type="comments"
+                    type={type !== undefined ? type : "comments"}
                 />
             </div>
         </div>

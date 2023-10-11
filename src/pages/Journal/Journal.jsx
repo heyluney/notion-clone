@@ -19,13 +19,19 @@ const Journal = () => {
 
             <div className={styles.journal_entries}>
                 {Object.entries(journalEntries)
-                    .map(([idx, entry]) => 
-                    <JournalEntry 
-                        key={idx}
-                        idx={idx}
-                        entry={entry}/>
+                    .map(([idx, entry]) => {
+                        return (
+                            <div key={idx}>
+                            <JournalEntry 
+                                key={idx}
+                                idx={idx}
+                                entry={entry}/>
+                            </div>
+                        )
+                    }
                 )}
             </div>
+            
         </div>
         <SlideOut/> 
         </Fragment>

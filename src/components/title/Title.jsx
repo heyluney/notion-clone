@@ -40,7 +40,7 @@ const Title = ({isLarge, horizontal, title, emoji, type}) => {
                         let newPages;
                         if (type === 'journal') {
                             newPages = 
-                            editJournalTitle(pages, currentPageName, slideOut.idx, e.target.value);
+                            editJournalTitle(pages, currentPageName, slideOut, e.target.value);
                             toggleSlideOut(null);
                         } else {
                             newPages = editTitle(pages, currentPageName, e.target.value);

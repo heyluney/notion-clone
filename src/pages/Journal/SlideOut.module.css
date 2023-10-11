@@ -1,5 +1,17 @@
 @import '../../standard.module.css';
 
+.comments {
+display: flex;
+flex-direction: column;
+}
+.comment {
+    display: flex;
+    flex-direction: row;
+    max-height: 15%;
+    padding: 5px;
+}
+
+
 .slideout {
     width: 0px; 
     transition: 300ms;

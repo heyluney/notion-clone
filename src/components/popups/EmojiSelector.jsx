@@ -4,7 +4,10 @@ import styles from './EmojiSelector.module.css';
 
 
 import { chunkify } from '../../utils/chunkify';
-import { addEmoji, updateEmoji, editJournalEmoji } from '../../data/pages_helper_functions';
+import { addEmojiToComment, 
+        updateTitleEmoji, 
+        editJournalEmoji,
+        addEmojiToJournalComment } from '../../data/pages_helper_functions';
 import { PageContext, PopupContext, SlideOutContext } from '../../App';
 import { computeEmoji, addEmojiToRecent } from '../../data/compute_emojis';
 
@@ -18,8 +21,9 @@ const EmojiSelector = ({
         emojiArray, 
         isRecent}) => {
     const { togglePopup } = useContext(PopupContext);
-    const { slideOut, toggleSlideOut } = useContext(SlideOutContext);
+    const { slideOut } = useContext(SlideOutContext);
 
+    console.log('type', type)
     // Lists which emoji is currently being hovered.
     const [hoveredEmoji, changeHoveredEmoji] = useState([/*isRecent?*/false, /*emoji name*/false]);
 
@@ -46,17 +50,19 @@ const EmojiSelector = ({
                         let newPages;
                         switch(type) {
                             case 'comments': 
-                                newPages = addEmoji(pages, currentPageName, idx, {[hexcode]: name});
+                                newPages = addEmojiToComment(pages, currentPageName, idx, {[hexcode]: name});
                                 break;
                             case 'journal': 
-                                newPages = editJournalEmoji(pages, currentPageName, slideOut.idx, hexcode);
-                                toggleSlideOut({...pages[currentPageName].entries[slideOut.idx], 
-                                                emoji: hexcode, idx: slideOut.idx})
+                                newPages = editJournalEmoji(pages, currentPageName, slideOut, hexcode);
+                                break;
+                            case 'journal_comments':
+                                const commentIdx = parseInt(component.split('_')[1]);
+                                newPages = addEmojiToJournalComment(pages, currentPageName, slideOut, commentIdx, {[hexcode]: name});
                                 console.log('newPages', newPages);
                                 break;
                             default: 
                                 // Default is to update the emoji associated with the page.
-                                newPages = updateEmoji(pages, currentPageName, hexcode);
+                                newPages = updateTitleEmoji(pages, currentPageName, hexcode);
                                 break;
                         }
                         changePages(newPages);

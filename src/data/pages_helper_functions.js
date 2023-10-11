@@ -2,107 +2,101 @@ import { calculateNextKey } from "../utils/calculate_next_key";
 // Note: All functions are pure functions - create a copy of the original 
 // state before modifying.
 
-// Merges comment into comments on the page. 
-const mergeComment = (page, comment) => {
-    return {
-        ...page,
-        comments: {
-            ...page.comments,
-            ...comment
-        }
-    }
-}
-// Transforms text entered into new comment object, with a unique key.
-const createComment = (page, commentText) => {
-    return {
-        [calculateNextKey(page.comments)]: {
-            timestamp: JSON.stringify(new Date()),
-            comment: commentText,
-            edited: false,
-            emojis: {}
-        }
-    }
-}
-
-// Replaces original text in comment with updated comment text.
-const updateComment = (comment, commentText, commentIdx) => {
-    return {
-         [commentIdx]: {
-             ...comment,
-             timestamp: JSON.stringify(new Date()),
-             comment: commentText,
-             edited: true
-         }
-    } 
-}
-
-// Removes emoji from comment.
-const deleteEmojiFromComment = (comment, emojiToDelete, commentIdx) => {
-    const {[emojiToDelete]: desc, ...keptEmojis} = comment.emojis;
-    return {
-        [commentIdx]: {
-            ...comment, 
-            emojis: keptEmojis
-        }
-    }
-}
-
-const addEmojiToComment = (comment, emojiToAdd, commentIdx) => {
-    const blah = {
-        [commentIdx]: {
-            ...comment,
-            emojis: {...comment.emojis, ...emojiToAdd}
-        }
-    }
-    return blah;
-}
 // All of these functions are page-level -> they return the entire "pages" object,
 // which can be subsequently saved in local storage.
-export const addEmoji = (pages, pageName, commentIdx, emoji) => {
-    const page = pages[pageName];
-    return {
-        ...pages,
-        [pageName]:
-             mergeComment(page, addEmojiToComment(
-                page.comments[commentIdx], emoji, commentIdx))
-    }
-}
 
-export const updateEmoji = (pages, pageName, hexcode) => {
+
+export const updateTitleEmoji = (pages, pageName, hexcode) => {
     const page = pages[pageName];
     return {
         ...pages,
         [pageName]: {...page, icon: hexcode}
     }
 }
-
-export const removeEmoji = (pages, pageName, commentIdx, emoji) => {
-    const page = pages[pageName];
+export const editTitle = (pages, pageName, newTitle) => {
+    const {[pageName]: pageToDelete, ...restOfPages} = pages; 
     return {
-        ...pages, 
-        [pageName]: mergeComment(page, 
-            deleteEmojiFromComment
-            (page.comments[commentIdx], emoji, commentIdx))
+        ...restOfPages,
+        [newTitle]: {
+            ...pageToDelete,
+            name: newTitle
+        }
     }
 }
 
 export const addComment = (pages, pageName, commentText) => {
     const page = pages[pageName];
-    return {...pages, [pageName]: 
-        mergeComment(page, createComment(page, commentText))
+    return {
+        ...pages, 
+            [pageName]: {
+                ...page, 
+                comments: {
+                    ...page.comments,
+                    [calculateNextKey(page.comments)]: {
+                        timestamp: JSON.stringify(new Date()),
+                        comment: commentText,
+                        edited: false,
+                        emojis: {}
+                    }
+                }
+            }
     }
 }
-
 export const editComment = (pages, pageName, commentText, commentIdx) => {
     const page = pages[pageName];
-    const comment = page.comments[commentIdx];
     return {
         ...pages,
-        [pageName]: mergeComment(page, 
-            updateComment(comment, commentText, commentIdx))
+        [pageName]: {
+            ...page,
+            comments: {
+                ...page.comments,
+                [commentIdx]: {
+                    ...page.comments[commentIdx],
+                    timestamp: JSON.stringify(new Date()),
+                    comment: commentText,
+                    edited: true
+                }
+            }
+        }
+    }
+}
+export const addEmojiToComment = (pages, pageName, commentIdx, emojiPair) => {
+    const page = pages[pageName];
+    return {
+        ...pages,
+        [pageName]: { 
+            ...page,
+            comments: {
+                ...page.comments,
+                [commentIdx]: {
+                    ...page.comments[commentIdx],
+                    emojis: {
+                        ...page.comments[commentIdx].emojis, 
+                        ...emojiPair
+                    }
+                }
+            }
+        }
     }
 }
 
+export const removeEmojiFromComment = (pages, pageName, commentIdx, emoji) => {
+    const page = pages[pageName];
+    const {[emoji]: desc, ...keptEmojis} = page.comments[commentIdx].emojis;
+    return {
+        ...pages, 
+        [pageName]: {
+            ...page,
+            comments: {
+                ...page.comments,
+                [commentIdx]: {
+                    ...page.comments[commentIdx],
+                    emojis: keptEmojis
+                }
+            }
+        }
+    }
+}
 
 export const deleteComment = (pages, pageName, commentIdx) => {
     const page = pages[pageName];
@@ -114,17 +108,6 @@ export const deleteComment = (pages, pageName, commentIdx) => {
             comments: keptComments
         }
 
-    }
-}
-
-export const editTitle = (pages, pageName, newTitle) => {
-    const {[pageName]: pageToDelete, ...restOfPages} = pages; 
-    return {
-        ...restOfPages,
-        [newTitle]: {
-            ...pageToDelete,
-            name: newTitle
-        }
     }
 }
 
@@ -162,5 +145,76 @@ export const editJournalEmoji = (pages, pageName, journalIdx, newEmoji) => {
     }
 }
 
+export const editJournalComment = (
+        pages, pageName, journalIdx, commentIdx, commentText
+    ) => {
+    const page = pages[pageName];
 
+    return {
+        ...pages,
+        [pageName]: {
+            ...page,
+            entries: {
+                ...page.entries,
+                [journalIdx]: {
+                    ...page.entries[journalIdx],
+                    comments: {
+                        [commentIdx]: {
+                            ...page.entries[journalIdx].comments[commentIdx],
+                            timestamp:  JSON.stringify(new Date()),
+                            comment: commentText,
+                            edited: true
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+// export const removeEmojiFromComment = (pages, pageName, commentIdx, emoji) => {
+//     const page = pages[pageName];
+//     const {[emoji]: desc, ...keptEmojis} = page.comments[commentIdx].emojis;
+//     return {
+//         ...pages, 
+//         [pageName]: {
+//             ...page,
+//             comments: {
+//                 ...page.comments,
+//                 [commentIdx]: {
+//                     ...page.comments[commentIdx],
+//                     emojis: keptEmojis
+//                 }
+//             }
+//         }
+//     }
+// }
+
+export const addEmojiToJournalComment = 
+    (pages, pageName, journalIdx, commentIdx, emojiPair) => 
+        {
+            const page = pages[pageName];
+            return {
+                ...pages,
+                [pageName]: {
+                    ...page,
+                    entries: {
+                        ...page.entries,
+                        [journalIdx]: {
+                            ...page.entries[journalIdx],
+                            comments: {
+                                [commentIdx]: {
+                                    ...page.entries[journalIdx].comments[commentIdx],
+                                    emojis: {
+                                        ...page.entries[journalIdx].comments[commentIdx].emojis,
+                                        ...emojiPair
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 

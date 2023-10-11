@@ -12,9 +12,10 @@ import EditComment from './EditComment';
 import CommentEmojis from './CommentEmojis';
 import CommentButtons from './CommentButtons';
 
-const Comments = () => {
+const Comments = ({passedComments, type}) => {
     const { pages, currentPageName } = useContext(PageContext);
-    const comments = pages[currentPageName].comments;
+    const comments = 
+        passedComments === undefined ? pages[currentPageName].comments : passedComments;
 
     const [commentBeingMousedOver, changeMouseOver] = useState(-1);
 
@@ -29,7 +30,8 @@ const Comments = () => {
                 <div className={styles.comment}
                     key={idx}
                     onMouseEnter={() => {
-                        if (commentBeingEdited == -1) changeMouseOver(idx);
+                        if (commentBeingEdited == -1) 
+                        changeMouseOver(idx);
                     }}
                 >
                     <img className={styles.pic} src={clark} />
@@ -46,9 +48,10 @@ const Comments = () => {
                             comment={comment.comment}
                             commentBeingEdited={commentBeingEdited}
                             changeCommentBeingEdited={changeCommentBeingEdited}
-                            changeMouseOver={changeMouseOver} />
+                            changeMouseOver={changeMouseOver} 
+                            type={type}/>
 
-                        <CommentEmojis idx={idx} comment={comment}/>
+                        <CommentEmojis idx={idx} comment={comment} type={type}/>
                     </div>
                     <CommentButtons 
                         idx={idx}

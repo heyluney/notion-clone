@@ -40,25 +40,44 @@ const defaultJournal = {
       emoji: "1F923",
       tags: ["Canada", "backpacking", "hiking", "blah", "blah1", "blah2",
       "blah3", "blah4", "blah5", "blah6", "blah7", "blah8", "blah9"],
-      timestamp: "1693348898325"
+      timestamp: "1693348898325",
+      comments: defaultComments
     },
     2: {
       title: "Taking Clark on a walk!",
       emoji: "1F415",
       tags: ["dogs", "Clark"],
-      timestamp: "1893348898325"
+      timestamp: "1893348898325",
+      comments: defaultComments
     },
     3: {
       title: "Checking out a new flavor at Salt & Straw",
       emoji: "1F366",
       tags: ["cinnamon snickerdoodle"],
-      timestamp: "1893348894825"
+      timestamp: "1893348894825",
+      comments: {
+        1: {
+          comment: "Hmm that sounds good!",
+          edited: false,
+          emojis:  
+          {"1F366": 'rolling on the floor laughing'},
+          timestamp: "1293348898325"
+        }
+      }
     },
     4: {
-      title: "Just chekcing how asjd f;alskdj f;laksjd f;laksj df;lkasj df;klasj df;kaljsd f;aksjd fa;sjdf a;slkdj fa;lksjd f;aslkdj f;askdj fa;sdkj fa;lskd jfa;slkd jf;aslk jdf;alskd jfasdf",
+      title: "Just checking how asjd f;alskdj f;laksjd f;laksj df;lkasj df;klasj df;kaljsd f;aksjd fa;sjdf a;slkdj fa;lksjd f;aslkdj f;askdj fa;sdkj fa;lskd jfa;slkd jf;aslk jdf;alskd jfasdf",
       emoji: "1F366",
       tags: ["b1", "b2"],
-      timestamp: "1893348894855"
+      timestamp: "1893348894855",
+      comments: {
+        1: {
+          comment: "Interesting...", 
+          edited: false,
+          emojis: {},
+          timestamp: "1293348898325"
+        }
+      }
     }
 }
 

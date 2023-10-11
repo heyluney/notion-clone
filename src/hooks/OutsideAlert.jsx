@@ -36,8 +36,6 @@ const useOutsideAlerter = ref => {
                 // with emoji selector popup.
                 return;
             }
-            console.log('we are outside???')
-
             togglePopup(null);
         }
     }

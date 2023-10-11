@@ -4,9 +4,6 @@ import SideBar from './components/sidebar/SideBar';
 import Main from './components/main/Main';
 
 import { addFaviconToPage } from './utils/generate_favicon';
-import Popup from './components/popups/Popup';
-import SlideOut from './pages/Journal/SlideOut';
-
 import { seedEmojiDictionary } from './data/populate_emoji_dictionary';
 import { seedPages } from './data/populate_pages'
 
@@ -17,15 +14,13 @@ const App = () => {
   seedEmojiDictionary();
   seedPages();
   const [pages, changePages] = useState(getItem('pages'));
-  const [currentPageName, changeCurrentPageName] = useState(getItem('current_page_name'));
+  const [currentPageName, changeCurrentPageName]
+    = useState(getItem('current_page_name'));
 
   // Determines global state for whether a popup is currently open or not.
   const [popup, togglePopup] = useState(null);
   addFaviconToPage(pages[currentPageName].icon);
-
   const [slideOut, toggleSlideOut] = useState(null);
-
- 
   return (
     <PageContext.Provider value={{
       currentPageName, changeCurrentPageName,
@@ -37,20 +32,7 @@ const App = () => {
             <div className={`${styles.app}`}>
               <SideBar />
               <Main />
-            </div>
-            {/* <Popup /> */}
-            
-            
-            {/* <div className={styles.emoji_overlay}
-              style={{ display: 
-                  popup === null ? 'none' : 'block' 
-                }}>
-            </div>
-            <div className={styles.popup_overlay}
-              style={{ 
-                display: (popup && popup.startsWith('Delete')) ? 'block' : 'none' }}
-            >
-            </div> */}
+            </div>            
             {popup && <Overlay/>}
           </Fragment>
         </SlideOutContext.Provider>

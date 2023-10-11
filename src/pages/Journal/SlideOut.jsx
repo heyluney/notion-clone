@@ -1,7 +1,9 @@
 import { useContext, useRef } from 'react';
 
 import styles from './SlideOut.module.css';
-import { SlideOutContext } from "../../App";
+
+import Comments from '../../components/comment/Comments';
+import { SlideOutContext, PageContext } from "../../App";
 import { BiSolidChevronsRight as Chevron } from 'react-icons/bi';
 import { getFullTimeString } from '../../utils/calculate_date';
 import Tags from './Tags';
@@ -11,9 +13,10 @@ import Title
  import { useSlideOutOutsideAlerter } from '../../hooks/OutsideAlert';
 
 const SlideOut = () => {
+    const { pages, currentPageName } = useContext(PageContext);
     const { slideOut, toggleSlideOut } = useContext(SlideOutContext);
     const { title, emoji, tags, timestamp } 
-        = slideOut === null ? {} : slideOut;
+        = slideOut === null ? {} : pages[currentPageName].entries[slideOut];
 
     const wrapperRef = useRef();
     useSlideOutOutsideAlerter(wrapperRef);
@@ -29,7 +32,7 @@ const SlideOut = () => {
                 <Title horizontal={true} 
                     title={title} 
                     emoji={emoji}
-                    type={"journal"} />
+                    type="journal" />
 
                 <div className={styles.desc}>
                     <div className={styles.desc_item}>Date Created</div>
@@ -37,7 +40,13 @@ const SlideOut = () => {
                     <div className={styles.desc_item}>Tags</div>
                     <Tags tags={tags} full={true}/>
                 </div>
+
+                <Comments className={styles.comments} 
+                        passedComments={pages[currentPageName].entries[slideOut].comments}
+                        type="journal_comments"/>
             </div>}
+
+
         </div>
     )
 }

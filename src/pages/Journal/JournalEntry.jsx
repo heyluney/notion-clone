@@ -12,7 +12,7 @@ const JournalEntry = ({ idx, entry }) => {
     return (
         <div onClick={
             () => 
-            toggleSlideOut({...entry, idx: parseInt(idx)})}
+            toggleSlideOut(idx)}
             className={styles.journal_entry}>
             <div className={styles.left}>
                 <Icon icon={emoji}

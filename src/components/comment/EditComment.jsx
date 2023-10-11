@@ -2,7 +2,7 @@ import { useContext, useState, useRef } from 'react';
 
 import styles from './EditComment.module.css'
 
-import { PageContext } from '../../App';
+import { PageContext, SlideOutContext } from '../../App';
 import useOutsideCommentAlerter from '../../hooks/OutsideCommentAlert'; 
 import { useAutosizeTextArea }
  from '../../hooks/AutosizeTextArea';
@@ -11,14 +11,17 @@ import { saveItem } from '../../utils/local_storage';
 import { MdCancel as Cancel } from 'react-icons/md'
 import { AiFillCheckCircle as Check } from 'react-icons/ai';
 
-import { editComment } from '../../data/pages_helper_functions';
+import { editComment, editJournalComment } from '../../data/pages_helper_functions';
 
 const EditComment = ({ idx,
     commentBeingEdited,
     comment,
     changeCommentBeingEdited,
-    changeMouseOver }) => {
+    changeMouseOver,
+    type }) => {
+
     const { pages, changePages, currentPageName } = useContext(PageContext);
+    const { slideOut } = useContext(SlideOutContext);
 
     const bigCommentRef = useRef(null);
     useOutsideCommentAlerter(bigCommentRef, changeCommentBeingEdited);
@@ -41,8 +44,18 @@ const EditComment = ({ idx,
                 onKeyDown={(e) => {
                     editCurrentComment(e.target.value);
                     if (e.key === 'Enter') {
-                        const newPages = editComment(pages, 
-                            currentPageName, e.target.value, idx);
+                        let newPages;
+                        switch(type) {
+                            case 'journal': 
+                                newPages = editJournalComment(pages, currentPageName,
+                                    slideOut, idx, e.target.value);
+                                break;
+                            default: 
+                                // Default is to update the comment associated with the page.
+                                newPages = editComment(pages, 
+                                    currentPageName, e.target.value, idx);
+                                break;
+                        }
                         changePages(newPages);
                         saveItem('pages', newPages);
                         changeMouseOver(-1);
