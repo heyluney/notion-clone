@@ -58,7 +58,6 @@ const EmojiSelector = ({
                             case 'journal_comments':
                                 const commentIdx = parseInt(component.split('_')[1]);
                                 newPages = addEmojiToJournalComment(pages, currentPageName, slideOut, commentIdx, {[hexcode]: name});
-                                console.log('newPages', newPages);
                                 break;
                             default: 
                                 // Default is to update the emoji associated with the page.

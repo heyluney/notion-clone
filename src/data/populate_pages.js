@@ -1,13 +1,18 @@
+
+
 import { saveItem, getItem } from '../utils/local_storage';
 import { capitalize } from '../utils/capitalize';
 
 // This allows us to dynamically pull up current page as the page associated with
 // the relevant url as default behavior.
 const getCurrentPage = () => {
+
     const parts = window.location.href.split("/");
+    console.log('parts', parts)
     const last = parts[parts.length-1]; // Last part of url 
-    const componentName = last.split('_').map(word => capitalize(word)).join(' ');
-    return componentName;
+    const componentName = last.split('_');
+    console.log('componentName', componentName)
+    return componentName.map(word => capitalize(word)).join(' ');
 }
 const defaultCurrentPageName = getCurrentPage();
 // This seeds some data across various pages using local storage (so data

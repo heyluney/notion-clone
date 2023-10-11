@@ -172,25 +172,6 @@ export const editJournalComment = (
     }
 }
 
-
-// export const removeEmojiFromComment = (pages, pageName, commentIdx, emoji) => {
-//     const page = pages[pageName];
-//     const {[emoji]: desc, ...keptEmojis} = page.comments[commentIdx].emojis;
-//     return {
-//         ...pages, 
-//         [pageName]: {
-//             ...page,
-//             comments: {
-//                 ...page.comments,
-//                 [commentIdx]: {
-//                     ...page.comments[commentIdx],
-//                     emojis: keptEmojis
-//                 }
-//             }
-//         }
-//     }
-// }
-
 export const addEmojiToJournalComment = 
     (pages, pageName, journalIdx, commentIdx, emojiPair) => 
         {
@@ -218,3 +199,28 @@ export const addEmojiToJournalComment =
             }
         }
 
+
+export const removeEmojiFromJournalComment = 
+    (pages, pageName, journalIdx, commentIdx, emoji) => {
+    const page = pages[pageName];
+
+    const {[emoji]: desc, ...keptEmojis} = page.entries[journalIdx].comments[commentIdx].emojis;
+    return {
+        ...pages, 
+        [pageName]: {
+            ...page,
+            entries: {
+                ...page.entries, 
+                [journalIdx]: {
+                    ...page.entries[journalIdx],
+                    comments: {
+                        [commentIdx]: {
+                            ...page.entries[journalIdx].comments[commentIdx],
+                            emojis: keptEmojis
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

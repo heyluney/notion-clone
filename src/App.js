@@ -2,6 +2,10 @@ import { useState, Fragment, createContext } from 'react';
 import styles from './App.module.css';
 import SideBar from './components/sidebar/SideBar';
 import Main from './components/main/Main';
+import { useLocation } from 'react-router-dom';
+import { capitalize } from './utils/capitalize';
+
+import { saveItem } from './utils/local_storage';
 
 import { addFaviconToPage } from './utils/generate_favicon';
 import { seedEmojiDictionary } from './data/populate_emoji_dictionary';
@@ -11,6 +15,11 @@ import { getItem } from './utils/local_storage';
 import Overlay from './Overlay';
 
 const App = () => {
+  // This allows us to dynamically pull up current page as the page associated with
+  // the relevant url as default behavior.
+  const defaultCurrentPageName  = capitalize(useLocation().pathname.slice(1));
+  if (getItem('current_page_name') === null) saveItem('current_page_name', defaultCurrentPageName);
+
   seedEmojiDictionary();
   seedPages();
   const [pages, changePages] = useState(getItem('pages'));
