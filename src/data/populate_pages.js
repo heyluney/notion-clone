@@ -1,20 +1,7 @@
 
 
 import { saveItem, getItem } from '../utils/local_storage';
-import { capitalize } from '../utils/capitalize';
 
-// This allows us to dynamically pull up current page as the page associated with
-// the relevant url as default behavior.
-const getCurrentPage = () => {
-
-    const parts = window.location.href.split("/");
-    console.log('parts', parts)
-    const last = parts[parts.length-1]; // Last part of url 
-    const componentName = last.split('_');
-    console.log('componentName', componentName)
-    return componentName.map(word => capitalize(word)).join(' ');
-}
-const defaultCurrentPageName = getCurrentPage();
 // This seeds some data across various pages using local storage (so data
 // persists between browser refreshes).
 
@@ -87,8 +74,15 @@ const defaultJournal = {
 }
 
 const defaultPages = {
-    "Quick Note": {
+    "Home": {
         idx: 0,
+        name: "Home",
+        path: "/", 
+        icon: '1F4D8',
+        component: "Home"
+    },
+    "Quick Note": {
+        idx: 1,
         name: "Quick Note", // Title of the page, must equal the key in defaultPages hash.
         path: "/quick_note",
         icon: '1F32D',
@@ -96,14 +90,14 @@ const defaultPages = {
         comments: defaultComments
     },
     "Task List": {
-        idx: 1,
+        idx: 2,
         name: "Task List",
         path: "/task_list",
         icon: '1F32D',
         component: "TaskList",
     },
     "Journal": {
-        idx: 2,
+        idx: 3,
         name: "Journal",
         path: "/journal",
         icon: '1F4D8',
@@ -114,7 +108,6 @@ const defaultPages = {
 
 export const seedPages = () => {
     if (getItem('pages') === null) saveItem('pages', defaultPages);
-    if (getItem('current_page_name') === null) saveItem('current_page_name', defaultCurrentPageName);
 }
 
 
