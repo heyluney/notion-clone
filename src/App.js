@@ -17,8 +17,6 @@ import url_map from './utils/url_to_component_map';
 
 
 const App = () => {
-  // This allows us to dynamically pull up current page as the page associated with
-  // the relevant url as default behavior.
   const location = useLocation();
   saveItem('current_page_name', url_map[location.pathname]);
 
@@ -26,6 +24,8 @@ const App = () => {
     changeCurrentPageName(url_map[location.pathname]);
     saveItem('current_page_name', currentPageName);
     addFaviconToPage(pages[currentPageName].icon);
+    document.title = currentPageName;
+
   }, [location])
 
   seedEmojiDictionary();
