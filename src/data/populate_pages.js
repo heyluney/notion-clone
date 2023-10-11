@@ -1,11 +1,13 @@
 
 
 import { saveItem, getItem } from '../utils/local_storage';
-
+import { pastelColors } from './color_constants';
 // This seeds some data across various pages using local storage (so data
 // persists between browser refreshes).
 
 // TODO(helen): Double check that icons also work to substitute traditional emojis.
+
+
 const defaultComments = {
     1: {
       comment: "Hi",
@@ -30,22 +32,28 @@ const defaultJournal = {
     1: {
       title: "Going backpacking with Taylor <3",
       emoji: "1F923",
-      tags: ["Canada", "backpacking", "hiking", "blah", "blah1", "blah2",
-      "blah3", "blah4", "blah5", "blah6", "blah7", "blah8", "blah9"],
+      tags: {
+          "Canada": pastelColors["purple"],
+          "backpacking": pastelColors["pink"],
+          "hiking": pastelColors["orange"]
+      },
       timestamp: "1693348898325",
       comments: defaultComments
     },
     2: {
       title: "Taking Clark on a walk!",
       emoji: "1F415",
-      tags: ["dogs", "Clark"],
+      tags: {
+        "dogs": pastelColors["green"],
+        "Clark": pastelColors["green"]
+      },
       timestamp: "1893348898325",
       comments: defaultComments
     },
     3: {
       title: "Checking out a new flavor at Salt & Straw",
       emoji: "1F366",
-      tags: ["cinnamon snickerdoodle"],
+      tags: {},
       timestamp: "1893348894825",
       comments: {
         1: {
@@ -60,7 +68,7 @@ const defaultJournal = {
     4: {
       title: "Just checking how asjd f;alskdj f;laksjd f;laksj df;lkasj df;klasj df;kaljsd f;aksjd fa;sjdf a;slkdj fa;lksjd f;aslkdj f;askdj fa;sdkj fa;lskd jfa;slkd jf;aslk jdf;alskd jfasdf",
       emoji: "1F366",
-      tags: ["b1", "b2"],
+      tags: {},
       timestamp: "1893348894855",
       comments: {
         1: {

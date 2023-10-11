@@ -17,8 +17,6 @@ const CommentEmojis = ({idx, comment, type}) => {
     // Need idx of comment and idx of emoji in order 
     // to toggle one description at a time.
     const [descriptor, toggleDescriptor] = useState("-1_-1");
-
-    console.log('type', type)
     return (
         <div className={styles.emojis}>
             {comment.emojis && Object.entries(comment.emojis)

@@ -23,7 +23,6 @@ const EmojiSelector = ({
     const { togglePopup } = useContext(PopupContext);
     const { slideOut } = useContext(SlideOutContext);
 
-    console.log('type', type)
     // Lists which emoji is currently being hovered.
     const [hoveredEmoji, changeHoveredEmoji] = useState([/*isRecent?*/false, /*emoji name*/false]);
 

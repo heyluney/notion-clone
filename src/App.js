@@ -2,7 +2,7 @@ import { useState, Fragment, createContext, useEffect } from 'react';
 import styles from './App.module.css';
 import SideBar from './components/sidebar/SideBar';
 import Main from './components/main/Main';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { saveItem } from './utils/local_storage';
 
@@ -18,24 +18,26 @@ import url_map from './utils/url_to_component_map';
 
 const App = () => {
   const location = useLocation();
-  saveItem('current_page_name', url_map[location.pathname]);
 
-  useEffect(() => {
-    changeCurrentPageName(url_map[location.pathname]);
-    saveItem('current_page_name', currentPageName);
-    addFaviconToPage(pages[currentPageName].icon);
-    document.title = currentPageName;
-
-  }, [location])
-
+  if (getItem('current_page_name') === null) {
+    saveItem('current_page_name', url_map[location.pathname]);
+  }
   seedEmojiDictionary();
   seedPages();
+
   const [pages, changePages] = useState(getItem('pages'));
   const [currentPageName, changeCurrentPageName]
     = useState(getItem('current_page_name'));
 
-    console.log('pages', pages);
-    console.log('currentPageName', currentPageName);
+  // TODO(helenyu): I thinks somehow the react history is manually being manipulated, because
+  // the application breaks on browser "forward" and "back" buttons, investigate further.
+  useEffect(() => {
+    changeCurrentPageName(url_map[location.pathname]);
+    addFaviconToPage(pages[currentPageName].icon);
+    document.title = currentPageName;
+    saveItem('current_page_name', currentPageName);
+  }, [location, currentPageName])
+
   // Determines global state for whether a popup is currently open or not.
   const [popup, togglePopup] = useState(null);
   addFaviconToPage(pages[currentPageName].icon);

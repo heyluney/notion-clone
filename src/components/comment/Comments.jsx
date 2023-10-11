@@ -62,7 +62,8 @@ const Comments = ({passedComments, type}) => {
             )}
             <AddComment
                 currentComment={currentComment}
-                updateComment={updateComment} />
+                updateComment={updateComment}
+                type={type}/>
         </div>
     )
 }

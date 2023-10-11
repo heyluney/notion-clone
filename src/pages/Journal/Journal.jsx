@@ -21,12 +21,10 @@ const Journal = () => {
                 {Object.entries(journalEntries)
                     .map(([idx, entry]) => {
                         return (
-                            <div key={idx}>
-                            <JournalEntry 
-                                key={idx}
-                                idx={idx}
-                                entry={entry}/>
-                            </div>
+                                <JournalEntry 
+                                    key={idx}
+                                    idx={idx}
+                                    entry={entry}/>
                         )
                     }
                 )}

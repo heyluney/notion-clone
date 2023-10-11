@@ -1,6 +1,7 @@
 /* So colors can be unified. */
 :root {
     --highlight-grey: rgb(234, 234, 233);
+    --highlight-grey-darker: rgb(223, 223, 222);
 }
 
 :root {

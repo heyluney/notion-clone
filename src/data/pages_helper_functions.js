@@ -159,11 +159,40 @@ export const editJournalComment = (
                 [journalIdx]: {
                     ...page.entries[journalIdx],
                     comments: {
+                        ...page.entries[journalIdx].comments,
                         [commentIdx]: {
                             ...page.entries[journalIdx].comments[commentIdx],
                             timestamp:  JSON.stringify(new Date()),
                             comment: commentText,
                             edited: true
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+export const addJournalComment = (
+    pages, pageName, journalIdx, commentText
+) => {
+    const page = pages[pageName];
+
+    return {
+        ...pages,
+        [pageName]: {
+            ...page,
+            entries: {
+                ...page.entries,
+                [journalIdx]: {
+                    ...page.entries[journalIdx],
+                    comments: {
+                        ...page.entries[journalIdx].comments,
+                        [calculateNextKey(page.entries[journalIdx].comments)]: {
+                            timestamp:  JSON.stringify(new Date()),
+                            comment: commentText,
+                            edited: false, 
+                            emojis: {}
                         }
                     }
                 }
@@ -185,6 +214,7 @@ export const addEmojiToJournalComment =
                         [journalIdx]: {
                             ...page.entries[journalIdx],
                             comments: {
+                                ...page.entries[journalIdx].comments,
                                 [commentIdx]: {
                                     ...page.entries[journalIdx].comments[commentIdx],
                                     emojis: {
@@ -214,10 +244,51 @@ export const removeEmojiFromJournalComment =
                 [journalIdx]: {
                     ...page.entries[journalIdx],
                     comments: {
+                        ...page.entries[journalIdx].comments,
                         [commentIdx]: {
                             ...page.entries[journalIdx].comments[commentIdx],
                             emojis: keptEmojis
                         }
+                    }
+                }
+            }
+        }
+    }
+}
+
+export const removeTagFromJournal = 
+    (pages, pageName, journalIdx, tagName) => {
+    const page = pages[pageName];
+    const {[tagName]: associatedColor, ...keptTags} = page.entries[journalIdx].tags;
+    return {
+        ...pages, 
+        [pageName]: {
+            ...page,
+            entries: {
+                ...page.entries, 
+                [journalIdx]: {
+                    ...page.entries[journalIdx],
+                    tags: keptTags
+                }
+            }
+        }
+    }
+}
+
+export const addTagToJournal = 
+    (pages, pageName, journalIdx, tagPair) => {
+    const page = pages[pageName];
+    return {
+        ...pages, 
+        [pageName]: {
+            ...page,
+            entries: {
+                ...page.entries, 
+                [journalIdx]: {
+                    ...page.entries[journalIdx],
+                    tags: {
+                        ...page.entries[journalIdx].tags,
+                        ...tagPair
                     }
                 }
             }

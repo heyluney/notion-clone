@@ -1,15 +1,16 @@
 import { useContext } from 'react';
-import { PageContext } from '../../App';
+import { PageContext, SlideOutContext } from '../../App';
 
 import styles from './AddComment.module.css';
 import clark from '../../assets/clark_profile.jpg';
 
-import { addComment } from '../../data/pages_helper_functions';
+import { addComment, addJournalComment } from '../../data/pages_helper_functions';
 
 import { saveItem } from '../../utils/local_storage';
 
 
-const AddComment = ({ currentComment, updateComment }) => {
+const AddComment = ({ currentComment, updateComment, type }) => {
+    const { slideOut } = useContext(SlideOutContext);
     const { pages, changePages, currentPageName } = useContext(PageContext);
     return (
         <div className={styles.new}>
@@ -25,7 +26,16 @@ const AddComment = ({ currentComment, updateComment }) => {
             }}
             onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                    const newPages = addComment(pages, currentPageName, e.target.value);
+                    let newPages;
+                    switch(type) {
+                        case 'journal_comments': 
+                            newPages = addJournalComment(pages, currentPageName, slideOut, e.target.value);
+                            break;
+                        default: 
+                            // Default is to update the comment associated with the page.
+                            newPages = addComment(pages, currentPageName, e.target.value);
+                            break;
+                    }
                     changePages(newPages);
                     saveItem('pages', newPages);
                     updateComment("");

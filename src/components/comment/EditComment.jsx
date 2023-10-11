@@ -46,7 +46,7 @@ const EditComment = ({ idx,
                     if (e.key === 'Enter') {
                         let newPages;
                         switch(type) {
-                            case 'journal': 
+                            case 'journal_comments': 
                                 newPages = editJournalComment(pages, currentPageName,
                                     slideOut, idx, e.target.value);
                                 break;

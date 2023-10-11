@@ -1,0 +1,25 @@
+@import '../../standard.module.css';
+
+
+.addTag {
+    border: none;
+    outline: none;
+    background: var(--highlight-grey);
+    display: flex;
+    width: 55px;
+
+    margin: 1px;
+    padding: 2px; 
+    padding-left: 9px;
+    padding-right: 9px;
+    font-size: 14px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.addTag:hover {
+    cursor: pointer;
+    background:  var(--highlight-grey-darker);
+}

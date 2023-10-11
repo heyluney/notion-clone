@@ -9,16 +9,7 @@ import { PageContext, SlideOutContext } from '../../App';
 // for the right page in the sidebar (otherwise multiple popups will be)
 // triggered.
 const SideBarDetailItem = ({idx, name, icon, path}) => {
-    const { currentPageName, changeCurrentPageName } = useContext(PageContext);
-    const { toggleSlideOut } = useContext(SlideOutContext);
-
-    // Closes the slide out if the page isn't journal.
-    useEffect(() => {
-        if (currentPageName !== 'Journal') {
-            toggleSlideOut(null);
-        }
-    }, [currentPageName])
-
+    const { changeCurrentPageName } = useContext(PageContext);
     return (
         <div className={styles.left}>
             <Icon icon={icon} 
