@@ -1,7 +1,7 @@
 {
   "name": "notion-clone",
   "version": "0.1.0",
-  "homepage": "https://heyluney.github.io/notion-clone/",
+  "homepage": "https://heyluney.github.io/notion-clone",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
