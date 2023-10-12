@@ -27,7 +27,6 @@ const JournalEntry = ({ idx, entry }) => {
             </div>
             <div className={styles.right}>
                 <Tags 
-                    addTagsShown={false}
                     tags={tags} journalIdx={parseInt(idx)}/>
                 <div className={styles.timestamp}>
                     {getFullTimeString(timestamp)}

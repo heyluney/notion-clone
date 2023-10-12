@@ -2,7 +2,7 @@ import { useState, Fragment, createContext, useEffect } from 'react';
 import styles from './App.module.css';
 import SideBar from './components/sidebar/SideBar';
 import Main from './components/main/Main';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { saveItem } from './utils/local_storage';
 
@@ -36,7 +36,7 @@ const App = () => {
     addFaviconToPage(pages[currentPageName].icon);
     document.title = currentPageName;
     saveItem('current_page_name', currentPageName);
-  }, [location, currentPageName])
+  }, [location, currentPageName, pages])
 
   // Determines global state for whether a popup is currently open or not.
   const [popup, togglePopup] = useState(null);
