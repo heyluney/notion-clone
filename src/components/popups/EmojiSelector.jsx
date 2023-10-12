@@ -32,8 +32,8 @@ const EmojiSelector = ({
         <div key={rowIdx} className={styles.row}>
             {emojis.map(([name, hexcode, isVisible], columnIdx) => (
                 isVisible && 
-                <div className={`${styles.emoji} ${columnIdx % 12 == 0 ? styles.left :
-                                                    columnIdx % 12 == 11 ? styles.right : ""}`}
+                <div className={`${styles.emoji} ${columnIdx % 12 === 0 ? styles.left :
+                                                    columnIdx % 12 === 11 ? styles.right : ""}`}
                     key={name}
                     onClick={(e) => {
                         e.preventDefault();

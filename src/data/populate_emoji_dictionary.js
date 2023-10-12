@@ -4,7 +4,7 @@ const myMarkdownFile = require("./emojis.txt");
 
 function asyncCallback(data) {
     const dictionary = {};
-    const lines = data.split('\n').filter(x => x != '');
+    const lines = data.split('\n').filter(x => x !== '');
     let currentGroupName = "";
     let currentSubgroupName = "";
     for (let line of lines) {
@@ -14,10 +14,10 @@ function asyncCallback(data) {
 
             if (!line.includes('subgroup')) {
                 dictionary[name] = {};
-                if (currentGroupName != name) currentGroupName = name;
+                if (currentGroupName !== name) currentGroupName = name;
             } else {
                 dictionary[currentGroupName][name] = {};
-                if (currentSubgroupName != name) currentSubgroupName = name;
+                if (currentSubgroupName !== name) currentSubgroupName = name;
             }
         } else {
             if (line.includes('unqualified')) continue;
@@ -31,9 +31,9 @@ function asyncCallback(data) {
             const desc = rest.split(weird_code)[1].trim();
           
             // A couple of emojis do not look visually in keeping with the rest, omit this from the final emoji dictionary.
-            if (desc == "smiling face") continue;
-            if (desc == "dotted line face") continue;
-            if (desc == "frowning face") continue;
+            if (desc === "smiling face") continue;
+            if (desc === "dotted line face") continue;
+            if (desc === "frowning face") continue;
 
             dictionary[currentGroupName][currentSubgroupName][desc] = hexcode;
         }

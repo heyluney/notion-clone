@@ -31,9 +31,9 @@ export const getTimeString = (stringified_date) => {
     if (hours >= 12) {
         return num_to_month_mapping[oldDate.getMonth()].slice(0, 3) + " " + oldDate.getDate();
     } else if (minutes >= 60) {
-        return `${hours} hour${hours == 1 ? "": "s"} ago`;
+        return `${hours} hour${hours === 1 ? "": "s"} ago`;
     } else if (minutes > 1) {
-        return `${minutes} minute${minutes == 1 ? "": "s"} ago`;
+        return `${minutes} minute${minutes === 1 ? "": "s"} ago`;
     } else {
         return "Now";
     }

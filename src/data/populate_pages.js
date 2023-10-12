@@ -6,8 +6,6 @@ import { pastelColors } from './color_constants';
 // persists between browser refreshes).
 
 // TODO(helen): Double check that icons also work to substitute traditional emojis.
-
-
 const defaultComments = {
     1: {
       comment: "Hi",

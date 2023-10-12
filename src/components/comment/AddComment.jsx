@@ -14,7 +14,7 @@ const AddComment = ({ currentComment, updateComment, type }) => {
     const { pages, changePages, currentPageName } = useContext(PageContext);
     return (
         <div className={styles.new}>
-        <img className={styles.pic} src={clark} />
+        <img className={styles.pic} src={clark} alt="clarkie_profile_photo" />
         <textarea
             name="postContent"
             value={currentComment}

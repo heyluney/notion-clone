@@ -1,9 +1,9 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import styles from './SideBarDetailItem.module.css';
 import Icon from '../popups/Icon';
 
 import { Link } from 'react-router-dom';
-import { PageContext, SlideOutContext } from '../../App';
+import { PageContext } from '../../App';
 
 // Index is necessary to trigger the correct emoji selector popup 
 // for the right page in the sidebar (otherwise multiple popups will be)

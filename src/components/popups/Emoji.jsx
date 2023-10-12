@@ -29,7 +29,6 @@ const Emoji = ({ component, type }) => {
     // This allows synchronization of emoji update across multiple pages.
     const { pages, changePages, currentPageName } = useContext(PageContext);
     const { slideOut } = useContext(SlideOutContext);
-    const currentPage = pages[currentPageName];
 
     const { popup, togglePopup } = useContext(PopupContext);
 
@@ -60,7 +59,7 @@ const Emoji = ({ component, type }) => {
     const intersectingCategory = useOnScreen(categoryRefs);
 
     const handleScroll = (e) => {
-        if (intersectingCategory != "No intersection exists.")
+        if (intersectingCategory !== "No intersection exists.")
             changeCategory(intersectingCategory);
         const scrollDifference = e.target.scrollHeight - e.target.scrollTop;
         if (Math.abs(e.target.clientHeight - scrollDifference) < 400) {

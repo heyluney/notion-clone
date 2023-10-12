@@ -12,7 +12,7 @@ const useOutsideCommentAlerter = (ref, toggleComment) => {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [ref]);
+    });
 }
 
 export default useOutsideCommentAlerter;

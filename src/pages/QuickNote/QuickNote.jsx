@@ -5,14 +5,14 @@ import Comments from '../../components/comment/Comments';
 import Title from '../../components/title/Title';
 
 const QuickNote = () => {
-    // const [textarea, changeTextArea] = 
-    //     useState(localStorage.getItem('quicknote'));
+    const [textarea, changeTextArea] = 
+        useState(localStorage.getItem('quicknote'));
     
     return (
         <div className={styles.quicknote}>
             <Title isLarge={true} />
             <Comments />
-            {/* <div>
+            <div>
                 <textarea 
                     name="postContent" 
                     className={styles.textarea}
@@ -21,7 +21,7 @@ const QuickNote = () => {
                         changeTextArea(e.target.value);
                         localStorage.setItem('quicknote', e.target.value);
                     }}/>
-            </div> */}
+            </div>
             <div className={styles.list}>
                 Todo placeholder. Lorem ipsum.
             </div>

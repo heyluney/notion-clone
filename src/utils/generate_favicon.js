@@ -10,8 +10,8 @@ export const generateFavicon = hexcode =>
       ${computeEmoji(hexcode)}
     </text></svg>`;
 
-export const addFaviconToPage = (icon) => {
-  const link = document.querySelector("link[rel~='icon']");
+export const addFaviconToPage = icon => {
+  let link = document.querySelector("link[rel~='icon']");
   if (!link) {
     link = document.createElement('link');
     link.rel = 'icon';

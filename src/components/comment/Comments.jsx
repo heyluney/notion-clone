@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef } from 'react';
+import { useState, useContext } from 'react';
 import styles from './Comments.module.css';
 
 import clark from '../../assets/clark_profile.jpg';
@@ -24,17 +24,17 @@ const Comments = ({passedComments, type}) => {
 
     return (
         <div className={styles.comments}>
-            {Object.keys(comments).length == 0 ? "" : 
+            {Object.keys(comments).length === 0 ? "" : 
             
             Object.entries(comments).map(([idx, comment]) =>
                 <div className={styles.comment}
                     key={idx}
                     onMouseEnter={() => {
-                        if (commentBeingEdited == -1) 
+                        if (commentBeingEdited === -1) 
                         changeMouseOver(idx);
                     }}
                 >
-                    <img className={styles.pic} src={clark} />
+                    <img className={styles.pic} src={clark} alt="clark_profile" />
                     <div className={styles.text}>
                         <div className={styles.header}>
                             <div className={styles.meta}>

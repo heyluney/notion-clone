@@ -18,7 +18,7 @@ export const useAutosizeTextArea = (idx, ref, value, commentBeingEdited) => {
             }
         }, 800)
 
-    }, [ref, value, commentBeingEdited]);
+    }, [ref, value, commentBeingEdited, idx]);
 }
 // This hook allows the text area to automatically be sized to fit the 
 // text content inside. If this is not used, the text area will have a scroll.

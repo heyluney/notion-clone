@@ -3,7 +3,6 @@
 import { useState, useContext } from 'react';
 import styles from './TaskList.module.css';
 
-import Icon from '../../components/popups/Icon';
 import Title from '../../components/title/Title';
 
 import { PageContext } from '../../App';
@@ -13,7 +12,7 @@ const TaskList = () => {
         const newTodos = { ...todos };
         newTodos[draggedTask.category] =
             [...todos[draggedTask.category]
-                .filter(todo => todo.taskId != draggedTask.taskId)];
+                .filter(todo => todo.taskId !== draggedTask.taskId)];
         newTodos[category] = [...todos[category], draggedTask];
         updateDraggedTask({});
         updateTodos(newTodos);
@@ -49,6 +48,8 @@ const TaskList = () => {
         "category9": []
     })
 
+    const [ pages, currentPageName ] = useContext(PageContext);
+    console.log('pages', pages, 'currentPageName', currentPageName);
     const [draggedTask, updateDraggedTask] = useState({});
     return (
         <div className={styles.tasklist}>

@@ -5,7 +5,8 @@ import { useState, useEffect, useMemo } from 'react';
 const useOnScreen = categoryRefs => {
     const [isIntersecting, setIntersecting] = useState("")
 
-    const observer =  useMemo(() => new IntersectionObserver(observerCallback, {}), [categoryRefs]);
+    const observer =  useMemo(() => new IntersectionObserver(observerCallback, {}), 
+        [/*categoryRefs*/]);
 
     function observerCallback(entries, _) {
         entries.forEach(entry => {
@@ -13,7 +14,7 @@ const useOnScreen = categoryRefs => {
                 const category = entry.target.innerHTML;
                 const refinedCategory = category
                     .split(' ')
-                    .map(x => x == "&amp;" ? "&" : x)
+                    .map(x => x === "&amp;" ? "&" : x)
                     .join(' ');
                 setIntersecting(refinedCategory)
             } else {
@@ -23,13 +24,14 @@ const useOnScreen = categoryRefs => {
     }
   
     useEffect(() => {
+        // const keys = Object.keys(categoryRefs.current);
         for (let category in categoryRefs.current) {
             if (categoryRefs.current[category] !== null) {
                 observer.observe(categoryRefs.current[category])
             }
         }
         return () => observer.disconnect()
-    }, [Object.keys(categoryRefs.current), isIntersecting])
+    }, [isIntersecting, categoryRefs, observer])
   
     return isIntersecting;
   }

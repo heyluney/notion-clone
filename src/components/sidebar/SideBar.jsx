@@ -13,7 +13,7 @@ const SideBar = () =>{
     return (
         <div className={`${styles.sidebar}`} >
             <ProfileItem 
-                icon={<img className={styles.profile} src={clark}/>} 
+                icon={<img className={styles.profile} src={clark} alt="clark_profile"/>} 
                 name="Clarkie ButtButt's Notion"/>
             
             {Object.values(pages)

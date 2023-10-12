@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import styles from './Banner.module.css'
 
 import Icon from '../popups/Icon';

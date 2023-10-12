@@ -94,7 +94,7 @@ export const getSkinToneCategories = emojiDictPeople => {
 
 export const getRepresentativeEmojis = emojiDict => {
     return Object.entries(emojiDict)
-                .filter(([category, _]) => category != 'recent')
+                .filter(([category, _]) => category !== 'recent')
                 .map(([category, subCategoryHash]) => [
                         category,
                         Object.entries(subCategoryHash)
@@ -138,7 +138,7 @@ export const filterEmojiDictionary = (emojiDict, prefix) => {
 export const flattenEmojiDictionary = emojiDict => {
     const flattened = Object.fromEntries(
         Object.entries(emojiDict)
-                .filter(([category, _]) => category != 'recent')
+                .filter(([category, _]) => category !== 'recent')
                 .map(([category, subCategoryHash]) => [
                         category,
                         Object.entries(subCategoryHash)
@@ -164,9 +164,24 @@ export const truncateEmojiDictionary = (emojiDict, prefix, length) => {
     } else {
         // Number of emoji entries is at most length.
         for (let category in emojiDict) {
-            newEmojiDict[category] = emojiDict[category].map(
-                ([name, hexcode, isVisible], idx) => count + idx > length ? [name, hexcode, false] : [name, hexcode, true]
-            );
+            // console.log(emojiDict[category])
+            const temp = [];
+
+            for (let i = 0; i < emojiDict[category].length; i++) {
+                const name = emojiDict[category][i][0];
+                const hexcode = emojiDict[category][i][1];
+                if (count + i + 1 < length) {
+                    temp.push([name, hexcode, true]);
+                } else {
+                    temp.push([name, hexcode, false]);
+                }
+            }
+            newEmojiDict[category] = temp;
+            // newEmojiDict[category] = emojiDict[category].map(
+            //     ([name, hexcode, isVisible], idx) => count + emojiDict[category].length > length 
+            //         ? [name, hexcode, false] 
+            //         : [name, hexcode, true]
+            // );
             count += emojiDict[category].length;
         }
     }

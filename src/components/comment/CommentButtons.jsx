@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 
 import { PopupContext } from '../../App';
 import { AiFillEdit as Edit, AiFillDelete as Delete } from 'react-icons/ai';
@@ -10,7 +10,6 @@ const CommentEmojis = ({idx,
         commentBeingEdited,
         changeCommentBeingEdited,
     }) => {
-    const [descriptor, changeDescriptor] = useState([null, -1]);
     const { togglePopup } = useContext(PopupContext);
 
     return (        
@@ -21,12 +20,6 @@ const CommentEmojis = ({idx,
                 ${commentBeingMousedOver === idx ?
                     styles.edit_active 
                     : styles.edit_inactive}`}
-            onMouseEnter={() => {
-                changeDescriptor(['edit', idx]);
-            }}
-            onMouseLeave={() => {
-                changeDescriptor([null, -1])
-            }}
             onClick={() => {
                 changeCommentBeingEdited(idx);
             }}>
@@ -37,12 +30,6 @@ const CommentEmojis = ({idx,
                 commentBeingMousedOver === idx ? 
                     styles.delete_active : 
                         styles.delete_inactive}`}
-            onMouseEnter={() => {
-                changeDescriptor(['delete', idx]);
-            }}
-            onMouseLeave={() => {
-                changeDescriptor([null, -1])
-            }}
             onClick={() => {
                 togglePopup(`Delete_${idx}`);
             }}>
