@@ -1,7 +1,10 @@
 @import '../../standard.module.css';
 
-
-.addTag {
+.group {
+    display: flex;
+    flex-direction: row;
+}
+.add_tag {
     border: none;
     outline: none;
     background: var(--highlight-grey);
@@ -19,7 +22,24 @@
     align-items: center;
 }
 
-.addTag:hover {
+.add_tag:hover {
     cursor: pointer;
     background:  var(--highlight-grey-darker);
+}
+
+.add_tag:focus {
+    height: 27px;
+    background:  var(--highlight-grey-darker);
+}
+
+.color_selector {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(75px);
+}
+
+.color:hover {
+    filter: brightness(0.8);
+    cursor: pointer;
 }

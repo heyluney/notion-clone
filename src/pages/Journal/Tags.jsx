@@ -10,7 +10,7 @@ import { saveItem } from '../../utils/local_storage';
 import AddTag from './AddTag';
 import { ImCross as Cross } from 'react-icons/im';
 
-const Tags = ({ journalIdx, tags, full }) => {
+const Tags = ({ addTagsShown, journalIdx, tags, full }) => {
     const { slideOut }= useContext(SlideOutContext);
     const { pages, changePages, currentPageName } = useContext(PageContext);
 
@@ -32,10 +32,15 @@ const Tags = ({ journalIdx, tags, full }) => {
                         onMouseLeave={() => toggleDeleteButtonsShown(-1)}
                     >
                     
-                    <div>{tag}</div>
+                    <div>{tag /* idx === activeTag */}</div>
                 
                     {
-                        deleteButtonsShown === idx && <Cross className={`${styles.delete} ${idx === activeTag ? styles.active : null}`}
+                        deleteButtonsShown === idx && <Cross className={`${styles.delete}`}
+                        style={idx === activeTag ? {
+                            backgroundColor: color,
+                            filter: "brightness(0.7)",
+                            cursor: "pointer"
+                        } : {}}
                         onMouseEnter={() => toggleActiveTag(idx)}
                         onMouseLeave={() => toggleActiveTag(-1)}
                         onClick={() => {
@@ -47,7 +52,7 @@ const Tags = ({ journalIdx, tags, full }) => {
                 </div>
                 
             )}
-                <AddTag className={`${styles.tag} ${styles.add_tag}`} />
+            {addTagsShown && <AddTag className={`${styles.tag} ${styles.add_tag}`} />}
         </div>
     )
 }

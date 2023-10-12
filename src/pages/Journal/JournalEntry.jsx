@@ -26,9 +26,9 @@ const JournalEntry = ({ idx, entry }) => {
                 </div>
             </div>
             <div className={styles.right}>
-                <Tags onClick={() => {
-                    console.log('hi!!')
-                }}tags={tags} journalIdx={parseInt(idx)}/>
+                <Tags 
+                    addTagsShown={false}
+                    tags={tags} journalIdx={parseInt(idx)}/>
                 <div className={styles.timestamp}>
                     {getFullTimeString(timestamp)}
                 </div>

@@ -38,7 +38,7 @@ const SlideOut = () => {
                     <div className={styles.desc_item}>Date Created</div>
                     <div className={styles.desc_item}>{getFullTimeString(timestamp)}</div>
                     <div className={styles.desc_item}>Tags</div>
-                    <Tags tags={tags} full={true}/>
+                    <Tags tags={tags} full={true} addTagsShown={true}/>
                 </div>
 
                 <Comments className={styles.comments} 

@@ -1,7 +1,7 @@
 import { useState, useContext, useRef, useCallback } from 'react';
 
 import styles from './Emoji.module.css';
-import { PageContext, PopupContext } from '../../App';
+import { PageContext, PopupContext, SlideOutContext } from '../../App';
 
 import { getItem, saveItem } from '../../utils/local_storage';
 
@@ -21,11 +21,14 @@ import useOnScreen from '../../hooks/OnscreenAlert';
 
 import EmojiSelector from './EmojiSelector';
 
+import { addEmojiToComment, editJournalEmoji, addEmojiToJournalComment, updateTitleEmoji } from '../../data/pages_helper_functions';
+
 import { FaShuffle as Shuffle } from 'react-icons/fa6';
 
 const Emoji = ({ component, type }) => {
     // This allows synchronization of emoji update across multiple pages.
     const { pages, changePages, currentPageName } = useContext(PageContext);
+    const { slideOut } = useContext(SlideOutContext);
     const currentPage = pages[currentPageName];
 
     const { popup, togglePopup } = useContext(PopupContext);
@@ -96,11 +99,26 @@ const Emoji = ({ component, type }) => {
                         autoFocus={true} />
                     <div className={styles.button}
                         onClick={() => {
-                            const {_, hexcode} = getRandomEmoji(emojiDictionary);
-                            const newPages = {...pages};
-                            newPages[currentPageName] = {
-                                ...currentPage, icon: hexcode 
-                            };
+                            const {description: name, hexcode} = getRandomEmoji(emojiDictionary);
+                            let newPages;
+                            const idx = parseInt(component.split('_')[1]);
+
+                            switch(type) {
+                                case 'comments': 
+                                    newPages = addEmojiToComment(pages, currentPageName, idx, {[hexcode]: name});
+                                    break;
+                                case 'journal': 
+                                    newPages = editJournalEmoji(pages, currentPageName, slideOut, hexcode);
+                                    break;
+                                case 'journal_comments':
+                                    const commentIdx = parseInt(component.split('_')[1]);
+                                    newPages = addEmojiToJournalComment(pages, currentPageName, slideOut, commentIdx, {[hexcode]: name});
+                                    break;
+                                default: 
+                                    // Default is to update the emoji associated with the page.
+                                    newPages = updateTitleEmoji(pages, currentPageName, hexcode);
+                                    break;
+                            }
                             changePages(newPages);
                             saveItem('pages', newPages);
                             togglePopup(null);
