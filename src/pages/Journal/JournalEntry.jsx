@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import styles from './JournalEntry.module.css';
 
 import { getFullTimeString } from '../../utils/calculate_date';
@@ -12,10 +12,14 @@ import { FaComments as Comments } from 'react-icons/fa6';
 const JournalEntry = ({ idx, entry }) => {
     const { slideOut, toggleSlideOut, togglePhysicalSlideOut } = useContext(SlideOutContext);
     const { title, emoji, tags, timestamp, comments } = entry;
-    console.log("comments", comments)
+
+    const iconRef = useRef();
     return (
         <div onClick={
-            () => {
+            (e) => {
+                if (iconRef && 
+                    iconRef.current && 
+                    iconRef.current.contains(e.target)) return;
                 if (slideOut === null) {
                     toggleSlideOut(idx);
                     togglePhysicalSlideOut(true);
@@ -25,9 +29,12 @@ const JournalEntry = ({ idx, entry }) => {
                 <div className={`${styles.title} 
                 ${Object.keys(tags).length > 0 ? 
                         styles.title_with_tags : null}`}>
-                    <Icon icon={emoji}
+                    <div ref={iconRef}>
+                    <Icon 
+                        icon={emoji}
                         component={`${"Journal"}_${idx}`}
                     />
+                    </div>
                     <div className={styles.journal_entry_title}>
                         {title}
                     </div>
