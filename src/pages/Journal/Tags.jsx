@@ -25,7 +25,7 @@ const Tags = ({ addTagsShown, journalIdx, tags, full }) => {
                         style={{
                             backgroundColor: color
                         }}
-                        key={idx} className={`${styles.tag} ${styles.existing_tag}`}
+                        key={idx} className={`${styles.tag}`}
                         onMouseEnter={() => {
                             toggleDeleteButtonsShown(idx)
                         }}

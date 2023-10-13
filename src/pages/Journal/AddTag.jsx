@@ -53,46 +53,49 @@ const AddTag = () => {
                         });
                     }
             }} />
-            <div className={styles.color_selector}>
-
+            <div className={styles.color_selector_group}>
                 <div className={styles.color}
                     style={{
                         backgroundColor: Object.values(pastelColors)[0],
                         backgroundImage: `-webkit-linear-gradient(30deg, 
                             ${Object.values(pastelColors)[2]} 50%, 
                             ${Object.values(pastelColors)[3]} 50%)`,
+                        top: 0,
                         height: "20px",
                         width: "20px",
-                        borderRadius: "4px"
+                        borderRadius: "4px",
                     }} 
                     onClick={
                         () =>  toggleColorSelector(!colorSelectorOpen)
                     }>
                 </div>
-               {Object.values(pastelColors).map(color =>
-                    <div className={styles.color}
-                        key={color}
-                        onClick={() => {
-                            updateCurrentTag({
-                                ...currentTag,
-                                color: color
-                            })
-                            toggleColorSelector(false)
-                    }}
-                        style={colorSelectorOpen ? {
-                            backgroundColor: color,
-                            height: "20px",
-                            width: "20px",
-                            borderRadius: "4px",
-                            transition: "1s"
-                        } : {
-                            backgroundColor: color,
-                            height: "0px",
-                            width: "0px",
-                            borderRadius: "4px",
-                            transition: "1s"
-                        }}>
-                    </div>)}
+                <div className={styles.color_selector}>
+                    {Object.values(pastelColors).map(color =>
+                        <div className={styles.color}
+                            key={color}
+                            onClick={() => {
+                                updateCurrentTag({
+                                    ...currentTag,
+                                    color: color
+                                })
+                                toggleColorSelector(false)
+                        }}
+                            style={colorSelectorOpen ? {
+                                backgroundColor: color,
+                                height: "20px",
+                                width: "20px",
+                                borderRadius: "4px",
+                                transition: "1s",
+                            } : {
+                                backgroundColor: color,
+                                height: "0px",
+                                width: "0px",
+                                borderRadius: "4px",
+                                transition: "1s",
+                                transform: "translateY(-70px)"
+                            }}>
+                        </div>)}
+                </div>
             </div>
         </div>
     )

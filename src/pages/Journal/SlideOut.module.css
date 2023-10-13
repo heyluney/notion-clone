@@ -22,7 +22,6 @@ flex-direction: column;
 
 .slideout {
     width: 0px; 
-    /* transition: 0ms; */
     right: 0;
     top: 0;
     position: fixed;
@@ -37,7 +36,6 @@ flex-direction: column;
 /* Javascript will set the width to be 500px when the slide out is open. */
 .active {
     box-sizing: border-box;
-    /* transition: 0ms; */
     box-shadow: var(--box-shadow);
     right: 0;
     top: 0;
@@ -52,11 +50,11 @@ flex-direction: column;
 }
 
 .desc {
-    margin-top: 20px;
+    margin-top: 30px;
     display: grid;
-    grid-template-columns: 200px 200px;
-    max-width: 400px;
+    grid-template-columns: 40% 60%;
     row-gap: 20px;
+    margin-bottom: 30px;
 }
 
 .desc_item {
@@ -64,4 +62,10 @@ flex-direction: column;
     box-sizing: border-box;
     color: var(--light-grey);
     font-weight: 300;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }

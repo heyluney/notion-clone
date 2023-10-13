@@ -39,7 +39,11 @@ const SlideOut = () => {
                 draggable={true}
                 onDrop = {() => changeTransitionTime(300)}
                 onDrag={(e) => {
+                    // e.clientX is 0 if the mouse goes off screen (e.g. vertically).
+                    // This is a severe jump, so we return to avoid the jumpy effect
+                    // of slideOutWidth extending to maximum.
                     if (e.clientX === 0) return;
+
                     e.stopPropagation();
                     const newSlideOutWidth = window.screen.width - e.clientX + 2.5;
                     changeSlideOutWidth(newSlideOutWidth);
@@ -52,7 +56,7 @@ const SlideOut = () => {
                 onDragOver={(e) => e.preventDefault()}
             >
             </div>
-            <div >
+            <div className={styles.right}>
                 <Chevron onClick = {() => toggleSlideOut(null)}/>
 
                 {slideOut !== null &&
@@ -73,7 +77,6 @@ const SlideOut = () => {
                             passedComments={pages[currentPageName].entries[slideOut].comments}
                             type="journal_comments"/>
                 </div>}
-
             </div>
 
 

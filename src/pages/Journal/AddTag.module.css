@@ -3,6 +3,7 @@
 .group {
     display: flex;
     flex-direction: row;
+    /* flex-grow: 1; */
 }
 .add_tag {
     border: none;
@@ -22,6 +23,21 @@
     align-items: center;
 }
 
+.color_selector_group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.color_selector {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(70px);
+}
+
+
 .add_tag:hover {
     cursor: pointer;
     background:  var(--highlight-grey-darker);
@@ -30,15 +46,6 @@
 .add_tag:focus {
     height: 27px;
     background:  var(--highlight-grey-darker);
-}
-
-.color_selector {
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    transform: translateX(75px);
-    align-items: center;
-    justify-content: center;
 }
 
 .color:hover {
