@@ -12,33 +12,37 @@ flex-direction: column;
 }
 
 
+.draggable {
+    opacity: 0;
+    cursor: col-resize;
+    flex-shrink: 0;
+    width: 5px;
+    height: 100%;
+}
+
 .slideout {
     width: 0px; 
-    transition: 300ms;
+    /* transition: 0ms; */
     right: 0;
     top: 0;
     position: fixed;
     height: 100vh;
     background: white;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     z-index: 3;
     overflow-y: scroll;
-    resize: horizontal;
-    overflow: auto;
 }
 
+/* Javascript will set the width to be 500px when the slide out is open. */
 .active {
     box-sizing: border-box;
-    width: 500px;
-    transition: 300ms;
+    /* transition: 0ms; */
     box-shadow: var(--box-shadow);
     right: 0;
     top: 0;
     position: fixed;
     height: 100vh;
-    resize: horizontal;
-    overflow: auto;
 }
 
 .main {

@@ -14,8 +14,7 @@ import { pastelColors } from '../../data/color_constants';
 const AddTag = () => {
     const { pages, currentPageName, changePages } = useContext(PageContext);
     const { slideOut } = useContext(SlideOutContext);
-    // const [currentValue, updateCurrentValue] = useState("Add Tag");
-
+    
     const getRandomPastelColor = () => {
         const pastels = Object.values(pastelColors);
         return pastels[Math.floor(Math.random()*pastels.length)];
@@ -63,23 +62,35 @@ const AddTag = () => {
                             ${Object.values(pastelColors)[2]} 50%, 
                             ${Object.values(pastelColors)[3]} 50%)`,
                         height: "20px",
-                        width: "20px"
+                        width: "20px",
+                        borderRadius: "4px"
                     }} 
                     onClick={
                         () =>  toggleColorSelector(!colorSelectorOpen)
                     }>
                 </div>
-                {colorSelectorOpen && Object.values(pastelColors).map(color =>
+               {Object.values(pastelColors).map(color =>
                     <div className={styles.color}
                         key={color}
-                        onClick={() => updateCurrentTag({
-                            ...currentTag,
-                            color: color
-                        })}
-                        style={{
+                        onClick={() => {
+                            updateCurrentTag({
+                                ...currentTag,
+                                color: color
+                            })
+                            toggleColorSelector(false)
+                    }}
+                        style={colorSelectorOpen ? {
                             backgroundColor: color,
                             height: "20px",
-                            width: "20px"
+                            width: "20px",
+                            borderRadius: "4px",
+                            transition: "1s"
+                        } : {
+                            backgroundColor: color,
+                            height: "0px",
+                            width: "0px",
+                            borderRadius: "4px",
+                            transition: "1s"
                         }}>
                     </div>)}
             </div>

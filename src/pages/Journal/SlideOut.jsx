@@ -1,4 +1,4 @@
-import { useContext, useRef } from 'react';
+import { useState, useContext, useRef } from 'react';
 
 import styles from './SlideOut.module.css';
 
@@ -21,30 +21,60 @@ const SlideOut = () => {
     const wrapperRef = useRef();
     useSlideOutOutsideAlerter(wrapperRef);
 
+    const [slideOutWidth, changeSlideOutWidth] = useState(500);
+    const [transitionTime, changeTransitionTime] = useState(300);
+
     return (
-        <div ref={wrapperRef} 
+        <div ref={wrapperRef}
+            style={slideOut !== null ? {
+                width: `${slideOutWidth}px`,
+                transition: `${transitionTime}ms`,
+            } : {
+                transition: `${transitionTime}ms`
+            }}
             className={`${styles.slideout} 
                 ${slideOut === null ? null : styles.active}`}>
-            <Chevron onClick = {() => toggleSlideOut(null)}/>
 
-            {slideOut !== null &&
-                <div className={styles.main}>
-                <Title horizontal={true} 
-                    title={title} 
-                    emoji={emoji}
-                    type="journal" />
+            <div className={styles.draggable}       
+                draggable={true}
+                onDrop = {() => changeTransitionTime(300)}
+                onDrag={(e) => {
+                    if (e.clientX === 0) return;
+                    e.stopPropagation();
+                    const newSlideOutWidth = window.screen.width - e.clientX + 2.5;
+                    changeSlideOutWidth(newSlideOutWidth);
 
-                <div className={styles.desc}>
-                    <div className={styles.desc_item}>Date Created</div>
-                    <div className={styles.desc_item}>{getFullTimeString(timestamp)}</div>
-                    <div className={styles.desc_item}>Tags</div>
-                    <Tags tags={tags} full={true} addTagsShown={true}/>
-                </div>
+                    // Normally this is 300ms to imitate a "slide out" animation.
+                    // However, we want to make the transition time 0 during manually
+                    // dragging, to eliminate lag.
+                    changeTransitionTime(0);
+                }}
+                onDragOver={(e) => e.preventDefault()}
+            >
+            </div>
+            <div >
+                <Chevron onClick = {() => toggleSlideOut(null)}/>
 
-                <Comments className={styles.comments} 
-                        passedComments={pages[currentPageName].entries[slideOut].comments}
-                        type="journal_comments"/>
-            </div>}
+                {slideOut !== null &&
+                    <div className={styles.main}>
+                    <Title horizontal={true} 
+                        title={title} 
+                        emoji={emoji}
+                        type="journal" />
+
+                    <div className={styles.desc}>
+                        <div className={styles.desc_item}>Date Created</div>
+                        <div className={styles.desc_item}>{getFullTimeString(timestamp)}</div>
+                        <div className={styles.desc_item}>Tags</div>
+                        <Tags tags={tags} full={true} addTagsShown={true}/>
+                    </div>
+
+                    <Comments className={styles.comments} 
+                            passedComments={pages[currentPageName].entries[slideOut].comments}
+                            type="journal_comments"/>
+                </div>}
+
+            </div>
 
 
         </div>

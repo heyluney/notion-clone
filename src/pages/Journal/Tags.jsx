@@ -32,7 +32,7 @@ const Tags = ({ addTagsShown, journalIdx, tags, full }) => {
                         onMouseLeave={() => toggleDeleteButtonsShown(-1)}
                     >
                     
-                    <div>{tag /* idx === activeTag */}</div>
+                    <div>{tag}</div>
                 
                     {
                         deleteButtonsShown === idx && <Cross className={`${styles.delete}`}
