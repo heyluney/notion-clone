@@ -7,10 +7,12 @@ import Icon from '../../components/popups/Icon';
 import { SlideOutContext } from '../../App';
 import Tags from './Tags';
 
+import { FaComments as Comments } from 'react-icons/fa6';
+
 const JournalEntry = ({ idx, entry }) => {
     const { slideOut, toggleSlideOut, togglePhysicalSlideOut } = useContext(SlideOutContext);
-    const { title, emoji, tags, timestamp } = entry;
-    console.log('tags', tags)
+    const { title, emoji, tags, timestamp, comments } = entry;
+    console.log("comments", comments)
     return (
         <div onClick={
             () => {
@@ -29,6 +31,10 @@ const JournalEntry = ({ idx, entry }) => {
                     <div className={styles.journal_entry_title}>
                         {title}
                     </div>
+                </div>
+                <div className={styles.comments}>
+                    <Comments />
+                    <div className={styles.number}>{Object.keys(comments).length}</div>
                 </div>
                 <div className={styles.tags}>
                     <Tags tags={tags} journalIdx={parseInt(idx)}/>

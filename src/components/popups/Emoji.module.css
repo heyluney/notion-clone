@@ -17,6 +17,8 @@
     min-width: 400px;
     z-index: 100;
     pointer-events:all;
+    position: fixed;
+    transform: translateX(200px) translateY(175px);
 }
 
 .emojis.open {

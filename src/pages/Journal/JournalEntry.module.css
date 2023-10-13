@@ -3,7 +3,7 @@
 /* Want tags and date to be on the right?? */
 .journal_entry {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto auto 1fr auto;
     align-items: center;
     column-gap: 8px;
 }
@@ -35,7 +35,14 @@
     max-width: 300px;
 }
 
-
+.comments {
+    display: flex;
+    color: var(--light-grey);
+}
+.number {
+    margin-left: 2px;
+    margin-right: 2px;
+}
 .tags {
     overflow-x: hidden;
 }
@@ -45,3 +52,4 @@
     display: flex;
     justify-content: flex-end;
 }
+
