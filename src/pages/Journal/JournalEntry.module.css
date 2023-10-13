@@ -1,11 +1,13 @@
 @import '../../standard.module.css';
 
+/* Want tags and date to be on the right?? */
 .journal_entry {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
+    column-gap: 8px;
 }
+
 .journal_entry:hover{
     background: var(--highlight-grey);
     cursor: pointer;
@@ -17,18 +19,29 @@
     font-size: 18px;
     display: flex;
     align-items: flex-end;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
-.left {
+.title {
     display: flex;
-    flex-direction: row;
-}
-.right {
-    display: flex;
-    flex-direction: row;
     align-items: center;
+    flex-direction: row;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.title_with_tags {
+    max-width: 300px;
+}
+
+
+.tags {
+    overflow-x: hidden;
 }
 
 .timestamp {
-    font-size: 12px;
+    font-size: 11.5px;
+    display: flex;
+    justify-content: flex-end;
 }

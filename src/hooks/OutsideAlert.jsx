@@ -3,15 +3,20 @@ import { useContext, useEffect } from 'react';
 import { PopupContext, SlideOutContext } from '../App';
 
 
-export const useSlideOutOutsideAlerter = ref => {
+export const useSlideOutOutsideAlerter = (ref) => {
     const { togglePopup } = useContext(PopupContext);
-    const { slideOut, toggleSlideOut } = useContext(SlideOutContext);
+    const { slideOut, toggleSlideOut,
+        togglePhysicalSlideOut, 
+        slideOutTransitionTime,
+        changeSlideOutTransitionTime } = useContext(SlideOutContext);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (!slideOut) return;
             if (ref.current && !ref.current.contains(event.target)) {
-                toggleSlideOut(null);
+                togglePhysicalSlideOut(false);
+                changeSlideOutTransitionTime(300);
+                setTimeout(() => toggleSlideOut(null), slideOutTransitionTime);
                 togglePopup(null);
             }
         }
@@ -20,8 +25,10 @@ export const useSlideOutOutsideAlerter = ref => {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [ref, slideOut, toggleSlideOut, togglePopup]);
+    }, [ref, slideOut, toggleSlideOut, togglePopup, changeSlideOutTransitionTime,
+        slideOutTransitionTime, togglePhysicalSlideOut]);
 }
+
 
 // If we detect a click outside the popup (event.target location is not contained)
 // in ref.current, which is the popup -> then we trigger the popup to be closed.

@@ -29,8 +29,7 @@ const App = () => {
   const [currentPageName, changeCurrentPageName]
     = useState(getItem('current_page_name'));
 
-  // TODO(helenyu): I thinks somehow the react history is manually being manipulated, because
-  // the application breaks on browser "forward" and "back" buttons, investigate further.
+  // TODO(helenyu): I thinks somehow the react history is manually being manipulated, because the application breaks on browser "forward" and "back" buttons, investigate further.
   useEffect(() => {
     changeCurrentPageName(url_map[location.pathname]);
     addFaviconToPage(pages[currentPageName].icon);
@@ -41,21 +40,28 @@ const App = () => {
   // Determines global state for whether a popup is currently open or not.
   const [popup, togglePopup] = useState(null);
   addFaviconToPage(pages[currentPageName].icon);
-  const [slideOut, toggleSlideOut] = useState(null);
 
+  // Controls the journal entry that will be displayed on SlideOut component. The reason why physicalSlideOut exists is because the text on the slideOut needs to exist until the transition time is completely over.
+  const [slideOut, toggleSlideOut] = useState(null);
+  const [physicalSlideOut, togglePhysicalSlideOut] = useState(false);
+  const [slideOutTransitionTime, changeSlideOutTransitionTime] = useState(300);
   return (
     <PageContext.Provider value={{
       currentPageName, changeCurrentPageName,
       pages, changePages
     }}>
       <PopupContext.Provider value={{ popup, togglePopup }}>
-        <SlideOutContext.Provider value={{ slideOut, toggleSlideOut }}>
+        <SlideOutContext.Provider value={{
+          slideOut, toggleSlideOut,
+          physicalSlideOut, togglePhysicalSlideOut,
+          slideOutTransitionTime, changeSlideOutTransitionTime
+        }}>
           <Fragment>
             <div className={`${styles.app}`}>
               <SideBar />
               <Main />
-            </div>            
-            {popup && <Overlay/>}
+            </div>
+            {popup && <Overlay />}
           </Fragment>
         </SlideOutContext.Provider>
       </PopupContext.Provider>

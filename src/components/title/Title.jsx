@@ -12,7 +12,7 @@ import { useAutosizeDefaultTextArea }
 
 const Title = ({isLarge, horizontal, title, emoji, type}) => {
 
-    const { slideOut, toggleSlideOut } = useContext(SlideOutContext);
+    const { slideOut } = useContext(SlideOutContext);
     const { pages, changePages, currentPageName, changeCurrentPageName } = useContext(PageContext);
     const currentPage = pages[currentPageName];
     const [isUpdatingTitle, updatingTitle] = useState(false);
@@ -41,7 +41,6 @@ const Title = ({isLarge, horizontal, title, emoji, type}) => {
                         if (type === 'journal') {
                             newPages = 
                             editJournalTitle(pages, currentPageName, slideOut, e.target.value);
-                            toggleSlideOut(null);
                         } else {
                             newPages = editTitle(pages, currentPageName, e.target.value);
                             changeCurrentPageName(e.target.value);

@@ -14,30 +14,31 @@ import Title
 
 const SlideOut = () => {
     const { pages, currentPageName } = useContext(PageContext);
-    const { slideOut, toggleSlideOut } = useContext(SlideOutContext);
+    const { slideOut, toggleSlideOut,
+            physicalSlideOut, togglePhysicalSlideOut,
+            slideOutTransitionTime, changeSlideOutTransitionTime} = useContext(SlideOutContext);
     const { title, emoji, tags, timestamp } 
         = slideOut === null ? {} : pages[currentPageName].entries[slideOut];
 
+    const [slideOutWidth, changeSlideOutWidth] = useState(500);
+
     const wrapperRef = useRef();
     useSlideOutOutsideAlerter(wrapperRef);
-
-    const [slideOutWidth, changeSlideOutWidth] = useState(500);
-    const [transitionTime, changeTransitionTime] = useState(300);
-
+ 
     return (
         <div ref={wrapperRef}
-            style={slideOut !== null ? {
+            style={physicalSlideOut !== false ? {
                 width: `${slideOutWidth}px`,
-                transition: `${transitionTime}ms`,
+                transition: `${slideOutTransitionTime}ms`,
             } : {
-                transition: `${transitionTime}ms`
+                width: `0px`,
+                transition: `${slideOutTransitionTime}ms`
             }}
             className={`${styles.slideout} 
-                ${slideOut === null ? null : styles.active}`}>
+                ${physicalSlideOut === false ? null : styles.active}`}>
 
             <div className={styles.draggable}       
                 draggable={true}
-                onDrop = {() => changeTransitionTime(300)}
                 onDrag={(e) => {
                     // e.clientX is 0 if the mouse goes off screen (e.g. vertically).
                     // This is a severe jump, so we return to avoid the jumpy effect
@@ -49,20 +50,22 @@ const SlideOut = () => {
 
                     // Want the slide out to have a minimum width of 500.
                     if (newSlideOutWidth < 500) return;
-
-                    console.log("slideoutwidth", newSlideOutWidth);
                     changeSlideOutWidth(newSlideOutWidth);
 
                     // Normally this is 300ms to imitate a "slide out" animation.
                     // However, we want to make the transition time 0 during manually
                     // dragging, to eliminate lag.
-                    changeTransitionTime(0);
+                    changeSlideOutTransitionTime(0);
                 }}
                 onDragOver={(e) => e.preventDefault()}
             >
             </div>
             <div className={styles.right}>
-                <Chevron onClick = {() => toggleSlideOut(null)}/>
+                <Chevron onClick = {() => {
+                    changeSlideOutTransitionTime(300);
+                    setTimeout(() => toggleSlideOut(null), slideOutTransitionTime);
+                    togglePhysicalSlideOut(false);
+                }}/>
 
                 {slideOut !== null &&
                     <div className={styles.main}>

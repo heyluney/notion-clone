@@ -1,8 +1,8 @@
 @import '../../standard.module.css';
 
 .comments {
-display: flex;
-flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 .comment {
     display: flex;

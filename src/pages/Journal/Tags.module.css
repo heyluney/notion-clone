@@ -4,9 +4,10 @@
 .tags {
     display: flex;
     flex-direction: row;
+    /* flex-grow: 0.5; */
+    /* max-width: 200px; */
     /* align-items: flex-start;
     justify-content: flex-start; */
-    /* overflow-x: hidden; */
     /* max-width: 250px; */
     /* background: red; */
 }

@@ -7,31 +7,35 @@ import Icon from '../../components/popups/Icon';
 import { SlideOutContext } from '../../App';
 import Tags from './Tags';
 
-import { shortenText } from '../../utils/shorten_text';
-
-
 const JournalEntry = ({ idx, entry }) => {
-    const { toggleSlideOut } = useContext(SlideOutContext);
+    const { slideOut, toggleSlideOut, togglePhysicalSlideOut } = useContext(SlideOutContext);
     const { title, emoji, tags, timestamp } = entry;
+    console.log('tags', tags)
     return (
         <div onClick={
-            () => toggleSlideOut(idx)}
+            () => {
+                if (slideOut === null) {
+                    toggleSlideOut(idx);
+                    togglePhysicalSlideOut(true);
+                }
+            }}
             className={styles.journal_entry}>
-            <div className={styles.left}>
-                <Icon icon={emoji}
-                    component={`${"Journal"}_${idx}`}
-                />
-                <div className={styles.journal_entry_title}>
-                    {shortenText(title, 30) + "..."}
+                <div className={`${styles.title} 
+                ${Object.keys(tags).length > 0 ? 
+                        styles.title_with_tags : null}`}>
+                    <Icon icon={emoji}
+                        component={`${"Journal"}_${idx}`}
+                    />
+                    <div className={styles.journal_entry_title}>
+                        {title}
+                    </div>
                 </div>
-            </div>
-            <div className={styles.right}>
-                <Tags 
-                    tags={tags} journalIdx={parseInt(idx)}/>
+                <div className={styles.tags}>
+                    <Tags tags={tags} journalIdx={parseInt(idx)}/>
+                </div>
                 <div className={styles.timestamp}>
-                    {getFullTimeString(timestamp)}
+                        {getFullTimeString(timestamp)}
                 </div>
-            </div>
         </div>
     )
 }
