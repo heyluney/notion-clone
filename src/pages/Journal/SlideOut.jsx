@@ -46,6 +46,11 @@ const SlideOut = () => {
 
                     e.stopPropagation();
                     const newSlideOutWidth = window.screen.width - e.clientX + 2.5;
+
+                    // Want the slide out to have a minimum width of 500.
+                    if (newSlideOutWidth < 500) return;
+
+                    console.log("slideoutwidth", newSlideOutWidth);
                     changeSlideOutWidth(newSlideOutWidth);
 
                     // Normally this is 300ms to imitate a "slide out" animation.

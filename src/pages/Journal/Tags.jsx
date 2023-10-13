@@ -38,7 +38,7 @@ const Tags = ({ addTagsShown, journalIdx, tags, full }) => {
                         deleteButtonsShown === idx && <Cross className={`${styles.delete}`}
                         style={idx === activeTag ? {
                             backgroundColor: color,
-                            filter: "brightness(0.7)",
+                            filter: "brightness(0.8)",
                             cursor: "pointer"
                         } : {}}
                         onMouseEnter={() => toggleActiveTag(idx)}

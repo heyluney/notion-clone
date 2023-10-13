@@ -3,7 +3,6 @@
 .group {
     display: flex;
     flex-direction: row;
-    /* flex-grow: 1; */
 }
 .add_tag {
     border: none;

@@ -19,9 +19,12 @@ const AddTag = () => {
         const pastels = Object.values(pastelColors);
         return pastels[Math.floor(Math.random()*pastels.length)];
     }
+    
+    // Set the default tag color to highlight-grey. When the "choose a color"
+    // color selector is toggled, a random color will be picked.
     const [currentTag, updateCurrentTag] = useState({
         tagText: "Add Tag",
-        color: getRandomPastelColor()
+        color: "rgb(234, 234, 233)"
     });
     const [colorSelectorOpen, toggleColorSelector] = useState(false);
     return (
@@ -66,7 +69,13 @@ const AddTag = () => {
                         borderRadius: "4px",
                     }} 
                     onClick={
-                        () =>  toggleColorSelector(!colorSelectorOpen)
+                        () =>  {
+                            toggleColorSelector(!colorSelectorOpen);
+                            updateCurrentTag({
+                                ...currentTag, 
+                                color: getRandomPastelColor()
+                            })
+                        }
                     }>
                 </div>
                 <div className={styles.color_selector}>

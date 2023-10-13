@@ -27,9 +27,6 @@
     align-items: center;
 }
 
-.existing_tag {
-    background: #dbcdf0;
-}
 .add_tag {
     background: var(--highlight-grey);
 }
