@@ -22,9 +22,14 @@ const App = () => {
   console.log("location.pathname IS: ", location.pathname);
   console.log("url_map", url_map);
   console.log("url_map[location.pathname]", url_map[location.pathname]);
+
   if (getItem('current_page_name') === null) {
     saveItem('current_page_name', url_map[location.pathname]);
   }
+
+  console.log('current_page_name', getItem('current_page_name'))
+  console.log('currentPageName', currentPageName)
+
   seedEmojiDictionary();
   seedPages();
 
@@ -32,13 +37,14 @@ const App = () => {
   const [currentPageName, changeCurrentPageName]
     = useState(getItem('current_page_name'));
 
+
   // TODO(helenyu): I thinks somehow the react history is manually being manipulated, because the application breaks on browser "forward" and "back" buttons, investigate further.
-  useEffect(() => {
-    changeCurrentPageName(url_map[location.pathname]);
-    addFaviconToPage(pages[currentPageName].icon);
-    document.title = currentPageName;
-    saveItem('current_page_name', currentPageName);
-  }, [location, currentPageName, pages])
+  // useEffect(() => {
+  //   changeCurrentPageName(url_map[location.pathname]);
+  //   addFaviconToPage(pages[currentPageName].icon);
+  //   document.title = currentPageName;
+  //   saveItem('current_page_name', currentPageName);
+  // }, [location, currentPageName, pages])
 
   // Determines global state for whether a popup is currently open or not.
   const [popup, togglePopup] = useState(null);
