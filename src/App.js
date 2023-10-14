@@ -20,6 +20,8 @@ const App = () => {
   const location = useLocation();
 
   console.log("location.pathname IS: ", location.pathname);
+  console.log("url_map", url_map);
+  console.log("url_map[location.pathname]", url_map[location.pathname]);
   if (getItem('current_page_name') === null) {
     saveItem('current_page_name', url_map[location.pathname]);
   }
