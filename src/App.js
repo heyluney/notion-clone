@@ -19,6 +19,7 @@ import url_map from './utils/url_to_component_map';
 const App = () => {
   const location = useLocation();
 
+  console.log("location.pathname IS: ", location.pathname);
   if (getItem('current_page_name') === null) {
     saveItem('current_page_name', url_map[location.pathname]);
   }
