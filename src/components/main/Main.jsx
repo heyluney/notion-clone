@@ -6,7 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import { PageContext } from '../../App';
 import map from '../../utils/string_to_component_map';
-
+import Home from '../../pages/Home/Home';
 const Main = () => {
     const { currentPageName, pages } = useContext(PageContext);
     return (
@@ -21,6 +21,7 @@ const Main = () => {
                                             path={path}
                                             element={<Component/>} />
                         })}
+                    <Route key="root" path="/notion-clone" element={<Home />}/>
                 </Routes>
             </div>
         </div>

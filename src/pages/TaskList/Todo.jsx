@@ -6,7 +6,6 @@ import styles from './Todo.module.css';
 import { SlideOutContext } from '../../App';
 const Todo = ({todo, onDrag, updateClickedCategory}) => {
     const { toggleSlideOut, togglePhysicalSlideOut } = useContext(SlideOutContext);
-    console.log('todo', todo)
     return (
         <div
             key={todo.id}
