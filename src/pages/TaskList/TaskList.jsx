@@ -6,6 +6,7 @@ import styles from './TaskList.module.css';
 import Title from '../../components/title/Title';
 
 import { PageContext } from '../../App';
+
 import { moveTodo } from '../../data/pages_helper_functions';
 
 import SlideOut from '../../components/popups/SlideOut';
@@ -30,14 +31,12 @@ const TaskList = () => {
 
     const onDrag = (e, todo) => {
         e.preventDefault();
-        // The current category will already be stoered in the todo 
-        // const newTodo = { ...todo, ...{ "category": category } };
         updateDraggedTodo(todo);
     }
 
     // Stores what todo is currently in the state of being dragged, and the category that it was dragged from.
     const [draggedTodo, updateDraggedTodo] = useState({});
-
+    const [clickedCategory, updateClickedCategory] = useState("");
     return (
         <div className={styles.tasklist}>
             <div className={styles.header}>
@@ -58,12 +57,13 @@ const TaskList = () => {
                             category={category}
                             onDrag={onDrag}
                             onDrop={onDrop} 
-                            draggedTodo={draggedTodo}  />
+                            draggedTodo={draggedTodo} 
+                            updateClickedCategory={updateClickedCategory} />
                 
                 )}
             </div>
 
-            <SlideOut type="tasklist"/>
+            <SlideOut type="tasklist" category={clickedCategory}/>
         </div>
     )
 }

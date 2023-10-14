@@ -301,8 +301,8 @@ export const moveTodo = (pages, pageName, todoIdx, categoryDraggedFrom, category
     const todos = page.todos;
 
     const { [todoIdx]: todo, ...keptTodos } = todos[categoryDraggedFrom];
-    // console.log('todo', todo);
-    const withTodoAdded = { ...todos[categoryDraggedTo], [todoIdx]: todo};
+    const withTodoAdded = 
+        { ...todos[categoryDraggedTo], [todoIdx]: {...todo, category: categoryDraggedTo}};
     return {
         ...pages, 
         [pageName]: {

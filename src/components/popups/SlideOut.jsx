@@ -12,7 +12,7 @@ import Title
 
  import { useSlideOutOutsideAlerter } from '../../hooks/OutsideAlert';
 
-const SlideOut = ({type}) => {
+const SlideOut = ({type, category}) => {
     const { pages, currentPageName } = useContext(PageContext);
     const { slideOut, toggleSlideOut,
             physicalSlideOut, togglePhysicalSlideOut,
@@ -38,8 +38,6 @@ const SlideOut = ({type}) => {
     const wrapperRef = useRef();
     useSlideOutOutsideAlerter(wrapperRef);
  
-    // tags part is optional, but comments still exist
-    // {title, emoji, timestamp}
     return (
         <div ref={wrapperRef}
             style={physicalSlideOut !== false ? {

@@ -44,6 +44,7 @@ const App = () => {
   // Controls the journal entry that will be displayed on SlideOut component. The reason why physicalSlideOut exists is because the text on the slideOut needs to exist until the transition time is completely over.
   const [slideOut, toggleSlideOut] = useState(null);
   const [physicalSlideOut, togglePhysicalSlideOut] = useState(false);
+
   const [slideOutTransitionTime, changeSlideOutTransitionTime] = useState(300);
   return (
     <PageContext.Provider value={{

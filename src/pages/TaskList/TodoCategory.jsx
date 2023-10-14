@@ -2,7 +2,7 @@ import styles from './TodoCategory.module.css';
 
 import Todo from './Todo';
 
-const TodoCategory = ({ todos, category, onDrag, onDrop }) => {
+const TodoCategory = ({ todos, category, onDrag, onDrop, updateClickedCategory }) => {
     // console.log('todos', Object.entries(todos));
     return (
         <div key={category}
@@ -21,7 +21,8 @@ const TodoCategory = ({ todos, category, onDrag, onDrop }) => {
                     <Todo 
                         key={idx}
                         todo={todo} 
-                        onDrag={onDrag}/>)
+                        onDrag={onDrag}
+                        updateClickedCategory={updateClickedCategory}/>)
             }
         </div>
 

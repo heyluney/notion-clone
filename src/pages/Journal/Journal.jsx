@@ -6,8 +6,8 @@ import styles from './Journal.module.css';
 
 import { PageContext } from '../../App';
 import SlideOut from '../../components/popups/SlideOut';
-
 import JournalEntry from './JournalEntry';
+
 const Journal = () => {
     const { pages, currentPageName } = useContext(PageContext);
     const journalEntries = pages[currentPageName].entries;
