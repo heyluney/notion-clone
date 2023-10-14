@@ -5,7 +5,7 @@ import Title from '../../components/title/Title';
 import styles from './Journal.module.css';
 
 import { PageContext } from '../../App';
-import SlideOut from './SlideOut';
+import SlideOut from '../../components/popups/SlideOut';
 
 import JournalEntry from './JournalEntry';
 const Journal = () => {
@@ -17,6 +17,9 @@ const Journal = () => {
         <div className={styles.journal}>
             <Title horizontal={true} />
 
+            <div className={styles.description}>
+                Document your life - daily happenings, special occasions, and reflections on your goals. Categorize entries with tags and automatically capture the date.
+            </div>
             <div className={styles.journal_entries}>
                 {Object.entries(journalEntries)
                     .map(([idx, entry]) => {
@@ -31,7 +34,7 @@ const Journal = () => {
             </div>
             
         </div>
-        <SlideOut/> 
+        <SlideOut type="journal"/> 
         </Fragment>
     )
 }

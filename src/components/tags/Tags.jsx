@@ -14,13 +14,14 @@ const Tags = ({ addTagsShown, journalIdx, tags, full }) => {
     const { slideOut }= useContext(SlideOutContext);
     const { pages, changePages, currentPageName } = useContext(PageContext);
 
-    const [deleteButtonsShown, toggleDeleteButtonsShown] = useState(-1);
+    const [deleteButtonsShown, toggleDeleteButtonsShown] 
+        = useState(-1);
     const [activeTag, toggleActiveTag] = useState(-1);
 
     return (
         <div className={`${styles.tags} 
                         ${full ? styles.tags_full : null}`}>
-            {Object.entries(tags).map(([tag, color], idx) =>
+            {tags && Object.entries(tags).map(([tag, color], idx) =>
                 <div 
                         style={{
                             backgroundColor: color
@@ -32,7 +33,7 @@ const Tags = ({ addTagsShown, journalIdx, tags, full }) => {
                         onMouseLeave={() => toggleDeleteButtonsShown(-1)}
                     >
                     
-                    <div>{tag}</div>
+                    {tag}
                 
                     {
                         deleteButtonsShown === idx && <Cross className={`${styles.delete}`}

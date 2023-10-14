@@ -6,82 +6,64 @@ import styles from './TaskList.module.css';
 import Title from '../../components/title/Title';
 
 import { PageContext } from '../../App';
+import { moveTodo } from '../../data/pages_helper_functions';
+
+import SlideOut from '../../components/popups/SlideOut';
+import TodoCategory from './TodoCategory';
+import { saveItem } from '../../utils/local_storage';
 
 const TaskList = () => {
-    const onDrop = (_, category) => {
-        const newTodos = { ...todos };
-        newTodos[draggedTask.category] =
-            [...todos[draggedTask.category]
-                .filter(todo => todo.taskId !== draggedTask.taskId)];
-        newTodos[category] = [...todos[category], draggedTask];
-        updateDraggedTask({});
-        updateTodos(newTodos);
+    const { pages, currentPageName, changePages } = 
+        useContext(PageContext);
+
+    const todos = pages[currentPageName].todos;
+
+    const onDrop = (_, movedToCategory) => {
+        const newPages = 
+            moveTodo(pages, currentPageName, 
+                draggedTodo.id, 
+                draggedTodo.category, 
+                movedToCategory);
+        changePages(newPages);
+        saveItem('pages', newPages);
     }
 
-    const onDrag = (e, todo, category) => {
+    const onDrag = (e, todo) => {
         e.preventDefault();
-        const newTodo = { ...todo, ...{ "category": category } };
-        updateDraggedTask(newTodo);
+        // The current category will already be stoered in the todo 
+        // const newTodo = { ...todo, ...{ "category": category } };
+        updateDraggedTodo(todo);
     }
 
-    const [todos, updateTodos] = useState({
-        "undone": [{
-            taskId: 1,
-            task: "buy milk"
-        }, {
-            taskId: 2,
-            task: "take Clark out"
-        }, {
-            taskId: 3,
-            task: "go climbing"
-        }, {
-            taskId: 4,
-            task: "go to Yosemite"
-        }],
-        "doing": [],
-        "complete": [],
-        "category4": [],
-        "category5": [],
-        "category6": [],
-        "category7": [],
-        "category8": [],
-        "category9": []
-    })
+    // Stores what todo is currently in the state of being dragged, and the category that it was dragged from.
+    const [draggedTodo, updateDraggedTodo] = useState({});
 
-    const [ pages, currentPageName ] = useContext(PageContext);
-    console.log('pages', pages, 'currentPageName', currentPageName);
-    const [draggedTask, updateDraggedTask] = useState({});
     return (
         <div className={styles.tasklist}>
+            <div className={styles.header}>
              <Title horizontal={true}/>
             <div className={styles.description}>
                 Use this template to track your personal tasks.
                 Click + New to create a new task directly on this board.
                 Click an existing task to add additional context or subtasks.
             </div>
-
-            <div className={styles.list}>
-                {Object.entries(todos).map(([category, todos]) => (
-                    <div key={category}
-                        className={styles.category}
-                        onDragOver={e => e.preventDefault()}
-                        onDrop={e => onDrop(e, category)}
-                    >
-                        <div className={styles.header}><span className={styles.name}>{category}</span></div>
-                        {
-                            todos.map(todo =>
-                                <div
-                                    key={todo.taskId}
-                                    className={styles.todo}
-                                    draggable={true}
-                                    onDrag={e => onDrag(e, todo, category)}>
-                                    {todo.task}
-                                </div>)
-                        }
-                    </div>
-                ))}
             </div>
 
+            <div className={styles.list}>
+                {Object.entries(todos).map(
+                    ([category, todos]) => 
+                        <TodoCategory 
+                            key={category}
+                            todos={todos} 
+                            category={category}
+                            onDrag={onDrag}
+                            onDrop={onDrop} 
+                            draggedTodo={draggedTodo}  />
+                
+                )}
+            </div>
+
+            <SlideOut type="tasklist"/>
         </div>
     )
 }

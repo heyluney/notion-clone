@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './QuickNote.module.css';
 
-import Comments from '../../components/comment/Comments';
+import Comments from '../../components/comments/Comments';
 import Title from '../../components/title/Title';
 
 const QuickNote = () => {

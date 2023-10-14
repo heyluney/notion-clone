@@ -2,29 +2,44 @@ import { useState, useContext, useRef } from 'react';
 
 import styles from './SlideOut.module.css';
 
-import Comments from '../../components/comment/Comments';
+import Comments from '../comments/Comments';
 import { SlideOutContext, PageContext } from "../../App";
 import { BiSolidChevronsRight as Chevron } from 'react-icons/bi';
 import { getFullTimeString } from '../../utils/calculate_date';
-import Tags from './Tags';
+import Tags from '../tags/Tags';
 import Title
- from '../../components/title/Title';
+ from '../title/Title';
 
  import { useSlideOutOutsideAlerter } from '../../hooks/OutsideAlert';
 
-const SlideOut = () => {
+const SlideOut = ({type}) => {
     const { pages, currentPageName } = useContext(PageContext);
     const { slideOut, toggleSlideOut,
             physicalSlideOut, togglePhysicalSlideOut,
             slideOutTransitionTime, changeSlideOutTransitionTime} = useContext(SlideOutContext);
-    const { title, emoji, tags, timestamp } 
-        = slideOut === null ? {} : pages[currentPageName].entries[slideOut];
+    
+    let entry;
+    switch(type) {
+        case 'journal': 
+            entry = slideOut === null ? {} : pages[currentPageName].entries[slideOut];
+            break;
+        case 'tasklist': 
+            entry = slideOut === null ? {} : pages[currentPageName].todos[category][slideOut];
+            break;
+        default: 
+            entry = {}
+            break;
+    }
+
+    const { title, emoji, tags, timestamp } = entry;
 
     const [slideOutWidth, changeSlideOutWidth] = useState(500);
 
     const wrapperRef = useRef();
     useSlideOutOutsideAlerter(wrapperRef);
  
+    // tags part is optional, but comments still exist
+    // {title, emoji, timestamp}
     return (
         <div ref={wrapperRef}
             style={physicalSlideOut !== false ? {
@@ -78,12 +93,12 @@ const SlideOut = () => {
                         <div className={styles.desc_item}>Date Created</div>
                         <div className={styles.desc_item}>{getFullTimeString(timestamp)}</div>
                         <div className={styles.desc_item}>Tags</div>
-                        <Tags tags={tags} full={true} addTagsShown={true}/>
+                       <Tags tags={tags} full={true} addTagsShown={true}/>
                     </div>
 
-                    <Comments className={styles.comments} 
-                            passedComments={pages[currentPageName].entries[slideOut].comments}
-                            type="journal_comments"/>
+                    {entry.comments && <Comments className={styles.comments} 
+                            passedComments={entry.comments}
+                            type="journal_comments"/>}
                 </div>}
             </div>
 

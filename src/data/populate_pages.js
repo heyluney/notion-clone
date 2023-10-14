@@ -64,9 +64,13 @@ const defaultJournal = {
       }
     },
     4: {
-      title: "Just checking how asjd f;alskdj f;laksjd f;laksj df;lkasj df;klasj df;kaljsd f;aksjd fa;sjdf a;slkdj fa;lksjd f;aslkdj f;askdj fa;sdkj fa;lskd jfa;slkd jf;aslk jdf;alskd jfasdf",
-      emoji: "1F366",
-      tags: {},
+      title: "Short climbing session. Maybe sneak in a running session afterwards?",
+      emoji: "1F9D7 200D 2640",
+      tags: {
+        "v7": pastelColors["yellow"],
+        "movement": pastelColors["blue"],
+        "go hard or go home": pastelColors["yellow"]
+      },
       timestamp: "1893348894855",
       comments: {
         1: {
@@ -79,19 +83,67 @@ const defaultJournal = {
     }
 }
 
+
+const defaultTodos = {
+  "undone": {
+    1: {
+      id: 1,
+      title: "buy milk",
+      emoji: "1F366",
+      timestamp: "1893348894855",
+      category: "undone",
+      tags: {
+        "Canada": pastelColors["purple"],
+        "backpacking": pastelColors["pink"]
+      }
+    },
+    2: {
+      id: 2,
+      title: "take Clark out",
+      emoji: "1F415",
+      timestamp: "1893348855855",
+      category: "undone",
+      tags: {}
+    },
+    3: {
+      id: 3,
+      title: "go climbing",
+      emoji: "1F415",
+      timestamp: "1893348855895",
+      category: "undone",
+      tags: {}
+    },
+    4:  {
+      id: 4,
+      title: "go to Yosemite",
+      emoji: "1F415",
+      timestamp: "1893348889895",
+      category: "undone",
+      tags: {}
+    }},
+    "doing": {},
+    "complete": {},
+    "category4": {},
+    "category5": {},
+    "category6": {},
+    "category7": {},
+    "category8": {},
+    "category9": {}
+}
+
 const defaultPages = {
     "Home": {
         idx: 0,
         name: "Home",
         path: "/", 
-        icon: '1F4D8',
+        icon: '1F4A1', // Candle
         component: "Home"
     },
     "Quick Note": {
         idx: 1,
         name: "Quick Note", // Title of the page, must equal the key in defaultPages hash.
         path: "/quick_note",
-        icon: '1F32D',
+        icon: '1F58B', // Fountain pen
         component: "QuickNote", // Stringified name of React component.
         comments: defaultComments
     },
@@ -99,14 +151,15 @@ const defaultPages = {
         idx: 2,
         name: "Task List",
         path: "/task_list",
-        icon: '1F32D',
+        icon: '1F4C4', // Scroll
         component: "TaskList",
+        todos: defaultTodos
     },
     "Journal": {
         idx: 3,
         name: "Journal",
         path: "/journal",
-        icon: '1F4D8',
+        icon: '1F4D5',
         component: "Journal",
         entries: defaultJournal
     }

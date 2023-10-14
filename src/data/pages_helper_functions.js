@@ -295,3 +295,23 @@ export const addTagToJournal =
         }
     }
 }
+
+export const moveTodo = (pages, pageName, todoIdx, categoryDraggedFrom, categoryDraggedTo) => {
+    const page = pages[pageName];
+    const todos = page.todos;
+
+    const { [todoIdx]: todo, ...keptTodos } = todos[categoryDraggedFrom];
+    // console.log('todo', todo);
+    const withTodoAdded = { ...todos[categoryDraggedTo], [todoIdx]: todo};
+    return {
+        ...pages, 
+        [pageName]: {
+            ...page,
+            todos: {
+                ...page.todos, 
+                [categoryDraggedFrom]: keptTodos,
+                [categoryDraggedTo]: withTodoAdded
+            }
+        }
+    }
+}

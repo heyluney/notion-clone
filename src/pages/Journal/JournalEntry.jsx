@@ -5,7 +5,7 @@ import { getFullTimeString } from '../../utils/calculate_date';
 import Icon from '../../components/popups/Icon';
 
 import { SlideOutContext } from '../../App';
-import Tags from './Tags';
+import Tags from '../../components/tags/Tags';
 
 import { FaComments as Comments } from 'react-icons/fa6';
 
