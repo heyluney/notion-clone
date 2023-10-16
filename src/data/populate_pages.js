@@ -135,14 +135,14 @@ const defaultPages = {
     "Home": {
         idx: 0,
         name: "Home",
-        path: "/", 
+        path: "/notion-clone", 
         icon: '1F4A1', // Candle
         component: "Home"
     },
     "Quick Note": {
         idx: 1,
         name: "Quick Note", // Title of the page, must equal the key in defaultPages hash.
-        path: "/quick_note",
+        path: "/notion-clone/quick_note",
         icon: '1F58B', // Fountain pen
         component: "QuickNote", // Stringified name of React component.
         comments: defaultComments
@@ -150,7 +150,7 @@ const defaultPages = {
     "Task List": {
         idx: 2,
         name: "Task List",
-        path: "/task_list",
+        path: "/notion-clone/task_list",
         icon: '1F4C4', // Scroll
         component: "TaskList",
         todos: defaultTodos
@@ -158,7 +158,7 @@ const defaultPages = {
     "Journal": {
         idx: 3,
         name: "Journal",
-        path: "/journal",
+        path: "/notion-clone/journal",
         icon: '1F4D5',
         component: "Journal",
         entries: defaultJournal

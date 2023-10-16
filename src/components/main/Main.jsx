@@ -21,7 +21,7 @@ const Main = () => {
                                             path={path}
                                             element={<Component/>} />
                         })}
-                    <Route key="root" path="/notion-clone" element={<Home />}/>
+                    {/* <Route key="root" path="/notion-clone" element={<Home />}/> */}
                 </Routes>
             </div>
         </div>
