@@ -85,7 +85,6 @@ const defaultJournal = {
 
 
 const defaultTodos = {
-  "undone": {
     1: {
       id: 1,
       title: "buy milk",
@@ -110,7 +109,7 @@ const defaultTodos = {
       title: "go climbing",
       emoji: "1F415",
       timestamp: "1893348855895",
-      category: "undone",
+      category: "doing",
       tags: {}
     },
     4:  {
@@ -118,17 +117,9 @@ const defaultTodos = {
       title: "go to Yosemite",
       emoji: "1F415",
       timestamp: "1893348889895",
-      category: "undone",
+      category: "completed",
       tags: {}
-    }},
-    "doing": {},
-    "complete": {},
-    "category4": {},
-    "category5": {},
-    "category6": {},
-    "category7": {},
-    "category8": {},
-    "category9": {}
+    }
 }
 
 const defaultPages = {
@@ -153,7 +144,8 @@ const defaultPages = {
         path: "/notion-clone/task_list",
         icon: '1F4C4', // Scroll
         component: "TaskList",
-        todos: defaultTodos
+        todos: defaultTodos,
+        categories: ["undone", "doing", "completed"]
     },
     "Journal": {
         idx: 3,

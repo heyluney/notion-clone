@@ -7,7 +7,8 @@ import { chunkify } from '../../utils/chunkify';
 import { addEmojiToComment, 
         updateTitleEmoji, 
         editJournalEmoji,
-        addEmojiToJournalComment } from '../../data/pages_helper_functions';
+        addEmojiToJournalComment,
+        updateTodoEmoji } from '../../data/pages_helper_functions';
 import { PageContext, PopupContext, SlideOutContext } from '../../App';
 import { computeEmoji, addEmojiToRecent } from '../../data/compute_emojis';
 
@@ -22,6 +23,8 @@ const EmojiSelector = ({
         isRecent}) => {
     const { togglePopup } = useContext(PopupContext);
     const { slideOut } = useContext(SlideOutContext);
+
+    // console.log('component', component, 'type', type)
 
     // Lists which emoji is currently being hovered.
     const [hoveredEmoji, changeHoveredEmoji] = useState([/*isRecent?*/false, /*emoji name*/false]);
@@ -57,6 +60,10 @@ const EmojiSelector = ({
                             case 'journal_comments':
                                 const commentIdx = parseInt(component.split('_')[1]);
                                 newPages = addEmojiToJournalComment(pages, currentPageName, slideOut, commentIdx, {[hexcode]: name});
+                                break;
+                            case 'todo': 
+                                const todoIdx = parseInt(component.split('_')[1]);
+                                newPages = updateTodoEmoji(pages, currentPageName, todoIdx, hexcode);
                                 break;
                             default: 
                                 // Default is to update the emoji associated with the page.

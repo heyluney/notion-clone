@@ -11,6 +11,8 @@ import { moveTodo } from '../../data/pages_helper_functions';
 
 import SlideOut from '../../components/popups/SlideOut';
 import TodoCategory from './TodoCategory';
+
+import normalizeTodos from './normalize_todos';
 import { saveItem } from '../../utils/local_storage';
 
 const TaskList = () => {
@@ -22,9 +24,7 @@ const TaskList = () => {
     const onDrop = (_, movedToCategory) => {
         const newPages = 
             moveTodo(pages, currentPageName, 
-                draggedTodo.id, 
-                draggedTodo.category, 
-                movedToCategory);
+                draggedTodo.id, movedToCategory);
         changePages(newPages);
         saveItem('pages', newPages);
     }
@@ -49,7 +49,7 @@ const TaskList = () => {
             </div>
 
             <div className={styles.list}>
-                {Object.entries(todos).map(
+                {Object.entries(normalizeTodos(todos)).map(
                     ([category, todos]) => 
                         <TodoCategory 
                             key={category}

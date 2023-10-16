@@ -12,7 +12,7 @@ import Title
 
  import { useSlideOutOutsideAlerter } from '../../hooks/OutsideAlert';
 
-const SlideOut = ({type, category}) => {
+const SlideOut = ({type}) => {
     const { pages, currentPageName } = useContext(PageContext);
     const { slideOut, toggleSlideOut,
             physicalSlideOut, togglePhysicalSlideOut,
@@ -24,7 +24,7 @@ const SlideOut = ({type, category}) => {
             entry = slideOut === null ? {} : pages[currentPageName].entries[slideOut];
             break;
         case 'tasklist': 
-            entry = slideOut === null ? {} : pages[currentPageName].todos[category][slideOut];
+            entry = slideOut === null ? {} : pages[currentPageName].todos[slideOut];
             break;
         default: 
             entry = {}
@@ -53,9 +53,7 @@ const SlideOut = ({type, category}) => {
             <div className={styles.draggable}       
                 draggable={true}
                 onDrag={(e) => {
-                    // e.clientX is 0 if the mouse goes off screen (e.g. vertically).
-                    // This is a severe jump, so we return to avoid the jumpy effect
-                    // of slideOutWidth extending to maximum.
+                    // e.clientX is 0 if the mouse goes off screen (e.g. vertically). This is a severe jump, so we return to avoid the jumpy effect of slideOutWidth extending to maximum.
                     if (e.clientX === 0) return;
 
                     e.stopPropagation();
@@ -65,9 +63,7 @@ const SlideOut = ({type, category}) => {
                     if (newSlideOutWidth < 500) return;
                     changeSlideOutWidth(newSlideOutWidth);
 
-                    // Normally this is 300ms to imitate a "slide out" animation.
-                    // However, we want to make the transition time 0 during manually
-                    // dragging, to eliminate lag.
+                    // Normally this is 300ms to imitate a "slide out" animation. However, we want to make the transition time 0 during manually dragging, to eliminate lag.
                     changeSlideOutTransitionTime(0);
                 }}
                 onDragOver={(e) => e.preventDefault()}

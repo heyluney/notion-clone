@@ -296,21 +296,40 @@ export const addTagToJournal =
     }
 }
 
-export const moveTodo = (pages, pageName, todoIdx, categoryDraggedFrom, categoryDraggedTo) => {
+// We don't actually need to update categories, all we need to do is change
+// the category 
+export const moveTodo = (pages, pageName, todoIdx, categoryDraggedTo) => {
     const page = pages[pageName];
-    const todos = page.todos;
-
-    const { [todoIdx]: todo, ...keptTodos } = todos[categoryDraggedFrom];
-    const withTodoAdded = 
-        { ...todos[categoryDraggedTo], [todoIdx]: {...todo, category: categoryDraggedTo}};
     return {
         ...pages, 
         [pageName]: {
             ...page,
             todos: {
                 ...page.todos, 
-                [categoryDraggedFrom]: keptTodos,
-                [categoryDraggedTo]: withTodoAdded
+                [todoIdx]: {
+                    ...page.todos[todoIdx],
+                    category: categoryDraggedTo
+                }
+            }
+        }
+    }
+}
+
+export const updateTodoEmoji = (pages, pageName, todoIdx, newEmoji) => {
+    const page = pages[pageName];
+
+    console.log(page.todos);
+    console.log(todoIdx);
+    return {
+        ...pages,
+        [pageName]: {
+            ...page,
+            todos: {
+                ...page.todos,
+                [todoIdx]: {
+                    ...page.todos[todoIdx],
+                    emoji: newEmoji
+                }
             }
         }
     }

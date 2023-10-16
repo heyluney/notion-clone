@@ -13,6 +13,8 @@ export const useSlideOutOutsideAlerter = (ref) => {
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (!slideOut) return;
+            
+            if (event.target.className.includes("todo")) return;
             if (ref.current && !ref.current.contains(event.target)) {
                 togglePhysicalSlideOut(false);
                 changeSlideOutTransitionTime(300);

@@ -41,7 +41,9 @@ const JournalEntry = ({ idx, entry }) => {
                 </div>
                 <div className={styles.comments}>
                     <Comments />
-                    <div className={styles.number}>{Object.keys(comments).length}</div>
+                    <div className={styles.number}>
+                        {Object.keys(comments).length}
+                    </div>
                 </div>
                 <div className={styles.tags}>
                     <Tags tags={tags} journalIdx={parseInt(idx)}/>
