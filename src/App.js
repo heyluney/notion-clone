@@ -1,16 +1,14 @@
-import { useState, Fragment, createContext, useEffect } from 'react';
+import { useState, Fragment, createContext } from 'react';
 import styles from './App.module.css';
 import SideBar from './components/sidebar/SideBar';
 import Main from './components/main/Main';
 import { useLocation } from 'react-router-dom';
 
-import { saveItem } from './utils/local_storage';
-
 import { addFaviconToPage } from './utils/generate_favicon';
 import { seedEmojiDictionary } from './data/populate_emoji_dictionary';
 import { seedPages } from './data/populate_pages'
 
-import { getItem } from './utils/local_storage';
+import { getItem, saveItem } from './utils/local_storage';
 import Overlay from './Overlay';
 
 import url_map from './utils/url_to_component_map';
@@ -19,16 +17,9 @@ import url_map from './utils/url_to_component_map';
 const App = () => {
   const location = useLocation();
 
-  console.log("location.pathname IS: ", location.pathname);
-  console.log("url_map", url_map);
-  console.log("url_map[location.pathname]", url_map[location.pathname]);
-
   if (getItem('current_page_name') === null) {
     saveItem('current_page_name', url_map[location.pathname]);
   }
-
-  console.log('current_page_name', getItem('current_page_name'))
-  console.log('currentPageName', currentPageName)
 
   seedEmojiDictionary();
   seedPages();
@@ -37,14 +28,13 @@ const App = () => {
   const [currentPageName, changeCurrentPageName]
     = useState(getItem('current_page_name'));
 
+  // If user presses back and forth buttons, want to update currentPageName
+  // to be in sync with the actual page being displayed.
+  if (currentPageName !== url_map[location.pathname]) {
+    changeCurrentPageName( url_map[location.pathname])
+    saveItem('current_page_name', currentPageName);
 
-  // TODO(helenyu): I thinks somehow the react history is manually being manipulated, because the application breaks on browser "forward" and "back" buttons, investigate further.
-  // useEffect(() => {
-  //   changeCurrentPageName(url_map[location.pathname]);
-  //   addFaviconToPage(pages[currentPageName].icon);
-  //   document.title = currentPageName;
-  //   saveItem('current_page_name', currentPageName);
-  // }, [location, currentPageName, pages])
+  }
 
   // Determines global state for whether a popup is currently open or not.
   const [popup, togglePopup] = useState(null);
@@ -84,3 +74,6 @@ export default App;
 export const PageContext = createContext();
 export const PopupContext = createContext();
 export const SlideOutContext = createContext();
+
+
+
