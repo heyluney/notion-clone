@@ -162,11 +162,11 @@
 
 .search:focus {
     border: none;
-    outline: none;
-    box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px inset;
     background: rgba(242, 241, 238, 0.6);
     cursor: text;
     box-sizing: border-box;
+    outline: 1px solid #87b0ee;
+    box-shadow: 0px 0px 5px 1.5px #87b0ee;
 }
 
 .button:hover {
