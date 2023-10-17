@@ -3,7 +3,7 @@ import { useState, useContext, useRef } from 'react';
 import styles from './SlideOut.module.css';
 
 import Comments from '../comments/Comments';
-import { SlideOutContext, PageContext } from "../../App";
+import { PageContext, PopupContext } from "../../App";
 import { BiSolidChevronsRight as Chevron } from 'react-icons/bi';
 import { getFullTimeString } from '../../utils/calculate_date';
 import Tags from '../tags/Tags';
@@ -16,7 +16,7 @@ const SlideOut = ({type}) => {
     const { pages, currentPageName } = useContext(PageContext);
     const { slideOut, toggleSlideOut,
             physicalSlideOut, togglePhysicalSlideOut,
-            slideOutTransitionTime, changeSlideOutTransitionTime} = useContext(SlideOutContext);
+            slideOutTransitionTime, changeSlideOutTransitionTime} = useContext(PopupContext);
     
     let entry;
     switch(type) {

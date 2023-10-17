@@ -57,7 +57,9 @@ const TaskList = () => {
                             category={category}
                             onDrag={onDrag}
                             onDrop={onDrop} 
-                            draggedTodo={draggedTodo} 
+                            draggedTodo={draggedTodo}
+                            timestamp={pages[currentPageName].categories[category].timestamp} 
+                            color={pages[currentPageName].categories[category].color} 
                             updateClickedCategory={updateClickedCategory} />
                 
                 )}

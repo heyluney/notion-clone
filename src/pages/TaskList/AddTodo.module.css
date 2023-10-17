@@ -1,7 +1,4 @@
-
-@import '../../standard.module.css';
-
-.todo {
+.add_todo {
     background: white;
     border: 1px solid #eaeae9;
     border-radius: 4px;
@@ -13,29 +10,11 @@
     margin-bottom: 4px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
     font-weight: 700;
 }
 
-.todo:hover {
-    cursor: pointer;
-    background: rgb(241, 241, 240, 1);
-}
-
-
-.left {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.right { 
-    display: flex;
-    flex-direction: row;
-}
-
-.buttons {
-    display: flex;
-    flex-direction: row;
+.add_todo > input {
+    outline: none;
+    border: none;
 }

@@ -1,9 +1,12 @@
 import styles from './TodoCategory.module.css';
 
 import Todo from './Todo';
+import AddTodo
+ from './AddTodo';
 
-const TodoCategory = ({ todos, category, onDrag, onDrop, updateClickedCategory }) => {
-    // console.log('todos', Object.entries(todos));
+import { getFullTimeString } from '../../utils/calculate_date';
+
+const TodoCategory = ({ todos, category, onDrag, onDrop, updateClickedCategory, timestamp, color }) => {
     return (
         <div key={category}
             className={styles.category}
@@ -11,10 +14,14 @@ const TodoCategory = ({ todos, category, onDrag, onDrop, updateClickedCategory }
             onDrop={e => onDrop(e, category)}
         >
             <div className={styles.header}>
-                <div className={styles.category_name}>
+                <div className={styles.category_name}
+                    style={{
+                        background: color
+                    }}
+                >
                     {category}
                 </div>
-                <div className={styles.date}>June 11</div>
+                <div className={styles.date}>{getFullTimeString(timestamp)}</div>
             </div>
             {
                 Object.entries(todos).map(([idx, todo]) =>
@@ -24,6 +31,7 @@ const TodoCategory = ({ todos, category, onDrag, onDrop, updateClickedCategory }
                         onDrag={onDrag}
                         updateClickedCategory={updateClickedCategory}/>)
             }
+            <AddTodo category={category} />
         </div>
 
     )

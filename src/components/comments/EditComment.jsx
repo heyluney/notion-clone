@@ -2,7 +2,7 @@ import { useContext, useState, useRef } from 'react';
 
 import styles from './EditComment.module.css'
 
-import { PageContext, SlideOutContext } from '../../App';
+import { PageContext, PopupContext } from '../../App';
 import useOutsideCommentAlerter from '../../hooks/OutsideCommentAlert'; 
 import { useAutosizeTextArea }
  from '../../hooks/AutosizeTextArea';
@@ -21,7 +21,7 @@ const EditComment = ({ idx,
     type }) => {
 
     const { pages, changePages, currentPageName } = useContext(PageContext);
-    const { slideOut } = useContext(SlideOutContext);
+    const { slideOut } = useContext(PopupContext);
 
     const bigCommentRef = useRef(null);
     useOutsideCommentAlerter(bigCommentRef, changeCommentBeingEdited);

@@ -1,14 +1,13 @@
 import { useContext, useEffect } from 'react';
 
-import { PopupContext, SlideOutContext } from '../App';
+import { PopupContext } from '../App';
 
 
 export const useSlideOutOutsideAlerter = (ref) => {
-    const { togglePopup } = useContext(PopupContext);
-    const { slideOut, toggleSlideOut,
+    const { togglePopup, slideOut, toggleSlideOut,
         togglePhysicalSlideOut, 
         slideOutTransitionTime,
-        changeSlideOutTransitionTime } = useContext(SlideOutContext);
+        changeSlideOutTransitionTime } = useContext(PopupContext);
 
     useEffect(() => {
         const handleClickOutside = (event) => {

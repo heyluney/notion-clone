@@ -1,0 +1,55 @@
+.edit_button {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.button {
+    background: white;
+    border: 1px solid #eaeae9;
+    border-radius: 4px;
+    box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
+             rgba(15, 15, 15, 0.1) 0px 2px 4px;
+    outline: none;
+    padding: 10px 10px 8px 8px;
+    box-sizing: border-box;
+    margin-bottom: 4px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    color: var(--medium-grey);
+    margin-left: 2px;
+    margin-right: 2px;
+}
+.button:hover {
+    background: var(--highlight-grey);
+}
+
+.inactive {
+    opacity: 0;
+    transition: 400ms;
+}
+.active {
+    cursor: pointer;
+    transition: 400ms;
+    opacity: 1;
+}
+
+.descriptor {
+    position: absolute;
+    display: flex;
+    text-align: center;
+    background:	#343d46;
+    color: white;
+    border-radius: 4px;
+    padding: 2px 4px 2px 4px;
+    font-size: 12px;
+    opacity: 85%;
+    max-width: fit-content;
+    display: inline-block;
+    word-wrap: break-word;
+    transform: translateY(38px);
+}

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { PageContext, SlideOutContext } from '../../App';
+import { PageContext, PopupContext } from '../../App';
 
 import styles from './AddComment.module.css';
 import clark from '../../assets/clark_profile.jpg';
@@ -10,7 +10,7 @@ import { saveItem } from '../../utils/local_storage';
 
 
 const AddComment = ({ currentComment, updateComment, type }) => {
-    const { slideOut } = useContext(SlideOutContext);
+    const { slideOut } = useContext(PopupContext);
     const { pages, changePages, currentPageName } = useContext(PageContext);
     return (
         <div className={styles.new}>

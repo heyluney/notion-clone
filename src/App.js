@@ -36,18 +36,20 @@ const App = () => {
   const [popup, togglePopup] = useState(null);
   addFaviconToPage(pages[currentPageName].icon);
 
-  // Controls the journal entry that will be displayed on SlideOut component. The reason why physicalSlideOut exists is because the text on the slideOut needs to exist until the transition time is completely over.
+  // Controls the journal entry that will be displayed on SlideOut component. The reason why physicalSlideOut exists is because the text on the slideOut needs to display on the page until the transition time (for the slideout to fully close) is completely over.
   const [slideOut, toggleSlideOut] = useState(null);
   const [physicalSlideOut, togglePhysicalSlideOut] = useState(false);
-
   const [slideOutTransitionTime, changeSlideOutTransitionTime] = useState(300);
+
+  // There can only ever be on item being "acted on" (e.g. either edited or deleted). at a given pointed in time. Therefore, the id of what is being acted on can be stored on global state.
   return (
     <PageContext.Provider value={{
       currentPageName, changeCurrentPageName,
-      pages, changePages
+      pages, changePages,
+      // currentItem, changeCurrent
     }}>
-      <PopupContext.Provider value={{ popup, togglePopup }}>
-        <SlideOutContext.Provider value={{
+      <PopupContext.Provider value={{ 
+          popup, togglePopup,
           slideOut, toggleSlideOut,
           physicalSlideOut, togglePhysicalSlideOut,
           slideOutTransitionTime, changeSlideOutTransitionTime
@@ -59,7 +61,6 @@ const App = () => {
             </div>
             {popup && <Overlay />}
           </Fragment>
-        </SlideOutContext.Provider>
       </PopupContext.Provider>
     </PageContext.Provider>
   )
@@ -69,7 +70,6 @@ export default App;
 
 export const PageContext = createContext();
 export const PopupContext = createContext();
-export const SlideOutContext = createContext();
 
 
 

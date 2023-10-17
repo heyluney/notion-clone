@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import styles from './CommentEmojis.module.css';
 
-import { PageContext, SlideOutContext } from '../../App';
+import { PageContext, PopupContext } from '../../App';
 import { saveItem } from '../../utils/local_storage';
 import { computeEmoji } from '../../data/compute_emojis';
 import Icon from '../popups/Icon';
@@ -10,7 +10,7 @@ import { removeEmojiFromComment,
     removeEmojiFromJournalComment } from '../../data/pages_helper_functions';
 
 const CommentEmojis = ({idx, comment, type}) => {
-    const { slideOut } = useContext(SlideOutContext);
+    const { slideOut } = useContext(PopupContext);
     const plusIcon = "2795";
     const { pages, changePages, currentPageName } = useContext(PageContext);
     

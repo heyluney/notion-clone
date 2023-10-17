@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 
-import { PageContext, SlideOutContext } from '../../App';
+import { PageContext, PopupContext } from '../../App';
 
 import styles from './Tags.module.css';
 
@@ -11,7 +11,7 @@ import AddTag from './AddTag';
 import { ImCross as Cross } from 'react-icons/im';
 
 const Tags = ({ addTagsShown, journalIdx, tags, full }) => {
-    const { slideOut }= useContext(SlideOutContext);
+    const { slideOut }= useContext(PopupContext);
     const { pages, changePages, currentPageName } = useContext(PageContext);
 
     const [deleteButtonsShown, toggleDeleteButtonsShown] 

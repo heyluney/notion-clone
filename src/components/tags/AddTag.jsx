@@ -2,7 +2,7 @@
 
 import { useContext, useState } from 'react';
 
-import { PageContext, SlideOutContext } from '../../App';
+import { PageContext, PopupContext } from '../../App';
 import styles from './AddTag.module.css';
 
 import { addTagToJournal } from '../../data/pages_helper_functions';
@@ -13,7 +13,7 @@ import { pastelColors } from '../../data/color_constants';
 
 const AddTag = () => {
     const { pages, currentPageName, changePages } = useContext(PageContext);
-    const { slideOut } = useContext(SlideOutContext);
+    const { slideOut } = useContext(PopupContext);
     
     const getRandomPastelColor = () => {
         const pastels = Object.values(pastelColors);

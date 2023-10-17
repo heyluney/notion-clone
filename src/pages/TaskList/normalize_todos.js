@@ -2,7 +2,7 @@ import { getItem } from "../../utils/local_storage";
 
 const normalizeTodos = (todos) => {
     const categories = {};
-    for (let category of getItem('pages')['Task List'].categories) {
+    for (let category in getItem('pages')['Task List'].categories) {
         categories[category] = {};
     }
     for (let [todoId, todo] of Object.entries(todos)) {

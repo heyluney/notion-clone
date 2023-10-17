@@ -9,7 +9,7 @@ import { addEmojiToComment,
         editJournalEmoji,
         addEmojiToJournalComment,
         updateTodoEmoji } from '../../data/pages_helper_functions';
-import { PageContext, PopupContext, SlideOutContext } from '../../App';
+import { PageContext, PopupContext } from '../../App';
 import { computeEmoji, addEmojiToRecent } from '../../data/compute_emojis';
 
 import { saveItem } from '../../utils/local_storage';
@@ -21,8 +21,7 @@ const EmojiSelector = ({
         emojiDictionary,
         emojiArray, 
         isRecent}) => {
-    const { togglePopup } = useContext(PopupContext);
-    const { slideOut } = useContext(SlideOutContext);
+    const { togglePopup, slideOut } = useContext(PopupContext);
 
     // console.log('component', component, 'type', type)
 

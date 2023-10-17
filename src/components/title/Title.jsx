@@ -1,6 +1,6 @@
 import { useState, useContext, useRef } from 'react';
 import { saveItem } from '../../utils/local_storage';
-import { PageContext, SlideOutContext } from '../../App';
+import { PageContext, PopupContext } from '../../App';
 import styles from './Title.module.css';
 
 import Icon from '../../components/popups/Icon';
@@ -12,7 +12,7 @@ import { useAutosizeDefaultTextArea }
 
 const Title = ({isLarge, horizontal, title, emoji, type}) => {
 
-    const { slideOut } = useContext(SlideOutContext);
+    const { slideOut } = useContext(PopupContext);
     const { pages, changePages, currentPageName, changeCurrentPageName } = useContext(PageContext);
     const currentPage = pages[currentPageName];
     const [isUpdatingTitle, updatingTitle] = useState(false);

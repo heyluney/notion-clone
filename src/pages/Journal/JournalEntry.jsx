@@ -4,13 +4,13 @@ import styles from './JournalEntry.module.css';
 import { getFullTimeString } from '../../utils/calculate_date';
 import Icon from '../../components/popups/Icon';
 
-import { SlideOutContext } from '../../App';
+import { PopupContext } from '../../App';
 import Tags from '../../components/tags/Tags';
 
 import { FaComments as Comments } from 'react-icons/fa6';
 
 const JournalEntry = ({ idx, entry }) => {
-    const { slideOut, toggleSlideOut, togglePhysicalSlideOut } = useContext(SlideOutContext);
+    const { slideOut, toggleSlideOut, togglePhysicalSlideOut } = useContext(PopupContext);
     const { title, emoji, tags, timestamp, comments } = entry;
 
     const iconRef = useRef();

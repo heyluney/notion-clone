@@ -1,7 +1,7 @@
 import { useState, useContext, useRef, useCallback } from 'react';
 
 import styles from './Emoji.module.css';
-import { PageContext, PopupContext, SlideOutContext } from '../../App';
+import { PageContext, PopupContext } from '../../App';
 
 import { getItem, saveItem } from '../../utils/local_storage';
 
@@ -28,9 +28,7 @@ import { FaShuffle as Shuffle } from 'react-icons/fa6';
 const Emoji = ({ component, type }) => {
     // This allows synchronization of emoji update across multiple pages.
     const { pages, changePages, currentPageName } = useContext(PageContext);
-    const { slideOut } = useContext(SlideOutContext);
-
-    const { popup, togglePopup } = useContext(PopupContext);
+    const { popup, togglePopup, slideOut } = useContext(PopupContext);
 
     // Determines whether the emoji popup window is open or closed.
     const wrapperRef = useRef();

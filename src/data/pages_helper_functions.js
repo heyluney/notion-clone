@@ -317,9 +317,6 @@ export const moveTodo = (pages, pageName, todoIdx, categoryDraggedTo) => {
 
 export const updateTodoEmoji = (pages, pageName, todoIdx, newEmoji) => {
     const page = pages[pageName];
-
-    console.log(page.todos);
-    console.log(todoIdx);
     return {
         ...pages,
         [pageName]: {
@@ -329,6 +326,29 @@ export const updateTodoEmoji = (pages, pageName, todoIdx, newEmoji) => {
                 [todoIdx]: {
                     ...page.todos[todoIdx],
                     emoji: newEmoji
+                }
+            }
+        }
+    }
+}
+
+export const addTodo = (pages, pageName, newTodoText, newTodoCategory) => {
+    const page = pages[pageName];
+
+    const nextTodoId = calculateNextKey(page.todos);
+    return {
+        ...pages,
+        [pageName]: {
+            ...page,
+            todos: {
+                ...page.todos,
+                [nextTodoId]: {
+                    id: nextTodoId,
+                    emoji: "2795",
+                    title: newTodoText,
+                    category: newTodoCategory,
+                    timestamp: JSON.stringify(new Date()),
+                    tags: {}
                 }
             }
         }

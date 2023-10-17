@@ -1,0 +1,22 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.meta {
+    display: flex;
+    align-items: center;
+}
+
+.author {
+    font-weight: 700;
+}
+
+.date {
+    margin: 5px;
+    font-size: 0.8em;
+    font-weight: 500;
+    color: rgba(154, 154, 151, 1);
+}

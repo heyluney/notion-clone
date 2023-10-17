@@ -119,6 +119,14 @@ const defaultTodos = {
       timestamp: "1893348889895",
       category: "completed",
       tags: {}
+    },
+    5: {
+      id: 5,
+      title: "visit Cindy and Josiah",
+      emoji: "1F6FB",
+      timestamp: "1893348889895",
+      category: "roadtrips",
+      tags: {"east coast": pastelColors["green"]}
     }
 }
 
@@ -145,7 +153,24 @@ const defaultPages = {
         icon: '1F4C4', // Scroll
         component: "TaskList",
         todos: defaultTodos,
-        categories: ["undone", "doing", "completed"]
+        categories: {
+          "undone": {
+            timestamp: "1693348889895", 
+            color: pastelColors["green"]
+          },
+          "doing": {
+            timestamp: "1593348877795", 
+            color: pastelColors["pink"]
+          },
+          "completed": {
+            timestamp: "1593344437789", 
+            color: pastelColors["purple"]
+          },
+          "roadtrips": {
+            timestamp: "1593345537789",
+            color: pastelColors["purple"] 
+          }
+        }
     },
     "Journal": {
         idx: 3,

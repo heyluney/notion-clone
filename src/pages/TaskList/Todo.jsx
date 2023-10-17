@@ -3,9 +3,13 @@ import { useContext, useRef } from 'react';
 import Icon from '../../components/popups/Icon';
 import styles from './Todo.module.css';
 
-import { SlideOutContext } from '../../App';
+import { PopupContext } from '../../App';
+
+import EditButton from '../../components/buttons/EditButton';
+import DeleteButton from '../../components/buttons/DeleteButton';
+
 const Todo = ({todo, onDrag, updateClickedCategory}) => {
-    const { slideOut, toggleSlideOut, togglePhysicalSlideOut, slideOutTransitionTime } = useContext(SlideOutContext);
+    const { slideOut, toggleSlideOut, togglePhysicalSlideOut, slideOutTransitionTime } = useContext(PopupContext);
 
     // This is so clicking on the emoji will only trigger opening the Emoji Selector, and not the slide out component.
     const iconRef = useRef();
@@ -40,14 +44,23 @@ const Todo = ({todo, onDrag, updateClickedCategory}) => {
             className={styles.todo}
             draggable={true}
             onDrag={e => onDrag(e, todo)}>
-            <div ref={iconRef}>
-                <Icon 
-                    type="todo"
-                    icon={todo.emoji}
-                    component={`${"Todo"}_${todo.id}`}
-                />
+
+            <div className={styles.left}>
+                <div ref={iconRef}>
+                    <Icon 
+                        type="todo"
+                        icon={todo.emoji}
+                        component={`${"Todo"}_${todo.id}`}
+                    />
+                </div>
+                <div>{todo.title}</div>
             </div>
-            {todo.title}
+            <div className={styles.buttons} onMouseEnter={() => {
+
+            }}>
+                <EditButton />
+                <DeleteButton />
+            </div>
         </div>
     )
 }
