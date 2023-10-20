@@ -23,6 +23,10 @@
     background: rgb(241, 241, 240, 1);
 }
 
+.todo_publish {
+    background: green;
+    transition: 1s;
+}
 
 .left {
     display: flex;
@@ -38,4 +42,12 @@
 .buttons {
     display: flex;
     flex-direction: row;
+}
+
+.textarea {
+    resize: none;
+    overflow: hidden;
+    font-size: 15px;
+    height: 15px;
+    background: transparent;
 }

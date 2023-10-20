@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import styles from './TodoCategory.module.css';
 
 import Todo from './Todo';
@@ -7,6 +9,9 @@ import AddTodo
 import { getFullTimeString } from '../../utils/calculate_date';
 
 const TodoCategory = ({ todos, category, onDrag, onDrop, timestamp, color }) => {
+
+    const [itemBeingMousedOver, changeMouseOver] = useState(-1);
+
     return (
         <div key={category}
             className={styles.category}
@@ -25,10 +30,16 @@ const TodoCategory = ({ todos, category, onDrag, onDrop, timestamp, color }) => 
             </div>
             {
                 Object.entries(todos).map(([idx, todo]) =>
+                <div key={idx}
+                    onMouseEnter={() => changeMouseOver(parseInt(idx))}
+                    onMouseLeave={() => changeMouseOver(-1)}>
                     <Todo 
                         key={idx}
                         todo={todo} 
-                        onDrag={onDrag} />)
+                        onDrag={onDrag} 
+                        itemBeingMousedOver={itemBeingMousedOver}
+                        />
+                </div>)
             }
             <AddTodo category={category} />
         </div>

@@ -1,9 +1,18 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 
-const useOutsideCommentAlerter = (ref, toggleComment) => {
+import { PageContext } from '../App';
+
+const useOutsideCommentAlerter = (ref) => {
+    const { component, changeComponent } = useContext(PageContext);
     const handleClickOutside = event => {
         if (ref.current && !ref.current.contains(event.target)) {
-            toggleComment(-1);
+            changeComponent({
+                id: null,
+                type: null,
+                popups: {
+                    ...component.popups
+                }
+            })
         }
     }
 

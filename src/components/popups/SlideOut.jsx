@@ -44,8 +44,6 @@ const SlideOut = () => {
     const wrapperRef = useRef();
     useSlideOutOutsideAlerter(wrapperRef, changeSlideOutTransitionTime);
  
-    console.log('component', component, 'entry', entry)
-
     return (
         <div ref={wrapperRef}
             style={slideout ? {

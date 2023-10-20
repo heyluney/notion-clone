@@ -354,3 +354,36 @@ export const addTodo = (pages, pageName, newTodoText, newTodoCategory) => {
         }
     }
 }
+
+
+export const editTodo = (pages, pageName, todoIdx, todoText) => {
+    const page = pages[pageName];
+
+    return {
+        ...pages,
+        [pageName]: {
+            ...page,
+            todos: {
+                ...page.todos,
+                [todoIdx]: {
+                    ...page.todos[todoIdx],
+                    timestamp:  JSON.stringify(new Date()),
+                    title: todoText
+                }
+            }
+        }
+    }
+}
+
+export const deleteTodo = (pages, pageName, todoIdx) => {
+    const page = pages[pageName];
+
+    const {[todoIdx]: todoToDelete, ...keptTodos} = page.todos;
+    return {
+        ...pages,
+        [pageName]: {
+            ...page,
+            todos: keptTodos
+        }
+    }
+}

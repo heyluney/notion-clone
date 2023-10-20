@@ -13,11 +13,6 @@ const Icon = ({isLarge, icon, value}) => {
     const [isHovered, updateHover] = useState(false);
     const { component } = useContext(PageContext);
 
-    // if ( `${component.type}_${component.id}` === "sidebar_3" && value === "sidebar_3") {
-    //     console.log('component_string', `${component.type}_${component.id}`);
-    //     console.log('value', value);
-    // }
-
     return (
         <div className={styles.group}>
             <div 

@@ -14,32 +14,33 @@ import { AiFillCheckCircle as Check } from 'react-icons/ai';
 import { editComment, editJournalComment } from '../../data/pages_helper_functions';
 
 const EditComment = ({ idx,
-    commentBeingEdited,
     comment,
-    changeCommentBeingEdited,
     changeMouseOver,
     type }) => {
 
-    const { pages, changePages, currentPageName, component } = useContext(PageContext);
-    const { id } = component;
+    const { pages, changePages, currentPageName, component, changeComponent } = useContext(PageContext);
 
     const bigCommentRef = useRef(null);
-    useOutsideCommentAlerter(bigCommentRef, changeCommentBeingEdited);
+    useOutsideCommentAlerter(bigCommentRef);
 
     const textareaRef = useRef(null);
     const [currentComment, editCurrentComment] = useState(comment);
 
-    useAutosizeTextArea(idx, textareaRef, currentComment, commentBeingEdited);
+    useAutosizeTextArea(idx, textareaRef, currentComment);
     return (
         <div ref={bigCommentRef} className={styles.edit_comment}>
             <textarea 
             ref={textareaRef}
-                readOnly={commentBeingEdited === -1}
+                readOnly={idx !== component.id}
                 defaultValue={comment}
-                className={commentBeingEdited === idx ? 
+                className={idx === component.id ? 
                     styles.active : styles.textarea}
                 onClick={() => {
-                    changeCommentBeingEdited(idx)
+                    changeComponent({
+                        id: idx,
+                        type: "edit",
+                        popups: {...component.popups}
+                    })
                 }}
                 onKeyDown={(e) => {
                     editCurrentComment(e.target.value);
@@ -48,7 +49,7 @@ const EditComment = ({ idx,
                         switch(type) {
                             case 'journal_comments': 
                                 newPages = editJournalComment(pages, currentPageName,
-                                    id, idx, e.target.value);
+                                    component.id, idx, e.target.value);
                                 break;
                             default: 
                                 // Default is to update the comment associated with the page.
@@ -59,18 +60,23 @@ const EditComment = ({ idx,
                         changePages(newPages);
                         saveItem('pages', newPages);
                         changeMouseOver(-1);
-                        changeCommentBeingEdited(-1);
+                        changeComponent({
+                            id: null,
+                            type: null,
+                            popups: {...component.popups}
+                        })
                     }
                 }} />
-            {commentBeingEdited === idx &&
-                <button className={styles.button}>
-                    <Cancel />
-                </button>
+            {component.id === idx &&
+                <>
+                    <button className={styles.button}>
+                        <Cancel />
+                    </button>
+                    <button className={styles.button}>
+                        <Check />
+                    </button>
+                </>
             }
-            {commentBeingEdited === idx &&
-                <button className={styles.button}>
-                    <Check />
-                </button>}
         </div>
     )
 }

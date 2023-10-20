@@ -4,7 +4,7 @@ import { PageContext } from '../../App';
 import styles from './Title.module.css';
 
 import Icon from '../../components/popups/Icon';
-import { editTitle, editJournalTitle } from '../../data/pages_helper_functions';
+import { editTitle, editJournalTitle, editTodo } from '../../data/pages_helper_functions';
 
 
 import { useAutosizeDefaultTextArea }
@@ -20,7 +20,6 @@ const Title = ({isLarge, horizontal, title, emoji }) => {
 
     const titleRef = useRef();
     useAutosizeDefaultTextArea(titleRef);
-
     return (
         <div className={horizontal ? styles.title_horizontal : styles.title}>
             <div onClick={() => {
@@ -49,11 +48,15 @@ const Title = ({isLarge, horizontal, title, emoji }) => {
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                         let newPages;
-
                         switch(component.type) {
-                            case 'journal': 
+                            case 'journal_slideout': 
                                 newPages = 
                                 editJournalTitle(pages, currentPageName, component.id, e.target.value);
+                                break;
+                            case 'tasklist': 
+                                newPages = editTodo(pages,
+                                    currentPageName, component.id,
+                                    e.target.value);
                                 break;
                             default: 
                                 newPages = editTitle(pages, currentPageName, e.target.value);

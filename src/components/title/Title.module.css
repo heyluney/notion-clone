@@ -19,5 +19,6 @@
     font-size: inherit;
     font-weight: 700;
     cursor: text;
-    resize: none;
+    overflow: hidden;
+    resize: vertical;
 }
