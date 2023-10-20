@@ -35,6 +35,15 @@ const SideBarDetailItem = ({idx, name, icon, path}) => {
                     () => {
                         changeCurrentPageName(name);
                         saveItem('current_page_name', name);
+                        changeComponent({
+                            id: null,
+                            type: null,
+                            popups: {
+                                slideout: false,
+                                modal: false,
+                                emoji: false
+                            }
+                        })
                     }
                 }
                 >

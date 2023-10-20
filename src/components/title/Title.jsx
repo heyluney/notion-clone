@@ -20,6 +20,7 @@ const Title = ({isLarge, horizontal, title, emoji }) => {
 
     const titleRef = useRef();
     useAutosizeDefaultTextArea(titleRef);
+    
     return (
         <div className={horizontal ? styles.title_horizontal : styles.title}>
             <div onClick={() => {
@@ -32,9 +33,10 @@ const Title = ({isLarge, horizontal, title, emoji }) => {
                         }
                     })
                 }} >
-                    <Icon icon={emoji !== undefined ? emoji : currentPage.icon}
+                    <Icon   
+                        icon={emoji !== undefined ? emoji : currentPage.icon}
                         isLarge={isLarge}
-                        value={`title_`}
+                        value="title_"
                     />
             </div>
             <textarea

@@ -1,7 +1,7 @@
 import { useState, useContext, useRef } from 'react';
 
 import Icon from '../../components/popups/Icon';
-import styles from './Todo.module.css';
+import styles from './EditTodo.module.css';
 
 import { PageContext } from '../../App';
 
@@ -12,7 +12,7 @@ import { editTodo } from '../../data/pages_helper_functions';
 
 import { saveItem } from '../../utils/local_storage';
 
-const Todo = ({todo, onDrag, itemBeingMousedOver}) => {
+const EditTodo = ({todo, onDrag, itemBeingMousedOver}) => {
 
     const { pages, currentPageName, changePages, component, changeComponent } = useContext(PageContext);
     // This is so clicking on the emoji will only trigger opening the Emoji Selector, and not the slide out component.
@@ -72,7 +72,7 @@ const Todo = ({todo, onDrag, itemBeingMousedOver}) => {
                     <Icon 
                         type="todo"
                         icon={todo.emoji}
-                        value={`todo_${todo.id}`}
+                        value={`tasklist_${todo.id}`}
                     />
                 </div>
                 <textarea 
@@ -120,4 +120,4 @@ const Todo = ({todo, onDrag, itemBeingMousedOver}) => {
     )
 }
 
-export default Todo;
+export default EditTodo;

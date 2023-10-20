@@ -18,8 +18,7 @@ const JournalEntry = ({ idx, entry }) => {
     return (
         <div onClick={
             (e) => {
-                if (iconRef && 
-                    iconRef.current && 
+                if (iconRef.current && 
                     iconRef.current.contains(e.target)) {
                         return;
                     }

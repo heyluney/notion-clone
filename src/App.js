@@ -9,7 +9,10 @@ import { seedEmojiDictionary } from './data/populate_emoji_dictionary';
 import { seedPages } from './data/populate_pages'
 
 import { getItem, saveItem } from './utils/local_storage';
-import Overlay from './Overlay';
+import EmojiOverlay from './components/overlays/EmojiOverlay';
+import ModalOverlay from './components/overlays/ModalOverlay';
+import Modal from './components/popups/Modal';
+// import Overlay from './Overlay';
 
 import url_map from './utils/url_to_component_map';
 
@@ -56,7 +59,10 @@ const App = () => {
             <SideBar />
             <Main />
           </div>
-          <Overlay />
+          
+          <Modal />
+          {/* <EmojiOverlay/> */}
+          <ModalOverlay/>
         </Fragment>
     </PageContext.Provider>
   )

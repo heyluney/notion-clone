@@ -8,7 +8,8 @@ import { addEmojiToComment,
         updateTitleEmoji, 
         editJournalEmoji,
         addEmojiToJournalComment,
-        updateTodoEmoji } from '../../data/pages_helper_functions';
+        updateTodoEmoji, 
+    addTodoEmoji } from '../../data/pages_helper_functions';
 import { PageContext, PopupContext } from '../../App';
 import { computeEmoji, addEmojiToRecent } from '../../data/compute_emojis';
 
@@ -37,7 +38,8 @@ const EmojiSelector = ({
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        const idx = parseInt(component.split('_')[1]);
+                        console.log('component', component)
+                        // const idx = parseInt(component.split('_')[1]);
                         
                         const newEmojiDict = addEmojiToRecent(emojiDictionary, {[name]: hexcode});
                         changeEmojiDictionary(newEmojiDict);
@@ -48,7 +50,7 @@ const EmojiSelector = ({
                         let newPages;
                         switch(type) {
                             case 'comments': 
-                                newPages = addEmojiToComment(pages, currentPageName, idx, {[hexcode]: name});
+                                newPages = addEmojiToComment(pages, currentPageName, id, {[hexcode]: name});
                                 break;
                             case 'journal': 
                                 newPages = editJournalEmoji(pages, currentPageName, id, hexcode);
@@ -57,9 +59,12 @@ const EmojiSelector = ({
                                 const commentIdx = parseInt(component.split('_')[1]);
                                 newPages = addEmojiToJournalComment(pages, currentPageName, id, commentIdx, {[hexcode]: name});
                                 break;
-                            case 'todo': 
-                                const todoIdx = parseInt(component.split('_')[1]);
-                                newPages = updateTodoEmoji(pages, currentPageName, todoIdx, hexcode);
+                            case 'tasklist': 
+                                newPages = updateTodoEmoji(pages, currentPageName, id, hexcode);
+                                break;
+                            case 'add_todo': 
+                                // id in this case should be category
+                                newPages = addTodoEmoji(pages, currentPageName, id, hexcode);
                                 break;
                             default: 
                                 // Default is to update the emoji associated with the page.
@@ -69,8 +74,8 @@ const EmojiSelector = ({
                         changePages(newPages);
                         saveItem('pages', newPages);
                         changeComponent({
-                            id: null,
-                            type: null,
+                            id: component.id,
+                            type: component.type,
                             popups: {
                                 ...component.popups,
                                 "emoji": false

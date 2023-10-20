@@ -6,7 +6,7 @@ import { PageContext } from '../../App';
 import { getItem, saveItem } from '../../utils/local_storage';
 
 import { skintones } from '../../data/populate_emoji_dictionary';
-import useOutsideEmojiAlerter from '../../hooks/OutsideEmojiAlert';
+import { useOutsideEmojiAlerter } from '../../hooks/OutsideEmojiAlert';
 import { computeEmoji, getTotalEmojiCount } from '../../data/compute_emojis';
 
 import { flattenEmojiDictionary, 
@@ -21,7 +21,11 @@ import useOnScreen from '../../hooks/OnscreenAlert';
 
 import EmojiSelector from './EmojiSelector';
 
-import { addEmojiToComment, editJournalEmoji, addEmojiToJournalComment, updateTitleEmoji } from '../../data/pages_helper_functions';
+import { addEmojiToComment, 
+        editJournalEmoji, 
+        addEmojiToJournalComment, 
+        updateTitleEmoji,
+        addTodoEmoji } from '../../data/pages_helper_functions';
 
 import { FaShuffle as Shuffle } from 'react-icons/fa6';
 
@@ -29,6 +33,7 @@ const Emoji = () => {
     // This allows synchronization of emoji update across multiple pages.
     const { pages, changePages, currentPageName, component, changeComponent } = useContext(PageContext);
     const { id, type } = component;
+
 
     // Determines whether the emoji popup window is open or closed.
     const wrapperRef = useRef();
@@ -111,6 +116,9 @@ const Emoji = () => {
                                     const commentIdx = parseInt(component.split('_')[1]);
                                     newPages = addEmojiToJournalComment(pages, currentPageName, id, commentIdx, {[hexcode]: name});
                                     break;
+                                case 'add_todo': 
+                                    newPages = addTodoEmoji(pages, currentPageName, id, hexcode);
+                                    break;
                                 default: 
                                     // Default is to update the emoji associated with the page.
                                     newPages = updateTitleEmoji(pages, currentPageName, hexcode);
@@ -119,8 +127,8 @@ const Emoji = () => {
                             changePages(newPages);
                             saveItem('pages', newPages);
                             changeComponent({
-                                id: null,
-                                type: null,
+                                id: component.id,
+                                type: component.type,
                                 popups: {
                                     ...component.popups,
                                     emoji: false

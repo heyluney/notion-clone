@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 
 import useOutsideModalAlerter from '../../hooks/OutsideModalAlert';
-import styles from './Popup.module.css';
+import styles from './Modal.module.css';
 
 import { PageContext } from '../../App';
 import { useRef } from 'react';
@@ -9,7 +9,7 @@ import { useRef } from 'react';
 import { deleteComment } from '../../data/pages_helper_functions';
 import { saveItem } from '../../utils/local_storage';
 
-const Popup = () => {
+const Modal = () => {
     const { pages, changePages, 
         currentPageName,
         component, changeComponent } = useContext(PageContext);
@@ -20,7 +20,7 @@ const Popup = () => {
 
     const [cancelIsHovered, toggleCancelIsHovered] = useState(false);
     return (
-        <div className={`${styles.none} 
+        component.popups.modal && <div className={`${styles.none} 
             ${component.popups.modal ? styles.popup : null}`}
             ref={wrapperRef}>
             <div className={styles.question}>
@@ -60,4 +60,4 @@ const Popup = () => {
     )
 }
 
-export default Popup;
+export default Modal;

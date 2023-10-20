@@ -2,16 +2,15 @@ import { Fragment, useContext } from 'react';
 import styles from './Overlay.module.css'
 
 import { PageContext }  from './App';
-import Popup from './components/popups/Popup';
+import Modal from './components/popups/Modal';
 
 
 // Which popup is open (e.g. emoji vs. modal) is determined by the popup field in the component.
 const Overlay = () => {
     const { component } = useContext(PageContext);
-
     return (
         <Fragment>
-            {component.popups.modal && <Popup />}
+            {component.popups.modal && <Modal />}
             {component.popups.modal && 
                 <div className={styles.modal_overlay}
                 style={{display: "block" }}/>}

@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 import styles from './TodoCategory.module.css';
 
-import Todo from './Todo';
+import EditTodo from './EditTodo';
 import AddTodo
  from './AddTodo';
 
@@ -12,6 +12,9 @@ const TodoCategory = ({ todos, category, onDrag, onDrop, timestamp, color }) => 
 
     const [itemBeingMousedOver, changeMouseOver] = useState(-1);
 
+    const [categoryActive, toggleCategoryActive] = useState(false);
+
+    const textAreaRef = useRef();
     return (
         <div key={category}
             className={styles.category}
@@ -19,12 +22,28 @@ const TodoCategory = ({ todos, category, onDrag, onDrop, timestamp, color }) => 
             onDrop={e => onDrop(e, category)}
         >
             <div className={styles.header}>
-                <div className={styles.category_name}
-                    style={{
+                <div className={categoryActive === category ?  styles.active_category_name : styles.category_name}
+                    style={categoryActive === category ? {
+                        background: color,
+                        filter:"brightness(0.8)"
+                    } : {
                         background: color
                     }}
+                    onClick={() => {
+                        toggleCategoryActive(categoryActive === null ? category : null)
+                        textAreaRef.current.setSelectionRange(
+                            textAreaRef.current.value.length, textAreaRef.current.value.length
+                        )
+                    }}
                 >
-                    {category}
+                    <textarea
+                        ref={textAreaRef}
+                        className={styles.textarea} 
+                        style={{background: "transparent"}} 
+                        defaultValue={category}
+                        onKeyDown={(e) => {
+
+                        }}/>
                 </div>
                 <div className={styles.date}>{getFullTimeString(timestamp)}</div>
             </div>
@@ -33,7 +52,7 @@ const TodoCategory = ({ todos, category, onDrag, onDrop, timestamp, color }) => 
                 <div key={idx}
                     onMouseEnter={() => changeMouseOver(parseInt(idx))}
                     onMouseLeave={() => changeMouseOver(-1)}>
-                    <Todo 
+                    <EditTodo 
                         key={idx}
                         todo={todo} 
                         onDrag={onDrag} 

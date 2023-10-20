@@ -35,8 +35,10 @@ const SlideOut = () => {
         return entry;
     }
 
+
     const entry = retrieveEntry();
     const { title, emoji, tags, timestamp } = entry;
+    // console.log('entry', entry)
 
     const [slideOutTransitionTime, changeSlideOutTransitionTime] = useState(300);
     const [slideOutWidth, changeSlideOutWidth] = useState(500);
@@ -93,7 +95,8 @@ const SlideOut = () => {
                     <div className={styles.main}>
                     <Title horizontal={true} 
                         title={title} 
-                        emoji={emoji} />
+                        emoji={emoji} 
+                        />
 
                     <div className={styles.desc}>
                         <div className={styles.desc_item}>Date Created</div>

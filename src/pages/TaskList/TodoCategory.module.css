@@ -20,18 +20,36 @@
 }
 
 .category_name {
-    padding: 5px;
+    padding: 8px;
     margin-right: 8px;
     border-radius: 4px;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
     width: 50px;
+}
+
+.active_category_name {
+    display: flex;
+    padding: 8px;
+    margin-right: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100px;
+}
+.textarea {
+    height: 15px;
+    font-size: 15px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .date {
     color: var(--medium-grey);
     font-weight: 300;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 

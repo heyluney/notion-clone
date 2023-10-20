@@ -1,9 +1,5 @@
 .add_todo {
     background: white;
-    border: 1px solid #eaeae9;
-    border-radius: 4px;
-    box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
-             rgba(15, 15, 15, 0.1) 0px 2px 4px;
     outline: none;
     padding: 10px 10px 8px 8px;
     box-sizing: border-box;
@@ -12,6 +8,14 @@
     flex-direction: row;
     align-items: center;
     font-weight: 700;
+    font-size: 12;
+}
+
+.active {
+    border: 1px solid #eaeae9;
+    border-radius: 4px;
+    box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
+             rgba(15, 15, 15, 0.1) 0px 2px 4px;
 }
 
 .add_todo > input {

@@ -126,7 +126,9 @@ const defaultTodos = {
       emoji: "1F6FB",
       timestamp: "1893348889895",
       category: "roadtrips",
-      tags: {"east coast": pastelColors["green"]}
+      tags: {
+        "east coast": pastelColors["green"]
+      }
     }
 }
 
@@ -150,7 +152,7 @@ const defaultPages = {
         idx: 2,
         name: "Task List",
         path: "/notion-clone/task_list",
-        icon: '1F4C4', // Scroll
+        icon: '1F4C4',
         component: "TaskList",
         todos: defaultTodos,
         categories: {

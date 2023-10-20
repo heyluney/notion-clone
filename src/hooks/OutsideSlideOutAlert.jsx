@@ -5,8 +5,10 @@ import { PageContext } from '../App';
 
 export const useSlideOutOutsideAlerter = (ref, changeSlideOutTransitionTime) => {
     const { component, changeComponent } = useContext(PageContext);
+
     useEffect(() => {
         const handleClickOutside = (event) => {
+            if (component.popups.slideout === false) return;
             if (ref.current && !ref.current.contains(event.target)) {
                 changeSlideOutTransitionTime(300);
                 changeComponent({
