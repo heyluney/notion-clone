@@ -2,13 +2,13 @@ import { useContext, useState } from 'react';
 
 import styles from './DeleteButton.module.css';
 
-import { PopupContext } from '../../App';
+import { PageContext } from '../../App';
 
 import { AiFillDelete as Delete } from 'react-icons/ai';
 
 
 const DeleteButton = ({idx, commentBeingMousedOver}) => {
-    const { togglePopup } = useContext(PopupContext);
+    const { component, changeComponent } = useContext(PageContext);
 
     const [isHovered, toggleHover] = useState(false);
     return (
@@ -18,7 +18,14 @@ const DeleteButton = ({idx, commentBeingMousedOver}) => {
                     styles.active :
                     styles.inactive}`}
                 onClick={() => {
-                    togglePopup(`Delete_${idx}`);
+                    changeComponent({
+                        id: component.id === null ? idx : null,
+                        type: component.id === null ? "delete" : null,
+                        popups: {
+                            ...component.popups,
+                            modal: !component.popups.popup
+                        }
+                    })
                 }}
                 onMouseEnter={() => {
                     toggleHover(true);

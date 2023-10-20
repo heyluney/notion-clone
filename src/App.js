@@ -32,36 +32,32 @@ const App = () => {
     saveItem('current_page_name', currentPageName);
   }
 
-  // Determines global state for whether a popup is currently open or not.
-  const [popup, togglePopup] = useState(null);
   addFaviconToPage(pages[currentPageName].icon);
 
-  // Controls the journal entry that will be displayed on SlideOut component. The reason why physicalSlideOut exists is because the text on the slideOut needs to display on the page until the transition time (for the slideout to fully close) is completely over.
-  const [slideOut, toggleSlideOut] = useState(null);
-  const [physicalSlideOut, togglePhysicalSlideOut] = useState(false);
-  const [slideOutTransitionTime, changeSlideOutTransitionTime] = useState(300);
-
-  // There can only ever be on item being "acted on" (e.g. either edited or deleted). at a given pointed in time. Therefore, the id of what is being acted on can be stored on global state.
+  // Represents the current item being modified. Type and id are sufficient to be 
+  // a unique identifier (e.g. for the emoji selector popup).
+  const [component, changeComponent] = useState({
+    id: null,
+    type: null,
+    popups: {
+      modal: false,
+      emoji: false,
+      slideout: false
+    } // Multiple popups (e.g. slideout, emoji, modal) can be triggered simultaneously.
+  })
   return (
     <PageContext.Provider value={{
       currentPageName, changeCurrentPageName,
       pages, changePages,
-      // currentItem, changeCurrent
+      component, changeComponent
     }}>
-      <PopupContext.Provider value={{ 
-          popup, togglePopup,
-          slideOut, toggleSlideOut,
-          physicalSlideOut, togglePhysicalSlideOut,
-          slideOutTransitionTime, changeSlideOutTransitionTime
-        }}>
-          <Fragment>
-            <div className={`${styles.app}`}>
-              <SideBar />
-              <Main />
-            </div>
-            {popup && <Overlay />}
-          </Fragment>
-      </PopupContext.Provider>
+        <Fragment>
+          <div className={`${styles.app}`}>
+            <SideBar />
+            <Main />
+          </div>
+          <Overlay />
+        </Fragment>
     </PageContext.Provider>
   )
 }

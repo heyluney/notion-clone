@@ -6,7 +6,7 @@ import AddTodo
 
 import { getFullTimeString } from '../../utils/calculate_date';
 
-const TodoCategory = ({ todos, category, onDrag, onDrop, updateClickedCategory, timestamp, color }) => {
+const TodoCategory = ({ todos, category, onDrag, onDrop, timestamp, color }) => {
     return (
         <div key={category}
             className={styles.category}
@@ -28,8 +28,7 @@ const TodoCategory = ({ todos, category, onDrag, onDrop, updateClickedCategory, 
                     <Todo 
                         key={idx}
                         todo={todo} 
-                        onDrag={onDrag}
-                        updateClickedCategory={updateClickedCategory}/>)
+                        onDrag={onDrag} />)
             }
             <AddTodo category={category} />
         </div>

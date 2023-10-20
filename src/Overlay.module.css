@@ -14,7 +14,7 @@
   }
 
   /* Overlay on the page when a popup is opened. */
-  .popup_overlay {
+  .modal_overlay {
     position: fixed; 
     display: none;
     width: 100%; 

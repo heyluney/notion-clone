@@ -12,8 +12,8 @@ import { saveItem } from '../../utils/local_storage';
 import { pastelColors } from '../../data/color_constants';
 
 const AddTag = () => {
-    const { pages, currentPageName, changePages } = useContext(PageContext);
-    const { slideOut } = useContext(PopupContext);
+    const { pages, currentPageName, changePages, component } = useContext(PageContext);
+    const { id } = component;
     
     const getRandomPastelColor = () => {
         const pastels = Object.values(pastelColors);
@@ -46,7 +46,7 @@ const AddTag = () => {
                     if (e.key === 'Enter') {
                         e.preventDefault();
                  
-                        const newPages = addTagToJournal(pages, currentPageName, slideOut, {
+                        const newPages = addTagToJournal(pages, currentPageName, id, {
                             [currentTag.tagText]: currentTag.color });
                         changePages(newPages);
                         saveItem('pages', newPages);

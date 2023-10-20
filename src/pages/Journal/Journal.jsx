@@ -9,13 +9,14 @@ import SlideOut from '../../components/popups/SlideOut';
 import JournalEntry from './JournalEntry';
 
 const Journal = () => {
-    const { pages, currentPageName } = useContext(PageContext);
+    const { pages, currentPageName, component } = useContext(PageContext);
     const journalEntries = pages[currentPageName].entries;
 
     return (
         <Fragment>
         <div className={styles.journal}>
-            <Title horizontal={true} />
+            <Title horizontal={true} component={component}
+            title={currentPageName}/>
 
             <div className={styles.description}>
                 Document your life - daily happenings, special occasions, and reflections on your goals. Categorize entries with tags and automatically capture the date.
@@ -34,7 +35,7 @@ const Journal = () => {
             </div>
             
         </div>
-        <SlideOut type="journal"/> 
+        <SlideOut /> 
         </Fragment>
     )
 }

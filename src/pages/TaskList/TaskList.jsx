@@ -16,7 +16,7 @@ import normalizeTodos from './normalize_todos';
 import { saveItem } from '../../utils/local_storage';
 
 const TaskList = () => {
-    const { pages, currentPageName, changePages } = 
+    const { pages, currentPageName, changePages, component } = 
         useContext(PageContext);
 
     const todos = pages[currentPageName].todos;
@@ -36,11 +36,12 @@ const TaskList = () => {
 
     // Stores what todo is currently in the state of being dragged, and the category that it was dragged from.
     const [draggedTodo, updateDraggedTodo] = useState({});
-    const [clickedCategory, updateClickedCategory] = useState("");
+
     return (
         <div className={styles.tasklist}>
             <div className={styles.header}>
-             <Title horizontal={true}/>
+             <Title horizontal={true} component={component}
+                title={currentPageName}/>
             <div className={styles.description}>
                 Use this template to track your personal tasks.
                 Click + New to create a new task directly on this board.
@@ -60,12 +61,12 @@ const TaskList = () => {
                             draggedTodo={draggedTodo}
                             timestamp={pages[currentPageName].categories[category].timestamp} 
                             color={pages[currentPageName].categories[category].color} 
-                            updateClickedCategory={updateClickedCategory} />
+                             />
                 
                 )}
             </div>
 
-            <SlideOut type="tasklist" category={clickedCategory}/>
+            <SlideOut />
         </div>
     )
 }

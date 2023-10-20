@@ -7,5 +7,4 @@
     //     span.style.fontWeight = 700;
     //     span.appendChild(selection.extractContents());
     //     selection.insertNode(span);
-    //     console.log(parent.hasChildNodes())
     // }

@@ -1,12 +1,12 @@
 import { useState, useContext, useRef, useCallback } from 'react';
 
 import styles from './Emoji.module.css';
-import { PageContext, PopupContext } from '../../App';
+import { PageContext } from '../../App';
 
 import { getItem, saveItem } from '../../utils/local_storage';
 
 import { skintones } from '../../data/populate_emoji_dictionary';
-import useOutsideAlerter from '../../hooks/OutsideAlert';
+import useOutsideEmojiAlerter from '../../hooks/OutsideEmojiAlert';
 import { computeEmoji, getTotalEmojiCount } from '../../data/compute_emojis';
 
 import { flattenEmojiDictionary, 
@@ -25,14 +25,14 @@ import { addEmojiToComment, editJournalEmoji, addEmojiToJournalComment, updateTi
 
 import { FaShuffle as Shuffle } from 'react-icons/fa6';
 
-const Emoji = ({ component, type }) => {
+const Emoji = () => {
     // This allows synchronization of emoji update across multiple pages.
-    const { pages, changePages, currentPageName } = useContext(PageContext);
-    const { popup, togglePopup, slideOut } = useContext(PopupContext);
+    const { pages, changePages, currentPageName, component, changeComponent } = useContext(PageContext);
+    const { id, type } = component;
 
     // Determines whether the emoji popup window is open or closed.
     const wrapperRef = useRef();
-    useOutsideAlerter(wrapperRef);
+    useOutsideEmojiAlerter(wrapperRef);
 
 
     // Emoji being stored, and the three factors which update visual configuration.
@@ -84,7 +84,7 @@ const Emoji = ({ component, type }) => {
     return (
         <div 
             className={`${styles.emojis} 
-                ${popup ? styles.open : styles.closed}`} 
+                ${id !== null ? styles.open : styles.closed}`} 
             ref={wrapperRef}>
             <div className={styles.top}>
                 <div className={styles.wrapper}>
@@ -105,11 +105,11 @@ const Emoji = ({ component, type }) => {
                                     newPages = addEmojiToComment(pages, currentPageName, idx, {[hexcode]: name});
                                     break;
                                 case 'journal': 
-                                    newPages = editJournalEmoji(pages, currentPageName, slideOut, hexcode);
+                                    newPages = editJournalEmoji(pages, currentPageName, id, hexcode);
                                     break;
                                 case 'journal_comments':
                                     const commentIdx = parseInt(component.split('_')[1]);
-                                    newPages = addEmojiToJournalComment(pages, currentPageName, slideOut, commentIdx, {[hexcode]: name});
+                                    newPages = addEmojiToJournalComment(pages, currentPageName, id, commentIdx, {[hexcode]: name});
                                     break;
                                 default: 
                                     // Default is to update the emoji associated with the page.
@@ -118,7 +118,14 @@ const Emoji = ({ component, type }) => {
                             }
                             changePages(newPages);
                             saveItem('pages', newPages);
-                            togglePopup(null);
+                            changeComponent({
+                                id: null,
+                                type: null,
+                                popups: {
+                                    ...component.popups,
+                                    emoji: false
+                                }
+                            })
                         }}>
                         <Shuffle/>
                     </div>

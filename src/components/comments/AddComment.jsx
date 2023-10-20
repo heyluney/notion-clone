@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { PageContext, PopupContext } from '../../App';
+import { PageContext } from '../../App';
 
 import styles from './AddComment.module.css';
 import clark from '../../assets/clark_profile.jpg';
@@ -9,9 +9,9 @@ import { addComment, addJournalComment } from '../../data/pages_helper_functions
 import { saveItem } from '../../utils/local_storage';
 
 
-const AddComment = ({ currentComment, updateComment, type }) => {
-    const { slideOut } = useContext(PopupContext);
-    const { pages, changePages, currentPageName } = useContext(PageContext);
+const AddComment = ({ currentComment, updateComment }) => {
+    const { pages, changePages, currentPageName, component } = useContext(PageContext);
+    const { id, type } = component;
     return (
         <div className={styles.new}>
         <img className={styles.pic} src={clark} alt="clarkie_profile_photo" />
@@ -29,7 +29,7 @@ const AddComment = ({ currentComment, updateComment, type }) => {
                     let newPages;
                     switch(type) {
                         case 'journal_comments': 
-                            newPages = addJournalComment(pages, currentPageName, slideOut, e.target.value);
+                            newPages = addJournalComment(pages, currentPageName, id, e.target.value);
                             break;
                         default: 
                             // Default is to update the comment associated with the page.

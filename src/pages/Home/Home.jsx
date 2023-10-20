@@ -1,6 +1,14 @@
+import styles from './Home.module.css';
+
 const Home = () => {
     return (
-        <div>This is home!</div>
+        <div className={styles.home}>
+            This is home!
+        
+            <br />
+            <br />
+            Here are some examples of pages you can create:
+        </div>
     )
 }
 

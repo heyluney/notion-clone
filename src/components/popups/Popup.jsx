@@ -1,26 +1,27 @@
 import { useState, useContext } from 'react';
 
-import useOutsideAlerter from '../../hooks/OutsideAlert';
+import useOutsideModalAlerter from '../../hooks/OutsideModalAlert';
 import styles from './Popup.module.css';
 
 import { PageContext } from '../../App';
 import { useRef } from 'react';
-import { PopupContext } from '../../App';
 
 import { deleteComment } from '../../data/pages_helper_functions';
 import { saveItem } from '../../utils/local_storage';
 
-// Need comment idx in order to figure out which comment to delete.
 const Popup = () => {
-    const { popup, togglePopup } = useContext(PopupContext);
-    const { pages, changePages, currentPageName } = useContext(PageContext);
+    const { pages, changePages, 
+        currentPageName,
+        component, changeComponent } = useContext(PageContext);
 
     const wrapperRef = useRef();
-    useOutsideAlerter(wrapperRef);
+    useOutsideModalAlerter(wrapperRef);
+    
 
     const [cancelIsHovered, toggleCancelIsHovered] = useState(false);
     return (
-        <div className={`${styles.none} ${popup && popup.includes("Delete") && styles.popup}`}
+        <div className={`${styles.none} 
+            ${component.popups.modal ? styles.popup : null}`}
             ref={wrapperRef}>
             <div className={styles.question}>
                 Would you like to delete this comment?
@@ -29,15 +30,28 @@ const Popup = () => {
                 className={`${styles.delete} 
                     ${cancelIsHovered ? styles.active : null}`}
                 onClick={() => {
-                    const idx = parseInt(popup.split('_')[1]);
-                    const newPages = deleteComment(pages, currentPageName, idx);
+                    const newPages = deleteComment(pages, currentPageName, component.id);
                     changePages(newPages);
                     saveItem('pages', newPages);
-                    togglePopup(null);
+                    changeComponent({
+                        id: null,
+                        type: null,
+                        popups: {
+                            ...component.popups,
+                            modal: false
+                        }
+                    });
                 }}>
                 Delete
             </button>
-            <button onClick={() => togglePopup(null)}
+            <button onClick={() => changeComponent({
+                        id: null,
+                        type: null,
+                        popups: {
+                            ...component.popups,
+                            modal: false
+                        }
+                    })}
                 onMouseEnter={() => toggleCancelIsHovered(!cancelIsHovered)}
                 onMouseLeave={() => toggleCancelIsHovered(!cancelIsHovered)}>
                 Cancel

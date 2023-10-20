@@ -3,14 +3,14 @@ import { useContext, useRef } from 'react';
 import Icon from '../../components/popups/Icon';
 import styles from './Todo.module.css';
 
-import { PopupContext } from '../../App';
+import { PageContext } from '../../App';
 
 import EditButton from '../../components/buttons/EditButton';
 import DeleteButton from '../../components/buttons/DeleteButton';
 
-const Todo = ({todo, onDrag, updateClickedCategory}) => {
-    const { slideOut, toggleSlideOut, togglePhysicalSlideOut, slideOutTransitionTime } = useContext(PopupContext);
+const Todo = ({todo, onDrag}) => {
 
+    const { component, changeComponent } = useContext(PageContext);
     // This is so clicking on the emoji will only trigger opening the Emoji Selector, and not the slide out component.
     const iconRef = useRef();
 
@@ -20,44 +20,46 @@ const Todo = ({todo, onDrag, updateClickedCategory}) => {
             onClick={(e) => {
                 if (iconRef && 
                     iconRef.current && 
-                    iconRef.current.contains(e.target)) return;
-                
-                if (slideOut === null) {
-                    toggleSlideOut(todo.id);
-                    togglePhysicalSlideOut(true);
-                    updateClickedCategory(todo.category);
-                } else {
-                    setTimeout(() => toggleSlideOut(null),
-                    slideOutTransitionTime);
-                    togglePhysicalSlideOut(false);
-
-                    if (todo.id !== slideOut) {
-                        setTimeout(() => toggleSlideOut(todo.id), slideOutTransitionTime*2);
-                        setTimeout(() => togglePhysicalSlideOut(true), slideOutTransitionTime*2);
-                        setTimeout(() => updateClickedCategory(todo.category),
-                        slideOutTransitionTime);
+                    iconRef.current.contains(e.target)) 
+                    {
+                        return;
                     }
-                   
-                }
-             
+                
+                changeComponent({
+                    id: todo.id,
+                    type: "tasklist",
+                    popups: {
+                        ...component.popups,
+                        slideout: !component.popups.slideout
+                    }
+                })     
             }}
             className={styles.todo}
             draggable={true}
             onDrag={e => onDrag(e, todo)}>
 
             <div className={styles.left}>
-                <div ref={iconRef}>
+                <div 
+                    ref={iconRef} 
+                    onClick={() => {
+                    changeComponent({
+                        id: component.id === null ? todo.id : null,
+                        type: component.type === null ? "tasklist" : null,
+                        popups: {
+                            ...component.popups,
+                            emoji: !component.popups.emoji
+                        }
+                    })
+                }}>
                     <Icon 
                         type="todo"
                         icon={todo.emoji}
-                        component={`${"Todo"}_${todo.id}`}
+                        value={`todo_${todo.id}`}
                     />
                 </div>
                 <div>{todo.title}</div>
             </div>
-            <div className={styles.buttons} onMouseEnter={() => {
-
-            }}>
+            <div className={styles.buttons}>
                 <EditButton />
                 <DeleteButton />
             </div>

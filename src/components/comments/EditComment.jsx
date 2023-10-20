@@ -2,7 +2,7 @@ import { useContext, useState, useRef } from 'react';
 
 import styles from './EditComment.module.css'
 
-import { PageContext, PopupContext } from '../../App';
+import { PageContext } from '../../App';
 import useOutsideCommentAlerter from '../../hooks/OutsideCommentAlert'; 
 import { useAutosizeTextArea }
  from '../../hooks/AutosizeTextArea';
@@ -20,8 +20,8 @@ const EditComment = ({ idx,
     changeMouseOver,
     type }) => {
 
-    const { pages, changePages, currentPageName } = useContext(PageContext);
-    const { slideOut } = useContext(PopupContext);
+    const { pages, changePages, currentPageName, component } = useContext(PageContext);
+    const { id } = component;
 
     const bigCommentRef = useRef(null);
     useOutsideCommentAlerter(bigCommentRef, changeCommentBeingEdited);
@@ -48,7 +48,7 @@ const EditComment = ({ idx,
                         switch(type) {
                             case 'journal_comments': 
                                 newPages = editJournalComment(pages, currentPageName,
-                                    slideOut, idx, e.target.value);
+                                    id, idx, e.target.value);
                                 break;
                             default: 
                                 // Default is to update the comment associated with the page.

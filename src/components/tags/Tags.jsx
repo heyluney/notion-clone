@@ -11,8 +11,8 @@ import AddTag from './AddTag';
 import { ImCross as Cross } from 'react-icons/im';
 
 const Tags = ({ addTagsShown, journalIdx, tags, full }) => {
-    const { slideOut }= useContext(PopupContext);
-    const { pages, changePages, currentPageName } = useContext(PageContext);
+    const { pages, changePages, currentPageName, component } = useContext(PageContext);
+    const { id } = component;
 
     const [deleteButtonsShown, toggleDeleteButtonsShown] 
         = useState(-1);
@@ -46,7 +46,7 @@ const Tags = ({ addTagsShown, journalIdx, tags, full }) => {
                         onMouseLeave={() => toggleActiveTag(-1)}
                         onClick={() => {
                             const newPages = removeTagFromJournal(pages, currentPageName, 
-                                journalIdx !== undefined ? journalIdx : slideOut, tag);
+                                journalIdx !== undefined ? journalIdx : id, tag);
                             changePages(newPages);
                             saveItem('pages', newPages)}} />
                     }

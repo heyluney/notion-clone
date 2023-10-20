@@ -15,20 +15,17 @@ import { computeEmoji, addEmojiToRecent } from '../../data/compute_emojis';
 import { saveItem } from '../../utils/local_storage';
 
 const EmojiSelector = ({
-        component, 
-        type, 
         changeEmojiDictionary, 
         emojiDictionary,
         emojiArray, 
         isRecent}) => {
-    const { togglePopup, slideOut } = useContext(PopupContext);
 
-    // console.log('component', component, 'type', type)
 
     // Lists which emoji is currently being hovered.
     const [hoveredEmoji, changeHoveredEmoji] = useState([/*isRecent?*/false, /*emoji name*/false]);
 
-    const { pages, changePages, currentPageName } = useContext(PageContext);
+    const { pages, changePages, currentPageName, component, changeComponent} = useContext(PageContext);
+    const { id, type } = component;
 
     return chunkify(emojiArray, 12).map((emojis, rowIdx) =>
         <div key={rowIdx} className={styles.row}>
@@ -54,11 +51,11 @@ const EmojiSelector = ({
                                 newPages = addEmojiToComment(pages, currentPageName, idx, {[hexcode]: name});
                                 break;
                             case 'journal': 
-                                newPages = editJournalEmoji(pages, currentPageName, slideOut, hexcode);
+                                newPages = editJournalEmoji(pages, currentPageName, id, hexcode);
                                 break;
                             case 'journal_comments':
                                 const commentIdx = parseInt(component.split('_')[1]);
-                                newPages = addEmojiToJournalComment(pages, currentPageName, slideOut, commentIdx, {[hexcode]: name});
+                                newPages = addEmojiToJournalComment(pages, currentPageName, id, commentIdx, {[hexcode]: name});
                                 break;
                             case 'todo': 
                                 const todoIdx = parseInt(component.split('_')[1]);
@@ -71,7 +68,14 @@ const EmojiSelector = ({
                         }
                         changePages(newPages);
                         saveItem('pages', newPages);
-                        togglePopup(null);
+                        changeComponent({
+                            id: null,
+                            type: null,
+                            popups: {
+                                ...component.popups,
+                                "emoji": false
+                            }
+                        })
                     }}
                     onMouseOver={() => {
                         changeHoveredEmoji([isRecent, name])

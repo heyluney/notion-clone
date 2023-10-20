@@ -51,7 +51,7 @@ const Comments = ({passedComments, type}) => {
                                 changeMouseOver={changeMouseOver} 
                                 type={type}/>
 
-                            <CommentEmojis idx={idx} comment={comment} type={type}/>
+                            <CommentEmojis idx={idx} comment={comment} />
                         </div>
                     
                     {commentBeingEdited !== idx &&

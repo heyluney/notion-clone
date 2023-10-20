@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+
+import { PageContext } from '../../App';
 import styles from './QuickNote.module.css';
 
 
@@ -9,9 +11,11 @@ const QuickNote = () => {
     const [textarea, changeTextArea] = 
         useState(localStorage.getItem('quicknote'));
     
+    const { component, currentPageName } = useContext(PageContext);
     return (
         <div className={styles.quicknote}>
-            <Title isLarge={true} />
+            <Title isLarge={true} component={component}
+                title={currentPageName}/>
             <Comments />
             <div>
                 <textarea 

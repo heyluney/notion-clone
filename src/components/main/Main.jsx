@@ -8,10 +8,10 @@ import { PageContext } from '../../App';
 import map from '../../utils/string_to_component_map';
 
 const Main = () => {
-    const { currentPageName, pages } = useContext(PageContext);
+    const { pages } = useContext(PageContext);
     return (
         <div className={styles.main}>
-            <Banner currentPage={pages[currentPageName]} />
+            <Banner />
             <div className={styles.right}>
                 <Routes>
                     {Object.values(pages)
@@ -21,7 +21,6 @@ const Main = () => {
                                             path={path}
                                             element={<Component/>} />
                         })}
-                    {/* <Route key="root" path="/notion-clone" element={<Home />}/> */}
                 </Routes>
             </div>
         </div>

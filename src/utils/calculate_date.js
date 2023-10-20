@@ -15,6 +15,7 @@ const num_to_month_mapping = {
 
 
 export const getFullTimeString = (stringified_date) => {
+    if (stringified_date === undefined) return;
     const date = new Date(JSON.parse(stringified_date));
     const hours = date.getHours();
     const suffix = hours > 12 ? 'pm' : 'am';

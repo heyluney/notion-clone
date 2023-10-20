@@ -164,7 +164,6 @@ export const truncateEmojiDictionary = (emojiDict, prefix, length) => {
     } else {
         // Number of emoji entries is at most length.
         for (let category in emojiDict) {
-            // console.log(emojiDict[category])
             const temp = [];
 
             for (let i = 0; i < emojiDict[category].length; i++) {

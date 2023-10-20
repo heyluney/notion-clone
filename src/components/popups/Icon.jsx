@@ -2,34 +2,38 @@ import { useState, useContext } from 'react';
 import styles from './Icon.module.css';
 import { computeEmoji } from '../../data/compute_emojis';
 
-import { PopupContext } from '../../App';
+import { PageContext } from '../../App';
 
 import Emoji from './Emoji';
 
-// "component" allows us to toggle EmojiSelector only under the appropriately clicked icon.
-const Icon = ({isLarge, icon, component, type}) => {
+// The value key helps determine which React component this Icon is associated with.
+// If it matches the current "component" context, the emoji selector is toggled open.
+const Icon = ({isLarge, icon, value}) => {
     const Icon = icon;
     const [isHovered, updateHover] = useState(false);
+    const { component } = useContext(PageContext);
 
-    const { popup, togglePopup } = useContext(PopupContext);
+    // if ( `${component.type}_${component.id}` === "sidebar_3" && value === "sidebar_3") {
+    //     console.log('component_string', `${component.type}_${component.id}`);
+    //     console.log('value', value);
+    // }
+
     return (
         <div className={styles.group}>
             <div 
-                className={`${isLarge ? styles.main_large : styles.main} ${isHovered ? styles.active : null}`}
+                className={
+                    `${isLarge ? styles.main_large : styles.main}
+                    ${isHovered ? styles.active : null}`}
                 onMouseEnter={() => updateHover(!isHovered)}
                 onMouseLeave={() => updateHover(!isHovered)}
-                onClick={() => {
-                        togglePopup(popup === null ? component : null)
-                    }}
                 >
                 {typeof icon === "string" ? 
                     computeEmoji(icon) : 
                     <Icon />}
             </div>
-            {popup === component && 
-            <Emoji 
-                component={component}
-                type={type}/>}
+            {component.popups.emoji === true 
+            && value === `${component.type}_${component.id}` 
+            && <Emoji component={component} />}
         </div>
     )
 }
