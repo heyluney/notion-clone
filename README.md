@@ -1,6 +1,6 @@
 # Notion Clone
 
-This is a clone of the notion app using only frontend tools.
+This is a clone of the notion app using only frontend tools!
 
 
 # Getting Started with Create React App
