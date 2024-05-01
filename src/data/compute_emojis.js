@@ -116,6 +116,7 @@ export const filterEmojiDictionaryBySkintone = (emojiDict, skintone) => {
     return newEmojiDict;
 }
 export const filterEmojiDictionary = (emojiDict, prefix) => {
+    // console.log('emojiDict filter', emojiDict);
     const newEmojiDict = {};
     for (let category in emojiDict) {
         if (category === 'recent') continue;
@@ -132,10 +133,13 @@ export const filterEmojiDictionary = (emojiDict, prefix) => {
         }
     }
     newEmojiDict['recent'] = emojiDict['recent'];
+    // console.log('newEmojiDict filter', newEmojiDict)
     return newEmojiDict;
 }
 
 export const flattenEmojiDictionary = emojiDict => {
+    if (emojiDict === null) return {};
+    console.log('emojiDict', emojiDict);
     const flattened = Object.fromEntries(
         Object.entries(emojiDict)
                 .filter(([category, _]) => category !== 'recent')
@@ -145,6 +149,7 @@ export const flattenEmojiDictionary = emojiDict => {
                             .map(([_, hexCodePairs]) => Object.entries(hexCodePairs)).flat().map(x => [x[0], x[1], true])
         ])
     );
+    // console.log('flattened', flattened);
     flattened['recent'] = Object.entries(emojiDict['recent']).map(x => [x[0], x[1], true]);
     return flattened;
 }

@@ -2,7 +2,7 @@
 import { getItem, saveItem } from "../utils/local_storage";
 const myMarkdownFile = require("./emojis.txt");
 
-function asyncCallback(data) {
+function cleanDict(data) {
     const dictionary = {};
     const lines = data.split('\n').filter(x => x !== '');
     let currentGroupName = "";
@@ -38,14 +38,16 @@ function asyncCallback(data) {
             dictionary[currentGroupName][currentSubgroupName][desc] = hexcode;
         }
     }
+
     dictionary['recent'] = {};
-    saveItem('emoji_dictionary', dictionary);
+    return dictionary;
 }
 
-const populateEmojiDictionary = () => {
-    fetch(myMarkdownFile)
+// fetch is async?
+export const populateEmojiDictionary = () => {
+    return fetch(myMarkdownFile)
         .then(response => response.text())
-        .then(text => asyncCallback(text));
+        .then(text => cleanDict(text));
 }
 
 export const seedEmojiDictionary = () => {

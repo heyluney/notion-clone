@@ -1,11 +1,11 @@
-import { useState, Fragment, createContext } from 'react';
+import { useState, useEffect, Fragment, createContext } from 'react';
 import styles from './App.module.css';
 import SideBar from './components/sidebar/SideBar';
 import Main from './components/main/Main';
 import { useLocation } from 'react-router-dom';
 
 import { addFaviconToPage } from './utils/generate_favicon';
-import { seedEmojiDictionary } from './data/populate_emoji_dictionary';
+import { seedEmojiDictionary, populateEmojiDictionary } from './data/populate_emoji_dictionary';
 import { seedPages } from './data/populate_pages'
 
 import { getItem, saveItem } from './utils/local_storage';
@@ -18,18 +18,31 @@ import url_map from './utils/url_to_component_map';
 
 
 const App = () => {
+  localStorage.clear();
+
   const location = useLocation();
   saveItem('current_page_name', url_map[location.pathname]);
   
-  seedEmojiDictionary();
   seedPages();
+  
+  // before seedDictionary is run, 
+  const [emojiDictionary, changeEmojiDictionary] = useState();
+
+  // seedEmojiDictionary();
+
+  useEffect(() => { 
+    populateEmojiDictionary();
+    changeEmojiDictionary(getItem('emoji_dictionary'));
+    console.log('emojiDictionary', emojiDictionary)
+
+  }, [])
 
   const [pages, changePages] = useState(getItem('pages'));
   const [currentPageName, changeCurrentPageName]
     = useState(getItem('current_page_name'));
 
-  // If user presses back and forth buttons, want to update currentPageName
-  // to be in sync with the actual page being displayed.
+
+  // If user presses back and forth buttons, want to update currentPageName to be in sync with the actual page being displayed.
   if (currentPageName !== url_map[location.pathname]) {
     changeCurrentPageName( url_map[location.pathname])
     saveItem('current_page_name', currentPageName);
@@ -37,8 +50,7 @@ const App = () => {
 
   addFaviconToPage(pages[currentPageName].icon);
 
-  // Represents the current item being modified. Type and id are sufficient to be 
-  // a unique identifier (e.g. for the emoji selector popup).
+  // Represents the current item being modified. Type and id are sufficient to be a unique identifier (e.g. for the emoji selector popup).
   const [component, changeComponent] = useState({
     id: null,
     type: null,
@@ -52,7 +64,8 @@ const App = () => {
     <PageContext.Provider value={{
       currentPageName, changeCurrentPageName,
       pages, changePages,
-      component, changeComponent
+      component, changeComponent,
+      emojiDictionary, changeEmojiDictionary
     }}>
         <Fragment>
           <div className={`${styles.app}`}>

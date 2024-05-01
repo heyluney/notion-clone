@@ -1,4 +1,4 @@
-import { useState, useContext, useRef, useCallback } from 'react';
+import { useState, useEffect, useContext, useRef, useCallback } from 'react';
 
 import styles from './Emoji.module.css';
 import { PageContext } from '../../App';
@@ -40,8 +40,8 @@ const Emoji = () => {
     useOutsideEmojiAlerter(wrapperRef);
 
 
-    // Emoji being stored, and the three factors which update visual configuration.
     const [emojiDictionary, changeEmojiDictionary] = useState(getItem('emoji_dictionary'));
+
     const [emojiLength, changeEmojiLength] = useState(100);
     const [prefix, changePrefix] = useState("");
     const [skintone, changeSkintone] = useState(getItem('emoji_dictionary_skintone'));
