@@ -1,12 +1,17 @@
 export const computeEmoji = hexcode => {
     const codes = hexcode.split(' ').map(code => "0x" + code);
-    return String.fromCodePoint(...codes);
+    try {
+        return String.fromCodePoint(...codes);
+    } catch {
+        return String.fromCodePoint("0x1F415");
+    }
 }
 
 export const getSkinToneEmoji = (emojiDict, skintone) => {
     const newSkinTone = emojiDict['People & Body']
     ['hand-fingers-open']
     [`raised hand${skintone === "none" ? "" : ": " + skintone}`];
+    console.log('newSkinTone', newSkinTone)
     return newSkinTone;
 }
 

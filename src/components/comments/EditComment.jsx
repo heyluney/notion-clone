@@ -17,7 +17,6 @@ const EditComment = ({ idx,
     comment,
     changeMouseOver,
     type }) => {
-
     const { pages, changePages, currentPageName, component, changeComponent } = useContext(PageContext);
 
     const bigCommentRef = useRef(null);

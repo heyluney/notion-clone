@@ -5,21 +5,22 @@ import { useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import { PageContext } from '../../App';
-import map from '../../utils/string_to_component_map';
+
+import { page_id_to_component_map } from '../../utils/maps';
 
 const Main = () => {
     const { pages } = useContext(PageContext);
     return (
         <div className={styles.main}>
-            <Banner />
+            {/* <Banner /> */}
             <div className={styles.right}>
                 <Routes>
-                    {Object.values(pages)
-                        .map(({name, component, path}) => {
-                            const Component = map[component];
-                            return <Route key={name}
-                                            path={path}
-                                            element={<Component/>} />
+                    {Object.keys(pages)
+                    .map(idx => {
+                            const Component = page_id_to_component_map[idx];
+                            return <Route key={idx}
+                                            path={`/notion-clone/${idx}`}
+                                            element={<Component />} />
                         })}
                 </Routes>
             </div>

@@ -10,68 +10,26 @@ import { editTitle, editJournalTitle, editTodo } from '../../data/pages_helper_f
 import { useAutosizeDefaultTextArea }
  from '../../hooks/AutosizeTextArea';
 
-const Title = ({isLarge, horizontal, title, emoji }) => {
-    const { pages, changePages, 
-        currentPageName, changeCurrentPageName, 
-        component, changeComponent} = useContext(PageContext);
+const Title = () => {
+    const { currentPageId, pages, changePages } = useContext(PageContext);
 
-    const currentPage = pages[currentPageName];
-    const [isUpdatingTitle, updatingTitle] = useState(false);
+    const [title, updateTitle] = useState(pages[currentPageId]);
 
     const titleRef = useRef();
     useAutosizeDefaultTextArea(titleRef);
-    
+
     return (
-        <div className={horizontal ? styles.title_horizontal : styles.title}>
-            <div onClick={() => {
-                    changeComponent({
-                        id: component.type === null ? "" : null,
-                        type: component.type === null ? "title" : null,
-                        popups: {
-                            ...component.popups,
-                            emoji: !component.popups.emoji
-                        }
-                    })
-                }} >
-                    <Icon   
-                        icon={emoji !== undefined ? emoji : currentPage.icon}
-                        isLarge={isLarge}
-                        value="title_"
-                    />
-            </div>
-            <textarea
-                ref={titleRef}
-                className={styles.textarea}
-                readOnly={!isUpdatingTitle}
-                defaultValue={title}
-                onClick={() => {
-                    updatingTitle(true);
-                }}
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                        let newPages;
-                        switch(component.type) {
-                            case 'journal_slideout': 
-                                newPages = 
-                                editJournalTitle(pages, currentPageName, component.id, e.target.value);
-                                break;
-                            case 'tasklist': 
-                                newPages = editTodo(pages,
-                                    currentPageName, component.id,
-                                    e.target.value);
-                                break;
-                            default: 
-                                newPages = editTitle(pages, currentPageName, e.target.value);
-                                changeCurrentPageName(e.target.value);
-                                saveItem('current_page_name', e.target.value);
-                                break;
-                        }
-                        changePages(newPages);
-                        saveItem('pages', newPages);
-                        updatingTitle(false);
-                    }
-                }}
-            />
+        <div className={styles.title}>
+                <textarea
+                    ref={titleRef}
+                    className={styles.textarea}
+                    value={title}
+                    onChange={(e) => {
+                        e.preventDefault();
+                        updateTitle(e.target.value);
+                        changePages({...pages, [currentPageId]: e.target.value})
+                    }}
+                />            
         </div>
     )
 }

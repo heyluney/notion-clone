@@ -6,25 +6,45 @@ import { pastelColors } from './color_constants';
 // persists between browser refreshes).
 
 // TODO(helen): Double check that icons also work to substitute traditional emojis.
+
+// const entity_type_to_entity_mapping 
 const defaultComments = {
-    1: {
-      comment: "Hi",
-      edited: false,
-      emojis:  
-      {
-        "1F923": 'rolling on the floor laughing',
-        "1F62B": 'tired face'
-      },
-      timestamp: "1695669947591"
-    },
-    2: {
-      comment: "Hello",
-      edited: false,
-      emojis:  
-      {"1F923": 'rolling on the floor laughing'},
-      timestamp: "1693348898325"
-    }
-};
+  1: {
+    comment: "Hi",
+    edited: false,
+    entity_type: 1,
+    entity_id: 1,
+    timestamp: "1695669947591"
+  },
+  2: {
+    comment: "Hello",
+    edited: false,
+    entity_type: 1,
+    entity_id: 1,
+    timestamp: "1693348898325"
+  }
+}
+
+// 1 - page, 2 - comment 
+const defaultEmojis = {
+  1: {
+    emoji: "1F923",
+    entity_type: 2,
+    entity_id: 1
+  },
+  2: {
+    emoji: "1F62B",
+    entity_type: 2,
+    entity_id: 2
+  },
+  3: {
+    emoji: "1FAC5",
+    entity_type: 1,
+    entity_id: 1
+  }
+}
+
+
 
 const defaultJournal = {
     1: {
@@ -133,61 +153,60 @@ const defaultTodos = {
 }
 
 const defaultPages = {
-    "Home": {
-        idx: 0,
-        name: "Home",
-        path: "/notion-clone", 
-        icon: '1F4A1', // Candle
-        component: "Home"
-    },
-    "Quick Note": {
-        idx: 1,
-        name: "Quick Note", // Title of the page, must equal the key in defaultPages hash.
-        path: "/notion-clone/quick_note",
-        icon: '1F58B', // Fountain pen
-        component: "QuickNote", // Stringified name of React component.
-        comments: defaultComments
-    },
-    "Task List": {
-        idx: 2,
-        name: "Task List",
-        path: "/notion-clone/task_list",
-        icon: '1F4C4',
-        component: "TaskList",
-        todos: defaultTodos,
-        categories: {
-          "undone": {
-            timestamp: "1693348889895", 
-            color: pastelColors["green"]
-          },
-          "doing": {
-            timestamp: "1593348877795", 
-            color: pastelColors["pink"]
-          },
-          "completed": {
-            timestamp: "1593344437789", 
-            color: pastelColors["purple"]
-          },
-          "roadtrips": {
-            timestamp: "1593345537789",
-            color: pastelColors["purple"] 
-          }
-        }
-    },
-    "Journal": {
-        idx: 3,
-        name: "Journal",
-        path: "/notion-clone/journal",
-        icon: '1F4D5',
-        component: "Journal",
-        entries: defaultJournal
-    }
+    0: "Home",
+    1: "Quick Note", 
+    2: "Task List",
+    3: "Journal"
 }
 
 export const seedPages = () => {
-    if (getItem('pages') === null) saveItem('pages', defaultPages);
+  if (getItem('pages') === null) saveItem('pages', defaultPages);
+  if (getItem('emojis') === null) saveItem('emojis', defaultEmojis);
+  if (getItem('comments') === null) saveItem('comments', defaultComments);
 }
 
 
+// path: "/notion-clone/task_list",
+// icon: '1F4C4',
+// component: "TaskList",
+// todos: defaultTodos,
+// categories: {
+//   "undone": {
+//     timestamp: "1693348889895", 
+//     color: pastelColors["green"]
+//   },
+//   "doing": {
+//     timestamp: "1593348877795", 
+//     color: pastelColors["pink"]
+//   },
+//   "completed": {
+//     timestamp: "1593344437789", 
+//     color: pastelColors["purple"]
+//   },
+//   "roadtrips": {
+//     timestamp: "1593345537789",
+//     color: pastelColors["purple"] 
+//   }
+// }
 
 
+
+// const defaultComments = {
+//     1: {
+//       comment: "Hi",
+//       edited: false,
+//       emojis:  
+//       {
+//         "1F923": 'rolling on the floor laughing',
+//         "1F62B": 'tired face'
+//       },
+//       timestamp: "1695669947591"
+//     },
+//     2: {
+//       comment: "Hello",
+//       edited: false,
+//       emojis:  
+//       {"1F923": 'rolling on the floor laughing'},
+//       timestamp: "1693348898325"
+//     }
+// };

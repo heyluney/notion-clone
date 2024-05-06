@@ -2,7 +2,7 @@
 import { getItem, saveItem } from "../utils/local_storage";
 const myMarkdownFile = require("./emojis.txt");
 
-function cleanDict(data) {
+export const cleanDict = data => {
     const dictionary = {};
     const lines = data.split('\n').filter(x => x !== '');
     let currentGroupName = "";
@@ -39,21 +39,24 @@ function cleanDict(data) {
         }
     }
 
-    dictionary['recent'] = {};
+    dictionary.recent = {};
+    dictionary.skintone = "none";
     return dictionary;
 }
 
 // fetch is async?
+
+// populateEmojiDictionary is async 
 export const populateEmojiDictionary = () => {
     return fetch(myMarkdownFile)
         .then(response => response.text())
-        .then(text => cleanDict(text));
+        .then(text => cleanDict(text))
 }
 
-export const seedEmojiDictionary = () => {
-    if (getItem('emoji_dictionary') === null) populateEmojiDictionary();
-    if (getItem('emoji_dictionary_skintone') === null) {saveItem('emoji_dictionary_skintone', 'none');}
-}
+// export const seedEmojiDictionary = () => {
+//     if (getItem('emoji_dictionary') === null) populateEmojiDictionary();
+//     if (getItem('emoji_dictionary_skintone') === null) {saveItem('emoji_dictionary_skintone', 'none');}
+// }
 
 export const skintones = ["none", 
     "light skin tone",

@@ -14,15 +14,7 @@ import DeleteButton from '../buttons/DeleteButton';
 
 import MetaComment from './MetaComment';
 
-const Comments = ({passedComments, type}) => {
-    const { pages, currentPageName, component } = useContext(PageContext);
-    const comments = 
-        passedComments === undefined ? 
-        pages[currentPageName].comments : passedComments;
-
-    const [itemBeingMousedOver, changeMouseOver] = useState(-1);
-    const [currentComment, updateComment] = useState("Add a comment...");
-
+const Comments = ({comments}) => {
     return (
         <div className={styles.comments}>
             {Object.keys(comments).length === 0 ? "" : 
@@ -30,42 +22,11 @@ const Comments = ({passedComments, type}) => {
             Object.entries(comments).map(([idx, comment]) =>
                     <div className={styles.comment}
                         key={idx}
-                        onMouseEnter={() => {
-                            changeMouseOver(idx);
-                        }}
-                        onMouseLeave={() => {
-                            changeMouseOver(-1);
-                        }}
                     >
-                        <img className={styles.pic} 
-                            src={clark}         
-                            alt="clark_profile" />
-                        <div className={styles.text}>
-                            <MetaComment comment={comment}/>
-
-                            <EditComment
-                                idx={idx}
-                                comment={comment.comment}
-                                changeMouseOver={changeMouseOver} 
-                                type={type}/>
-
-                            <CommentEmojis idx={idx} comment={comment} />
-                        </div>
-                    
-                    {component.id !== idx &&
-                        <div className={styles.buttons}>
-                            <EditButton idx={idx} 
-                                itemBeingMousedOver={itemBeingMousedOver} />
-                            <DeleteButton idx={idx}
-                                itemBeingMousedOver={itemBeingMousedOver}/>
-                        </div>}
-                </div>
-            )}
-            <AddComment
-                currentComment={currentComment}
-                updateComment={updateComment}
-                type={type}/>
+                        {comment}
+                    </div>)}
         </div>
+ 
     )
 }
 

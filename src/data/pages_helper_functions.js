@@ -2,9 +2,27 @@ import { calculateNextKey } from "../utils/calculate_next_key";
 // Note: All functions are pure functions - create a copy of the original 
 // state before modifying.
 
-// All of these functions are page-level -> they return the entire "pages" object,
-// which can be subsequently saved in local storage.
+// entityType: 
+// {1: page, 2: journal}
+// loop through the emoji table to find the correct emoji 
+export const findEmoji = (emojis, entityType, entityId) => {
+    for (let emoji of Object.values(emojis)) {
+        if (emoji.entity_type == entityType && emoji.entity_id == entityId) {
+            return emoji.emoji;
+        }
+    }
+    return "1F415"; // Dog placeholder emoji if no emoji is found.
+  }
 
+export const findComments = (comments, entityType, entityId) => {
+    const filteredComments = [];
+    for (let comment of Object.values(comments)) {
+        if (comment.entity_type == entityType && comment.entity_id == entityId) {
+            filteredComments.push(comment.comment);
+        }
+    }
+    return filteredComments;
+}
 
 export const updateTitleEmoji = (pages, pageName, hexcode) => {
     const page = pages[pageName];
