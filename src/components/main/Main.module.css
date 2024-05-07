@@ -12,6 +12,7 @@
 
 .right {
     padding-top: 100px;
-
-    flex-grow: 1;
+    flex-direction: row;
+    padding-left: 20%;
+    padding-right: 20%;
 }

@@ -5,12 +5,9 @@ import clark from '../../assets/clark_profile.jpg';
 
 import { PageContext } from '../../App';
 import AddComment from './AddComment';
-import EditComment from './EditComment';
 
-import CommentEmojis from './CommentEmojis';
 
 import EditButton from '../buttons/EditButton';
-import DeleteButton from '../buttons/DeleteButton';
 
 import MetaComment from './MetaComment';
 

@@ -6,8 +6,8 @@ import { saveItem } from '../../utils/local_storage';
 import { computeEmoji } from '../../data/compute_emojis';
 import Icon from '../popups/Icon';
 
-import { removeEmojiFromComment,
-    removeEmojiFromJournalComment } from '../../data/pages_helper_functions';
+// import { removeEmojiFromComment,
+//     removeEmojiFromJournalComment } from '../../data/pages_helper_functions';
 
 const CommentEmojis = ({idx, comment}) => {
     const plusIcon = "2795";

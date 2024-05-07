@@ -4,10 +4,10 @@ import { PageContext, PopupContext } from '../../App';
 
 import styles from './Tags.module.css';
 
-import { removeTagFromJournal } from '../../data/pages_helper_functions';
+// import { removeTagFromJournal } from '../../data/pages_helper_functions';
 import { saveItem } from '../../utils/local_storage';
 
-import AddTag from './AddTag';
+// import AddTag from './AddTag';
 import { ImCross as Cross } from 'react-icons/im';
 
 const Tags = ({ addTagsShown, journalIdx, tags, full }) => {
@@ -44,16 +44,12 @@ const Tags = ({ addTagsShown, journalIdx, tags, full }) => {
                         } : {}}
                         onMouseEnter={() => toggleActiveTag(idx)}
                         onMouseLeave={() => toggleActiveTag(-1)}
-                        onClick={() => {
-                            const newPages = removeTagFromJournal(pages, currentPageName, 
-                                journalIdx !== undefined ? journalIdx : id, tag);
-                            changePages(newPages);
-                            saveItem('pages', newPages)}} />
+                        onClick={() => console.log('to fill')} />
                     }
                 </div>
                 
             )}
-            {addTagsShown && <AddTag className={`${styles.tag} ${styles.add_tag}`} />}
+            {/* {addTagsShown && <AddTag className={`${styles.tag} ${styles.add_tag}`} />} */}
         </div>
     )
 }

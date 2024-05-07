@@ -1,0 +1,8 @@
+.title {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 0.95;
+}

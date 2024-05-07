@@ -1,40 +1,27 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 
 import { PageContext } from '../../App';
 import styles from './QuickNote.module.css';
 
 import Comments from '../../components/comments/Comments';
-import Title from '../../components/title/Title';
-import Emoji from '../../components/popups/Emoji';
 
-import { findEmoji, findComments } from '../../data/pages_helper_functions';
-import { entity_to_entity_id_map } from '../../utils/maps';
+import { entity_type_map } from '../../utils/maps';
+import AddComment from '../../components/comments/AddComment';
+import Header from '../../components/title/Header';
 
-const QuickNote = () => {   
-    const {emojis, 
-           comments, 
-           currentPageId} = useContext(PageContext);
-    
-    const pageEmoji = findEmoji(
-        emojis, 
-        entity_to_entity_id_map['page'], 
-        currentPageId);
-    
-    const pageComments = findComments(
-        comments, 
-        entity_to_entity_id_map['page'], 
-        currentPageId);
+const QuickNote = ({comments}) => {   
+    const {currentPageId} = useContext(PageContext);
     
     return (
-        <div className={styles.quicknote}>
-            <div>
-                <Emoji emoji={pageEmoji} className={styles.emoji}/>
-                <Title />
-            </div>
+        <div>
+            <Header />
 
-            <Comments comments={pageComments}/>
+            <Comments comments={comments}/>
+            <AddComment 
+                entityType={entity_type_map['page']}
+                entityId={currentPageId} />
   
-            <div className={styles.list}>
+            <div>
                 Todo placeholder. Lorem ipsum.
             </div>
         </div>

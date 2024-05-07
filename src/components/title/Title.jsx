@@ -1,35 +1,33 @@
-import { useState, useContext, useRef } from 'react';
-import { saveItem } from '../../utils/local_storage';
+import { useState, useContext, useEffect } from 'react';
 import { PageContext } from '../../App';
 import styles from './Title.module.css';
 
-import Icon from '../../components/popups/Icon';
-import { editTitle, editJournalTitle, editTodo } from '../../data/pages_helper_functions';
-
-
-import { useAutosizeDefaultTextArea }
- from '../../hooks/AutosizeTextArea';
+import { setCaret } from '../../utils/text_editor';
 
 const Title = () => {
     const { currentPageId, pages, changePages } = useContext(PageContext);
 
+    const [editable, toggleEditable] = useState(false);
     const [title, updateTitle] = useState(pages[currentPageId]);
+    const [caretPos, updateCaretPos] = useState(0);
 
-    const titleRef = useRef();
-    useAutosizeDefaultTextArea(titleRef);
-
+    useEffect(() => setCaret(caretPos), [title, caretPos]);
+    
     return (
-        <div className={styles.title}>
-                <textarea
-                    ref={titleRef}
-                    className={styles.textarea}
-                    value={title}
-                    onChange={(e) => {
-                        e.preventDefault();
-                        updateTitle(e.target.value);
-                        changePages({...pages, [currentPageId]: e.target.value})
-                    }}
-                />            
+        <div className={styles.title}
+            id="editable"
+            contentEditable={editable}
+            onClick={() => toggleEditable(true)}
+            suppressContentEditableWarning="true"
+            onInput={(e) => {
+                updateTitle(e.currentTarget.innerText);
+
+                // Update caret position to be where the user last typed.
+                updateCaretPos(window.getSelection().getRangeAt(0).endOffset);
+                changePages({...pages, 
+                    [currentPageId]: e.currentTarget.innerText})
+            }}>
+            {title}
         </div>
     )
 }

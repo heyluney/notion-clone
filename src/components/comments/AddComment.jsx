@@ -1,48 +1,40 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { PageContext } from '../../App';
 
 import styles from './AddComment.module.css';
 import clark from '../../assets/clark_profile.jpg';
 
-import { addComment, addJournalComment } from '../../data/pages_helper_functions';
+import { calculateNextKey } from '../../utils/calculate_next_key';
 
-import { saveItem } from '../../utils/local_storage';
+const AddComment = ({entityType, entityId}) => {
+    const { comments, changeComments } = useContext(PageContext);
 
+    const [comment, changeComment] = useState("");
 
-const AddComment = ({ currentComment, updateComment }) => {
-    const { pages, changePages, currentPageName, component } = useContext(PageContext);
     return (
         <div className={styles.new}>
         <img className={styles.pic} src={clark} alt="clarkie_profile_photo" />
-        <textarea
-            name="postContent"
-            value={currentComment}
-            onChange={(e) => {
-                updateComment(e.target.value);
-            }}
-            onClick={() => {
-                updateComment("");
-            }}
-            onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                    let newPages;
-                    switch(component.type) {
-                        case 'journal_comments': 
-                            newPages = addJournalComment(pages, currentPageName, component.id, e.target.value);
-                            break;
-                        default: 
-                            // Default is to update the comment associated with the page.
-                            newPages = addComment(pages, currentPageName, e.target.value);
-                            break;
+            <textarea
+                name="postContent"
+                value={comment}
+                onChange={(e) => {
+                    changeComment(e.target.value);
+                }}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        const newComment = {
+                            comment: e.target.value,
+                            entity_type: entityType,
+                            entity_id: entityId,
+                            timestamp: Date.now(),
+                            edited: false
+                        }
+                        const next_comment_id = calculateNextKey(comments);
+                        changeComments({...comments, [next_comment_id]: newComment});
+                        changeComment("");
                     }
-                    changePages(newPages);
-                    saveItem('pages', newPages);
-                    updateComment("");
-                }
-            }}
-        >
-            <div className={styles.content}></div>
-        </textarea>
+                }}
+            />
         </div>
     )
 }

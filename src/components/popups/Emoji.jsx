@@ -19,7 +19,6 @@ import { flattenEmojiDictionary,
     } from '../../data/compute_emojis';
 import useOnScreen from '../../hooks/OnscreenAlert';
 
-import EmojiSelector from './EmojiSelector';
 
 import { addEmojiToComment, 
         editJournalEmoji, 
@@ -29,18 +28,10 @@ import { addEmojiToComment,
 
 import { FaShuffle as Shuffle } from 'react-icons/fa6';
 
-// emoji dciontary itself is static
-
-// but the emojis chosen for a comment/page/etc. are not
-
-// why does this component need to know everything
-
-
-
 const Emoji = ({emoji}) => {
     return (
         <div>
-        {computeEmoji(emoji)}
+            {computeEmoji(emoji === undefined ? "1F436" : emoji)}
         </div>
     )
     

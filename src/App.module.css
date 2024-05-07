@@ -19,3 +19,7 @@ textarea, textarea:focus {
   font-family: 'Roboto', sans-serif;
   resize: none;
 }
+
+[contenteditable] {
+  outline: 0px solid transparent;
+}

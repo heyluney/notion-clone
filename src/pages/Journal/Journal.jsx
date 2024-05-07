@@ -1,43 +1,33 @@
 
-import { useContext, Fragment } from 'react';
+import { useContext } from 'react';
 
-import Title from '../../components/title/Title';
 import styles from './Journal.module.css';
 
 import { PageContext } from '../../App';
-import SlideOut from '../../components/popups/SlideOut';
+
+import Header from '../../components/title/Header';
 import JournalEntry from './JournalEntry';
 
 const Journal = () => {
-    const { pages, currentPageName, component } = useContext(PageContext);
-    const journalEntries = pages[currentPageName].entries;
-
+    const { journal } = useContext(PageContext);
     return (
-        <Fragment>
-        <div className={styles.journal}>
-            <Title horizontal={true} component={component}
-            title={currentPageName}/>
+        <div>
+            <Header />
 
             <div className={styles.description}>
-                Document your life - daily happenings, special occasions, and reflections on your goals. Categorize entries with tags and automatically capture the date.
+                {blurb}
             </div>
-            <div className={styles.journal_entries}>
-                {Object.entries(journalEntries)
-                    .map(([idx, entry]) => {
-                        return (
-                                <JournalEntry 
-                                    key={idx}
-                                    idx={idx}
-                                    entry={entry}/>
-                        )
-                    }
-                )}
-            </div>
-            
+
+            {Object.values(journal)
+                .map((journal, idx) =>
+                <JournalEntry 
+                    key={idx} 
+                    journal={journal}/>)
+            }
         </div>
-        <SlideOut /> 
-        </Fragment>
     )
 }
+
+const blurb = "Document your life - daily happenings, special occasions, and reflections on your goals. Categorize entries with tags and automatically capture the date.";
 
 export default Journal;

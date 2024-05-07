@@ -1,4 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
+
+import { PageContext } from '../../App';
 
 import styles from './TodoCategory.module.css';
 
@@ -8,7 +10,13 @@ import AddTodo
 
 import { getFullTimeString } from '../../utils/calculate_date';
 
-const TodoCategory = ({ todos, category, onDrag, onDrop, timestamp, color }) => {
+const TodoCategory = ({ todos, 
+        category_id, 
+        onDrag, 
+        onDrop, 
+        timestamp, color }) => {
+
+    const { categories } = useContext(PageContext);
 
     const [itemBeingMousedOver, changeMouseOver] = useState(-1);
 
@@ -16,21 +24,21 @@ const TodoCategory = ({ todos, category, onDrag, onDrop, timestamp, color }) => 
 
     const textAreaRef = useRef();
     return (
-        <div key={category}
+        <div key={category_id}
             className={styles.category}
             onDragOver={e => e.preventDefault()}
-            onDrop={e => onDrop(e, category)}
+            onDrop={e => onDrop(e, category_id)}
         >
             <div className={styles.header}>
-                <div className={categoryActive === category ?  styles.active_category_name : styles.category_name}
-                    style={categoryActive === category ? {
+                <div className={categoryActive === category_id ?  styles.active_category_name : styles.category_name}
+                    style={categoryActive === category_id ? {
                         background: color,
                         filter:"brightness(0.8)"
                     } : {
                         background: color
                     }}
                     onClick={() => {
-                        toggleCategoryActive(categoryActive === null ? category : null)
+                        toggleCategoryActive(categoryActive === null ? category_id : null)
                         textAreaRef.current.setSelectionRange(
                             textAreaRef.current.value.length, textAreaRef.current.value.length
                         )
@@ -40,10 +48,9 @@ const TodoCategory = ({ todos, category, onDrag, onDrop, timestamp, color }) => 
                         ref={textAreaRef}
                         className={styles.textarea} 
                         style={{background: "transparent"}} 
-                        defaultValue={category}
-                        onKeyDown={(e) => {
-
-                        }}/>
+                        value={categories[category_id]}
+                        onChange={() => {}}
+                        />
                 </div>
                 <div className={styles.date}>{getFullTimeString(timestamp)}</div>
             </div>
@@ -54,13 +61,14 @@ const TodoCategory = ({ todos, category, onDrag, onDrop, timestamp, color }) => 
                     onMouseLeave={() => changeMouseOver(-1)}>
                     <EditTodo 
                         key={idx}
+                        idx={idx}
                         todo={todo} 
                         onDrag={onDrag} 
                         itemBeingMousedOver={itemBeingMousedOver}
                         />
                 </div>)
             }
-            <AddTodo category={category} />
+            {/* <AddTodo category_id={category_id} /> */}
         </div>
 
     )

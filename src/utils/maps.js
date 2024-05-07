@@ -15,11 +15,12 @@ export const url_map = {
     "/notion-clone": 0,
     "/notion-clone/": 0,
     "/notion-clone/1": 1,
-    "/notion-clone/task_list": 2,
-    "/notion-clone/journal": 3
+    "/notion-clone/2": 2,
+    "/notion-clone/3": 3
 }
 
-export const entity_to_entity_id_map = {
-    "page": 1
+export const entity_type_map = {
+    "page": 1,
+    "comments": 2
 }
 

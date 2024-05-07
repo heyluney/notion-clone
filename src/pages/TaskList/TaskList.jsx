@@ -12,61 +12,55 @@ import { moveTodo } from '../../data/pages_helper_functions';
 import SlideOut from '../../components/popups/SlideOut';
 import TodoCategory from './TodoCategory';
 
-import normalizeTodos from './normalize_todos';
-import { saveItem } from '../../utils/local_storage';
+import {sortTodosIntoCategories} from './todos_utility_functions';
 
-const TaskList = () => {
-    const { pages, currentPageName, changePages, component } = 
-        useContext(PageContext);
+import Emoji from '../../components/popups/Emoji';
+import { todo_constant } from '../../data/text_contents';
 
-    const todos = pages[currentPageName].todos;
+import Header from '../../components/title/Header';
+
+const TaskList = ({emoji}) => {
+    const { todos, changeTodos, categories } =  useContext(PageContext);
 
     const onDrop = (_, movedToCategory) => {
-        const newPages = 
-            moveTodo(pages, currentPageName, 
-                draggedTodo.id, movedToCategory);
-        changePages(newPages);
-        saveItem('pages', newPages);
+        changeTodos({...todos, [draggedTodoIdx]: {
+            ...todos[draggedTodoIdx],
+            category_id: movedToCategory
+        }})
     }
 
-    const onDrag = (e, todo) => {
+    const onDrag = (e, idx) => {
         e.preventDefault();
-        updateDraggedTodo(todo);
+        updateDraggedTodoIdx(idx);
     }
 
     // Stores what todo is currently in the state of being dragged, and the category that it was dragged from.
-    const [draggedTodo, updateDraggedTodo] = useState({});
+    const [draggedTodoIdx, updateDraggedTodoIdx] = useState();
+
 
     return (
-        <div className={styles.tasklist}>
-            <div className={styles.header}>
-             <Title horizontal={true} component={component}
-                title={currentPageName}/>
+        <div>
+            <Header />
             <div className={styles.description}>
-                Use this template to track your personal tasks.
-                Click + New to create a new task directly on this board.
-                Click an existing task to add additional context or subtasks.
+                {todo_constant}
             </div>
-            </div>
-
+        
             <div className={styles.list}>
-                {Object.entries(normalizeTodos(todos)).map(
-                    ([category, todos]) => 
+                {Object.entries(sortTodosIntoCategories(todos, categories)).map(
+                    ([category_id, todos]) => 
                         <TodoCategory 
-                            key={category}
+                            key={category_id}
                             todos={todos} 
-                            category={category}
+                            category_id={category_id}
                             onDrag={onDrag}
                             onDrop={onDrop} 
-                            draggedTodo={draggedTodo}
-                            timestamp={pages[currentPageName].categories[category].timestamp} 
-                            color={pages[currentPageName].categories[category].color} 
-                             />
+                            draggedTodoIdx={draggedTodoIdx}
+                            />
                 
                 )}
             </div>
 
-            <SlideOut />
+            {/* <SlideOut /> */}
         </div>
     )
 }

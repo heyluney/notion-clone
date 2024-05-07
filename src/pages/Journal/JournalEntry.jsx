@@ -9,63 +9,26 @@ import Tags from '../../components/tags/Tags';
 
 import { FaComments as Comments } from 'react-icons/fa6';
 
-const JournalEntry = ({ idx, entry }) => {
-    const { title, emoji, tags, timestamp, comments } = entry;
-
-    const { component, changeComponent } = useContext(PageContext);
-
-    const iconRef = useRef();
+const JournalEntry = ({journal}) => {
     return (
-        <div onClick={
-            (e) => {
-                if (iconRef.current && 
-                    iconRef.current.contains(e.target)) {
-                        return;
-                    }
-                changeComponent({
-                    id: idx,
-                    type: "journal_slideout",
-                    popups: {
-                        ...component.popups,
-                        slideout: true
-                    }
-                })
-            }}
-            className={styles.journal_entry}>
-                <div className={`${styles.title} 
-                ${Object.keys(tags).length > 0 ? 
-                        styles.title_with_tags : null}`}>
-                    <div ref={iconRef} onClick={() => {
-                        changeComponent({
-                            id: component.id === null ? idx : null, 
-                            type: component.type === null ? "journal" : null,
-                            popups: {
-                                ...component.popups,
-                                emoji: !component.popups.emoji
-                            }
-                        })
-                    }}>
-                        <Icon 
-                            icon={emoji}
-                            component={component}
-                            value={`journal_${idx}`}
-                        />
-                    </div>
+
+        <div className={styles.journal_entry}>
+                <div>
                     <div className={styles.journal_entry_title}>
-                        {title}
+                        {journal.journal}
                     </div>
                 </div>
                 <div className={styles.comments}>
-                    <Comments />
-                    <div className={styles.number}>
+                    {/* <Comments /> */}
+                    {/* <div className={styles.number}>
                         {Object.keys(comments).length}
-                    </div>
+                    </div> */}
                 </div>
                 <div className={styles.tags}>
-                    <Tags tags={tags} journalIdx={parseInt(idx)}/>
+                    {/* <Tags tags={tags} journalIdx={parseInt(idx)}/> */}
                 </div>
                 <div className={styles.timestamp}>
-                        {getFullTimeString(timestamp)}
+                        {getFullTimeString(journal.timestamp)}
                 </div>
         </div>
     )

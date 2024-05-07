@@ -10,52 +10,22 @@ import { seedPages } from './data/populate_pages'
 
 import { getItem, saveItem } from './utils/local_storage';
 import EmojiOverlay from './components/overlays/EmojiOverlay';
-import ModalOverlay from './components/overlays/ModalOverlay';
-import Modal from './components/popups/Modal';
+// import ModalOverlay from './components/overlays/ModalOverlay';
+// import Modal from './components/popups/Modal';
 // import Overlay from './Overlay';
 
-import { url_map } from './utils/maps';
+import { url_map, entity_type_map } from './utils/maps';
 
-
-// currently pages is de-normalized 
-// tables => comments 
-
-
-// Page
-// id (unique int)
-// title (string)
-// created_at
-
-
-// Emoji (not unique to one page)
-// id (unique int)
-// entity_type  (e.g.a num that maps to page, comment, title) (foreign key)
-// entity_id 
-
-// Comments
-// id (unique int)
-// text (string)
-// entity_type (e.g. page, comment, title)
-// created_at 
-
-// Journal
-// id (unique int)
-// title 
-// created_at
-
-// Tags
-// id (unique int)
-// entity_type
-// entity_id 
-
-
+import { findEmoji, findComments } from './data/pages_helper_functions';
 
 const App = () => {
-  localStorage.clear();
+  // localStorage.clear();
   seedPages();
   const location = useLocation();
 
-  saveItem('current_page_id', location.pathname.slice(location.pathname.lastIndexOf('/')+ 1))    
+  saveItem('current_page_id', 
+    parseInt(location.pathname.slice(location.pathname.lastIndexOf('/')+1))
+  )
 
   const [emojiDictionary, changeEmojiDictionary] = useState(null);
   useEffect(() => { 
@@ -71,44 +41,44 @@ const App = () => {
   }, [emojiDictionary]);
 
   const [pages, changePages] = useState(getItem('pages'));
-  const [currentPageId, changeCurrentPageId] = useState(parseInt(getItem('current_page_id')));
+  const [currentPageId, changeCurrentPageId] = useState(getItem('current_page_id'));
   const [emojis, changeEmojis] =  useState(getItem('emojis'));
   const [comments, changeComments] = useState(getItem('comments'));
+  const [categories, changeCategories] = useState(getItem('categories'));
+  const [todos, changeTodos] = useState(getItem('todos'));
+  const [journal, changeJournal] = useState(getItem('journal'));
 
+  // Update local storage whenever state changes.
   useEffect(() => saveItem('pages', pages), [pages]);
-  useEffect(() => saveItem('current_page_id', parseInt(currentPageId)), [currentPageId]);
+  useEffect(() => saveItem('current_page_id', currentPageId), [currentPageId]);
   useEffect(() => saveItem('emojis', emojis), [emojis]);
-  useEffect(() => saveItem('comments'), [comments]);
-  // console.log('pages', pages)
+  useEffect(() => saveItem('comments', comments), [comments]);
+  useEffect(() => saveItem('categories', categories), [categories]);
+  useEffect(() => saveItem('todos', todos), [todos]);
+  useEffect(() => saveItem('journal', journal), [journal]);
 
-  // addFaviconToPage(pages[1].icon);
+  const pageEmoji = findEmoji(emojis, 'page', currentPageId);
+  const pageComments = findComments(comments, 'page', currentPageId);
 
-  // Represents the current item being modified. Type and id are sufficient to be a unique identifier (e.g. for the emoji selector popup).
-  // const [component, changeComponent] = useState({
-  //   id: null,
-  //   type: null,
-  //   popups: {
-  //     modal: false,
-  //     emoji: false,
-  //     slideout: false
-  //   } // Multiple popups (e.g. slideout, emoji, modal) can be triggered simultaneously.
-  // })
+  addFaviconToPage(pageEmoji);
+
   return (
     <PageContext.Provider value={{
       pages, changePages,
       currentPageId, changeCurrentPageId,
       emojis, changeEmojis,
-      comments, changeComments
+      pageEmoji, 
+      comments, changeComments,
+      categories, changeCategories,
+      todos, changeTodos,
+      journal, changeJournal
     }}>
         <Fragment>
           <div className={`${styles.app}`}>
-            {/* <SideBar /> */}
-            <Main />
+            <SideBar />
+            <Main emoji={pageEmoji} 
+                comments={pageComments}/>
           </div>
-          
-          {/* <Modal /> */}
-          {/* <EmojiOverlay/> */}
-          {/* <ModalOverlay/> */}
         </Fragment>
     </PageContext.Provider>
   )
