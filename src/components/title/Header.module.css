@@ -5,4 +5,14 @@
     font-size: 50px;
     font-weight: 700;
     line-height: 0.95;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    background: red;
+}
+
+.header_small {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 20px;
 }

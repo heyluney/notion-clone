@@ -1,23 +1,31 @@
 import { useContext } from 'react';
-import styles from './SideBarDetailItem.module.css';
-import Icon from '../popups/Icon';
-
 import { Link } from 'react-router-dom';
-import { PageContext } from '../../App';
 
-const SideBarDetailItem = ({idx, page}) => {
-    const { changeCurrentPageId } = useContext(PageContext);
+import styles from './SideBarDetailItem.module.css';
+
+import { PageContext } from '../../App';
+import Emoji from '../popups/Emoji';
+import { findEmoji } from '../../data/pages_helper_functions';
+
+import Header from '../title/Header';
+
+const SideBarDetailItem = ({ id, page }) => {
+    const { changeCurrentPageId, emojis } = useContext(PageContext);
 
     return (
-        <Link
-            to={`/notion-clone/${idx}`}
-            onClick={() => {
-                changeCurrentPageId(idx)
-            }}>
-            {page}
-        </Link>
+        <div className={styles.detail_item}>
+            <Emoji 
+                emoji={findEmoji(emojis, "page", id)} />
+            <Link
+                to={`/notion-clone/${id}`}
+                onClick={() => {
+                    changeCurrentPageId(id)
+                }}>
+                {page}
+            </Link>
+        </div>
     )
 }
-    
+
 
 export default SideBarDetailItem;

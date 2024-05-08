@@ -8,14 +8,13 @@ import Emoji from "../popups/Emoji";
 import { PageContext } from "../../App";
 
 
-const Header = () => {
-    const { pageEmoji } = useContext(PageContext);
+const Header = ({isSmall, emoji}) => {
+    const { pages, currentPageId } = useContext(PageContext);
 
     return (        
-        <div className={styles.header}>
-            <Emoji emoji={pageEmoji} 
-                className={styles.emoji}/>
-            <Title />
+        <div className={isSmall ? styles.header_small : styles.header }>
+            <Emoji className={styles.emoji}/>
+            <Title passedTitle={pages[currentPageId]}/>
         </div>
     )
 }

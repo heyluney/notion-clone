@@ -8,7 +8,6 @@ import { PageContext } from '../../App';
 import Header from '../../components/title/Header';
 import JournalEntry from './JournalEntry';
 
-import SlideOut from '../../components/popups/SlideOut';
 import { journal_constant } from '../../data/text_contents';
 
 const Journal = () => {

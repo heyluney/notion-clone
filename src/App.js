@@ -69,7 +69,7 @@ const App = () => {
 
   addFaviconToPage(pageEmoji);
 
-  const [slideOutWidth, changeSlideOutWidth] = useState(500);
+  const [slideOutWidth, changeSlideOutWidth] = useState(0);
 
   return (
     <PageContext.Provider value={{
@@ -98,7 +98,6 @@ const App = () => {
 export default App;
 
 export const PageContext = createContext();
-// export const PopupContext = createContext();
 
 
 

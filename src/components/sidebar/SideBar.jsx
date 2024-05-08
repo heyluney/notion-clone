@@ -17,11 +17,11 @@ const SideBar = () =>{
                 icon={<img className={styles.profile} src={clark} alt="clark_profile"/>} 
                 name="Clark's Notion"/>
             
-            {Object.values(pages)
-                        .map((page, idx) => 
+            {Object.entries(pages)
+                        .map(([id, page]) => 
                         <SideBarDetailItem 
-                            key={idx}
-                            idx={idx}
+                            key={id}
+                            id={id}
                             page={page} />)} 
         </div>
     )

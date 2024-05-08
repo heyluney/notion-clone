@@ -1,6 +1,9 @@
 
 /* Figure out why this isn't properly outfitted in the title example. */
-
+.emoji {
+    padding: 5px;
+    /* background: pink; */
+}
 .emojis {
     border: 1px solid #eaeae9;
     border-radius: 4px;

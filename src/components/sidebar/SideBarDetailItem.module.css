@@ -1,43 +1,11 @@
 @import '../../standard.module.css';
 
-.main {
+.detail_item {
     display: flex;
-    justify-content: space-between;
-    flex-direction: horizontal;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-}
-
-.left {
-    display: flex;
-    align-items: center;
-    flex-direction: horizontal;
-}
-
-.right {
-    display: flex;
-    align-items: center;
-    flex-direction: horizontal;
-}
-
-.left:hover {
-    background: var(--highlight-grey);
-    color: rgba(55, 53, 47, 1);
-    cursor: pointer;
+    align-items: start;
+    justify-content: start;
 }
 
 .link {
-    text-decoration: none;
-    height: 100%;
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-}
-.name {
-    color: var(--medium-grey);
-}
-.link:visited {
-    color: rgb(55, 53, 47);
+    background: red;
 }

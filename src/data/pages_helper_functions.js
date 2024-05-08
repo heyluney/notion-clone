@@ -10,9 +10,8 @@ export const findEmoji = (emojis, entityType, entityId) => {
             return emoji.emoji;
         }
     }
-    
     return "1F415"; // Dog placeholder emoji if no emoji is found.
-  }
+}
 
 export const findComments = (comments, entityType, entityId) => {
     const filteredComments = [];
