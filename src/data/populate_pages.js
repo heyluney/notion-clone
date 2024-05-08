@@ -113,6 +113,34 @@ const defaultJournal = {
     }
 }
 
+const defaultTags = {
+  1: {
+    text: "dog",
+    entity_type: 3,
+    entity_id: 2
+  },
+  2: {
+    text: "ice cream",
+    entity_type: 3,
+    entity_id: 3
+  },
+  3: {
+    text: "work hard play hard",
+    entity_type: 3,
+    entity_id: 4
+  },
+  4: {
+    text: "marathon",
+    entity_type: 3,
+    entity_id: 4
+  },
+  5: {
+    text: "sprint",
+    entity_type: 3,
+    entity_id: 4
+  }
+}
+
 
 
 export const seedPages = () => {
@@ -122,4 +150,5 @@ export const seedPages = () => {
   if (getItem('categories') === null) saveItem('categories', defaultCategories);
   if (getItem('todos') === null) saveItem('todos', defaultTodos);
   if (getItem('journal') === null) saveItem('journal', defaultJournal);
+  if (getItem('tags') === null) saveItem('tags', defaultTags);
 }

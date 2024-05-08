@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment, createContext } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import styles from './App.module.css';
 import SideBar from './components/sidebar/SideBar';
 import Main from './components/main/Main';
@@ -14,7 +14,8 @@ import EmojiOverlay from './components/overlays/EmojiOverlay';
 // import Modal from './components/popups/Modal';
 // import Overlay from './Overlay';
 
-import { url_map, entity_type_map } from './utils/maps';
+import SlideOut from './components/popups/SlideOut';
+
 
 import { findEmoji, findComments } from './data/pages_helper_functions';
 
@@ -40,6 +41,7 @@ const App = () => {
     saveItem('emoji_dictionary', emojiDictionary);
   }, [emojiDictionary]);
 
+
   const [pages, changePages] = useState(getItem('pages'));
   const [currentPageId, changeCurrentPageId] = useState(getItem('current_page_id'));
   const [emojis, changeEmojis] =  useState(getItem('emojis'));
@@ -47,6 +49,9 @@ const App = () => {
   const [categories, changeCategories] = useState(getItem('categories'));
   const [todos, changeTodos] = useState(getItem('todos'));
   const [journal, changeJournal] = useState(getItem('journal'));
+  const [tags, changeTags] = useState(getItem('tags'));
+  const [activeEntityId, changeActiveEntityId] = useState(-1);
+
 
   // Update local storage whenever state changes.
   useEffect(() => saveItem('pages', pages), [pages]);
@@ -56,11 +61,15 @@ const App = () => {
   useEffect(() => saveItem('categories', categories), [categories]);
   useEffect(() => saveItem('todos', todos), [todos]);
   useEffect(() => saveItem('journal', journal), [journal]);
+  useEffect(() => saveItem('tags', tags), [tags]);
+
 
   const pageEmoji = findEmoji(emojis, 'page', currentPageId);
   const pageComments = findComments(comments, 'page', currentPageId);
 
   addFaviconToPage(pageEmoji);
+
+  const [slideOutWidth, changeSlideOutWidth] = useState(500);
 
   return (
     <PageContext.Provider value={{
@@ -71,15 +80,17 @@ const App = () => {
       comments, changeComments,
       categories, changeCategories,
       todos, changeTodos,
-      journal, changeJournal
+      journal, changeJournal,
+      tags, changeTags,
+      activeEntityId, changeActiveEntityId,
+      slideOutWidth, changeSlideOutWidth
     }}>
-        <Fragment>
-          <div className={`${styles.app}`}>
-            <SideBar />
-            <Main emoji={pageEmoji} 
-                comments={pageComments}/>
-          </div>
-        </Fragment>
+      <div className={`${styles.app}`}>
+        <SideBar />
+        <Main emoji={pageEmoji} 
+            comments={pageComments}/>
+        <SlideOut />
+      </div>
     </PageContext.Provider>
   )
 }
@@ -87,7 +98,7 @@ const App = () => {
 export default App;
 
 export const PageContext = createContext();
-export const PopupContext = createContext();
+// export const PopupContext = createContext();
 
 
 

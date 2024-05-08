@@ -1,24 +1,11 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 
-import { PageContext } from '../App';
-
-
-export const useSlideOutOutsideAlerter = (ref, changeSlideOutTransitionTime) => {
-    const { component, changeComponent } = useContext(PageContext);
-
+export const useSlideOutOutsideAlerter = (ref, changeSlideOutTransitionTime, changeSlideOutWidth) => {
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (component.popups.slideout === false) return;
             if (ref.current && !ref.current.contains(event.target)) {
                 changeSlideOutTransitionTime(300);
-                changeComponent({
-                    id: null,
-                    type: null,
-                    popups: {
-                        ...component.popups,
-                        slideout: false
-                    }
-                })
+                changeSlideOutWidth(0);
             }
         }
 
@@ -26,5 +13,5 @@ export const useSlideOutOutsideAlerter = (ref, changeSlideOutTransitionTime) => 
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [ref, changeSlideOutTransitionTime, component, changeComponent]);
+    }, [ref, changeSlideOutTransitionTime]);
 }

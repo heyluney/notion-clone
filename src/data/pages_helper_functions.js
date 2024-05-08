@@ -18,8 +18,18 @@ export const findComments = (comments, entityType, entityId) => {
     const filteredComments = [];
     for (let comment of Object.values(comments)) {
         if (comment.entity_type == entity_type_map[entityType] && comment.entity_id == entityId) {
-            filteredComments.push(comment.comment);
+            filteredComments.push(comment);
         }
     }
     return filteredComments;
+}
+
+export const findTags = (tags, entityType, entityId) => {
+    const filteredTags = [];
+    for (let tag of Object.values(tags)) {
+        if (tag.entity_type == entity_type_map[entityType] && tag.entity_id == entityId) {
+            filteredTags.push(tag);
+        }
+    }
+    return filteredTags;
 }

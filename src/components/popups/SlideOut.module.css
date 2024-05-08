@@ -31,16 +31,9 @@
     flex-direction: row;
     z-index: 3;
     overflow-y: scroll;
-}
-
-/* Javascript will set the width to be 500px when the slide out is open. */
-.active {
     box-sizing: border-box;
     box-shadow: var(--box-shadow);
-    right: 0;
-    top: 0;
     position: fixed;
-    height: 100vh;
 }
 
 .main {

@@ -12,7 +12,7 @@ const Header = () => {
     const { pageEmoji } = useContext(PageContext);
 
     return (        
-        <div className={styles.title}>
+        <div className={styles.header}>
             <Emoji emoji={pageEmoji} 
                 className={styles.emoji}/>
             <Title />

@@ -8,6 +8,9 @@ import { PageContext } from '../../App';
 import Header from '../../components/title/Header';
 import JournalEntry from './JournalEntry';
 
+import SlideOut from '../../components/popups/SlideOut';
+import { journal_constant } from '../../data/text_contents';
+
 const Journal = () => {
     const { journal } = useContext(PageContext);
     return (
@@ -15,19 +18,18 @@ const Journal = () => {
             <Header />
 
             <div className={styles.description}>
-                {blurb}
+                {journal_constant}
             </div>
 
-            {Object.values(journal)
-                .map((journal, idx) =>
+            {Object.entries(journal)
+                .map(([idx, journal]) =>
                 <JournalEntry 
                     key={idx} 
+                    id={idx}
                     journal={journal}/>)
             }
         </div>
     )
 }
-
-const blurb = "Document your life - daily happenings, special occasions, and reflections on your goals. Categorize entries with tags and automatically capture the date.";
 
 export default Journal;

@@ -4,11 +4,12 @@ import styles from './Title.module.css';
 
 import { setCaret } from '../../utils/text_editor';
 
-const Title = () => {
+const Title = ({entity}) => {
     const { currentPageId, pages, changePages } = useContext(PageContext);
 
     const [editable, toggleEditable] = useState(false);
-    const [title, updateTitle] = useState(pages[currentPageId]);
+    const [title, updateTitle] = 
+        useState(entity == null ? pages[currentPageId] : entity);
     const [caretPos, updateCaretPos] = useState(0);
 
     useEffect(() => setCaret(caretPos), [title, caretPos]);
@@ -17,7 +18,10 @@ const Title = () => {
         <div className={styles.title}
             id="editable"
             contentEditable={editable}
-            onClick={() => toggleEditable(true)}
+            onClick={() => {
+                toggleEditable(true);
+                updateCaretPos(window.getSelection().getRangeAt(0).endOffset);
+            }}
             suppressContentEditableWarning="true"
             onInput={(e) => {
                 updateTitle(e.currentTarget.innerText);

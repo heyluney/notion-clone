@@ -11,6 +11,8 @@ import EditButton from '../buttons/EditButton';
 
 import MetaComment from './MetaComment';
 
+import { getFullTimeString } from '../../utils/calculate_date';
+
 const Comments = ({comments}) => {
     return (
         <div className={styles.comments}>
@@ -20,7 +22,8 @@ const Comments = ({comments}) => {
                     <div className={styles.comment}
                         key={idx}
                     >
-                        {comment}
+                        <div>{comment.comment}</div>
+                        <div>{getFullTimeString(comment.timestamp)}</div>
                     </div>)}
         </div>
  
