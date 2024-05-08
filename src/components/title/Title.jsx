@@ -11,7 +11,7 @@ const Title = ({ passedTitle }) => {
     const [title, updateTitle] = useState(passedTitle);
     const [caretPos, updateCaretPos] = useState(0);
 
-    useEffect(() => setCaret(caretPos), [title, caretPos]);
+    // useEffect(() => setCaret(caretPos), [title, caretPos]);
     useEffect(() => updateTitle(passedTitle), [passedTitle]);
 
     return (

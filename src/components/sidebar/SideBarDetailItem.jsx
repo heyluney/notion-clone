@@ -12,9 +12,11 @@ import Header from '../title/Header';
 const SideBarDetailItem = ({ id, page }) => {
     const { changeCurrentPageId, emojis } = useContext(PageContext);
 
+    // Link to encapsulate header component  
     return (
         <div className={styles.detail_item}>
-            <Emoji 
+            <Header isSmall={true}/>
+            {/* <Emoji 
                 emoji={findEmoji(emojis, "page", id)} />
             <Link
                 to={`/notion-clone/${id}`}
@@ -22,7 +24,7 @@ const SideBarDetailItem = ({ id, page }) => {
                     changeCurrentPageId(id)
                 }}>
                 {page}
-            </Link>
+            </Link> */}
         </div>
     )
 }

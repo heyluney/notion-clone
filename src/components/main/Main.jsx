@@ -7,7 +7,7 @@ import Banner from './Banner';
 import { PageContext } from '../../App';
 
 import { page_id_to_component_map } from '../../utils/maps';
-
+import ErrorPage from '../../pages/Error/ErrorPage';
 
 const Main = ({emoji, comments}) => {
     const { pages } = useContext(PageContext);
@@ -20,11 +20,12 @@ const Main = ({emoji, comments}) => {
                     .map(idx => {
                             const Component = page_id_to_component_map[idx];
                             return <Route key={idx}
-                                            path={`/notion-clone/${idx}`}
+                                            exact path={`/notion-clone/${idx}`}
                                             element={<Component 
                                                     emoji={emoji} 
                                                     comments={comments}/>} />
                         })}
+                        <Route path="*" element={<ErrorPage />} />
                 </Routes>
             </div>
         </div>
