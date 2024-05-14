@@ -4,28 +4,36 @@ import styles from './Title.module.css';
 
 import { setCaret } from '../../utils/text_editor';
 
-const Title = ({ passedTitle }) => {
+const Title = ({ passedTitle, canEdit, isTruncated }) => {
     const { currentPageId, pages, changePages } = useContext(PageContext);
 
     const [editable, toggleEditable] = useState(false);
-    const [title, updateTitle] = useState(passedTitle);
+    const [title, updateTitle] = useState("");
     const [caretPos, updateCaretPos] = useState(0);
 
-    // useEffect(() => setCaret(caretPos), [title, caretPos]);
-    useEffect(() => updateTitle(passedTitle), [passedTitle]);
+    useEffect(() => {
+        if (canEdit) {
+            const el = document.getElementById('editable');
+            setCaret(el, caretPos);
+        }
+    }, [title, caretPos]);
+
+    useEffect(() => updateTitle(
+        passedTitle === undefined ? pages[currentPageId] : passedTitle), [passedTitle, currentPageId]);
 
     return (
-        <div className={styles.title}
-            id="editable"
+        <div className={isTruncated ? styles.truncated_title : styles.title}
+            id={canEdit ? "editable" : ""}
             contentEditable={editable}
             onClick={() => {
-                toggleEditable(true);
-                updateCaretPos(window.getSelection().getRangeAt(0).endOffset);
+                toggleEditable(canEdit);
+                canEdit && 
+                    updateCaretPos(window.getSelection().getRangeAt(0).endOffset);
             }}
             suppressContentEditableWarning="true"
             onInput={(e) => {
                 updateTitle(e.currentTarget.innerText);
-
+                
                 // Update caret position to be where the user last typed.
                 updateCaretPos(window.getSelection().getRangeAt(0).endOffset);
                 changePages({

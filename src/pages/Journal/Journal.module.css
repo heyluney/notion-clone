@@ -1,18 +1,4 @@
-.journal {
-    display: row;
-    flex-direction: row;
-    font-weight: 300;
-    padding-left: 20%;
-    padding-right: 20%;
-}
-
-.journal_entries {
-    display: flex;
-    flex-direction: column;
-}
-
 .description {
-    display: flex;
     margin-top: 10px;
     margin-bottom: 20px;
 }

@@ -6,8 +6,11 @@ import { PageContext } from '../../App';
 
 import EditButton from '../../components/buttons/EditButton';
 import Emoji from '../../components/popups/Emoji';
+import { findEmoji } from '../../data/pages_helper_functions';
 
-const EditTodo = ({idx, todo, onDrag, itemBeingMousedOver}) => {
+const EditTodo = ({id, todo, onDrag, itemBeingMousedOver}) => {
+    const { emojis } = useContext(PageContext);
+
     // This is so clicking on the emoji will only trigger opening the Emoji Selector, and not the slide out component.
     const todoRef = useRef();
     const iconRef = useRef();
@@ -22,7 +25,6 @@ const EditTodo = ({idx, todo, onDrag, itemBeingMousedOver}) => {
     return (
         <div
             ref={todoRef}
-            key={idx}
             className={styles.todo}
             style={todoStyle}
             onClick={(e) => {
@@ -38,7 +40,7 @@ const EditTodo = ({idx, todo, onDrag, itemBeingMousedOver}) => {
                     }  
             }}
             draggable={true}
-            onDrag={(e) => onDrag(e, idx)}>
+            onDrag={(e) => onDrag(e, id)}>
 
             <div className={styles.left}>
                 <div 
@@ -47,13 +49,13 @@ const EditTodo = ({idx, todo, onDrag, itemBeingMousedOver}) => {
                         
                 }}
                 >
-                <Emoji />
+                <Emoji emoji={findEmoji(emojis, "tasklists", id)}/>
 
                 </div>
                 <textarea 
                     ref={textAreaRef}
                     className={styles.textarea} 
-                    value={todo.todo}   
+                    value={todo.title}   
                     onChange={(e) => console.log('e', e.target.value)}
                     onKeyDown={(e) => {
                         editCurrentTodo(e.target.value);

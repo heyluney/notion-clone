@@ -1,11 +1,1 @@
 @import '../../standard.module.css';
-
-.detail_item {
-    display: flex;
-    align-items: start;
-    justify-content: start;
-}
-
-.link {
-    background: red;
-}

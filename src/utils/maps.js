@@ -19,11 +19,11 @@ export const url_map = {
     "/notion-clone/3": 3
 }
 
-// Maps entity to entity type enum.
-export const entity_type_map = {
-    "page": 1,
+// Maps each table to a unique identifier (for component_type foreign key).
+export const component_type_map = {
+    "pages": 1,
     "comments": 2,
-    "journal": 3,
-    "todos": 4
+    "tasklists": 3,
+    "journals": 4,
 }
 

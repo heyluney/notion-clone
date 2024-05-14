@@ -6,26 +6,33 @@ import { getFullTimeString } from '../../utils/calculate_date';
 import { PageContext } from '../../App';
 import Tags from '../../components/tags/Tags';
 
-import { findTags } from '../../data/pages_helper_functions';
+import { findTags, findEmoji } from '../../data/pages_helper_functions';
+import Header from '../../components/title/Header';
 
 const JournalEntry = ({ id, journal }) => {
-    const { tags, changeActiveEntityId, changeSlideOutWidth } = useContext(PageContext);
+    const { emojis, tags, journals, changeActiveEntity, changeSlideOutWidth } = useContext(PageContext);
 
-    const journalEntryTags = findTags(tags, 'journal', id);
+    // const journalEntryTags = findTags(tags, "journals", id);
 
     return (
         <div className={styles.journal_entry}
             onClick={() => {
-                changeActiveEntityId(id);
+                changeActiveEntity(journals[id]);
                 changeSlideOutWidth(500);
                 }}>
             <div className={styles.left}>
-                <div className={styles.title}>
-                    {journal.journal}
-                </div>
-                <Tags tags={journalEntryTags} />
+                <Header 
+                            emoji={findEmoji(emojis, "journals", id)}
+                            title={journal.title}
+
+                            isSmall={true} 
+                            isTruncated={true}/>
             </div>
-            <div className={styles.date}>
+                    
+            {/* <div className={styles.middle}>
+                <Tags tags={journalEntryTags} />
+            </div> */}
+            <div className={styles.right}>
                 {getFullTimeString(journal.timestamp)}
             </div>
         </div>

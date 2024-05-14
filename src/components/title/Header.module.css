@@ -5,9 +5,7 @@
     font-size: 50px;
     font-weight: 700;
     line-height: 0.95;
-    flex-wrap: nowrap;
-    overflow: hidden;
-    background: red;
+    padding-bottom: 10px;
 }
 
 .header_small {
@@ -15,8 +13,8 @@
     flex-direction: row;
     align-items: center;
     font-size: 20px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex-wrap: nowrap;
-    /* height: 50px; */
+
+    /* overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; */
 }

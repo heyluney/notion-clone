@@ -9,16 +9,17 @@ import TodoCategory from './TodoCategory';
 
 import {sortTodosIntoCategories} from './todos_utility_functions';
 
-import { todo_constant } from '../../data/text_contents';
+import { todo_constant } from '../../data/constants/text_contents';
 
 import Header from '../../components/title/Header';
 
-const TaskList = () => {
-    const { todos, changeTodos, categories } =  useContext(PageContext);
+const TaskList = ({components, subComponents}) => {
+    const { changeComponents } = useContext(PageContext);
 
+    
     const onDrop = (_, movedToCategory) => {
-        changeTodos({...todos, [draggedTodoIdx]: {
-            ...todos[draggedTodoIdx],
+        changeComponents({...components, [draggedTodoIdx]: {
+            ...components[draggedTodoIdx],
             category_id: movedToCategory
         }})
     }
@@ -28,29 +29,30 @@ const TaskList = () => {
         updateDraggedTodoIdx(idx);
     }
 
-    // Stores what todo is currently in the state of being dragged, and the category that it was dragged from.
+    // // Stores what todo is currently in the state of being dragged, and the category that it was dragged from.
     const [draggedTodoIdx, updateDraggedTodoIdx] = useState();
     
     return (
-        <div>
-            <Header />
-            <div className={styles.description}>
+        <div>            
+            {/* <div className={styles.description}>
                 {todo_constant}
-            </div>
+            </div> */}
         
             <div className={styles.list}>
-                {Object.entries(sortTodosIntoCategories(todos, categories)).map(
-                    ([category_id, todos]) => 
+                This is the tasklist
+                {/* <TodoCategory category={category} todos={todos}*/}
+                {/* {Object.entries(sortTodosIntoCategories(tasklists, categories)).map(
+                    ([category_id, tasklists]) => 
                         <TodoCategory 
                             key={category_id}
-                            todos={todos} 
+                            todos={tasklists} 
                             category_id={category_id}
                             onDrag={onDrag}
                             onDrop={onDrop} 
                             draggedTodoIdx={draggedTodoIdx}
                             />
                 
-                )}
+                )} */}
             </div>
         </div>
     )

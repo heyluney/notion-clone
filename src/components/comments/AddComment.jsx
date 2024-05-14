@@ -6,7 +6,7 @@ import clark from '../../assets/clark_profile.jpg';
 
 import { calculateNextKey } from '../../utils/calculate_next_key';
 
-const AddComment = ({entityType, entityId}) => {
+const AddComment = ({componentType, componentId}) => {
     const { comments, changeComments } = useContext(PageContext);
 
     const [comment, changeComment] = useState("");
@@ -24,13 +24,15 @@ const AddComment = ({entityType, entityId}) => {
                     if (e.key === 'Enter') {
                         const newComment = {
                             comment: e.target.value,
-                            entity_type: entityType,
-                            entity_id: entityId,
+                            component_type: componentType,
+                            component_id: componentId,
                             timestamp: Date.now(),
                             edited: false
                         }
                         const next_comment_id = calculateNextKey(comments);
-                        changeComments({...comments, [next_comment_id]: newComment});
+                        changeComments(
+                            {...comments, [next_comment_id]: newComment}
+                        );
                         changeComment("");
                     }
                 }}

@@ -1,0 +1,6 @@
+.comment {    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px;
+}

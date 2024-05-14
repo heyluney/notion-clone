@@ -5,29 +5,17 @@ import styles from './SlideOutView.module.css';
 import { PageContext } from '../../App';
 
 import Header from '../title/Header';
+import { findEmoji } from '../../data/pages_helper_functions';
 
+// should only need one object 
 const SlideOutView = () => {
-    const { 
-        journal,
-        todos,
-        currentPageId, 
-        activeEntityId } = useContext(PageContext);
+    const {emojis, activeEntity } = useContext(PageContext);
 
-
-    let entity = null;
-    if (activeEntityId !== -1) {
-        if (currentPageId === 3) {
-            entity = journal[activeEntityId];
-        } else if (currentPageId === 4) {
-            entity = todos[activeEntityId];
-        }
-    }
-
-
-    return (
-        <div>
+        return (
+        <div className={styles.slide_out_view}>
             
-            {entity && entity.journal}
+           <Header title={activeEntity ? activeEntity.journal : null}
+                    emoji={findEmoji(emojis, "journals",  1)}/>
         </div>
     )
 }

@@ -13,7 +13,6 @@ import SlideOutView from '../views/SlideOutView';
 const SlideOut = () => {
     const {slideOutWidth, changeSlideOutWidth} = useContext(PageContext);
     const [slideOutTransitionTime, changeSlideOutTransitionTime] = useState(300);
-    // const [slideOutWidth, changeSlideOutWidth] = useState(500);
 
     const wrapperRef = useRef();
     useSlideOutOutsideAlerter(wrapperRef, changeSlideOutTransitionTime, changeSlideOutWidth);

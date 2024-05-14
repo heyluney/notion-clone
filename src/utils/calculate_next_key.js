@@ -1,6 +1,18 @@
-export const calculateNextKey = hash => {
-    const keysSortedDescending 
-        = Object.keys(hash).sort((a,b) => b-a).map(x => parseInt(x));
-    return keysSortedDescending.length === 0 ? 1 : keysSortedDescending[0] + 1;
+// Helper method for getting all keys sorted in descending order.
+const retrieveKeysInDescendingOrder = hash => {
+    return Object.keys(hash).map(x => parseInt(x)).sort((a,b) => b-a);
 }
 
+export const calculateNextKey = hash => {
+    const descKeys = retrieveKeysInDescendingOrder(hash);
+    return descKeys.length === 0 ? 1 : descKeys[0] + 1;
+}
+
+export const shiftAllKeys = (hash, shiftId) => {
+    const descKeys = retrieveKeysInDescendingOrder(hash);
+    for (let key of descKeys) {
+        if (key >= shiftId) {
+            hash[key+1] = hash[key];
+        }
+    }
+}

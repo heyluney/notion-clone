@@ -10,13 +10,8 @@ import AddTodo
 
 import { getFullTimeString } from '../../utils/calculate_date';
 
-const TodoCategory = ({ todos, 
-        category_id, 
-        onDrag, 
-        onDrop, 
-        timestamp, color }) => {
-
-    const { categories } = useContext(PageContext);
+const TodoCategory = ({ category }) => {
+    const { todos } = useContext(PageContext);
 
     const [itemBeingMousedOver, changeMouseOver] = useState(-1);
 
@@ -31,12 +26,12 @@ const TodoCategory = ({ todos,
         >
             <div className={styles.header}>
                 <div className={categoryActive === category_id ?  styles.active_category_name : styles.category_name}
-                    style={categoryActive === category_id ? {
-                        background: color,
-                        filter:"brightness(0.8)"
-                    } : {
-                        background: color
-                    }}
+                    // style={categoryActive === category_id ? {
+                    //     background: color,
+                    //     filter:"brightness(0.8)"
+                    // } : {
+                    //     background: color
+                    // }}
                     onClick={() => {
                         toggleCategoryActive(categoryActive === null ? category_id : null)
                         textAreaRef.current.setSelectionRange(
@@ -55,13 +50,12 @@ const TodoCategory = ({ todos,
                 <div className={styles.date}>{getFullTimeString(timestamp)}</div>
             </div>
             {
-                Object.entries(todos).map(([idx, todo]) =>
-                <div key={idx}
-                    onMouseEnter={() => changeMouseOver(parseInt(idx))}
+                Object.entries(todos).map(([id, todo]) =>
+                <div key={id}
+                    onMouseEnter={() => changeMouseOver(parseInt(id))}
                     onMouseLeave={() => changeMouseOver(-1)}>
                     <EditTodo 
-                        key={idx}
-                        idx={idx}
+                        id={id}
                         todo={todo} 
                         onDrag={onDrag} 
                         itemBeingMousedOver={itemBeingMousedOver}

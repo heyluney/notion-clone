@@ -5,27 +5,24 @@ import styles from './Journal.module.css';
 
 import { PageContext } from '../../App';
 
-import Header from '../../components/title/Header';
 import JournalEntry from './JournalEntry';
 
-import { journal_constant } from '../../data/text_contents';
+// import { journal_constant } from '../../data/text_contents';
 
-const Journal = () => {
-    const { journal } = useContext(PageContext);
+const Journal = ({component, subComponents}) => {
     return (
         <div>
-            <Header />
-
             <div className={styles.description}>
-                {journal_constant}
+                {/* {journal_constant} */}
+                This is the journal
             </div>
 
-            {Object.entries(journal)
-                .map(([idx, journal]) =>
+            {subComponents
+                .map(([idx, subComponent]) =>
                 <JournalEntry 
                     key={idx} 
                     id={idx}
-                    journal={journal}/>)
+                    journal={subComponent}/>)
             }
         </div>
     )

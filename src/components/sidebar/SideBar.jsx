@@ -4,12 +4,13 @@ import styles from './SideBar.module.css'; // Import css modules stylesheet as s
 import ProfileItem from './ProfileItem';
 import SideBarDetailItem from './SideBarDetailItem';
 
+import { calculateNextKey } from '../../utils/calculate_next_key';
 import { PageContext } from '../../App';
 
 import clark from '../../assets/clark_profile.jpg';
 
 const SideBar = () =>{
-    const { pages } = useContext(PageContext);
+    const { pages, changePages } = useContext(PageContext);
 
     return (
         <div className={`${styles.sidebar}`} >
@@ -23,6 +24,14 @@ const SideBar = () =>{
                             key={id}
                             id={id}
                             page={page} />)} 
+            
+            <button onClick={
+                () => {
+                    const next_page_id = calculateNextKey(pages);
+                    changePages({...pages, [next_page_id]: "Untitled"});
+                }}>
+                    Add Page
+                </button>
         </div>
     )
 }
