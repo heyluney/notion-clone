@@ -3,20 +3,14 @@ import styles from './Header.module.css';
 import Title from "./Title";
 import Emoji from "../popups/Emoji";
 
-const Header = ({
-        isTruncated,
-        isSmall, 
-        emoji, 
-        title, 
-        canEdit
-    }) => {
+// small = true, then use SmallHeader
+const Header = ({emoji, title}) => {
     return (        
-        <div className={isSmall ? styles.header_small : styles.header }>
-            <Emoji className={styles.emoji} emoji={emoji}/>
+        <div className={styles.header}>
+            <Emoji emoji={emoji}/>
             <Title 
-                passedTitle={title} 
-                canEdit={canEdit}
-                isTruncated={isTruncated}/>
+                title={title} 
+                editable={false}/>
         </div>
     )
 }

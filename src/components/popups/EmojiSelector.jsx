@@ -4,12 +4,6 @@ import styles from './EmojiSelector.module.css';
 
 
 import { chunkify } from '../../utils/chunkify';
-import { addEmojiToComment, 
-        updateTitleEmoji, 
-        editJournalEmoji,
-        addEmojiToJournalComment,
-        updateTodoEmoji, 
-    addTodoEmoji } from '../../data/pages_helper_functions';
 import { PageContext, PopupContext } from '../../App';
 import { computeEmoji, addEmojiToRecent } from '../../data/compute_emojis';
 

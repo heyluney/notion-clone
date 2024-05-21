@@ -7,11 +7,11 @@ import useOutsideCommentAlerter from '../../hooks/OutsideCommentAlert';
 import { useAutosizeTextArea }
  from '../../hooks/AutosizeTextArea';
 
-import { saveItem } from '../../utils/local_storage';
+import { saveItem } from '../../data/database/database_functions';
 import { MdCancel as Cancel } from 'react-icons/md'
 import { AiFillCheckCircle as Check } from 'react-icons/ai';
 
-import { editComment, editJournalComment } from '../../data/pages_helper_functions';
+
 
 const EditComment = ({ idx,
     comment,

@@ -6,33 +6,28 @@ import { PageContext } from "../App";
 
 import Component from "./Component";
 
-const Page = () => {
-    const { currentPageId,
-        comments,
-        components } = useContext(PageContext);
+import { getEmoji, getAllChildComponents } from "../data/database/database_functions";
+import Emoji from "../components/popups/Emoji";
 
-    const findPageComponents = (parentPageId) => {
-        return Object.entries(components)
-            .filter(
-                ([idx, component]) => 
-                    component.parent_id == parentPageId
-            )
-            .sort(
-                (a, b) => a[1].order_id - b[1].order_id
-            );
-    }
-    const pageComponents = findPageComponents(currentPageId);
 
-    console.log('pageComponents', pageComponents);
+
+const Page = ({page}) => {
+    const { components } = useContext(PageContext)
+
+    const pageComponents = getAllChildComponents(components, page.id);
+    const emoji = getEmoji(components, page.id);
+
     return (
         <div>
-            <Header />
+            {/* <Header /> */}
+            {/* <Emoji /> */}
 
-            {pageComponents.map(([component_id, component]) =>
+
+            {/* {pageComponents.map(([component_id, component]) =>
                     <Component 
                         key={component_id} 
                         component_id={component_id} 
-                        component={component} />)}
+                        component={component} />)} */}
 
         </div>
     )

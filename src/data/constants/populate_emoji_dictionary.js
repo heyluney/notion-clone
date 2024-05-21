@@ -1,5 +1,5 @@
 
-import { getItem, saveItem } from "../../utils/local_storage";
+import { getItem, saveItem } from '../../data/database/database_functions';
 const myMarkdownFile = require("./emojis.txt");
 
 export const cleanDict = data => {

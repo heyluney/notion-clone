@@ -4,9 +4,8 @@ import styles from './EditTodo.module.css';
 
 import { PageContext } from '../../App';
 
-import EditButton from '../../components/buttons/EditButton';
+// import EditButton from '../../components/buttons/EditButton';
 import Emoji from '../../components/popups/Emoji';
-import { findEmoji } from '../../data/pages_helper_functions';
 
 const EditTodo = ({id, todo, onDrag, itemBeingMousedOver}) => {
     const { emojis } = useContext(PageContext);
@@ -27,18 +26,7 @@ const EditTodo = ({id, todo, onDrag, itemBeingMousedOver}) => {
             ref={todoRef}
             className={styles.todo}
             style={todoStyle}
-            onClick={(e) => {
-                if (iconRef.current && 
-                    iconRef.current.contains(e.target)) 
-                    {
-                        return;
-                    }
-                if (buttonsRef.current && 
-                    buttonsRef.current.contains(e.target)) 
-                    {
-                        return;
-                    }  
-            }}
+
             draggable={true}
             onDrag={(e) => onDrag(e, id)}>
 
@@ -49,13 +37,13 @@ const EditTodo = ({id, todo, onDrag, itemBeingMousedOver}) => {
                         
                 }}
                 >
-                <Emoji emoji={findEmoji(emojis, "tasklists", id)}/>
+                <Emoji />
 
                 </div>
                 <textarea 
                     ref={textAreaRef}
                     className={styles.textarea} 
-                    value={todo.title}   
+                    value={todo[1].title}   
                     onChange={(e) => console.log('e', e.target.value)}
                     onKeyDown={(e) => {
                         editCurrentTodo(e.target.value);
@@ -77,17 +65,22 @@ const EditTodo = ({id, todo, onDrag, itemBeingMousedOver}) => {
                     }}
                 />
             </div>
-            <div className={styles.buttons} ref={buttonsRef}>
-                {/* <EditButton type="tasklist" 
-                    textAreaRef={textAreaRef}
-                    idx={todo.id} 
-                    itemBeingMousedOver={itemBeingMousedOver}/>
-                <DeleteButton type="tasklist" 
-                    idx={todo.id}
-                    itemBeingMousedOver={itemBeingMousedOver}/> */}
-            </div>
         </div>
     )
 }
 
 export default EditTodo;
+
+
+// onClick={(e) => {
+//     if (iconRef.current && 
+//         iconRef.current.contains(e.target)) 
+//         {
+//             return;
+//         }
+//     if (buttonsRef.current && 
+//         buttonsRef.current.contains(e.target)) 
+//         {
+//             return;
+//         }  
+// }}

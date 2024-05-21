@@ -6,8 +6,7 @@ import { PageContext } from '../../App';
 
 import { AiFillDelete as Delete } from 'react-icons/ai';
 
-import { deleteTodo } from '../../data/pages_helper_functions';
-import { saveItem } from '../../utils/local_storage';
+import { saveItem } from '../../data/database/database_functions';
 
 const DeleteButton = ({idx, type, itemBeingMousedOver}) => {
     const { pages, changePages, currentPageName, component, changeComponent } = useContext(PageContext);

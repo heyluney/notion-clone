@@ -6,8 +6,7 @@ import styles from './Modal.module.css';
 import { PageContext } from '../../App';
 import { useRef } from 'react';
 
-import { deleteComment } from '../../data/pages_helper_functions';
-import { saveItem } from '../../utils/local_storage';
+import { saveItem } from '../../data/database/database_functions';
 
 const Modal = () => {
     const { pages, changePages, 

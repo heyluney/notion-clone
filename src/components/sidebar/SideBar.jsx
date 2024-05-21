@@ -4,37 +4,59 @@ import styles from './SideBar.module.css'; // Import css modules stylesheet as s
 import ProfileItem from './ProfileItem';
 import SideBarDetailItem from './SideBarDetailItem';
 
-import { calculateNextKey } from '../../utils/calculate_next_key';
+import { getChildComponents, createComponent } from '../../data/database/database_functions';
 import { PageContext } from '../../App';
 
 import clark from '../../assets/clark_profile.jpg';
 
-const SideBar = () =>{
-    const { pages, changePages } = useContext(PageContext);
+const SideBar = () => {
+    const { components, 
+        changeComponents, 
+        changeActiveComponents } = useContext(PageContext);
+
+    const pages = getChildComponents(components, 0, "page");
+
 
     return (
         <div className={`${styles.sidebar}`} >
-            <ProfileItem 
-                icon={<img className={styles.profile} src={clark} alt="clark_profile"/>} 
-                name="Clark's Notion"/>
-            
-            {Object.entries(pages)
-                        .map(([id, page]) => 
-                        <SideBarDetailItem 
-                            key={id}
-                            id={id}
-                            page={page} />)} 
-            
+            <ProfileItem
+                icon={<img className={styles.profile} 
+                src={clark} 
+                alt="clark_profile" />}
+                name="Clark's Notion" />
+
+
+            {pages.map(page =>
+                    <SideBarDetailItem
+                        key={page.id}
+                        page={page} />)}
+
+
             <button onClick={
                 () => {
-                    const next_page_id = calculateNextKey(pages);
-                    changePages({...pages, [next_page_id]: "Untitled"});
+                    const newComponent = createComponent(
+                        components, 
+                        'page',
+                        /*parent_id*/0,
+                        {title: "Untitled"}, 
+                        true
+                    );
+         
+                    changeComponents({
+                        ...components, 
+                        [newComponent.id]: newComponent
+                    });
+                    changeActiveComponents({
+                        "page": newComponent.id
+                    })
+                    window.history.replaceState
+                        (null, "", `notion-clone/${newComponent.id}`);
                 }}>
-                    Add Page
-                </button>
+                Add Page
+            </button>
         </div>
     )
 }
-    
+
 
 export default SideBar;

@@ -6,7 +6,6 @@ import styles from './AddTodo.module.css';
 
 import { useState } from 'react';
 
-import { saveItem } from '../../utils/local_storage';
 
 import { FaPlus as Plus } from 'react-icons/fa6';
 
@@ -14,7 +13,7 @@ import Icon from '../../components/popups/Icon';
 
 
 const AddTodo = ({category}) => {
-    const { pages } = useContext(PageContext);
+    // const { pages } = useContext(PageContext);
 
     const [isActive, toggleActive] = useState(false);
 

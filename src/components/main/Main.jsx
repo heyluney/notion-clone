@@ -4,27 +4,30 @@ import { Routes, Route } from 'react-router-dom';
 import styles from './Main.module.css'
 import Banner from './Banner';
 
+import { getChildComponents } from '../../data/database/database_functions';
+
 import { PageContext } from '../../App';
 
 import ErrorPage from '../../pages/Error/ErrorPage';
 
 import Page from '../../pages/Page';
 
-const Main = ({ emoji, comments }) => {
-    const { pages } = useContext(PageContext);
+const Main = () => {
+    const { components } = useContext(PageContext);
+    const pages = getChildComponents(components, 0, "page");
+
+    // We have to order the c
     return (
         <div className={styles.main}>
             <Banner />
             <div className={styles.right}>
                 <Routes>
-                    {Object.keys(pages)
-                        .map((page_id) => {
-
-                            return <Route key={page_id}
-                                exact path={`/notion-clone/${page_id}`}
-                                element={
-                                    <Page page={pages[page_id]} />} />
-                        })}
+                    {pages.map(page =>
+                        <Route
+                            key={page.id}
+                            exact path={`/notion-clone/${page.id}`}
+                            element={<Page page={page} />} />
+                    )}
                     <Route path="*" element={<ErrorPage />} />
                 </Routes>
             </div>

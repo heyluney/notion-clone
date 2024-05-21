@@ -10,30 +10,26 @@ import AddTodo
 
 import { getFullTimeString } from '../../utils/calculate_date';
 
-const TodoCategory = ({ category }) => {
-    const { todos } = useContext(PageContext);
+const TodoCategory = ({ categories, category, onDrag, onDrop, todos }) => {
+    // const { todos } = useContext(PageContext);
 
     const [itemBeingMousedOver, changeMouseOver] = useState(-1);
 
     const [categoryActive, toggleCategoryActive] = useState(false);
 
     const textAreaRef = useRef();
+    console.log("todo category", Object.entries(todos))
     return (
-        <div key={category_id}
+        <div key={category}
             className={styles.category}
             onDragOver={e => e.preventDefault()}
-            onDrop={e => onDrop(e, category_id)}
+            onDrop={e => onDrop(e, category)}
         >
             <div className={styles.header}>
-                <div className={categoryActive === category_id ?  styles.active_category_name : styles.category_name}
-                    // style={categoryActive === category_id ? {
-                    //     background: color,
-                    //     filter:"brightness(0.8)"
-                    // } : {
-                    //     background: color
-                    // }}
+                <div className={categoryActive === category ?  styles.active_category_name : styles.category_name}
                     onClick={() => {
-                        toggleCategoryActive(categoryActive === null ? category_id : null)
+                        toggleCategoryActive(categoryActive === 
+                            null ? category : null)
                         textAreaRef.current.setSelectionRange(
                             textAreaRef.current.value.length, textAreaRef.current.value.length
                         )
@@ -43,11 +39,11 @@ const TodoCategory = ({ category }) => {
                         ref={textAreaRef}
                         className={styles.textarea} 
                         style={{background: "transparent"}} 
-                        value={categories[category_id]}
+                        value={category}
                         onChange={() => {}}
                         />
                 </div>
-                <div className={styles.date}>{getFullTimeString(timestamp)}</div>
+                {/* <div className={styles.date}>{getFullTimeString(timestamp)}</div> */}
             </div>
             {
                 Object.entries(todos).map(([id, todo]) =>

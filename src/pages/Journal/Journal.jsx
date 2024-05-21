@@ -3,13 +3,12 @@ import { useContext } from 'react';
 
 import styles from './Journal.module.css';
 
-import { PageContext } from '../../App';
-
 import JournalEntry from './JournalEntry';
 
 // import { journal_constant } from '../../data/text_contents';
 
 const Journal = ({component, subComponents}) => {
+
     return (
         <div>
             <div className={styles.description}>

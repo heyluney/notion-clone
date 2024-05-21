@@ -5,7 +5,6 @@ import { useContext, useState } from 'react';
 import { PageContext, PopupContext } from '../../App';
 import styles from './AddTag.module.css';
 
-import { addTagToJournal } from '../../data/pages_helper_functions';
 
 import { saveItem } from '../../utils/local_storage';
 

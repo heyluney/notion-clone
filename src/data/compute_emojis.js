@@ -207,3 +207,18 @@ export const addEmojiToRecent = (emojiDict, newEmojiPair) => {
         }
     }
 }
+
+
+
+  // const [emojiDictionary, changeEmojiDictionary] = useState(null);
+  // useEffect(() => { 
+  //   const asyncPopulateEmojiDictionary = async() => {
+  //     const dictionary = await populateEmojiDictionary();
+  //     changeEmojiDictionary(dictionary);
+  //   }
+  //   asyncPopulateEmojiDictionary();
+  // }, [])
+
+  // useEffect(() => { 
+  //   saveItem('emoji_dictionary', emojiDictionary);
+  // }, [emojiDictionary]);

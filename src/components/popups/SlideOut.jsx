@@ -51,7 +51,7 @@ const SlideOut = () => {
                 <Chevron onClick={() => {
                     changeSlideOutTransitionTime(300);
                 }} />
-                <SlideOutView />
+                {/* <SlideOutView /> */}
             </div>
 
         </div>
