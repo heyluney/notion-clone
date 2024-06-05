@@ -6,7 +6,7 @@ import styles from './Comment.module.css'
 
 import { getFullTimeString } from "../../utils/calculate_date";
 
-import { getChildComponents } from '../../data/database/database_functions';
+import { getOrderedChildComponents } from '../../data/database/database_functions';
 
 import Emoji from '../popups/Emoji';
 

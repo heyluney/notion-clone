@@ -12,20 +12,20 @@ import {sortTodosIntoCategories} from './todos_utility_functions';
 import { todo_constant } from '../../data/constants/text_contents';
 
 
-const TaskList = ({component, subComponents}) => {
+const TaskList = ({component}) => {
     const { tags, changeComponents } = useContext(PageContext);
 
     const categories = {};
 
-    for (let subComponent of subComponents) {
-        const id = subComponent[0];
-        for (let tag of Object.values(tags)) {
-            if (tag.parent_id == id) {
-                if (categories[tag.text] === undefined) categories[tag.text] = [];
-                categories[tag.text].push(subComponent);
-            }
-        }
-    }
+    // for (let subComponent of subComponents) {
+    //     const id = subComponent[0];
+    //     for (let tag of Object.values(tags)) {
+    //         if (tag.parent_id == id) {
+    //             if (categories[tag.text] === undefined) categories[tag.text] = [];
+    //             categories[tag.text].push(subComponent);
+    //         }
+    //     }
+    // }
 
     // onDrop we are going to change the parent_id the tag is associated to 
     const onDrop = (_, movedToCategory) => {

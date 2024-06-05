@@ -7,7 +7,6 @@ export const setCaret = (element, caretPos) => {
     const node = element.childNodes[0];
     if (node === undefined) return;
 
-    console.log('caretPos in here', caretPos)
     range.setStart(node, caretPos);
     range.collapse(true);
     

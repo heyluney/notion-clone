@@ -5,41 +5,34 @@ import Header from "../components/title/Header";
 import { PageContext } from "../App";
 
 import Component from "./Component";
+import Banner from './../components/main/Banner';
+import { getComponentAttribute } from "../data/database/database_functions";
 
-import { getEmoji, getAllChildComponents } from "../data/database/database_functions";
-import Emoji from "../components/popups/Emoji";
+import styles from './Page.module.css'
 
-
-
-const Page = ({page}) => {
+const Page = ({ page }) => {
     const { components } = useContext(PageContext)
 
-    const pageComponents = getAllChildComponents(components, page.id);
-    const emoji = getEmoji(components, page.id);
-
     return (
-        <div>
-            {/* <Header /> */}
-            {/* <Emoji /> */}
+        <div className={styles.page}>
+            <Banner title={page.title} emoji={page.emoji} />
 
+            <div className={styles.right}>
+                <Header
+                    title={page.title}
+                    emoji={
+                        getComponentAttribute(components, page.id, "emoji")} />
 
-            {/* {pageComponents.map(([component_id, component]) =>
-                    <Component 
-                        key={component_id} 
-                        component_id={component_id} 
-                        component={component} />)} */}
-
+                {page.children.map(component_id =>
+                    <Component
+                        key={component_id}
+                        component_id={component_id}
+                        component={components[component_id]} />)}
+            </div>
         </div>
     )
 
 }
 
-
-{/* <Comments
-                comments={
-                    findComponents(
-                        comments,
-                        "pages",
-                        currentPageId)} /> */}
 
 export default Page;

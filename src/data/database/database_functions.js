@@ -1,189 +1,146 @@
-import { component_map } from "./component_map";
+import { component_map, default_content_map } from "./component_map";
 
-// Retrieves a random component in the pre-seeded library.
-export const getRandomComponent = (component_library, component_type) => {
-    const components = component_library[component_type];
-    return components[Math.floor(Math.random() * components.length)];
-}
-
-// Retrieves immediate child components for all types.
-export const getAllChildComponents =
-    (components, component_id) => {
-        const child_components = [];
-        for (let id in components) {
-            const component = components[id];
-            if (component.parent_id == component_id) {
-                child_components.push(component);
-            }
-        }
-        return child_components;
-    }
-
-export const getEmoji = (components, component_id) => 
-    getChildComponent(components, component_id, "emoji");
-
-// Retrieves immediate child components of specified component type.
-export const getChildComponent =
-    (components, component_id, component_type) => {
-        for (let id in components) {
-            const component = components[id];
-            if (component.parent_id == component_id
-                && component.component_type == component_map[component_type]) {
-                return component;
-            }
-        }
-        return null;
-    }
-
-// Retrieves immediate child components of specified component type. Ordered by the parent's order map.
-export const getChildComponents =
-    (components, component_id, component_type) => {
-        // Maps component_id => order_id instead of vice versa.
-        const inverted_order_map = 
-            invertMap(components[component_id].order);
-  
-        const child_components = [];
-        for (let id in components) {
-            const component = components[id];
-            if (component.parent_id == component_id
-                && component.component_type == component_map[component_type]) {
-                child_components.push(component);
-            }
-        }
-        if (inverted_order_map !== undefined) {
-            child_components
-            .sort((componentA, componentB) => 
-                inverted_order_map[componentA.id] < 
-                inverted_order_map[componentB.id] ? 
-                -1 : 1);
-        }
-
-        
-        return child_components;
-    }
-
-
-// Creates component. Side effect is updating parent's order map.
-export const createComponent = (
-    components, 
-    component_type, 
-    parent_id, 
-    content, 
-    is_ordered) => {
-
-    const new_component_id = calculateNextKey(components);
-    
-    // If component is ordered, update it's parent's order map.
-    if (is_ordered) 
-        addToParentOrderMap(components[parent_id].order, new_component_id, -1);
+// Returns a copy of the parent component, with child_id added at index=order_id.
+const insertChildIdInParentOrder = (components, parent_id, child_id, order_id) => {
+    const parentComponent = components[parent_id];
 
     return {
-        id: new_component_id,
-        component_type: component_map[component_type],
-        parent_id,
-        order: {},
-        ...content,
+        ...components,
+        [parentComponent.id]: 
+            { ...parentComponent, 
+                children: [...parentComponent.children.slice(0, order_id), child_id, ...parentComponent.children.slice(order_id)] 
+            }
+    };
+}
+
+// Returns a copy of the parent component, with child_id removed.
+const removeChildFromParentOrder = (components, parent_id, child_id) => {
+    const parentComponent = components[parent_id];
+
+    const idx_to_be_removed = components[parent_id].children.indexOf(child_id);
+    return {
+        ...components,
+        [parentComponent.id]: {
+            ...parentComponent,
+            children: [
+                ...parentComponent.children.slice(0, idx_to_be_removed),
+                ...parentComponent.children.slice(idx_to_be_removed + 1)]
+        }
     }
 }
 
-
-// If the component is ordered, update parent component's order map. Default behavior is to add the component to the end.
-const addToParentOrderMap = (parent_order_map, component_id, order_id) => {
-    if (order_id == -1) order_id = calculateNextKey(parent_order_map);
-    shiftKeysForwards(parent_order_map, order_id);
-    parent_order_map[order_id] = component_id;
+// Recursively finds every child_id that is associated with component_id.
+const findIdsToBeDeleted = (components, component_id) => {
+    const ids_to_be_deleted = [component_id];
+    for (let child_id of components[component_id].children) {
+        const child_ids_to_be_deleted = findIdsToBeDeleted(components, child_id);
+        for (let id of child_ids_to_be_deleted) {
+            ids_to_be_deleted.push(id);
+        }
+    }
+    return ids_to_be_deleted;
 }
 
-export const removeFromParentOrderMap = (components, component_id) => {
-    const parent_order_map = getParentOrderMap(components, component_id);
+// Creates a component and returns it. As a side effect, updates the parent component to include the newly assigned unique id in it's children.
+export const createComponent = (
+    components,
+    component_type,
+    parent_id,
+    order_id,
+    content = default_content_map[component_type],
+) => {
+    const id = calculateNextKey(components);
 
-    const order_id = getOrderId(parent_order_map, component_id);
-    if (order_id !== -1) shiftKeysBackwards(parent_order_map, order_id);
+    const newComponent = {
+        [id]: {
+            id,
+            component_type: component_map[component_type],
+            children: [],
+            parent_id,
+            ...content,
+        }
+    }
+
+    const updatedParentComponent =
+        insertChildIdInParentOrder(components, parent_id, id, order_id);
+
+    return { ...components, ...newComponent, ...updatedParentComponent };
 }
 
+// Removes a component and all of it's children components.
 export const deleteComponent = (components, component_id) => {
-    removeFromParentOrderMap(components, component_id);
-    deleteAllChildComponents(components, component_id);
+    const ids_to_be_deleted = findIdsToBeDeleted(components, component_id);
+
+    // we have to remember to remove it from the parent 
+    const updatedParentComponent = removeChildFromParentOrder(
+        components[components[component_id].parent_id],
+        component_id);
+
+    const newComponents = Object
+        .entries(components)
+        .reduce((a, [k, v]) =>
+            (ids_to_be_deleted.indexOf(parseInt(k)) === -1 ? { ...a, [k]: v } : a), {})
+    return { ...newComponents, ...updatedParentComponent };
 }
 
-export const moveComponent = (components, component_id, order_id) => {
-    removeFromParentOrderMap(components, component_id);
-    addToParentOrderMap(components, component_id, order_id);
+export const moveComponent = (components, component_id, new_parent_id, new_order_id) => {
+    const updatedComponents = insertChildIdInParentOrder
+        (removeChildFromParentOrder
+            (components, components[component_id].parent_id, component_id), new_parent_id, component_id, new_order_id);
+
+    return { ...components, ...updatedComponents };
 }
 
 
+export const duplicateComponent = (components, component_id) => {
+    const duplicatedComponents = {};
 
-// Helper methods internal to this file.
-const retrieveKeysInAscendingOrder = hash => {
-    return Object
-        .keys(hash)
-        .map(x => parseInt(x))
-        .sort((a, b) => a - b);
-}
-const retrieveKeysInDescendingOrder = hash => {
-    return Object
-        .keys(hash)
-        .map(x => parseInt(x))
-        .sort((a, b) => b - a);
+    const duplicateComponents = (components, component_id, duplicated_parent_id) => {
+        const duplicated_component_id = calculateNextKey(components);
+
+        const duplicatedParentComponent = duplicatedComponents[duplicated_parent_id];
+        if (duplicatedParentComponent !== undefined)
+            duplicatedParentComponent.children.push(duplicated_component_id);
+
+        for (let child_id of components[component_id].children) {
+            duplicateComponents(components, child_id, duplicated_component_id);
+        }
+
+        duplicatedComponents[duplicated_component_id] = {
+            ...components[component_id],
+            id: duplicated_component_id,
+            children: []
+        }
+    }
+    duplicateComponents(components, component_id, -1);
+
+    return { ...components, ...duplicatedComponents };
 }
 
+
+export const getComponentAttribute = (components, component_id, attribute) => {
+    if (components[component_id][attribute] === undefined) return default_content_map[attribute];
+    return components[component_id][attribute];
+}
+
+// Update component attribute? 
+export const updateComponent = (components, component_id, content) => {
+    const updatedComponent = {
+        ...components[component_id],
+        ...content
+    }
+    return { ...components, ...updatedComponent };
+}
+// Retrieve the latest key.
+export const retrieveLatestKey = hash => {
+    const descKeys = Object.keys(hash).map(x => parseInt(x)).sort((a, b) => b - a);
+    return descKeys[0];
+}
+
+// Calculate the next available key.
 export const calculateNextKey = hash => {
-    const descKeys = retrieveKeysInDescendingOrder(hash);
+    const descKeys = Object.keys(hash).map(x => parseInt(x)).sort((a, b) => b - a);
     return descKeys.length === 0 ? 0 : descKeys[0] + 1;
-}
-
-const getOrderId = (map, id) => {
-    for (let key in map) {
-        if (map[key] === id) return key;
-    }
-    return -1;
-}
-
-const shiftKeysForwards = (map, order_id) => {
-    const descKeys = retrieveKeysInDescendingOrder(map);
-    for (let key of descKeys) {
-        if (key >= order_id) {
-            map[key + 1] = map[key];
-        }
-    }
-}
-
-const shiftKeysBackwards = (map, orderId) => {
-    const descKeys = retrieveKeysInAscendingOrder(map);
-    for (let key of descKeys) {
-        if (key > orderId) {
-            map[key - 1] = map[key]
-        }
-    }
-}
-
-const getParentOrderMap = (components, component_id) => {
-    const component = components[component_id];
-    return components[component.parent_id].order;
-}
-const getInverseParentOrderMap = (components, component_id) => {
-    const component = components[component_id];
-    console.log('component', component)
-    const order_map = components[component.parent_id].order;
-    return invertMap(order_map);
-}
-
-const invertMap = (map) => {
-    if (map === undefined) return undefined;
-    for (let k in map) {
-        map[map[k]] = k;
-    }
-    return map;
-}
-
-
-export const deleteAllChildComponents = (components, component_id) => {
-    for (let child_component in components) {
-        if (child_component.parent_id == component_id) {
-            deleteAllChildComponents(components, child_component.id);
-        }
-    }
-    delete components[component_id];
 }
 
 // These methods retrieve and save to local storage.

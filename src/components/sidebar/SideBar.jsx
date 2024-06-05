@@ -1,56 +1,60 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import styles from './SideBar.module.css'; // Import css modules stylesheet as styles
 
 import ProfileItem from './ProfileItem';
 import SideBarDetailItem from './SideBarDetailItem';
 
-import { getChildComponents, createComponent } from '../../data/database/database_functions';
+import { retrieveLatestKey } from '../../data/database/database_functions';
+import { createComponent } from '../../data/database/database_functions';
 import { PageContext } from '../../App';
+
+import { componentLibrary, getRandomComponent } from '../../data/database/component_library';
 
 import clark from '../../assets/clark_profile.jpg';
 
 const SideBar = () => {
-    const { components, 
-        changeComponents, 
-        changeActiveComponents } = useContext(PageContext);
+    const { components,
+        changeComponents } = useContext(PageContext);
 
-    const pages = getChildComponents(components, 0, "page");
+    const page_ids = components[0].children;
 
+    const [draggedPageId, changeDraggedPageId] = useState(-1);
+    const [dropPageIdx, changeDropPageIdx] = useState(-1);
 
     return (
-        <div className={`${styles.sidebar}`} >
+        <div className={`${styles.sidebar}`}>
             <ProfileItem
-                icon={<img className={styles.profile} 
-                src={clark} 
-                alt="clark_profile" />}
-                name="Clark's Notion" />
+                icon={<img className={styles.profile}
+                    src={clark}
+                    alt="clark_profile" />}
+                    name="Clark's Notion" />
 
-
-            {pages.map(page =>
-                    <SideBarDetailItem
-                        key={page.id}
-                        page={page} />)}
+            {page_ids.map((page_id, idx) =>
+                <SideBarDetailItem
+                    key={page_id}
+                    idx={idx}
+                    page={components[page_id]} 
+                    changeDraggedPageId={changeDraggedPageId}
+                    changeDropPageIdx={changeDropPageIdx}
+                    draggedPageId={draggedPageId}
+                    dropPageIdx={dropPageIdx}
+                    />)}
 
 
             <button onClick={
                 () => {
-                    const newComponent = createComponent(
-                        components, 
+                    const newComponents = createComponent(
+                        components,
                         'page',
-                        /*parent_id*/0,
-                        {title: "Untitled"}, 
-                        true
+                        0,
+                        page_ids.length,
+                        {
+                            emoji: getRandomComponent(componentLibrary, "emoji"),
+                            title: getRandomComponent(componentLibrary, "title")
+                        }
                     );
-         
-                    changeComponents({
-                        ...components, 
-                        [newComponent.id]: newComponent
-                    });
-                    changeActiveComponents({
-                        "page": newComponent.id
-                    })
-                    window.history.replaceState
-                        (null, "", `notion-clone/${newComponent.id}`);
+
+                    changeComponents(newComponents);
                 }}>
                 Add Page
             </button>

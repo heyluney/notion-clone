@@ -10,7 +10,6 @@ import AddComment from '../../components/comments/AddComment';
 import Header from '../../components/title/Header';
 
 const QuickNote = ({comments}) => {   
-    const {currentPageId} = useContext(PageContext);
     
     return (
         <div>

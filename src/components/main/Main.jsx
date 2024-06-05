@@ -2,9 +2,6 @@ import { useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import styles from './Main.module.css'
-import Banner from './Banner';
-
-import { getChildComponents } from '../../data/database/database_functions';
 
 import { PageContext } from '../../App';
 
@@ -14,28 +11,22 @@ import Page from '../../pages/Page';
 
 const Main = () => {
     const { components } = useContext(PageContext);
-    const pages = getChildComponents(components, 0, "page");
 
-    // We have to order the c
+    const page_ids = components[0].children;
     return (
         <div className={styles.main}>
-            <Banner />
-            <div className={styles.right}>
-                <Routes>
-                    {pages.map(page =>
-                        <Route
-                            key={page.id}
-                            exact path={`/notion-clone/${page.id}`}
-                            element={<Page page={page} />} />
-                    )}
-                    <Route path="*" element={<ErrorPage />} />
-                </Routes>
-            </div>
+            <Routes>
+                {page_ids.map(page_id =>
+                    <Route
+                        key={page_id}
+                        exact path={`/notion-clone/${page_id}`}
+                        element={<Page page={components[page_id]} />} />
+                )}
+
+                <Route path="*" element={<ErrorPage />} />
+            </Routes>
         </div>
     )
 }
 
 export default Main;
-
-// import { page_id_to_component_map } from '../../utils/maps';
-// const Component = page_id_to_component_map[idx];

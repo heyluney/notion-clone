@@ -1,22 +1,37 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './SideBarDetailItem.module.css';
 
-import { component_map } from '../../data/database/component_map';
-
+import { moveComponent } from '../../data/database/database_functions';
 import { PageContext } from '../../App';
-import { getEmoji, getChildComponents } from '../../data/database/database_functions';
+import { getComponentAttribute, deleteComponent } from '../../data/database/database_functions';
 
-import SmallHeader from '../title/SmallHeader';
+import Header from '../title/Header';
 
-const SideBarDetailItem = ({ page }) => {
-    const { components, activeComponents, changeActiveComponents } = useContext(PageContext);
+const SideBarDetailItem = ({ page, idx,  changeDraggedPageId, changeDropPageIdx, draggedPageId, dropPageIdx }) => {
+    const { components,
+        changeComponents, 
+        activeComponents, 
+        changeActiveComponents } = useContext(PageContext);
 
 
-    
+    const onDrop = () => {
+        const updatedComponents = moveComponent(components, draggedPageId, 0, dropPageIdx);
+        changeComponents(updatedComponents);
+    }
+
     return (
-        <div>
+        <div 
+            onDragOver={e => {
+                e.preventDefault();
+                changeDropPageIdx(idx);
+            }}
+            onDrag={e => {
+                e.preventDefault();
+                changeDraggedPageId(page.id);
+            }}
+            onDrop={() => onDrop()}>
             <Link 
                 to={`/notion-clone/${page.id}`}
                 onClick={() => changeActiveComponents({
@@ -24,10 +39,17 @@ const SideBarDetailItem = ({ page }) => {
                     "page": page.id
                 })}>
                 
-                <SmallHeader
+                <Header
+                    isSmall={true}
                     title={page.title}
-                    emoji={getEmoji(components, page.id)} />
+                    emoji={getComponentAttribute(components, page.id, "emoji")} />
+                
             </Link>
+            
+            {/* <button onClick={() => 
+                changeComponents(deleteComponent(components, page.id))}>
+                    Delete
+            </button> */}
         </div>
     )
 }
