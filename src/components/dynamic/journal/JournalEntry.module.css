@@ -1,0 +1,35 @@
+@import '../../../standard.module.css';
+
+.journal_entry {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.journal_entry:hover{
+    background: var(--highlight-grey);
+    cursor: pointer;
+}
+
+
+.left {
+    font-weight: 700;
+    border-bottom: 1px solid var(--highlight-grey);
+    font-size: 18px;
+    display: flex;
+    width: 30%;
+}
+.middle {
+    width: 50%;
+}
+.right {
+    font-size: 11.5px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    width: 20%;
+}
+

@@ -1,0 +1,53 @@
+
+@import '../../../standard.module.css';
+
+.todo {
+    background: white;
+    border: 1px solid #eaeae9;
+    border-radius: 4px;
+    box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
+             rgba(15, 15, 15, 0.1) 0px 2px 4px;
+    outline: none;
+    padding: 10px 10px 8px 8px;
+    box-sizing: border-box;
+    margin-bottom: 4px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+}
+
+.todo:hover {
+    cursor: pointer;
+    background: rgb(241, 241, 240, 1);
+}
+
+.todo_publish {
+    background: green;
+    transition: 1s;
+}
+
+.left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.right { 
+    display: flex;
+    flex-direction: row;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+.textarea {
+    resize: none;
+    overflow: hidden;
+    font-size: 15px;
+    height: 15px;
+    background: transparent;
+}

@@ -1,6 +1,6 @@
 import QuickNote from '../pages/QuickNote/QuickNote';
 import TaskList from '../pages/TaskList/TaskList';
-import Journal from '../pages/Journal/Journal';
+import Journal from '../components/journal/Journal';
 import Home from '../pages/Home/Home';
 
 export const page_id_to_component_map = {

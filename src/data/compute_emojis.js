@@ -1,10 +1,7 @@
 export const computeEmoji = hexcode => {
+    if (!hexcode) return String.fromCodePoint("0x1F415");
     const codes = hexcode.split(' ').map(code => "0x" + code);
-    try {
         return String.fromCodePoint(...codes);
-    } catch {
-        return String.fromCodePoint("0x1F415");
-    }
 }
 
 export const getSkinToneEmoji = (emojiDict, skintone) => {

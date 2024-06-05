@@ -1,9 +1,10 @@
 import { component_map, default_content_map } from "./component_map";
 
-// Returns a copy of the parent component, with child_id added at index=order_id.
+// Returns a copy of the parent component, with child_id added at index=order_id. The default behavior is to add the child component at the end.
 const insertChildIdInParentOrder = (components, parent_id, child_id, order_id) => {
     const parentComponent = components[parent_id];
-
+    
+    console.log('parentComponent', parentComponent, 'order_id', order_id);
     return {
         ...components,
         [parentComponent.id]: 
@@ -41,12 +42,12 @@ const findIdsToBeDeleted = (components, component_id) => {
     return ids_to_be_deleted;
 }
 
-// Creates a component and returns it. As a side effect, updates the parent component to include the newly assigned unique id in it's children.
+// Creates a component and returns it. As a side effect, updates the parent component to include the newly assigned unique id in it's children. By default, adds the component at the end of it's parent's children.
 export const createComponent = (
     components,
     component_type,
     parent_id,
-    order_id,
+    order_id = components[parent_id].length,
     content = default_content_map[component_type],
 ) => {
     const id = calculateNextKey(components);
@@ -92,29 +93,30 @@ export const moveComponent = (components, component_id, new_parent_id, new_order
 }
 
 
-export const duplicateComponent = (components, component_id) => {
-    const duplicatedComponents = {};
+export const duplicateComponent = (
+    components, 
+    component_id, 
+    duplicated_parent_component_id=components[component_id].parent_id) => 
+{
 
-    const duplicateComponents = (components, component_id, duplicated_parent_id) => {
-        const duplicated_component_id = calculateNextKey(components);
+    // Retrieves the content of the component to be duplicated, with id, parent_id and the children array to be set. 
+    const {id, parent_id, children, ...duplicated_content} = components[component_id];
 
-        const duplicatedParentComponent = duplicatedComponents[duplicated_parent_id];
-        if (duplicatedParentComponent !== undefined)
-            duplicatedParentComponent.children.push(duplicated_component_id);
+    let updatedComponents = createComponent(
+        components, 
+        components[component_id].component_type, 
+        duplicated_parent_component_id, 
+        components[duplicated_parent_component_id].children.length, 
+        duplicated_content);
+  
+    const duplicated_component_id = retrieveLatestKey(updatedComponents);
 
-        for (let child_id of components[component_id].children) {
-            duplicateComponents(components, child_id, duplicated_component_id);
-        }
-
-        duplicatedComponents[duplicated_component_id] = {
-            ...components[component_id],
-            id: duplicated_component_id,
-            children: []
-        }
+    // Duplicates each child component of the duplicated component.
+    for (let child_id of components[component_id].children) {
+        updatedComponents = duplicateComponent(updatedComponents, child_id, duplicated_component_id);
     }
-    duplicateComponents(components, component_id, -1);
 
-    return { ...components, ...duplicatedComponents };
+    return updatedComponents;
 }
 
 
@@ -123,7 +125,6 @@ export const getComponentAttribute = (components, component_id, attribute) => {
     return components[component_id][attribute];
 }
 
-// Update component attribute? 
 export const updateComponent = (components, component_id, content) => {
     const updatedComponent = {
         ...components[component_id],
@@ -135,6 +136,12 @@ export const updateComponent = (components, component_id, content) => {
 export const retrieveLatestKey = hash => {
     const descKeys = Object.keys(hash).map(x => parseInt(x)).sort((a, b) => b - a);
     return descKeys[0];
+}
+
+// Retrieve the earliest key.
+export const retrieveEarliestKey = hash => {
+    const ascKeys = Object.keys(hash).map(x => parseInt(x)).sort((a, b) => a-b);
+    return ascKeys[0];
 }
 
 // Calculate the next available key.

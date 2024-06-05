@@ -1,62 +1,58 @@
 import { useState, useEffect, createContext } from 'react';
 import styles from './App.module.css';
-import SideBar from './components/sidebar/SideBar';
-import Main from './components/main/Main';
+import SideBar from './components/static/sidebar/SideBar';
 import { useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
-// import { addFaviconToPage } from './utils/generate_favicon';
-import { retrieveLatestKey } from './data/database/database_functions';
-import { component_map } from './data/database/component_map';
+import { addFaviconToPage } from './utils/generate_favicon';
 import { seedPages } from './data/database/seeded_data'
-import { getFromLocalStorage, saveToLocalStorage, getChildComponents } from './data/database/database_functions';
+import { getFromLocalStorage, saveToLocalStorage } from './data/database/database_functions';
+
+import ErrorPage from './pages/Error/ErrorPage';
+import HomePage from './pages/Home/HomePage';
+
+import Page from './components/Page';
 
 const App = () => {
   seedPages();
   const location = useLocation();
 
   const [components, changeComponents] = useState(getFromLocalStorage('components'));
-  const [activeComponents, changeActiveComponents] = useState({
-    "page": 
-      parseInt(location.pathname.slice(location.pathname.lastIndexOf('/')+1)),
-    "last_id": 15
-  });
-
-  useEffect(() => {
-    const lastKey = retrieveLatestKey(components);
-
-    // console.log('components', components)
-
-    // Detects when a new page is added and updates the url to display that page.
-    if (activeComponents.last_id !== lastKey && 
-        components[lastKey].component_type == component_map['page']) {
-
-        changeActiveComponents({
-          ...activeComponents,
-          ...{
-            "page": lastKey,
-            "last_id": lastKey}
-        })
-        window.history.replaceState(null, "", `${lastKey}`);
-      }
-
-  }, [components])
+  const [activeComponents, changeActiveComponents] = useState();
 
   useEffect(() => saveToLocalStorage('components', components), [components]);
   useEffect(() => {
-    // console.log('activeComponents', activeComponents)
-    saveToLocalStorage('activeComponents', activeComponents)}, [activeComponents])
+    saveToLocalStorage('activeComponents', activeComponents)
+  }, [activeComponents]);
 
 
-  // addFaviconToPage(getChildComponents(components, activeComponents[component_type['page']], "emoji"));
-  
+  const currentPageId = parseInt(location.pathname.slice(location.pathname.lastIndexOf('/') + 1));
+
+  addFaviconToPage(currentPageId && components[currentPageId] ? components[currentPageId].emoji :  "1F9D7 1F3FB 200D 2640 FE0F");
+
+  const page_ids = components[0].children;
+
+  console.log('components', components)
   return (
     <PageContext.Provider value={{
       components, changeComponents,
       activeComponents, changeActiveComponents,
     }}>
       <div className={`${styles.app}`}>
-        <SideBar />
-        <Main />
+        <SideBar page_ids={page_ids} />
+        <div className={styles.main}>
+          <Routes>
+            {page_ids.map(id =>
+              <Route
+                key={id}
+                exact path={`/notion-clone/${id}`}
+                element={<Page page={components[id]} />} />
+            )}
+
+            <Route exact path="/notion-clone/" element={<HomePage />} />
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+        </div>
       </div>
     </PageContext.Provider>
   )

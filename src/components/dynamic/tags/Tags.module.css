@@ -1,0 +1,31 @@
+@import '../../../standard.module.css';
+
+
+.tags {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-right: 5px;
+}
+
+.tags_full {
+    flex-wrap: wrap;
+}
+
+
+
+.add_tag {
+    background: var(--highlight-grey);
+}
+.active {
+    cursor: pointer;
+    background: #9081a6;
+}
+
+.delete {
+    padding: 2px;
+    margin-left: 4px;
+    border-radius: 4px;
+}
