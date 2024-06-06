@@ -3,69 +3,46 @@
 import { useState, useContext } from 'react';
 import styles from './TaskList.module.css';
 
+import { moveComponent } from '../../../data/database/database_functions';
+
 import { PageContext } from '../../../App';
 
 import TodoCategory from './TodoCategory';
 
-// import {sortTodosIntoCategories} from './todos_utility_functions';
-
-
-
 const TaskList = ({component}) => {
-    const { tags, changeComponents } = useContext(PageContext);
+    const { components, changeComponents } = useContext(PageContext);
 
-    const categories = {};
+    // moveComponent(components, component_id, new_parent_id, new_order_id)
+    const onDrop = (_, movedToCategoryId) => {
+        console.log("dropTodoIdx", dropTodoIdx)
+        console.log("category id of dropped", movedToCategoryId)
+        console.log("draggedTodoId", draggedTodoId)
 
-    // for (let subComponent of subComponents) {
-    //     const id = subComponent[0];
-    //     for (let tag of Object.values(tags)) {
-    //         if (tag.parent_id == id) {
-    //             if (categories[tag.text] === undefined) categories[tag.text] = [];
-    //             categories[tag.text].push(subComponent);
-    //         }
-    //     }
-    // }
-
-    // onDrop we are going to change the parent_id the tag is associated to 
-    const onDrop = (_, movedToCategory) => {
-        console.log('movedToCategory', movedToCategory);
-        console.log(draggedTodoIdx);
-        // changeComponents({...component, [draggedTodoIdx]: {
-        //     ...component[draggedTodoIdx],
-        //     category_id: movedToCategory
-        // }})
+        const updatedComponents = moveComponent(components, draggedTodoId, movedToCategoryId, dropTodoIdx);
+        changeComponents(updatedComponents);
     }
 
-    const onDrag = (e, idx) => {
-        e.preventDefault();
-        updateDraggedTodoIdx(idx);
-    }
-
-    // // Stores what todo is currently in the state of being dragged, and the category that it was dragged from.
-    const [draggedTodoIdx, updateDraggedTodoIdx] = useState();
+    const [dropTodoIdx, changeDropTodoIdx] = useState(-1);
+    const [draggedTodoId, changeDraggedTodoId] = useState(-1);
 
     return (
         <div>            
             <div className={styles.description}>
-                Todo
+                {component.title}
             </div>
         
             <div className={styles.list}>
                 This is the tasklist
 
-                {Object.entries(categories).map(
-                    ([category, todos]) => 
-                        <TodoCategory 
-                            key={category}
-                            todos={todos} 
-                            categories={categories}
-                            category={category}
-                            onDrag={onDrag}
-                            onDrop={onDrop} 
-                            draggedTodoIdx={draggedTodoIdx}
-                            />
-                
-                )}
+                {component.children.map(category_id => 
+                    <TodoCategory 
+                        key={category_id}
+                        category={components[category_id]}
+                        onDrop={onDrop}
+                        changeDraggedTodoId={changeDraggedTodoId}
+                        changeDropTodoIdx={changeDropTodoIdx}
+                        />
+                    )}
             </div>
         </div>
     )

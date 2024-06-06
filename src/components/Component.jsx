@@ -17,7 +17,7 @@ const Component = ({component}) => {
 
     return (
         <div className={styles.component}>
-            <button>+</button>
+            {/* <button>+</button> */}
 
             <Component component={component} />        
         </div>

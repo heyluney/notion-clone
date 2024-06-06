@@ -1,6 +1,6 @@
-import { componentLibrary, getRandomComponent } from "./component_library"
+import { componentLibrary, getComponent } from "./component_library"
 
-// Mapping from human-readable component type to unique type identifier.
+// Mapping from human-readable component type to unique type identifier. Each component type maps to a unique frontend React component.
 export const component_map = {
     "app": 0,
     "page": 1,
@@ -10,13 +10,16 @@ export const component_map = {
     "journal": 5,
     "task": 6,
     "entry": 7,
-    "tag": 8
+    "tag": 8,
+    "category": 9
 }
 
 export const default_content_map = {
     "page": {
-        title: getRandomComponent(componentLibrary, "title"),
-        emoji: getRandomComponent(componentLibrary, "emoji")
+        title: "Random title",
+        emoji: getComponent(componentLibrary, "emoji", "dog")
     },
-    "emoji": "1F3D4 FE0F"
+    "emoji": getComponent(componentLibrary, "emoji", "dog"),
+    "journal": {},
+    "tasklist": {}
 }

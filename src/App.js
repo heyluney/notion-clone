@@ -32,7 +32,6 @@ const App = () => {
 
   const page_ids = components[0].children;
 
-  console.log('components', components)
   return (
     <PageContext.Provider value={{
       components, changeComponents,

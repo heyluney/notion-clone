@@ -3,10 +3,16 @@ import { component_map, default_content_map } from "./component_map";
 // Returns a copy of the parent component, with child_id added at index=order_id. The default behavior is to add the child component at the end.
 const insertChildIdInParentOrder = (components, parent_id, child_id, order_id) => {
     const parentComponent = components[parent_id];
+    if (parentComponent === undefined) return {};
     
-    console.log('parentComponent', parentComponent, 'order_id', order_id);
+    // Need to update child component's parent_id to point to the new parent_id.
+    const childComponent = components[child_id];
     return {
         ...components,
+        [child_id]: {
+            ...childComponent,
+            parent_id: parent_id
+        },
         [parentComponent.id]: 
             { ...parentComponent, 
                 children: [...parentComponent.children.slice(0, order_id), child_id, ...parentComponent.children.slice(order_id)] 
@@ -19,7 +25,8 @@ const removeChildFromParentOrder = (components, parent_id, child_id) => {
     const parentComponent = components[parent_id];
 
     const idx_to_be_removed = components[parent_id].children.indexOf(child_id);
-    return {
+  
+    const updated = {
         ...components,
         [parentComponent.id]: {
             ...parentComponent,
@@ -28,6 +35,8 @@ const removeChildFromParentOrder = (components, parent_id, child_id) => {
                 ...parentComponent.children.slice(idx_to_be_removed + 1)]
         }
     }
+    console.log('updated parent component', components[parentComponent.id])
+    return updated;
 }
 
 // Recursively finds every child_id that is associated with component_id.
@@ -47,25 +56,25 @@ export const createComponent = (
     components,
     component_type,
     parent_id,
-    order_id = components[parent_id].length,
     content = default_content_map[component_type],
+    order_id = components[parent_id].children.length 
 ) => {
     const id = calculateNextKey(components);
 
     const newComponent = {
         [id]: {
             id,
-            component_type: component_map[component_type],
-            children: [],
+            component_type,
             parent_id,
+            children: [],
             ...content,
         }
     }
 
-    const updatedParentComponent =
+    const componentsAfterUpdatingParentComponent =
         insertChildIdInParentOrder(components, parent_id, id, order_id);
 
-    return { ...components, ...newComponent, ...updatedParentComponent };
+    return { ...componentsAfterUpdatingParentComponent, ...newComponent };
 }
 
 // Removes a component and all of it's children components.
@@ -85,11 +94,11 @@ export const deleteComponent = (components, component_id) => {
 }
 
 export const moveComponent = (components, component_id, new_parent_id, new_order_id) => {
-    const updatedComponents = insertChildIdInParentOrder
-        (removeChildFromParentOrder
-            (components, components[component_id].parent_id, component_id), new_parent_id, component_id, new_order_id);
+    const removalFromOldParentComponents = removeChildFromParentOrder(components, components[component_id].parent_id, component_id);
 
-    return { ...components, ...updatedComponents };
+    const additionToNewParentComponents = insertChildIdInParentOrder(removalFromOldParentComponents, new_parent_id, component_id, new_order_id);
+
+    return { ...components, ...additionToNewParentComponents };
 }
 
 
@@ -100,15 +109,14 @@ export const duplicateComponent = (
 {
 
     // Retrieves the content of the component to be duplicated, with id, parent_id and the children array to be set. 
-    const {id, parent_id, children, ...duplicated_content} = components[component_id];
+    const {id, parent_id, children, component_type, ...content_to_be_duplicated} = components[component_id];
 
     let updatedComponents = createComponent(
         components, 
-        components[component_id].component_type, 
+        component_type, 
         duplicated_parent_component_id, 
-        components[duplicated_parent_component_id].children.length, 
-        duplicated_content);
-  
+        {...content_to_be_duplicated});
+      
     const duplicated_component_id = retrieveLatestKey(updatedComponents);
 
     // Duplicates each child component of the duplicated component.
@@ -121,7 +129,9 @@ export const duplicateComponent = (
 
 
 export const getComponentAttribute = (components, component_id, attribute) => {
-    if (components[component_id][attribute] === undefined) return default_content_map[attribute];
+    if (components[component_id][attribute] === undefined) 
+        return default_content_map[attribute];
+
     return components[component_id][attribute];
 }
 

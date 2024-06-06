@@ -1,21 +1,26 @@
 
-import { componentLibrary, getRandomComponent } from './component_library';
+import { componentLibrary, getRandomComponent, getComponent } from './component_library';
 import { saveToLocalStorage, getFromLocalStorage } from './database_functions';
 
 import { component_map } from './component_map';
 
-// This seeds some data across various pages using local storage (so data persists between clearing local storage).
+// This seeds components across various pages using local storage (so data persists between clearing local storage).
 
-// Retrieves a random component in the pre-seeded library.
+// Each component has the following data:
+    // id : A unique identifier across the entire application.
+    // parent_id : A unique identifier of a component's parent component.
+    // children : An ordered array of child component_id's.
+
+    // All other keys represent component-specific attributes.
 
 
-// id, component_type, parent_id, children, then attributes 
+// Maybe add some validation that if something refers to a parent_id, then that parent component includes it in it's children?
 const defaultComponents = {
     0: {
         id: 0,
         component_type: component_map['app'],
         parent_id: -1,
-        children: [1, 2, 3, 4],
+        children: [1, 2, 3, 4, 5],
         title: "Clark's Notion!",
     },
     1: {
@@ -24,15 +29,15 @@ const defaultComponents = {
         parent_id: 0,
         children: [],
         title: "Home",
-        emoji: getRandomComponent(componentLibrary, "emoji")
+        emoji: getComponent(componentLibrary, "emoji", "sushi")
     },
     2: {
         id: 2,
         component_type: component_map['page'],
         parent_id: 0,
-        children: [6, 10, 11],
+        children: [6, 13, 14],
         title: "Quick Note",
-        emoji: getRandomComponent(componentLibrary, "emoji")
+        emoji: getComponent(componentLibrary, "emoji", "notebook")
     },
     3: {
         id: 3,
@@ -40,7 +45,7 @@ const defaultComponents = {
         parent_id: 0,
         children: [],
         title: "Task List",
-        emoji: getRandomComponent(componentLibrary, "emoji")
+        emoji: getComponent(componentLibrary, "emoji", "scroll")
     },
     4: {
         id: 4,
@@ -48,87 +53,161 @@ const defaultComponents = {
         parent_id: 0,
         children: [14],
         title: "Journal",
-        emoji: getRandomComponent(componentLibrary, "emoji")
+        emoji: getComponent(componentLibrary, "emoji", "full moon")
+    },
+    5: {
+        id: 5,
+        component_type: component_map['page'],
+        parent_id: 0,
+        children: [],
+        title: "French Notecards",
+        emoji: getComponent(componentLibrary, "emoji", "France")
     },
     6: {
         id: 6,
         component_type: component_map['tasklist'],
         parent_id: 2,
         children: [7, 8, 9],
-        ...getRandomComponent(componentLibrary, "tasklist"),
+        title: "Clarks todos of today",
     },
     7: {
         id: 7,
-        component_type: component_map['task'],
+        component_type: component_map['category'],
         parent_id: 6,
-        children: [],
-        ...getRandomComponent(componentLibrary, "task"),
+        children: [10, 11],
+        title: "Nah"
     },
     8: {
         id: 8,
-        component_type: component_map['task'],
+        component_type: component_map['category'],
         parent_id: 6,
-        children: [],
-        ...getRandomComponent(componentLibrary, "task"),
+        children: [19, 20, 21],
+        title: "Maybehhh",
     },
     9: {
         id: 9,
-        component_type: component_map['task'],
+        component_type: component_map['category'],
         parent_id: 6,
-        children: [],
-        ...getRandomComponent(componentLibrary, "task"),
+        children: [12, 22],
+        title: "YAYY!!"
     },
     10: {
         id: 10,
-        component_type: component_map['journal'],
-        parent_id: 2,
-        children: [12, 13],
-        ...getRandomComponent(componentLibrary, "journal")
+        component_type: component_map['task'],
+        parent_id: 7,
+        children: [],
+        title: "Get mom to throw me the ball",
+        body: "She's busy staring at the black screen",
     },
     11: {
         id: 11,
-        component_type: component_map['comment'],
-        parent_id: 2,
+        component_type: component_map['task'],
+        parent_id: 7,
         children: [],
-        ...getRandomComponent(componentLibrary, "comment")
+        title: "Try to get to the tissue paperrrrr",
+        body: "Pay attention to ME!",
     },
     12: {
         id: 12,
-        component_type: component_map['entry'],
-        parent_id: 10,
+        component_type: component_map['task'],
+        parent_id: 9,
         children: [],
-        ...getRandomComponent(componentLibrary, "entry"),
+        title: "Dog park time!",
+        body: "Maybe Oreo will play with me",
     },
     13: {
         id: 13,
-        component_type: component_map['entry'],
-        parent_id: 10,
-        children: [],
-        ...getRandomComponent(componentLibrary, "entry"),
+        component_type: component_map['journal'],
+        parent_id: 2,
+        children: [15, 16],
+        title: "Random musings"
     },
     14: {
         id: 14,
-        component_type: component_map['journal'],
-        parent_id: 4,
-        children: [15],
-        ...getRandomComponent(componentLibrary, "journal")
+        component_type: component_map['comment'],
+        parent_id: 2,
+        children: [],
+        text: "Hi Clarky boy!",
+        timestamp: Date.now(),
+        edited: false
     },
     15: {
         id: 15,
         component_type: component_map['entry'],
-        parent_id: 14,
+        parent_id: 13,
+        children: [],
+        title: "Taking Clark on a walk!",
+        body: "Will be good exercise ",
+        timestamp: Date.now(),
+        emoji: getComponent(componentLibrary, "emoji", "dog"),
+        tags: ["Clark"]
+    },
+    16: {
+        id: 16,
+        component_type: component_map['entry'],
+        parent_id: 10,
+        children: [],
+        title: "Going backpacking with Taylor <3",
+        body: "Going to mammoth lakes",
+        timestamp: Date.now(),
+        emoji: getComponent(componentLibrary, "emoji", "snow-capped mountain"),
+        tags: ["mammoth lakes", "hiking", "exercise"]
+    },
+    17: {
+        id: 17,
+        component_type: component_map['journal'],
+        parent_id: 4,
+        children: [18],
+        title: "Opinions on The Tortured Poets Department"
+    },
+    18: {
+        id: 18,
+        component_type: component_map['entry'],
+        parent_id: 17,
         children: [],
         title: "Taylor swift!!!!",
         body: "Going to see the eras tour.",
         timestamp: Date.now(),
         emoji: getRandomComponent(componentLibrary, "emoji"),
         tags: ["swiftie 4 lyfe"]
+    },
+    19: {
+        id: 19,
+        component_type: component_map['task'],
+        parent_id: 8,
+        children: [],
+        title: "Chew on ma boneee",
+        body: "Nom nom nom",
+    },
+    20: {
+        id: 20,
+        component_type: component_map['task'],
+        parent_id: 8,
+        children: [],
+        title: "Try to steal some food off the dining table",
+        body: "What? I'mn innocent"
+    },
+    21: {
+        id: 21,
+        component_type: component_map['task'],
+        parent_id: 8,
+        children: [],
+        title: "Maybe find a stick and play",
+        body: "But it's so hot outside"
+    },
+    22: {
+        id: 22,
+        component_type: component_map['task'],
+        parent_id: 9,
+        children: [],
+        title: "Survey mom carefully as she bakes me more homemade dog treats",
+        body: "One can never be too careful"
     }
 };
 
 
 export const seedPages = () => {
-    localStorage.clear(); // Will remove this eventually.
+    // localStorage.clear(); // Will remove this eventually.
     if (getFromLocalStorage('components') === null)
         saveToLocalStorage('components', defaultComponents);
 }

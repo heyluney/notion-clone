@@ -14,6 +14,7 @@ import styles from './Page.module.css'
 const Page = ({ page }) => {
     const { components } = useContext(PageContext)
 
+    // console.log("PAGE CHILDREN", page.children)  [6, 10, 11]
     return (
         <div className={styles.page}>
             <Banner title={page.title} emoji={page.emoji} />
