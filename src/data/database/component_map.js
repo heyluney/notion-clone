@@ -15,11 +15,19 @@ export const component_map = {
 }
 
 export const default_content_map = {
-    "page": {
-        title: "Random title",
+    1: {
+        title: "Untitled",
         emoji: getComponent(componentLibrary, "emoji", "dog")
     },
-    "emoji": getComponent(componentLibrary, "emoji", "dog"),
-    "journal": {},
-    "tasklist": {}
+    3: getComponent(componentLibrary, "emoji", "dog"),
+    4: {
+        title: "Untitled",
+        categories: ['Not started', 'In progress', 'Done'],
+    },
+    6: {
+        title: "Untitled"
+    },
+    9: {
+        title: "Untitled"
+    }
 }

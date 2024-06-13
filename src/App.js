@@ -11,6 +11,7 @@ import { getFromLocalStorage, saveToLocalStorage } from './data/database/databas
 import ErrorPage from './pages/Error/ErrorPage';
 import HomePage from './pages/Home/HomePage';
 
+import { getCurrentPageId } from './utils/get_current_page';
 import Page from './components/Page';
 
 const App = () => {
@@ -20,17 +21,19 @@ const App = () => {
   const [components, changeComponents] = useState(getFromLocalStorage('components'));
   const [activeComponents, changeActiveComponents] = useState();
 
-  useEffect(() => saveToLocalStorage('components', components), [components]);
+  useEffect(() => {
+    saveToLocalStorage('components', components)
+  }, [components]);
   useEffect(() => {
     saveToLocalStorage('activeComponents', activeComponents)
   }, [activeComponents]);
-
 
   const currentPageId = parseInt(location.pathname.slice(location.pathname.lastIndexOf('/') + 1));
 
   addFaviconToPage(currentPageId && components[currentPageId] ? components[currentPageId].emoji :  "1F9D7 1F3FB 200D 2640 FE0F");
 
   const page_ids = components[0].children;
+    console.log('components', components)
 
   return (
     <PageContext.Provider value={{
@@ -41,12 +44,12 @@ const App = () => {
         <SideBar page_ids={page_ids} />
         <div className={styles.main}>
           <Routes>
-            {page_ids.map(id =>
-              <Route
-                key={id}
-                exact path={`/notion-clone/${id}`}
-                element={<Page page={components[id]} />} />
-            )}
+            {page_ids.map(id => {
+              return <Route
+              key={id}
+              exact path={`/notion-clone/${id}`}
+              element={<Page page={components[id]} />} />
+            })}
 
             <Route exact path="/notion-clone/" element={<HomePage />} />
             <Route path="*" element={<ErrorPage />} />

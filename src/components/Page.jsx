@@ -1,5 +1,5 @@
 import { useContext } from "react";
-
+import { createDefaultTaskList } from "../data/database/database_functions";
 import Header from './static/header/Header';
 // import Header from "./static/header/header";
 
@@ -12,24 +12,28 @@ import { getComponentAttribute } from "../data/database/database_functions";
 import styles from './Page.module.css'
 
 const Page = ({ page }) => {
-    const { components } = useContext(PageContext)
+    const { components, changeComponents } = useContext(PageContext)
 
-    // console.log("PAGE CHILDREN", page.children)  [6, 10, 11]
     return (
         <div className={styles.page}>
             <Banner title={page.title} emoji={page.emoji} />
 
             <div className={styles.right}>
                 <Header
+                    key={page.id}
                     title={page.title}
-                    emoji={
-                        getComponentAttribute(components, page.id, "emoji")} />
+                    emoji={getComponentAttribute(components, page.id, "emoji")} />
 
                 {page.children.map(component_id =>
                     <Component
                         key={component_id}
                         component_id={component_id}
                         component={components[component_id]} />)}
+
+                <button onClick={() => {
+                    const updatedComponents = createDefaultTaskList(components, page.id);
+                    changeComponents(updatedComponents);
+                }}>Create a Tasklist</button>
             </div>
         </div>
     )

@@ -6,30 +6,38 @@ import Tags from '../tags/Tags';
 
 import Header from '../../static/header/Header';
 
-const JournalEntry = ({ entry }) => {
+const JournalEntry = ({ idx, entry, changeDropEntryIdx, changeDraggedEntryId }) => {
     
-    const { title, emoji, timestamp, tags } = entry;
-
+    // onClick={() => {
+    //     // changeActiveEntity(journals[id]);
+    //     // changeSlideOutWidth(500);
+    //     }}
     return (
         <div className={styles.journal_entry}
-            onClick={() => {
-                // changeActiveEntity(journals[id]);
-                // changeSlideOutWidth(500);
-                }}>
+            draggable={true}
+            onDragOver={(e) =>  {
+                e.preventDefault()
+                changeDropEntryIdx(idx)
+            }}
+            onDrag={(e) => {
+                e.preventDefault();
+                changeDraggedEntryId(entry.id);
+            }}
+           >
             <div className={styles.left}>
                 <Header 
-                            emoji={emoji}
-                            title={title}
+                            emoji={entry.emoji}
+                            title={entry.title}
 
                             isSmall={true} 
                             isTruncated={true}/>
             </div>
                     
             <div className={styles.middle}>
-                <Tags tags={tags} />
+                <Tags tags={entry.tags} />
             </div>
             <div className={styles.right}>
-                {getFullTimeString(timestamp)}
+                {getFullTimeString(entry.timestamp)}
             </div>
         </div>
     )

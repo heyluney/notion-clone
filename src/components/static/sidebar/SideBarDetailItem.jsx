@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './SideBarDetailItem.module.css';
@@ -11,10 +11,7 @@ import Header from '../header/Header';
 
 const SideBarDetailItem = ({ page, idx,  changeDraggedPageId, changeDropPageIdx, draggedPageId, dropPageIdx }) => {
     const { components,
-        changeComponents, 
-        activeComponents, 
-        changeActiveComponents } = useContext(PageContext);
-
+        changeComponents } = useContext(PageContext);
 
     const onDrop = () => {
         const updatedComponents = moveComponent(components, draggedPageId, 0, dropPageIdx);
@@ -34,15 +31,12 @@ const SideBarDetailItem = ({ page, idx,  changeDraggedPageId, changeDropPageIdx,
             onDrop={() => onDrop()}>
             <Link 
                 to={`/notion-clone/${page.id}`}
-                onClick={() => changeActiveComponents({
-                    ...activeComponents,
-                    "page": page.id
-                })}>
+               >
                 
-                <Header
-                    isSmall={true}
-                    title={page.title}
-                    emoji={getComponentAttribute(components, page.id, "emoji")} />
+            <Header
+                isSmall={true}
+                title={page.title}
+                emoji={getComponentAttribute(components, page.id, "emoji")} />
                 
             </Link>
             

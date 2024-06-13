@@ -1,7 +1,9 @@
+import { useLocation } from 'react-router-dom';
 import { useState, useContext, useEffect } from 'react';
 import { PageContext } from '../../../App';
 import styles from './Title.module.css';
 
+import { updateComponent } from '../../../data/database/database_functions';
 import { setCaret } from '../../../utils/text_editor';
 
 const ReadOnlyTitle = ({ title }) => {
@@ -15,8 +17,9 @@ const ReadOnlyTitle = ({ title }) => {
 }
 
 const EditableTitle = ({ title }) => {
-    const { components, changeComponents, activeComponents }
-         = useContext(PageContext);
+    const { components, changeComponents } = useContext(PageContext);
+
+    const location = useLocation();
 
     const [editableTitle, updateEditableTitle] = useState(title);
     const [caretPos, updateCaretPos] = 
@@ -43,15 +46,12 @@ const EditableTitle = ({ title }) => {
                 // Update caret position to be where the user last typed.
                 updateCaretPos(window.getSelection().anchorOffset);
 
-                changeComponents({
-                    ...components,
-                    [activeComponents.page]: {
-                        ...components[activeComponents.page],
-                        title: e.currentTarget.innerText
-                    }
-                })
+                const currentPageId = parseInt(location.pathname.slice(location.pathname.lastIndexOf('/') + 1));
+            
+                const updatedComponents = updateComponent(components, currentPageId, {title: e.currentTarget.innerText});
+                changeComponents(updatedComponents);
             }}>
-            {title}
+            {editableTitle}
         </div>
     )
 }

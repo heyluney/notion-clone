@@ -1,6 +1,6 @@
 
-import { componentLibrary, getRandomComponent, getComponent } from './component_library';
-import { saveToLocalStorage, getFromLocalStorage } from './database_functions';
+import { componentLibrary, getRandomComponent, getComponent  } from './component_library';
+import { saveToLocalStorage, getFromLocalStorage, createComponent, createDefaultTaskList } from './database_functions';
 
 import { component_map } from './component_map';
 
@@ -15,7 +15,26 @@ import { component_map } from './component_map';
 
 
 // Maybe add some validation that if something refers to a parent_id, then that parent component includes it in it's children?
-const defaultComponents = {
+
+
+// seeded data and "default skeletons" should share similar 
+// const app = createNewDefaultComponent("app")
+
+// const tasklist1 = createNewDefaultComponent("tasklist")
+
+// retrieveLatestKey 
+// createComponent
+
+// export const createComponent = (
+//     components,
+//     component_type,
+//     parent_id,
+//     content = default_content_map[component_type],
+//     order_id = components[parent_id].children.length 
+// )
+
+
+let defaultComponents = {
     0: {
         id: 0,
         component_type: component_map['app'],
@@ -51,7 +70,7 @@ const defaultComponents = {
         id: 4,
         component_type: component_map['page'],
         parent_id: 0,
-        children: [14],
+        children: [17],
         title: "Journal",
         emoji: getComponent(componentLibrary, "emoji", "full moon")
     },
@@ -119,7 +138,7 @@ const defaultComponents = {
         id: 13,
         component_type: component_map['journal'],
         parent_id: 2,
-        children: [15, 16],
+        children: [15, 16, 23, 24],
         title: "Random musings"
     },
     14: {
@@ -202,9 +221,32 @@ const defaultComponents = {
         children: [],
         title: "Survey mom carefully as she bakes me more homemade dog treats",
         body: "One can never be too careful"
-    }
+    },
+    23: {
+        id: 23,
+        component_type: component_map['entry'],
+        parent_id: 13,
+        children: [],
+        title: "Eating some hot cheetos",
+        body: "Will undo the work of V7 trying hard",
+        timestamp: Date.now(),
+        emoji: getComponent(componentLibrary, "emoji", "dumpling"),
+        tags: ["junkfood"]
+    },
+    24: {
+        id: 24,
+        component_type: component_map['entry'],
+        parent_id: 13,
+        children: [],
+        title: "Chocolate tasting",
+        body: "Better than wine?",
+        timestamp: Date.now(),
+        emoji: getComponent(componentLibrary, "emoji", "person with crown"),
+        tags: ["dark chocolate", "milk chocolate"]
+    },
 };
 
+defaultComponents = createDefaultTaskList(defaultComponents, 2);
 
 export const seedPages = () => {
     // localStorage.clear(); // Will remove this eventually.

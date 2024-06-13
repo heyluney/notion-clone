@@ -51,7 +51,31 @@ const findIdsToBeDeleted = (components, component_id) => {
     return ids_to_be_deleted;
 }
 
-// Creates a component and returns it. As a side effect, updates the parent component to include the newly assigned unique id in it's children. By default, adds the component at the end of it's parent's children.
+
+export const createDefaultTaskList = (components, parent_id) => {
+    components = createComponent(components, component_map['tasklist'], parent_id);
+
+    const tasklist_id = retrieveLatestKey(components);
+    components = 
+        createComponent(components, 
+                component_map['category'], 
+                tasklist_id, 
+                {title: "Not Started"});
+
+    const not_started_id = retrieveLatestKey(components);
+
+    components = createComponent(components, component_map['task'], not_started_id);
+    components = createComponent(components, component_map['task'], not_started_id);
+    components = createComponent(components, component_map['task'], not_started_id);
+
+    components = createComponent(components, component_map['category'], tasklist_id, {title: "In Progress"});
+    components = createComponent(components, component_map['category'], tasklist_id, {title: "Completed"});
+
+
+    return components;
+}
+
+// Creates a component and the entire components state after the new component is added. As a side effect, updates the parent component to include the newly assigned unique id in it's children. By default, adds the component at the end of it's parent's children.
 export const createComponent = (
     components,
     component_type,
@@ -140,7 +164,8 @@ export const updateComponent = (components, component_id, content) => {
         ...components[component_id],
         ...content
     }
-    return { ...components, ...updatedComponent };
+
+    return { ...components, [component_id]: updatedComponent };
 }
 // Retrieve the latest key.
 export const retrieveLatestKey = hash => {

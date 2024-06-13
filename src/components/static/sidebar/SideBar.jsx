@@ -45,9 +45,7 @@ const SideBar = ({page_ids}) => {
                     const updatedComponents = createComponent(
                         components,
                         'page',
-                        0,
-                        page_ids.length
-                    );
+                        0);
                     changeComponents(updatedComponents);
                     
                     window.history.replaceState(null, "", `${last_key+1}`);

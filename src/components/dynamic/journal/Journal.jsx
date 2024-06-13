@@ -1,30 +1,44 @@
 
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 
 import { PageContext } from '../../../App';
 import styles from './Journal.module.css';
 
 import JournalEntry from './JournalEntry';
 
-// import { journal_constant } from '../../data/text_contents';
+import { moveComponent } from '../../../data/database/database_functions';
 
 const Journal = ({component}) => {
-    // component.children 
-    const { components } = useContext(PageContext);
+    const { components, changeComponents } = useContext(PageContext);
 
-    const { title } = component;
+    const [dropEntryIdx, changeDropEntryIdx] = useState(-1);
+    const [draggedEntryId, changeDraggedEntryId] = useState(-1);
+
+    const onDrop = (e) => {
+        e.preventDefault();
+        
+        const updatedComponents =
+        moveComponent(
+            components, draggedEntryId, component.id, dropEntryIdx
+        );
+        changeComponents(updatedComponents);
+    }
     return (
-        <div>
+        <div onDragOver={e => e.preventDefault()}
+            onDrop={(e) => onDrop(e)}>
             <div className={styles.description}>
-                {title}
+                {component.title}
             </div>
 
             {component.children
-                .map(id =>
+                .map((id, idx) =>
                 <JournalEntry 
                     key={id} 
-                    id={id}
-                    entry={components[id]}/>)
+                    idx={idx}
+                    entry={components[id]}
+                    changeDropEntryIdx={changeDropEntryIdx}
+                    changeDraggedEntryId={changeDraggedEntryId}
+                    onDrop={onDrop}/>)
             }
         </div>
     )
