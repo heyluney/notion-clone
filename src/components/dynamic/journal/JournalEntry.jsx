@@ -7,11 +7,6 @@ import Tags from '../tags/Tags';
 import Header from '../../static/header/Header';
 
 const JournalEntry = ({ idx, entry, changeDropEntryIdx, changeDraggedEntryId }) => {
-    
-    // onClick={() => {
-    //     // changeActiveEntity(journals[id]);
-    //     // changeSlideOutWidth(500);
-    //     }}
     return (
         <div className={styles.journal_entry}
             draggable={true}
@@ -26,11 +21,12 @@ const JournalEntry = ({ idx, entry, changeDropEntryIdx, changeDraggedEntryId }) 
            >
             <div className={styles.left}>
                 <Header 
+                            id={`JournalEntry_${entry.id}`}
                             emoji={entry.emoji}
                             title={entry.title}
 
                             isSmall={true} 
-                            isTruncated={true}/>
+                            isTruncated={false}/>
             </div>
                     
             <div className={styles.middle}>

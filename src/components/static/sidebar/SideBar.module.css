@@ -15,8 +15,8 @@
     border-radius: 2.5px;
 }
 
-/* @media (max-width: 800px) {
+@media (max-width: 800px) {
     .sidebar {
         display: none;
     }
-} */
+}

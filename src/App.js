@@ -11,7 +11,6 @@ import { getFromLocalStorage, saveToLocalStorage } from './data/database/databas
 import ErrorPage from './pages/Error/ErrorPage';
 import HomePage from './pages/Home/HomePage';
 
-import { getCurrentPageId } from './utils/get_current_page';
 import Page from './components/Page';
 
 const App = () => {
@@ -19,7 +18,9 @@ const App = () => {
   const location = useLocation();
 
   const [components, changeComponents] = useState(getFromLocalStorage('components'));
-  const [activeComponents, changeActiveComponents] = useState();
+
+  // Only one React component of a type can be active at a given time.
+  const [activeComponents, changeActiveComponents] = useState({});
 
   useEffect(() => {
     saveToLocalStorage('components', components)
@@ -33,8 +34,9 @@ const App = () => {
   addFaviconToPage(currentPageId && components[currentPageId] ? components[currentPageId].emoji :  "1F9D7 1F3FB 200D 2640 FE0F");
 
   const page_ids = components[0].children;
-    console.log('components', components)
 
+  // only one title can be active at a time 
+  // {component_name: id}
   return (
     <PageContext.Provider value={{
       components, changeComponents,

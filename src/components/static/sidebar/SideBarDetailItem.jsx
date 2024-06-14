@@ -34,6 +34,7 @@ const SideBarDetailItem = ({ page, idx,  changeDraggedPageId, changeDropPageIdx,
                >
                 
             <Header
+                id={`SideBarDetailItem_${page.id}`}
                 isSmall={true}
                 title={page.title}
                 emoji={getComponentAttribute(components, page.id, "emoji")} />

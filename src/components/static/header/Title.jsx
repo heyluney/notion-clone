@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import { PageContext } from '../../../App';
 import styles from './Title.module.css';
 
@@ -8,15 +8,13 @@ import { setCaret } from '../../../utils/text_editor';
 
 const ReadOnlyTitle = ({ title }) => {
     return (
-        <div
-            contentEditable={true}
-            suppressContentEditableWarning={true}>
+        <div>
             {title}
         </div>
     )
 }
 
-const EditableTitle = ({ title }) => {
+const EditableTitle = ({ title, editable, changeEditable }) => {
     const { components, changeComponents } = useContext(PageContext);
 
     const location = useLocation();
@@ -30,15 +28,30 @@ const EditableTitle = ({ title }) => {
         setCaret(document.getElementById('editable'), caretPos);
     }, [caretPos]);
 
+    const titleRef = useRef(null);
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            console.log('titleRef', titleRef, 'e.target', e.target)
+            if (titleRef.current && !titleRef.current.contains(e.target)) {
+                changeEditable(false);
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+          };
+    }, [titleRef])
+
     return (
         <div id="editable"
+            ref={titleRef}
             contentEditable={true}
             suppressContentEditableWarning={true}
             onClick={
                 () => {
                     updateCaretPos(window.getSelection().anchorOffset)
                 } 
-                
             }
             onInput={(e) => {
                 updateEditableTitle(e.currentTarget.innerText);
@@ -48,7 +61,12 @@ const EditableTitle = ({ title }) => {
 
                 const currentPageId = parseInt(location.pathname.slice(location.pathname.lastIndexOf('/') + 1));
             
-                const updatedComponents = updateComponent(components, currentPageId, {title: e.currentTarget.innerText});
+                // This is not necessarily true
+                // maybe use a useEffect here so when editableTitle is updated, the components are automatically updated 
+                const component_id = editable.split('_')[1];
+ 
+                const updatedComponents = 
+                    updateComponent(components, component_id, {title: e.currentTarget.innerText});
                 changeComponents(updatedComponents);
             }}>
             {editableTitle}
@@ -56,15 +74,20 @@ const EditableTitle = ({ title }) => {
     )
 }
 
-const Title = ({ title }) => {
-    const [editable, changeEditable] = useState(false);
+
+const Title = ({ id, title }) => {
+    const [editable, changeEditable] = useState("");
 
     return (
         <div className={styles.truncated_title}
-            onClick={() => changeEditable(true)}>
-            {editable ?
-                <EditableTitle title={title} />
-                : <ReadOnlyTitle title={title} />
+            onClick={() => 
+                changeEditable(id)
+            }>
+            {editable === id ?
+                <EditableTitle title={title}
+                                editable={editable}
+                                changeEditable={changeEditable}/> : 
+                <ReadOnlyTitle title={title} />
             }
         </div>
     )

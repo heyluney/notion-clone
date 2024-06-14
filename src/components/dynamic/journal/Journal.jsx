@@ -24,7 +24,8 @@ const Journal = ({component}) => {
         changeComponents(updatedComponents);
     }
     return (
-        <div onDragOver={e => e.preventDefault()}
+        <div className={styles.journal}
+            onDragOver={e => e.preventDefault()}
             onDrop={(e) => onDrop(e)}>
             <div className={styles.description}>
                 {component.title}

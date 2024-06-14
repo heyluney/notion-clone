@@ -6,11 +6,14 @@ import {BsStar as Star} from 'react-icons/bs';
 
 import Header from '../header/Header';
 
-const Banner = ({title, emoji}) => {
+const Banner = ({id, title, emoji}) => {
+    
     return (
         <div className={styles.banner}>
             <div className={styles.left}>
-                <Header isSmall={true} 
+                <Header 
+                    id={`Banner_${id}`}
+                    isSmall={true} 
                     title={title}
                     emoji={emoji} />
             </div>

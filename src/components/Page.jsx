@@ -16,11 +16,14 @@ const Page = ({ page }) => {
 
     return (
         <div className={styles.page}>
-            <Banner title={page.title} emoji={page.emoji} />
+            <Banner 
+                id={page.id}
+                title={page.title} emoji={page.emoji} />
 
             <div className={styles.right}>
                 <Header
                     key={page.id}
+                    id={`Page_${page.id}`}
                     title={page.title}
                     emoji={getComponentAttribute(components, page.id, "emoji")} />
 
@@ -31,7 +34,8 @@ const Page = ({ page }) => {
                         component={components[component_id]} />)}
 
                 <button onClick={() => {
-                    const updatedComponents = createDefaultTaskList(components, page.id);
+                    const updatedComponents = 
+                        createDefaultTaskList(components, page.id);
                     changeComponents(updatedComponents);
                 }}>Create a Tasklist</button>
             </div>
