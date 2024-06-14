@@ -1,4 +1,38 @@
-.sidebar_item {
+.sidebar_item, .sidebar_item_hover {
     display: flex;
     justify-content: space-between;
+    margin-left: 5px;
+    margin-right: 5px;
+    align-items: center;
+    line-height: .9;
+    padding: 5px 5px 5px 5px;
+
+}
+
+.sidebar_item_hover {
+    background: rgb(241, 241, 240, 1);
+    cursor: pointer;
+}
+
+.additional_options {
+    display: flex;
+    box-sizing: border-box;
+
+}
+
+.additional_options_none {
+    display: none;
+}
+
+.ellipses, .ellipses:hover {
+    border-radius: 4px;
+    padding: 4px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.ellipses:hover {
+    cursor: pointer;
+    background: rgb(229, 229, 228);
 }

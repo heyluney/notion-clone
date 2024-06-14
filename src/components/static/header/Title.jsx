@@ -14,10 +14,8 @@ const ReadOnlyTitle = ({ title }) => {
     )
 }
 
-const EditableTitle = ({ title, editable, changeEditable }) => {
+const EditableTitle = ({ title, editableId, changeEditableId }) => {
     const { components, changeComponents } = useContext(PageContext);
-
-    const location = useLocation();
 
     const [editableTitle, updateEditableTitle] = useState(title);
     const [caretPos, updateCaretPos] = 
@@ -28,12 +26,12 @@ const EditableTitle = ({ title, editable, changeEditable }) => {
         setCaret(document.getElementById('editable'), caretPos);
     }, [caretPos]);
 
+    // Updates the 
     const titleRef = useRef(null);
     useEffect(() => {
         const handleClickOutside = (e) => {
-            console.log('titleRef', titleRef, 'e.target', e.target)
             if (titleRef.current && !titleRef.current.contains(e.target)) {
-                changeEditable(false);
+                changeEditableId(null);
             }
         }
 
@@ -58,12 +56,9 @@ const EditableTitle = ({ title, editable, changeEditable }) => {
 
                 // Update caret position to be where the user last typed.
                 updateCaretPos(window.getSelection().anchorOffset);
-
-                const currentPageId = parseInt(location.pathname.slice(location.pathname.lastIndexOf('/') + 1));
             
-                // This is not necessarily true
-                // maybe use a useEffect here so when editableTitle is updated, the components are automatically updated 
-                const component_id = editable.split('_')[1];
+                // editableId is the unique identifier of the component that is currently being updated.
+                const component_id = editableId.split('_')[1];
  
                 const updatedComponents = 
                     updateComponent(components, component_id, {title: e.currentTarget.innerText});
@@ -76,17 +71,17 @@ const EditableTitle = ({ title, editable, changeEditable }) => {
 
 
 const Title = ({ id, title }) => {
-    const [editable, changeEditable] = useState("");
+    const [editableId, changeEditableId] = useState(null);
 
     return (
         <div className={styles.truncated_title}
             onClick={() => 
-                changeEditable(id)
+                changeEditableId(id)
             }>
-            {editable === id ?
+            {editableId === id ?
                 <EditableTitle title={title}
-                                editable={editable}
-                                changeEditable={changeEditable}/> : 
+                                editableId={editableId}
+                                changeEditableId={changeEditableId}/> : 
                 <ReadOnlyTitle title={title} />
             }
         </div>
