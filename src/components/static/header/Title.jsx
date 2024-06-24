@@ -1,12 +1,12 @@
-import { useLocation } from 'react-router-dom';
 import { useState, useContext, useEffect, useRef } from 'react';
 import { PageContext } from '../../../App';
 import styles from './Title.module.css';
 
 import { updateComponent } from '../../../data/database/database_functions';
 import { setCaret } from '../../../utils/text_editor';
+import useOutsideAlerter from '../../../hooks/OutsideAlerter';
 
-const ReadOnlyTitle = ({ title }) => {
+export const ReadOnlyTitle = ({ title }) => {
     return (
         <div>
             {title}
@@ -26,20 +26,17 @@ const EditableTitle = ({ title, editableId, changeEditableId }) => {
         setCaret(document.getElementById('editable'), caretPos);
     }, [caretPos]);
 
-    // Updates the 
-    const titleRef = useRef(null);
     useEffect(() => {
-        const handleClickOutside = (e) => {
-            if (titleRef.current && !titleRef.current.contains(e.target)) {
-                changeEditableId(null);
-            }
-        }
+        // Id of the component that is currently being updated.
+        const component_id = editableId.split('_')[1];
 
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-          };
-    }, [titleRef])
+        changeComponents(
+            updateComponent(components, component_id, {title: editableTitle})
+        );
+    }, [editableTitle]);
+
+    const titleRef = useRef(null);
+    useOutsideAlerter(titleRef, changeEditableId);
 
     return (
         <div id="editable"
@@ -51,18 +48,12 @@ const EditableTitle = ({ title, editableId, changeEditableId }) => {
                     updateCaretPos(window.getSelection().anchorOffset)
                 } 
             }
+            
             onInput={(e) => {
                 updateEditableTitle(e.currentTarget.innerText);
 
                 // Update caret position to be where the user last typed.
-                updateCaretPos(window.getSelection().anchorOffset);
-            
-                // editableId is the unique identifier of the component that is currently being updated.
-                const component_id = editableId.split('_')[1];
- 
-                const updatedComponents = 
-                    updateComponent(components, component_id, {title: e.currentTarget.innerText});
-                changeComponents(updatedComponents);
+                updateCaretPos(window.getSelection().anchorOffset);         
             }}>
             {editableTitle}
         </div>

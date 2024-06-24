@@ -30,13 +30,11 @@ const App = () => {
   }, [activeComponents]);
 
   const currentPageId = parseInt(location.pathname.slice(location.pathname.lastIndexOf('/') + 1));
-
+  
   addFaviconToPage(currentPageId && components[currentPageId] ? components[currentPageId].emoji :  "1F9D7 1F3FB 200D 2640 FE0F");
 
   const page_ids = components[0].children;
 
-  // only one title can be active at a time 
-  // {component_name: id}
   return (
     <PageContext.Provider value={{
       components, changeComponents,

@@ -3,15 +3,18 @@ import styles from './Header.module.css';
 import Title from "./Title";
 import Emoji from "./Emoji";
 
-// ReactComponent_componentIdd
-const Header = ({id, emoji, title, isSmall}) => {
-    console.log('in here', id, 'title', title)
+import { ReadOnlyTitle } from './Title';
+
+const Header = ({id, emoji, title, isSmall, readOnly}) => {
     return (  
         <div className={isSmall ? styles.header_small : styles.header_big}>
             <Emoji emoji={emoji}/>
-            <Title
-                id={id}
-                title={title} />
+            {readOnly ? 
+                <ReadOnlyTitle title={title} /> : 
+                <Title
+                    id={id}
+                    title={title}
+                />}
         </div>
     )
 }
