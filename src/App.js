@@ -37,6 +37,7 @@ const App = () => {
 
   const page_ids = components[0].children;
 
+  console.log("This is react router path: ", location.pathname)
   return (
     <PageContext.Provider value={{
       components, changeComponents,
