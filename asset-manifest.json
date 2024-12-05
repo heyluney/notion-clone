@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/notion-clone/static/css/main.9039622f.css",
-    "main.js": "/notion-clone/static/js/main.3f911752.js",
+    "main.js": "/notion-clone/static/js/main.d65e5ea7.js",
     "static/media/clark_profile.jpg": "/notion-clone/static/media/clark_profile.69dec30dc656d3d7eb99.jpg",
     "index.html": "/notion-clone/index.html",
     "main.9039622f.css.map": "/notion-clone/static/css/main.9039622f.css.map",
-    "main.3f911752.js.map": "/notion-clone/static/js/main.3f911752.js.map"
+    "main.d65e5ea7.js.map": "/notion-clone/static/js/main.d65e5ea7.js.map"
   },
   "entrypoints": [
     "static/css/main.9039622f.css",
-    "static/js/main.3f911752.js"
+    "static/js/main.d65e5ea7.js"
   ]
 }
