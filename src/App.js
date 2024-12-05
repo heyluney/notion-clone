@@ -15,6 +15,7 @@ import Page from './components/Page';
 
 const App = () => {
   seedPages();
+  console.log('am here')
   const location = useLocation();
 
   const [components, changeComponents] = useState(getFromLocalStorage('components'));
@@ -30,7 +31,8 @@ const App = () => {
   }, [activeComponents]);
 
   const currentPageId = parseInt(location.pathname.slice(location.pathname.lastIndexOf('/') + 1));
-  
+  console.log('currentPageId', currentPageId)
+
   addFaviconToPage(currentPageId && components[currentPageId] ? components[currentPageId].emoji :  "1F9D7 1F3FB 200D 2640 FE0F");
 
   const page_ids = components[0].children;
@@ -40,7 +42,7 @@ const App = () => {
       components, changeComponents,
       activeComponents, changeActiveComponents,
     }}>
-      <div className={`${styles.app}`}>
+      <div className={styles.app}>
         <SideBar page_ids={page_ids} />
         <div className={styles.main}>
           <Routes>

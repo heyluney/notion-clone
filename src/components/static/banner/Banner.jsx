@@ -2,14 +2,14 @@ import styles from './Banner.module.css'
 
 import {PiClockFill as Clock } from 'react-icons/pi';
 import {BiMessageDots as Message } from 'react-icons/bi';
-import {BsStar as Star} from 'react-icons/bs';
+import {BsStar as Star } from 'react-icons/bs';
 
 import Header from '../header/Header';
 
 const Banner = ({id, title, emoji}) => {
-    
     return (
         <div className={styles.banner}>
+            This is the banner
             <div className={styles.left}>
                 <Header 
                     id={`Banner_${id}`}

@@ -13,6 +13,8 @@ const SideBarMenu = ({ toggleSideBarMenuShown }) => {
         <div ref={sideBarRef}
             className={styles.side_bar_menu}>
             This is the sidebar menu
+            Will have a bunch of buttons
+            
         </div>
     )
 }

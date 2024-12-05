@@ -13,7 +13,6 @@ import styles from './Page.module.css'
 
 const Page = ({ page }) => {
     const { components, changeComponents } = useContext(PageContext)
-
     return (
         <div className={styles.page}>
             <Banner 

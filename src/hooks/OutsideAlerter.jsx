@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 
 // Detects when there is a click outside of a component (through a passed reference).
-const useOutsideAlerter = (ref, changeEditableId) => {
+const useOutsideAlerter = (ref, updateActiveComponent) => {
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (ref.current && !ref.current.contains(e.target)) {
-                changeEditableId(null);
+                updateActiveComponent(null);
             }
         }
 

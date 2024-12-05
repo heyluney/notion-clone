@@ -18,7 +18,7 @@ const SideBarDetailItem = ({ page, idx,  changeDraggedPageId, changeDropPageIdx,
     const navigate = useNavigate();
 
     const { components,
-        changeComponents } = useContext(PageContext);
+        changeComponents, changeActiveComponents } = useContext(PageContext);
 
     const [hover, toggleHover] = useState(false);
     const [sideBarMenuShown, toggleSideBarMenuShown] = useState(null);
@@ -28,11 +28,12 @@ const SideBarDetailItem = ({ page, idx,  changeDraggedPageId, changeDropPageIdx,
         changeComponents(updatedComponents);
     }
 
+    console.log('sideBarMenuShown', sideBarMenuShown)
     return (
         <div className={hover ? styles.sidebar_item_hover : styles.sidebar_item}
             onMouseEnter={() => toggleHover(true)}
             onMouseLeave={() => toggleHover(false)}
-            onClick={() => {
+            onClick={(e) => {
                 navigate(`/notion-clone/${page.id}`);
             }}
             onDragOver={e => {
@@ -57,11 +58,14 @@ const SideBarDetailItem = ({ page, idx,  changeDraggedPageId, changeDropPageIdx,
                     styles.additional_options_none}
                 >
                 <div className={styles.ellipses} 
-                    onClick={() => toggleSideBarMenuShown(page.id)}>
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        changeActiveComponents('popup');
+                    }}>
                     <Ellipses />
-                    
                 </div>
-                {sideBarMenuShown === page.id && <SideBarMenu toggleSideBarMenuShown={toggleSideBarMenuShown}/>}
+                {sideBarMenuShown === page.id && 
+                    <SideBarMenu toggleSideBarMenuShown={toggleSideBarMenuShown}/>}
             </div>
         </div>
     )

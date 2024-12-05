@@ -33,7 +33,23 @@ import { component_map } from './component_map';
 //     order_id = components[parent_id].children.length 
 // )
 
+// each component can have one of three things
+// (1) parent id
+// (2) child ids
+// (3) attributes (these are on the component itself)
 
+
+// componentA    componentB
+
+// when we seed a component we need to: 
+// (1) know what parent component that component belongs to
+// (2) know what attributes that component has
+
+// component_type is this necessary?
+// I think this is so we can provide the default styling for such a component??
+
+// createComponent(parentId, componentType, attributes)
+// => 
 let defaultComponents = {
     0: {
         id: 0,

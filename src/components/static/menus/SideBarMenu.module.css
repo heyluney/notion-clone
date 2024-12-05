@@ -1,3 +1,5 @@
 .side_bar_menu {
     position: fixed;
+    background: red;
+    pointer-events: auto;
 }
