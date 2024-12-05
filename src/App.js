@@ -50,7 +50,7 @@ const App = () => {
             {page_ids.map(id => {
               return <Route
               key={id}
-              exact path={`/notion-clone/${id}`}
+              exact path={`notion-clone/${id}`}
               element={<Page page={components[id]} />} />
             })}
 
