@@ -11,13 +11,13 @@ export const page_id_to_component_map = {
 }
 
 // Maps the url to the currentPageName.
-export const url_map = {
-    "/notion-clone": 0,
-    "/notion-clone/": 0,
-    "/notion-clone/1": 1,
-    "/notion-clone/2": 2,
-    "/notion-clone/3": 3
-}
+// export const url_map = {
+//     "/notion-clone": 0,
+//     "/notion-clone/": 0,
+//     "/notion-clone/1": 1,
+//     "/notion-clone/2": 2,
+//     "/notion-clone/3": 3
+// }
 
 // Maps each table to a unique identifier (for component_type foreign key).
 export const component_type_map = {

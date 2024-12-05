@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './SideBarDetailItem.module.css';
 
@@ -33,8 +33,8 @@ const SideBarDetailItem = ({ page, idx,  changeDraggedPageId, changeDropPageIdx,
         <div className={hover ? styles.sidebar_item_hover : styles.sidebar_item}
             onMouseEnter={() => toggleHover(true)}
             onMouseLeave={() => toggleHover(false)}
-            onClick={(e) => {
-                navigate(`/notion-clone/${page.id}`);
+            onClick={() => {
+                navigate(`/${page.id}`);
             }}
             onDragOver={e => {
                 e.preventDefault();
