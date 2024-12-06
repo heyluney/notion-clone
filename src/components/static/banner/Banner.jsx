@@ -9,7 +9,6 @@ import Header from '../header/Header';
 const Banner = ({id, title, emoji}) => {
     return (
         <div className={styles.banner}>
-            This is the banner
             <div className={styles.left}>
                 <Header 
                     id={`Banner_${id}`}

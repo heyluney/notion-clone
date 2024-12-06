@@ -9,12 +9,16 @@ import { PageContext } from '../../../App';
 
 import clark from '../../../assets/clark_profile.jpg';
 
-import { retrieveLatestKey } from '../../../data/database/database_functions';
+// button functionality can change though 
+
+// button that "adds"
+// button that "deletes"
+// button that duplicates, etc.
 
 const SideBar = ({page_ids}) => {
-    const { components,
-        changeComponents } = useContext(PageContext);
+    const { components, changeComponents } = useContext(PageContext);
 
+    // Keeps track of drag state.
     const [draggedPageId, changeDraggedPageId] = useState(-1);
     const [dropPageIdx, changeDropPageIdx] = useState(-1);
  
@@ -37,18 +41,17 @@ const SideBar = ({page_ids}) => {
                     dropPageIdx={dropPageIdx}
                     />)}
 
-
+            
             <button onClick={
                 () => {
-                    const last_key = retrieveLatestKey(components);
-
                     const updatedComponents = createComponent(
                         components,
                         'page',
                         0);
                     changeComponents(updatedComponents);
                     
-                    window.history.replaceState(null, "", `${last_key+1}`);
+                    // Figure out how to re-render the page just newly createdd
+                    // window.history.replaceState(null, "", `${last_key+1}`);
                 }}>
                 Add Page
             </button>

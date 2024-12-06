@@ -1,10 +1,9 @@
 .banner {
-    /* height: 10%; */
+    height: 10%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 2%;
-    background-color: purple;
 }
 
 .left {

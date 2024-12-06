@@ -14,6 +14,10 @@ export const component_map = {
     "category": 9
 }
 
+export const default_component_map = {
+    "app": { title: "Clark's Notion!" },
+    "page": { title: "Untitled" }
+}
 export const default_content_map = {
     1: {
         title: "Untitled",

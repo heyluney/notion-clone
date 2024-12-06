@@ -1,145 +1,99 @@
 import { component_map, default_content_map } from "./component_map";
 
-// Returns a copy of the parent component, with child_id added at index=order_id. The default behavior is to add the child component at the end.
-const insertChildIdInParentOrder = (components, parent_id, child_id, order_id) => {
-    const parentComponent = components[parent_id];
-    if (parentComponent === undefined) return {};
-    
-    // Need to update child component's parent_id to point to the new parent_id.
-    const childComponent = components[child_id];
+// Helper functions to update a component's children array. Component (not components) level.
+const addChild = (component, child_id, order_id) => {
+    if (order_id == -1) order_id = component.children.length;
     return {
-        ...components,
-        [child_id]: {
-            ...childComponent,
-            parent_id: parent_id
-        },
-        [parentComponent.id]: 
-            { ...parentComponent, 
-                children: [...parentComponent.children.slice(0, order_id), child_id, ...parentComponent.children.slice(order_id)] 
-            }
-    };
-}
-
-// Returns a copy of the parent component, with child_id removed.
-const removeChildFromParentOrder = (components, parent_id, child_id) => {
-    const parentComponent = components[parent_id];
-
-    const idx_to_be_removed = components[parent_id].children.indexOf(child_id);
-  
-    const updated = {
-        ...components,
-        [parentComponent.id]: {
-            ...parentComponent,
-            children: [
-                ...parentComponent.children.slice(0, idx_to_be_removed),
-                ...parentComponent.children.slice(idx_to_be_removed + 1)]
-        }
+        ...component,
+        children: [
+            ...component.children.slice(0, order_id), 
+            child_id,
+            ...component.children.slice(order_id)]
     }
-    console.log('updated parent component', components[parentComponent.id])
-    return updated;
 }
 
-// Recursively finds every child_id that is associated with component_id.
-const findIdsToBeDeleted = (components, component_id) => {
-    const ids_to_be_deleted = [component_id];
-    for (let child_id of components[component_id].children) {
-        const child_ids_to_be_deleted = findIdsToBeDeleted(components, child_id);
-        for (let id of child_ids_to_be_deleted) {
-            ids_to_be_deleted.push(id);
-        }
+const removeChild = (component, child_id) => {
+    const index = component.children.indexOf(child_id);
+    return {
+        ...component,
+        children: [
+            ...component.children.slice(0, index),
+            ...component.children.slice(index+1)
+        ]
     }
-    return ids_to_be_deleted;
 }
 
-
-export const createDefaultTaskList = (components, parent_id) => {
-    components = createComponent(components, component_map['tasklist'], parent_id);
-
-    const tasklist_id = retrieveLatestKey(components);
-    components = 
-        createComponent(components, 
-                component_map['category'], 
-                tasklist_id, 
-                {title: "Not Started"});
-
-    const not_started_id = retrieveLatestKey(components);
-
-    components = createComponent(components, component_map['task'], not_started_id);
-    components = createComponent(components, component_map['task'], not_started_id);
-    components = createComponent(components, component_map['task'], not_started_id);
-
-    components = createComponent(components, component_map['category'], tasklist_id, {title: "In Progress"});
-    components = createComponent(components, component_map['category'], tasklist_id, {title: "Completed"});
-
-
-    return components;
-}
-
-// Creates a component and the entire components state after the new component is added. As a side effect, updates the parent component to include the newly assigned unique id in it's children. By default, adds the component at the end of it's parent's children.
+// Creates a component and updates the components state to reflect the newly added component.
 export const createComponent = (
     components,
     component_type,
     parent_id,
-    content = default_content_map[component_type],
-    order_id = components[parent_id].children.length 
+    content = default_component_map[component_type],
+    order_id = -1
 ) => {
     const id = calculateNextKey(components);
 
-    const newComponent = {
-        [id]: {
-            id,
-            component_type,
-            parent_id,
+    const updatedParent = 
+        addChild(parent_id, id, order_id);
+
+    return { 
+        ...components,
+        [newComponent.parent_id]: updatedParent,
+        [newComponent.id]: {
+            id: id,
+            parent_id: parent_id,
             children: [],
-            ...content,
+            component_type: component_type,
+            content: content
         }
-    }
-
-    const componentsAfterUpdatingParentComponent =
-        insertChildIdInParentOrder(components, parent_id, id, order_id);
-
-    return { ...componentsAfterUpdatingParentComponent, ...newComponent };
+    };
 }
 
-// Removes a component and all of it's children components.
-export const deleteComponent = (components, component_id) => {
-    const ids_to_be_deleted = findIdsToBeDeleted(components, component_id);
 
-    // we have to remember to remove it from the parent 
-    const updatedParentComponent = removeChildFromParentOrder(
+export const deleteComponent = (components, component_id) => {
+    let newComponents = {};
+
+    // Recursively delete all child components, from bottom up.
+    const child_ids = components[component_id].children;
+    for (let child_id of child_ids) {
+        newComponents = deleteComponent(components, child_id);
+    }
+    
+    // All children and associated parent references deleted at this point, so it is safe to delete component_id (no orphans).
+    const { [component_id]: component, ...rest } = newComponents;
+
+    // Must remove reference in component's parent.
+    const updatedParent = removeChild(
         components[components[component_id].parent_id],
         component_id);
 
-    const newComponents = Object
-        .entries(components)
-        .reduce((a, [k, v]) =>
-            (ids_to_be_deleted.indexOf(parseInt(k)) === -1 ? { ...a, [k]: v } : a), {})
-    return { ...newComponents, ...updatedParentComponent };
+    return {...rest, updatedParent};
 }
 
 export const moveComponent = (components, component_id, new_parent_id, new_order_id) => {
-    const removalFromOldParentComponents = removeChildFromParentOrder(components, components[component_id].parent_id, component_id);
+    const updatedOldParent = removeChild(
+        components[components[component_id].parent_id], 
+        component_id);
 
-    const additionToNewParentComponents = insertChildIdInParentOrder(removalFromOldParentComponents, new_parent_id, component_id, new_order_id);
+    const updatedNewParent = addChild(components[new_parent_id], new_order_id, component_id);
 
-    return { ...components, ...additionToNewParentComponents };
+    return { ...components, updatedOldParent, updatedNewParent };
 }
 
 
 export const duplicateComponent = (
     components, 
-    component_id, 
-    duplicated_parent_component_id=components[component_id].parent_id) => 
+    /*component_to_duplicate=*/component_id, 
+    /*parent_component, which has already been duplicated except at base*/duplicated_parent_component_id=components[component_id].parent_id) => 
 {
-
     // Retrieves the content of the component to be duplicated, with id, parent_id and the children array to be set. 
-    const {id, parent_id, children, component_type, ...content_to_be_duplicated} = components[component_id];
+    const {id, parent_id, children, component_type, ...content} = components[component_id];
 
     let updatedComponents = createComponent(
         components, 
         component_type, 
         duplicated_parent_component_id, 
-        {...content_to_be_duplicated});
+        {...content});
       
     const duplicated_component_id = retrieveLatestKey(updatedComponents);
 
@@ -149,14 +103,6 @@ export const duplicateComponent = (
     }
 
     return updatedComponents;
-}
-
-
-export const getComponentAttribute = (components, component_id, attribute) => {
-    if (components[component_id][attribute] === undefined) 
-        return default_content_map[attribute];
-
-    return components[component_id][attribute];
 }
 
 export const updateComponent = (components, component_id, content) => {
@@ -196,4 +142,28 @@ export const getFromLocalStorage = (key) => {
 
 export const removeFromLocalStorage = (key) => {
     localStorage.removeItem(key);
+}
+
+// This should be moved into defaultComponent map
+export const createDefaultTaskList = (components, parent_id) => {
+    components = createComponent(components, component_map['tasklist'], parent_id);
+
+    const tasklist_id = retrieveLatestKey(components);
+    components = 
+        createComponent(components, 
+                component_map['category'], 
+                tasklist_id, 
+                {title: "Not Started"});
+
+    const not_started_id = retrieveLatestKey(components);
+
+    components = createComponent(components, component_map['task'], not_started_id);
+    components = createComponent(components, component_map['task'], not_started_id);
+    components = createComponent(components, component_map['task'], not_started_id);
+
+    components = createComponent(components, component_map['category'], tasklist_id, {title: "In Progress"});
+    components = createComponent(components, component_map['category'], tasklist_id, {title: "Completed"});
+
+
+    return components;
 }

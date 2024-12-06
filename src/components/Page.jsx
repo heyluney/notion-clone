@@ -7,7 +7,7 @@ import { PageContext } from "../App";
 
 import Component from "./Component";
 import Banner from './static/banner/Banner';
-import { getComponentAttribute } from "../data/database/database_functions";
+// import { getComponentAttribute } from "../data/database/database_functions";
 
 import styles from './Page.module.css'
 
@@ -24,7 +24,7 @@ const Page = ({ page }) => {
                     key={page.id}
                     id={`Page_${page.id}`}
                     title={page.title}
-                    emoji={getComponentAttribute(components, page.id, "emoji")} />
+                    emoji={components[page.id].emoji} />
 
                 {page.children.map(component_id =>
                     <Component

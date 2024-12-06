@@ -6,7 +6,7 @@ import styles from './SideBarDetailItem.module.css';
 import { useState } from 'react';
 import { moveComponent } from '../../../data/database/database_functions';
 import { PageContext } from '../../../App';
-import { getComponentAttribute } from '../../../data/database/database_functions';
+
 
 import { BsThreeDots as Ellipses } from 'react-icons/bs';
 
@@ -28,7 +28,7 @@ const SideBarDetailItem = ({ page, idx,  changeDraggedPageId, changeDropPageIdx,
         changeComponents(updatedComponents);
     }
 
-    console.log('sideBarMenuShown', sideBarMenuShown)
+    console.log('page', page);
     return (
         <div className={hover ? styles.sidebar_item_hover : styles.sidebar_item}
             onMouseEnter={() => toggleHover(true)}
@@ -50,8 +50,8 @@ const SideBarDetailItem = ({ page, idx,  changeDraggedPageId, changeDropPageIdx,
                 id={`SideBarDetailItem_${page.id}`}
                 isSmall={true}
                 readOnly={true}
-                title={page.title}
-                emoji={getComponentAttribute(components, page.id, "emoji")} />
+                title={page.content.title}
+                emoji={components[page.id].emoji} />
             
             <div className={hover ? 
                     styles.additional_options : 
@@ -71,10 +71,15 @@ const SideBarDetailItem = ({ page, idx,  changeDraggedPageId, changeDropPageIdx,
     )
 }
 
+export default SideBarDetailItem;
+
+
+
+
+
+
           {/* <button onClick={() => changeComponents(duplicateComponent(components, page.id))}>Dupe</button> */}
             {/* <button onClick={() => 
                 changeComponents(deleteComponent(components, page.id))}>
                     Delete
             </button> */}
-
-export default SideBarDetailItem;
