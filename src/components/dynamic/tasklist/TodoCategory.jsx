@@ -8,8 +8,8 @@ import EditTodo from './EditTodo';
 
 
 const TodoCategory = ({ category, onDrop, changeDraggedTodoId, changeDropTodoIdx}) => {
-    const { components } = useContext(PageContext);
-
+    const { components, changeComponents } = useContext(PageContext);
+    const { title } = category.content;
     return (
         <div key={category}
             className={styles.category}
@@ -17,7 +17,7 @@ const TodoCategory = ({ category, onDrop, changeDraggedTodoId, changeDropTodoIdx
             onDrop={e => onDrop(e, category.id)}
         >
             <div className={styles.header}>
-                {category.title}
+                {title}
             </div>
             {
                 category.children.map((todo_idx, idx) =>

@@ -5,11 +5,10 @@ import { PageContext } from '../../../App';
 import styles from './Journal.module.css';
 
 import JournalEntry from './JournalEntry';
-
 import { moveComponent } from '../../../data/database/database_functions';
 
 const Journal = ({component}) => {
-    const { components, changeComponents } = useContext(PageContext);
+    const [ components, changeComponents ] = useContext(PageContext)
 
     const [dropEntryIdx, changeDropEntryIdx] = useState(-1);
     const [draggedEntryId, changeDraggedEntryId] = useState(-1);

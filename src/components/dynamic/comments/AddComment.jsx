@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { PageContext } from '../../App';
 
 import styles from './AddComment.module.css';

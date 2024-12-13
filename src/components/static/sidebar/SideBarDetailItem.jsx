@@ -1,57 +1,62 @@
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
 
 import styles from './SideBarDetailItem.module.css';
 
-import { useState } from 'react';
 import { moveComponent } from '../../../data/database/database_functions';
-import { PageContext } from '../../../App';
-
 
 import { BsThreeDots as Ellipses } from 'react-icons/bs';
 
 import SideBarMenu from '../menus/SideBarMenu';
 
 import Header from '../header/Header';
+import { PageContext } from '../../../App';
 
 const SideBarDetailItem = ({ page, idx,  changeDraggedPageId, changeDropPageIdx, draggedPageId, dropPageIdx }) => {
     const navigate = useNavigate();
 
-    const { components,
-        changeComponents, changeActiveComponents } = useContext(PageContext);
+    const {components, changeComponents} = useContext(PageContext);
 
     const [hover, toggleHover] = useState(false);
     const [sideBarMenuShown, toggleSideBarMenuShown] = useState(null);
 
-    const onDrop = () => {
-        const updatedComponents = moveComponent(components, draggedPageId, 0, dropPageIdx);
-        changeComponents(updatedComponents);
-    }
+    // we define handleDragOver, handleDrag, handleDrop in the hook
 
-    console.log('page', page);
+    // onDragOver = {handleDragOver}, onDrag = {handleDrag}, onDrop = {handleDrop}
+    // console.log('page', page)
+    const { emoji, title } = page ? page.content : {};
+
+    // I want to extract this drag & drop capability
     return (
-        <div className={hover ? styles.sidebar_item_hover : styles.sidebar_item}
-            onMouseEnter={() => toggleHover(true)}
-            onMouseLeave={() => toggleHover(false)}
-            onClick={() => {
-                navigate(`/${page.id}`);
-            }}
+        <div className={hover ? styles.sidebar_item_hover : 
+            styles.sidebar_item}
+            draggable={true}
             onDragOver={e => {
                 e.preventDefault();
+                toggleHover(true);
                 changeDropPageIdx(idx);
             }}
             onDrag={e => {
                 e.preventDefault();
                 changeDraggedPageId(page.id);
             }}
-            onDrop={() => onDrop()}>
+            onDrop={() => {
+                const updatedComponents = moveComponent(components, draggedPageId, 0, dropPageIdx);
+                changeComponents(updatedComponents)
+            }}
+            onClick={() => {
+                navigate(`/${page.id}`);
+            }}
+            onMouseEnter={() => toggleHover(true)}
+            onMouseLeave={() => toggleHover(false)}
+            >
 
             <Header
                 id={`SideBarDetailItem_${page.id}`}
                 isSmall={true}
                 readOnly={true}
-                title={page.content.title}
-                emoji={components[page.id].emoji} />
+                title={title}
+                emoji={emoji} />
             
             <div className={hover ? 
                     styles.additional_options : 
@@ -60,7 +65,7 @@ const SideBarDetailItem = ({ page, idx,  changeDraggedPageId, changeDropPageIdx,
                 <div className={styles.ellipses} 
                     onClick={(e) => {
                         e.stopPropagation();
-                        changeActiveComponents('popup');
+                        // changeActiveComponents('popup');
                     }}>
                     <Ellipses />
                 </div>
@@ -75,7 +80,7 @@ export default SideBarDetailItem;
 
 
 
-
+// when this is dragged over another child, we change 
 
 
           {/* <button onClick={() => changeComponents(duplicateComponent(components, page.id))}>Dupe</button> */}

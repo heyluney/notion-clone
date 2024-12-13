@@ -1,4 +1,4 @@
-import { componentLibrary, getComponent } from "./component_library"
+import { componentLibrary, getEmoji } from "./component_library"
 
 // Mapping from human-readable component type to unique type identifier. Each component type maps to a unique frontend React component.
 export const component_map = {
@@ -19,11 +19,15 @@ export const default_component_map = {
     "page": { title: "Untitled" }
 }
 export const default_content_map = {
+    'page': {
+        title: "Untitled",
+        emoji: getEmoji('dog')
+    },
     1: {
         title: "Untitled",
-        emoji: getComponent(componentLibrary, "emoji", "dog")
+        emoji: getEmoji("dog")
     },
-    3: getComponent(componentLibrary, "emoji", "dog"),
+    3: getEmoji("dog"),
     4: {
         title: "Untitled",
         categories: ['Not started', 'In progress', 'Done'],

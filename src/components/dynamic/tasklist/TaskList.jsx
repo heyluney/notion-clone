@@ -11,6 +11,7 @@ import TodoCategory from './TodoCategory';
 
 const TaskList = ({ component }) => {
     const { components, changeComponents } = useContext(PageContext);
+    const { title } = component.content;
 
     const onDrop = (_, movedToCategoryId) => {
         const updatedComponents =
@@ -26,12 +27,10 @@ const TaskList = ({ component }) => {
     return (
         <div>
             <div className={styles.description}>
-                {component.title}
+                {title}
             </div>
 
             <div className={styles.list}>
-                This is the tasklist
-
                 {component.children.map(category_id =>
                     <TodoCategory
                         key={category_id}

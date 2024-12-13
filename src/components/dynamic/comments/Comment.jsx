@@ -7,7 +7,7 @@ import styles from './Comment.module.css'
 import { getFullTimeString } from "../../../utils/calculate_date";
 
 const Comment = ({ component }) => {
-    const { components } = useContext(PageContext);
+    const { components, changeComponents } = useContext(PageContext);
 
     return (
         <div className={styles.comment}>

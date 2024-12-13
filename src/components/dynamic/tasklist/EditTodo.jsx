@@ -1,6 +1,7 @@
 import styles from './EditTodo.module.css';
 
 const EditTodo = ({idx, todo, changeDraggedTodoId, changeDropTodoIdx}) => {
+    const { title } = todo.content;
     return (
         <div 
             className={styles.todo}
@@ -13,7 +14,7 @@ const EditTodo = ({idx, todo, changeDraggedTodoId, changeDropTodoIdx}) => {
                 e.preventDefault()
                 changeDropTodoIdx(idx)
             }}>
-            {todo.title}
+            {title}
         </div>
     )
 }

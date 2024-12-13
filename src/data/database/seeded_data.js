@@ -1,6 +1,6 @@
 
-import { componentLibrary, getRandomComponent, getComponent  } from './component_library';
-import { saveToLocalStorage, getFromLocalStorage, createDefaultTaskList, calculateNextKey } from './database_functions';
+import { getEmoji  } from './component_library';
+import { calculateNextKey } from './database_functions';
 
 import { component_map, default_component_map } from './component_map';
 
@@ -9,72 +9,12 @@ import { component_map, default_component_map } from './component_map';
 // Each component has the following data:
     // id : A unique identifier across the entire application.
     // parent_id : A unique identifier of a component's parent component.
-    // children : An ordered array of child component_id's.
-
+    // children : An ordered array of child component_id's. The order matters and determines the order the children are displayed.
     // All other keys represent component-specific attributes.
-
-
-// Maybe add some validation that if something refers to a parent_id, then that parent component includes it in it's children?
-
-
-// seeded data and "default skeletons" should share similar 
-// const app = createNewDefaultComponent("app")
-
-// const tasklist1 = createNewDefaultComponent("tasklist")
-
-// retrieveLatestKey 
-// createComponent
-
-// export const createComponent = (
-//     components,
-//     component_type,
-//     parent_id,
-//     content = default_content_map[component_type],
-//     order_id = components[parent_id].children.length 
-// )
-
-// each component can have one of three things
-// (1) parent id
-// (2) child ids
-// (3) attributes (these are on the component itself)
-
-
-// componentA    componentB
-
-// when we seed a component we need to: 
-// (1) know what parent component that component belongs to
-// (2) know what attributes that component has
-
-// component_type is this necessary?
-// I think this is so we can provide the default styling for such a component??
-
-// the component type is only necessary to distinguish the UI
-// e.g. a "comment" doesn't really mean anything, it's just a bunch of data (indistinguishable from a title)
-// but a "comment" UI-wise looks different from a "title", 
-// createComponent(parentId, componentType, attributes)
-
-// order is necessary for child components
-// order_id specifies the index in the children's array
-
-// id is unique key in components hash
-
-// <Component data={}/>
-// 5 things in a component
-    // id (unique identifier)
-    // parent_id 
-    // children array
-    // content (local to the object itself)
-    // component_type: how do we want to visually represent this data
-
-    // do we even need component_type, i don't think so
-    // cause we will just give the react component the entire state
-    // we give the burden to the user of using the correct react component with with the correct data component
-
 
 let components = {};
 
-// This function has a side effect of modifying defaultComponents hash map. Side effects are OK in the seeded version of createComponent.
-// content is standardized for each component
+// Seeded version of createComponent. Side effects are OK.
 const createComponent = 
 (
     component_type, 
@@ -100,103 +40,42 @@ const createComponent =
 // if id, parent_id, children are all shared across the objects, 
 
 const app = createComponent("app", null, {title: "Temp title"});
-const page1 = createComponent("page", app.id, {
+const homePage = createComponent("page", app.id, {
     title: "Home",
-    emoji: getComponent(componentLibrary, "emoji", "sushi")
+    emoji: getEmoji("sushi")
 })
-const page2 = createComponent("page", app.id, {
+const quickNotePage = createComponent("page", app.id, {
     title: "Quick Note",
-    emoji: getComponent(componentLibrary, "emoji", "notebook")
+    emoji: getEmoji("notebook")
 })
-
-//     2: {
-//         id: 2,
-//         component_type: component_map['page'],
-//         parent_id: 0,
-//         children: [6, 13, 14],
-//         title: "Quick Note",
-//         emoji: getComponent(componentLibrary, "emoji", "notebook")
-//     },
-
-// const homePage = createComponent({
-//     id: 
-// })
-// let defaultComponents = {
-//     0: {
-//         id: 0,
-//         component_type: component_map['app'],
-//         parent_id: -1,
-//         children: [1, 2, 3, 4, 5],
-//         title: "Clark's Notion!",
-//     },
-//     1: {
-//         id: 1,
-//         component_type: component_map['page'],
-//         parent_id: 0,
-//         children: [],
-//         title: "Home",
-//         emoji: getComponent(componentLibrary, "emoji", "sushi")
-//     },
-//     2: {
-//         id: 2,
-//         component_type: component_map['page'],
-//         parent_id: 0,
-//         children: [6, 13, 14],
-//         title: "Quick Note",
-//         emoji: getComponent(componentLibrary, "emoji", "notebook")
-//     },
-//     3: {
-//         id: 3,
-//         component_type: component_map['page'],
-//         parent_id: 0,
-//         children: [],
-//         title: "Task List",
-//         emoji: getComponent(componentLibrary, "emoji", "scroll")
-//     },
-//     4: {
-//         id: 4,
-//         component_type: component_map['page'],
-//         parent_id: 0,
-//         children: [17],
-//         title: "Journal",
-//         emoji: getComponent(componentLibrary, "emoji", "full moon")
-//     },
-//     5: {
-//         id: 5,
-//         component_type: component_map['page'],
-//         parent_id: 0,
-//         children: [],
-//         title: "French Notecards",
-//         emoji: getComponent(componentLibrary, "emoji", "France")
-//     },
-//     6: {
-//         id: 6,
-//         component_type: component_map['tasklist'],
-//         parent_id: 2,
-//         children: [7, 8, 9],
-//         title: "Clarks todos of today",
-//     },
-//     7: {
-//         id: 7,
-//         component_type: component_map['category'],
-//         parent_id: 6,
-//         children: [10, 11],
-//         title: "Nah"
-//     },
-//     8: {
-//         id: 8,
-//         component_type: component_map['category'],
-//         parent_id: 6,
-//         children: [19, 20, 21],
-//         title: "Maybehhh",
-//     },
-//     9: {
-//         id: 9,
-//         component_type: component_map['category'],
-//         parent_id: 6,
-//         children: [12, 22],
-//         title: "YAYY!!"
-//     },
+const taskListPage = createComponent("page", app.id, {
+    title: "Task List",
+    emoji: getEmoji("scroll")
+})
+const journalPage = createComponent("page", app.id, {
+    title: "Journal",
+    emoji: getEmoji("full moon")
+})
+const noteCardPage = createComponent("page", app.id, {
+    title: "French Notecards",
+    emoji: getEmoji("France")
+})
+const clarksTaskList = createComponent("tasklist", taskListPage.id, {
+    title: "Clark's Todos of today"
+})
+const noCategory = createComponent("category", clarksTaskList.id, {
+    title: "Nah not feeling it"
+})
+const maybeCategory = createComponent("category", clarksTaskList.id, {
+    title: "maybeehhh"
+})
+const yesCategory = createComponent("category", clarksTaskList.id, {
+    title: "Yayyy!"
+})
+const ballTask = createComponent("task", yesCategory.id, {
+    title: "Get mom to throw me the ball...about a million times!",
+    body: "She's too busy staring at her laptop...:("
+})
 //     10: {
 //         id: 10,
 //         component_type: component_map['task'],
@@ -336,9 +215,34 @@ const page2 = createComponent("page", app.id, {
 // defaultComponents = createDefaultTaskList(defaultComponents, 2);
 
 export const seedPages = () => {
-    if (getFromLocalStorage('components') === null) {
-        console.log('components', components)
-        saveToLocalStorage('components', components);
-    }
-        
+    localStorage.setItem('components', JSON.stringify(components));
+
 }
+
+// const homePage = createComponent({
+//     id: 
+// })
+// let defaultComponents = {
+//     0: {
+//         id: 0,
+//         component_type: component_map['app'],
+//         parent_id: -1,
+//         children: [1, 2, 3, 4, 5],
+//         title: "Clark's Notion!",
+//     },
+//     1: {
+//         id: 1,
+//         component_type: component_map['page'],
+//         parent_id: 0,
+//         children: [],
+//         title: "Home",
+//         emoji: getComponent(componentLibrary, "emoji", "sushi")
+//     },
+//     2: {
+//         id: 2,
+//         component_type: component_map['page'],
+//         parent_id: 0,
+//         children: [6, 13, 14],
+//         title: "Quick Note",
+//         emoji: getComponent(componentLibrary, "emoji", "notebook")
+//     },

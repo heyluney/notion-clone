@@ -5,32 +5,23 @@ import ProfileItem from './ProfileItem';
 import SideBarDetailItem from './SideBarDetailItem';
 
 import { createComponent } from '../../../data/database/database_functions';
-import { PageContext } from '../../../App';
 
 import clark from '../../../assets/clark_profile.jpg';
+import { PageContext } from '../../../App';
+import useDraggable from '../../../hooks/useDraggable';
 
-// button functionality can change though 
-
-// button that "adds"
-// button that "deletes"
-// button that duplicates, etc.
-
-const SideBar = ({page_ids}) => {
-    const { components, changeComponents } = useContext(PageContext);
-
-    // Keeps track of drag state.
-    const [draggedPageId, changeDraggedPageId] = useState(-1);
-    const [dropPageIdx, changeDropPageIdx] = useState(-1);
- 
+const SideBar = () => {
+    const {components, changeComponents}  = useContext(PageContext);
+    const { draggedPageId, changeDraggedPageId, dropPageIdx, changeDropPageIdx } = useDraggable();
     return (
         <div className={`${styles.sidebar}`}>
             <ProfileItem
                 icon={<img className={styles.profile}
-                    src={clark}
-                    alt="clark_profile" />}
+                src={clark}
+                alt="clark_profile" />}
                     name="Clark's Notion" />
 
-            {page_ids.map((page_id, idx) =>
+            {components ? components[0].children.map((page_id, idx) =>
                 <SideBarDetailItem
                     key={page_id}
                     idx={idx}
@@ -39,19 +30,21 @@ const SideBar = ({page_ids}) => {
                     changeDropPageIdx={changeDropPageIdx}
                     draggedPageId={draggedPageId}
                     dropPageIdx={dropPageIdx}
-                    />)}
+                    />) : null}
 
+            <button onClick={() => changeComponents({
+                0: {
+                    children: [5, 4, 3, 2, 1],
+                    component_type: 0,
+                    content: {title: "Blah", emoji:  '1F363'},
+                    id: 0,
+                    parent_id: null
+                }
+            })}>test</button>
             
             <button onClick={
                 () => {
-                    const updatedComponents = createComponent(
-                        components,
-                        'page',
-                        0);
-                    changeComponents(updatedComponents);
-                    
-                    // Figure out how to re-render the page just newly createdd
-                    // window.history.replaceState(null, "", `${last_key+1}`);
+                    changeComponents(createComponent(components,'page', 0));
                 }}>
                 Add Page
             </button>

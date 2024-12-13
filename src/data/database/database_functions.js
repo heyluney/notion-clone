@@ -1,25 +1,31 @@
 import { component_map, default_content_map } from "./component_map";
 
 // Helper functions to update a component's children array. Component (not components) level.
-const addChild = (component, child_id, order_id) => {
-    if (order_id == -1) order_id = component.children.length;
+const addChildComponent = (components, id, child_id, order_id) => {
+    if (order_id == -1) order_id = components[id].children.length;
     return {
-        ...component,
-        children: [
-            ...component.children.slice(0, order_id), 
-            child_id,
-            ...component.children.slice(order_id)]
+        ...components,
+        [id]: {
+            ...components[id],
+            children: [
+                ...components[id].children.slice(0, order_id), 
+                child_id,
+                ...components[id].children.slice(order_id)]
+        }
     }
 }
 
-const removeChild = (component, child_id) => {
-    const index = component.children.indexOf(child_id);
+const removeChildComponent = (components, id, child_id) => {
+    const index = components[id].children.indexOf(child_id);
     return {
-        ...component,
-        children: [
-            ...component.children.slice(0, index),
-            ...component.children.slice(index+1)
-        ]
+        ...components,
+        [id]: {
+            ...components[id],
+            children: [
+                ...components[id].children.slice(0, index),
+                ...components[id].children.slice(index+1)
+            ]
+        }
     }
 }
 
@@ -28,18 +34,17 @@ export const createComponent = (
     components,
     component_type,
     parent_id,
-    content = default_component_map[component_type],
+    content = default_content_map[component_type],
     order_id = -1
 ) => {
     const id = calculateNextKey(components);
 
-    const updatedParent = 
-        addChild(parent_id, id, order_id);
+    components = addChildComponent(components, parent_id, id, order_id);
+
 
     return { 
         ...components,
-        [newComponent.parent_id]: updatedParent,
-        [newComponent.id]: {
+        [id]: {
             id: id,
             parent_id: parent_id,
             children: [],
@@ -63,21 +68,17 @@ export const deleteComponent = (components, component_id) => {
     const { [component_id]: component, ...rest } = newComponents;
 
     // Must remove reference in component's parent.
-    const updatedParent = removeChild(
+    const updatedParent = removeChildComponent(
         components[components[component_id].parent_id],
         component_id);
 
     return {...rest, updatedParent};
 }
-
+// is this function
 export const moveComponent = (components, component_id, new_parent_id, new_order_id) => {
-    const updatedOldParent = removeChild(
-        components[components[component_id].parent_id], 
-        component_id);
-
-    const updatedNewParent = addChild(components[new_parent_id], new_order_id, component_id);
-
-    return { ...components, updatedOldParent, updatedNewParent };
+    components = removeChildComponent(components, components[component_id].parent_id, component_id);
+    components = addChildComponent(components, new_parent_id, component_id, new_order_id);
+    return components;
 }
 
 
@@ -129,19 +130,6 @@ export const retrieveEarliestKey = hash => {
 export const calculateNextKey = hash => {
     const descKeys = Object.keys(hash).map(x => parseInt(x)).sort((a, b) => b - a);
     return descKeys.length === 0 ? 0 : descKeys[0] + 1;
-}
-
-// These methods retrieve and save to local storage.
-export const saveToLocalStorage = (key, value) => {
-    localStorage.setItem(key, JSON.stringify(value));
-}
-
-export const getFromLocalStorage = (key) => {
-    return JSON.parse(localStorage.getItem(key));
-}
-
-export const removeFromLocalStorage = (key) => {
-    localStorage.removeItem(key);
 }
 
 // This should be moved into defaultComponent map
