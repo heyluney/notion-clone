@@ -1,3 +1,5 @@
+@import '../../../standard.module.css';
+
 .sidebar_item, .sidebar_item_hover {
     display: flex;
     justify-content: space-between;
@@ -21,6 +23,11 @@
 
 .additional_options_none {
     display: none;
+}
+
+.droppable_area {
+    height: 2px;
+    background: var(--highlight-grey);
 }
 
 .ellipses, .ellipses:hover {

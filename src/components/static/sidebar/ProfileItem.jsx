@@ -4,7 +4,7 @@ import clark from '../../../assets/clark_profile.jpg';
 
 
 
-const ProfileItem = ({name, icon}) => {
+const ProfileItem = () => {
     const [isHovered, updateHover] = useState(false);
     return (
         <div 
@@ -13,11 +13,10 @@ const ProfileItem = ({name, icon}) => {
             onMouseLeave={() => updateHover(!isHovered)}
         >
             
-            {/* <div>{<img className={styles.profile}
-                    src={clark}
-                    alt="clark_profile" />}</div> */}
-            <div>{icon}</div>
-            <div>{name}</div>
+        <img className={styles.profile_img}
+            src={clark}
+            alt="clark_profile" />
+        <div>Clark's Notion</div>
 
         </div>
     )

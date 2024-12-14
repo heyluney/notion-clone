@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext, useCallback } from 'react';
 import styles from './App.module.css';
 import SideBar from './components/static/sidebar/SideBar';
 import { useLocation } from 'react-router-dom';
@@ -13,7 +13,7 @@ import HomePage from './pages/Home/HomePage';
 import Page from './components/Page';
 
 const App = () => {  
-  const [components, changeComponents] = useState(useLocalStorage());
+  const [components, changeComponents] = useLocalStorage();
 
   return (
     <PageContext.Provider value={{

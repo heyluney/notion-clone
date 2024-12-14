@@ -19,6 +19,8 @@
     cursor: pointer;
 }
 
-img {
+.profile_img {
+    height: 45px;
+    width: 45px;
     padding-right: 15px;
 }

@@ -1,49 +1,39 @@
 import { useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 
-import styles from './SideBarDetailItem.module.css';
-
-import { moveComponent } from '../../../data/database/database_functions';
+import styles from './SideBarItem.module.css';
 
 import { BsThreeDots as Ellipses } from 'react-icons/bs';
 
 import SideBarMenu from '../menus/SideBarMenu';
 
 import Header from '../header/Header';
-import { PageContext } from '../../../App';
 
-const SideBarDetailItem = ({ page, idx,  changeDraggedPageId, changeDropPageIdx, draggedPageId, dropPageIdx }) => {
+const SideBarItem = ({ page, idx, draggableState, draggableHandlers }) => {
     const navigate = useNavigate();
 
-    const {components, changeComponents} = useContext(PageContext);
-
+    // we can pass in parameters for how we want the hoverability to work, like what color the item will be when we hover over it
+    // useHoverable();
     const [hover, toggleHover] = useState(false);
     const [sideBarMenuShown, toggleSideBarMenuShown] = useState(null);
 
-    // we define handleDragOver, handleDrag, handleDrop in the hook
-
-    // onDragOver = {handleDragOver}, onDrag = {handleDrag}, onDrop = {handleDrop}
-    // console.log('page', page)
     const { emoji, title } = page ? page.content : {};
-
-    // I want to extract this drag & drop capability
+    
+    const {
+        handleDragStart,
+        handleDrag,
+        handleDragOver,
+        handleDrop
+    } = draggableHandlers;
     return (
-        <div className={hover ? styles.sidebar_item_hover : 
-            styles.sidebar_item}
+        <>
+        {idx === draggableState.dropPageIdx ? <div className={styles.droppable_area}></div> : null}
+        <div className={hover ? styles.sidebar_item_hover : styles.sidebar_item}
             draggable={true}
-            onDragOver={e => {
-                e.preventDefault();
-                toggleHover(true);
-                changeDropPageIdx(idx);
-            }}
-            onDrag={e => {
-                e.preventDefault();
-                changeDraggedPageId(page.id);
-            }}
-            onDrop={() => {
-                const updatedComponents = moveComponent(components, draggedPageId, 0, dropPageIdx);
-                changeComponents(updatedComponents)
-            }}
+            onDragOver={(e) => handleDragOver(e, idx)}
+            onDragStart = {() => handleDragStart(page.id)}
+            onDrag={(e) => handleDrag(e)}
+            onDrop={handleDrop}
             onClick={() => {
                 navigate(`/${page.id}`);
             }}
@@ -73,10 +63,11 @@ const SideBarDetailItem = ({ page, idx,  changeDraggedPageId, changeDropPageIdx,
                     <SideBarMenu toggleSideBarMenuShown={toggleSideBarMenuShown}/>}
             </div>
         </div>
+        </>
     )
 }
 
-export default SideBarDetailItem;
+export default SideBarItem;
 
 
 
