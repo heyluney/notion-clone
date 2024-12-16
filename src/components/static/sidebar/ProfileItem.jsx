@@ -16,7 +16,7 @@ const ProfileItem = () => {
         <img className={styles.profile_img}
             src={clark}
             alt="clark_profile" />
-        <div>Clark's Notion</div>
+        <div className={styles.profile_text}>Clark's Notion</div>
 
         </div>
     )

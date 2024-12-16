@@ -5,6 +5,9 @@ import styles from './SideBarItem.module.css';
 import Emoji from '../header/Emoji';
 import useHoverable from '../../../hooks/useHoverable';
 
+import AddButton from '../buttons/AddButton';
+import MoreButton from '../buttons/MoreButton';
+
 const SideBarItem = ({ 
         page, 
         idx, 
@@ -40,6 +43,11 @@ const SideBarItem = ({
                     <Emoji emoji={page.content.emoji}/>
                     <div>{page.content.title}</div>
                 </div>
+                <div className={styles.others}>
+                    <MoreButton />
+                    <AddButton />
+                </div>
+
             </div>
         </>
     )

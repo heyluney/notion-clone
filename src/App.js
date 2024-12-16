@@ -11,17 +11,18 @@ import ErrorPage from './pages/Error/ErrorPage';
 import HomePage from './pages/Home/HomePage';
 
 import Page from './components/Page';
+import Overlay from './components/static/overlays/Overlay'
 
-// state has components 
 const App = () => {  
   const [components, changeComponents] = useLocalStorage();
-
+  const [overlay, changeOverlay] = useState(false);
   return (
     <PageContext.Provider value={{
-      components, 
-      changeComponents
+      components, changeComponents,
+      overlay, changeOverlay
       }}>
       <div className={styles.app}>
+        <Overlay visible={overlay}/>
         <SideBar page_ids={components[0].children} />
         <div className={styles.main}>
           <Routes>

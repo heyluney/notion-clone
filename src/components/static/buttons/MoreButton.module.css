@@ -1,0 +1,19 @@
+@import '../../../standard.module.css';
+
+/* var(--highlight-grey) */
+.active {
+    background: var(--highlight-grey);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.inactive {
+    padding: 5px;
+}
+
+.popup { 
+    position: absolute;
+    background: red;
+    height: 200px;
+    width: 200px;
+}

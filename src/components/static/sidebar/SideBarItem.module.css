@@ -68,3 +68,8 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+.others {
+    display: flex;
+    padding-right: 5px;
+}

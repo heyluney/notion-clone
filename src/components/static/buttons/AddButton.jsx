@@ -1,15 +1,7 @@
 const AddButton = () => {
     return (
-        <button onClick={
-            () => {
-                const updatedComponents = createComponent(
-                    components,
-                    'page',
-                    0);
-                changeComponents(updatedComponents);
-            
-            }}>
-                
+        <button>
+                add button
             </button>
     )
 }

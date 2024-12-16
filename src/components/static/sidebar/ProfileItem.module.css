@@ -20,7 +20,11 @@
 }
 
 .profile_img {
-    height: 45px;
-    width: 45px;
-    padding-right: 15px;
+    height: 30px;
+    width: 30px;
+    border-radius: 5px;
+}
+
+.profile_text {
+    padding-left: 10px;
 }

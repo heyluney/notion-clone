@@ -6,14 +6,17 @@ import styles from './Component.module.css'
 
 import { component_map } from "../data/database/component_map";
 
-const component_type_to_component_map = {
-    [component_map["journal"]]: Journal,
-    [component_map['tasklist']]: TaskList,
-    [component_map['comment']]: Comment
-};
+
 
 const Component = ({component}) => {
-    const Component = component_type_to_component_map[component.component_type];
+    // Maps component_type (a string) to a React component in order to render the correct React component dynamically.
+    const map = {
+        [component_map["journal"]]: Journal,
+        [component_map['tasklist']]: TaskList,
+        [component_map['comment']]: Comment
+    };
+
+    const Component = map[component.component_type];
 
     return (
         <div className={styles.component}>
