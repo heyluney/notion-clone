@@ -1,6 +1,17 @@
 @import '../../../standard.module.css';
 
-.sidebar_item, .sidebar_item_hover {
+.sidebar_item {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-left: 5px;
+    margin-right: 5px;
+    align-items: center;
+    line-height: .9;
+    padding: 5px 5px 5px 5px;
+}
+.sidebar_item_hover {
     display: flex;
     justify-content: space-between;
     margin-left: 5px;
@@ -8,10 +19,14 @@
     align-items: center;
     line-height: .9;
     padding: 5px 5px 5px 5px;
+    background: var(--highlight-grey-darker);
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-.sidebar_item_hover {
-    background: rgb(241, 241, 240, 1);
+.sidebar_item:hover {
+    background: var(--highlight-grey-darker);
+    border-radius: 5px;
     cursor: pointer;
 }
 
@@ -41,4 +56,15 @@
 .ellipses:hover {
     cursor: pointer;
     background: rgb(229, 229, 228);
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 20px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

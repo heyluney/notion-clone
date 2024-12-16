@@ -11,7 +11,10 @@ import useDraggable from '../../../hooks/useDraggable';
 
 const SideBar = () => {
     const {components, changeComponents}  = useContext(PageContext);
-    const { draggableState, draggableHandlers } = useDraggable(0);
+    const { draggableState, draggableHandlers: {handleDragStart,
+        handleDrag,
+        handleDragOver,
+        handleDrop}} = useDraggable(/*app_id=*/0);
 
     return (
         <div className={`${styles.sidebar}`}>
@@ -23,7 +26,10 @@ const SideBar = () => {
                     idx={idx}
                     page={components[page_id]}
                     draggableState={draggableState}
-                    draggableHandlers = {draggableHandlers}
+                    handleDragStart={handleDragStart}
+                    handleDrag={handleDrag}
+                    handleDragOver={handleDragOver}
+                    handleDrop={handleDrop}
                     />)}
             
             <button onClick={

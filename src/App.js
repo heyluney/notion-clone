@@ -12,6 +12,7 @@ import HomePage from './pages/Home/HomePage';
 
 import Page from './components/Page';
 
+// state has components 
 const App = () => {  
   const [components, changeComponents] = useLocalStorage();
 
