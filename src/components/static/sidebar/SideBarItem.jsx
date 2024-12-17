@@ -1,5 +1,5 @@
 import { useNavigate  } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useContext, useId } from 'react';
 
 import styles from './SideBarItem.module.css';
 
@@ -7,6 +7,8 @@ import Emoji from '../header/Emoji';
 import useHoverable from '../../../hooks/useHoverable';
 
 import Button from '../buttons/Button';
+
+import { PageContext } from '../../../App';
 
 const SideBarItem = ({ 
         page, 
@@ -44,9 +46,9 @@ const SideBarItem = ({
                     <Emoji emoji={page.content.emoji}/>
                     <div>{page.content.title}</div>
                 </div>
-                {hoverableState && <div className={styles.others}>
-                    <Button type={"ellipses"} />
-                    <Button type={"plus"} />
+                {<div className={styles.others}>
+                    <Button type={"ellipses"} id={useId()} />
+                    <Button type={"plus"} id={useId()}/>
                 </div>}
 
             </div>

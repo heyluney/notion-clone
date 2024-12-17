@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+import useDebouncer from "./useDebouncer";
 
 // Specifies hovering behaviors. For each handler, e.stopPropagation() is used so that at most one handler fires element - the innermost child element.
 const useHoverable = () => {
@@ -6,18 +8,20 @@ const useHoverable = () => {
 
     const handleMouseEnter = (e) => {
         e.stopPropagation();
-        toggleHoverableState(true) 
+        toggleHoverableState(true);
     }
-    const handleMouseLeave = (e) => { 
+    
+    const handleMouseLeave = (e) => {
         e.stopPropagation();
-        toggleHoverableState(false) 
+        toggleHoverableState(false);
     }
 
+    // Debouncing is necessary in order to ensure only one handler fires at a time if the user mouses over the sidebar very quickly.
     return { 
         hoverableState, 
         hoverableStateHandlers: {
-            handleMouseEnter, 
-            handleMouseLeave,
+            handleMouseEnter: handleMouseEnter,
+            handleMouseLeave: handleMouseLeave
         }};
 }
 

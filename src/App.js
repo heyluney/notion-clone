@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import { addFaviconToPage } from './utils/generate_favicon';
 import useLocalStorage from './hooks/useLocalStorage';
+import useClickable from './hooks/useClickable';
 
 import ErrorPage from './pages/Error/ErrorPage';
 import HomePage from './pages/Home/HomePage';
@@ -15,14 +16,15 @@ import Overlay from './components/static/overlays/Overlay'
 
 const App = () => {  
   const [components, changeComponents] = useLocalStorage();
-  const [overlay, changeOverlay] = useState(false);
+  const [clickState, changeClickState] = useClickable();
+
   return (
     <PageContext.Provider value={{
       components, changeComponents,
-      overlay, changeOverlay
+      clickState, changeClickState,
       }}>
       <div className={styles.app}>
-        <Overlay visible={overlay}/>
+        <Overlay visible={clickState}/>
         <SideBar page_ids={components[0].children} />
         <div className={styles.main}>
           <Routes>

@@ -4,7 +4,8 @@ import NewPopup from './NewPopup';
 import styles from './Popup.module.css'
 
 // Abstract "Popup" component.
-const Popup = ({type}) => {
+const Popup = ({type, visible}) => {
+    if (!visible) return;
     // Renders popup dynamically based on type (string).
     const map = {
         "more": MorePopup,
