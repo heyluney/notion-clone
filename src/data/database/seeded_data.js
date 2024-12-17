@@ -27,7 +27,7 @@ const createComponent =
         id: id, // get unique key
         parent_id: parent_id, // set parent_id
         children: [], // set empty children
-        component_type: component_map[component_type],
+        component_type: component_type,
         content: content // object that represents information k-v pairs about information 
     }
     components[newComponent.id] = newComponent;
@@ -76,6 +76,10 @@ const ballTask = createComponent("task", yesCategory.id, {
     title: "Get mom to throw me the ball...about a million times!",
     body: "She's too busy staring at her laptop...:("
 })
+
+
+
+
 //     10: {
 //         id: 10,
 //         component_type: component_map['task'],

@@ -1,12 +1,12 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import styles from './SideBarItem.module.css';
 
 import Emoji from '../header/Emoji';
 import useHoverable from '../../../hooks/useHoverable';
 
-import AddButton from '../buttons/AddButton';
-import MoreButton from '../buttons/MoreButton';
+import Button from '../buttons/Button';
 
 const SideBarItem = ({ 
         page, 
@@ -19,9 +19,10 @@ const SideBarItem = ({
     }) => {
     const navigate = useNavigate();
     const currentPageId = parseInt(window.location.hash.substring(2));
-    const { hoverableStateHandlers: { handleMouseEnter, handleMouseLeave } } 
+    const { hoverableState, 
+        hoverableStateHandlers: { handleMouseEnter, handleMouseLeave } } 
         = useHoverable();
-    
+
     return (
         <>
             {draggableState.dropPageIdx === idx &&
@@ -33,20 +34,20 @@ const SideBarItem = ({
                 onDragStart={() => handleDragStart(page.id)}
                 onDrag={(e) => handleDrag(e)}
                 onDrop={handleDrop}
-                onClick={() => {
-                    navigate(`/${page.id}`);
-                }}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
+                // onClick={() => {
+                //     navigate(`/${page.id}`);
+                // }}
+                onMouseEnter={(e) => handleMouseEnter(e)}
+                onMouseLeave={(e) => handleMouseLeave(e)}
             >
                 <div className={styles.title}>
                     <Emoji emoji={page.content.emoji}/>
                     <div>{page.content.title}</div>
                 </div>
-                <div className={styles.others}>
-                    <MoreButton />
-                    <AddButton />
-                </div>
+                {hoverableState && <div className={styles.others}>
+                    <Button type={"ellipses"} />
+                    <Button type={"plus"} />
+                </div>}
 
             </div>
         </>

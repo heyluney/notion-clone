@@ -4,16 +4,13 @@ import Comment from "./dynamic/comments/Comment";
 
 import styles from './Component.module.css'
 
-import { component_map } from "../data/database/component_map";
-
-
-
+// Abstract "Component" component.
 const Component = ({component}) => {
     // Maps component_type (a string) to a React component in order to render the correct React component dynamically.
     const map = {
-        [component_map["journal"]]: Journal,
-        [component_map['tasklist']]: TaskList,
-        [component_map['comment']]: Comment
+        "journal": Journal,
+        "tasklist": TaskList,
+        "comment": Comment
     };
 
     const Component = map[component.component_type];
