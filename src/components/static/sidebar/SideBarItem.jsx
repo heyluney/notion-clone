@@ -24,8 +24,10 @@ const SideBarItem = ({
 
     return (
         <div>
-            {draggableState.dropPageIdx === idx && 
-            <div className={styles.droppable_area} />}
+            {
+            draggableState.dropPageIdx === idx && 
+            <div className={styles.droppable_area} />
+            }
                 
             <div className={
                 active ? styles.sidebar_item_hover : styles.sidebar_item}
@@ -35,8 +37,9 @@ const SideBarItem = ({
                 onDragStart={() => handleDragStart(page.id)}
                 onDrag={(e) => handleDrag(e)}
                 onDrop={handleDrop}
-                onClick={() => {
-                    navigate(`/${page.id}`);
+                onClick={(e) => {
+                    if (e.target === e.currentTarget)
+                        navigate(`/${page.id}`);
                 }}
                 onMouseEnter={(e) => handleMouseEnter(e, page.id)}
                 onMouseLeave={handleMouseLeave}
@@ -46,10 +49,12 @@ const SideBarItem = ({
                     <div>{page.content.title}</div>
                 </div>
                 {<div className={styles.others}>
-                    <Button type={"ellipses"} 
-                            id={useId()} parentId={page.id} />
-                    <Button type={"plus"} 
-                            id={useId()} parentId={page.id} />
+                    <Button type="ellipses" 
+                            id={useId()} 
+                            parentId={page.id} />
+                    <Button type="plus"
+                            id={useId()} 
+                            parentId={page.id} />
                 </div>}
 
             </div>
