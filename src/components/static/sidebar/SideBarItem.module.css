@@ -22,11 +22,6 @@
     background: var(--highlight-grey-darker);
     cursor: pointer;
     border-radius: 5px;
-}
-
-.sidebar_item:hover {
-    background: var(--highlight-grey-darker);
-    border-radius: 5px;
     cursor: pointer;
 }
 

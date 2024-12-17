@@ -8,7 +8,7 @@ export const getSkinToneEmoji = (emojiDict, skintone) => {
     const newSkinTone = emojiDict['People & Body']
     ['hand-fingers-open']
     [`raised hand${skintone === "none" ? "" : ": " + skintone}`];
-    console.log('newSkinTone', newSkinTone)
+    // console.log('newSkinTone', newSkinTone)
     return newSkinTone;
 }
 
@@ -135,13 +135,11 @@ export const filterEmojiDictionary = (emojiDict, prefix) => {
         }
     }
     newEmojiDict['recent'] = emojiDict['recent'];
-    // console.log('newEmojiDict filter', newEmojiDict)
     return newEmojiDict;
 }
 
 export const flattenEmojiDictionary = emojiDict => {
     if (emojiDict === null) return {};
-    console.log('emojiDict', emojiDict);
     const flattened = Object.fromEntries(
         Object.entries(emojiDict)
                 .filter(([category, _]) => category !== 'recent')

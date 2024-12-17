@@ -4,7 +4,9 @@
     background: var(--highlight-grey);
     border-radius: 5px;
     padding: 5px;
+    cursor: pointer;
 }
+
 
 .inactive {
     padding: 5px;

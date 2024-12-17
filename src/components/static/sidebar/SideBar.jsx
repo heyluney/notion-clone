@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import styles from './SideBar.module.css'; 
 
 import ProfileItem from './ProfileItem';
@@ -10,12 +10,16 @@ import { PageContext } from '../../../App';
 import useDraggable from '../../../hooks/useDraggable';
 
 const SideBar = () => {
-    const {components, changeComponents}  = useContext(PageContext);
-    const { draggableState, draggableHandlers: {handleDragStart,
+    const {components, changeComponents,
+        hoverState
+    }  = useContext(PageContext);
+    const { 
+        draggableState, draggableHandlers: {handleDragStart,
         handleDrag,
         handleDragOver,
         handleDrop}} = useDraggable(/*app_id=*/0);
-
+    
+    const currentPageId = parseInt(window.location.hash.substring(2));
     return (
         <div className={`${styles.sidebar}`}>
             <ProfileItem />
@@ -23,6 +27,7 @@ const SideBar = () => {
             {components[0].children.map((page_id, idx) =>
                 <SideBarItem
                     key={page_id}
+                    active={currentPageId === page_id || hoverState == page_id}
                     idx={idx}
                     page={components[page_id]}
                     draggableState={draggableState}

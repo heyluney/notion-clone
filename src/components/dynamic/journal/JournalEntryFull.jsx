@@ -2,7 +2,6 @@ import styles from './JournalEntryFull.module.css';
 
 // entity type and entity id 
 const JournalEntryFull = () => {
-    console.log('at journal entry full')
     return (
         <div className={styles.main}>
             This is the journal!!!

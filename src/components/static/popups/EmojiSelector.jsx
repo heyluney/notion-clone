@@ -32,7 +32,7 @@ const EmojiSelector = ({
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        console.log('component', component)
+                        // console.log('component', component)
                         // const idx = parseInt(component.split('_')[1]);
                         
                         const newEmojiDict = addEmojiToRecent(emojiDictionary, {[name]: hexcode});

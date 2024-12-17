@@ -76,7 +76,6 @@ export const deleteComponent = (components, component_id) => {
 }
 // is this function
 export const moveComponent = (components, component_id, new_parent_id, new_order_id) => {
-    // console.log(components, component_id, new_parent_id, new_order_id);
     components = removeChildComponent(components, components[component_id].parent_id, component_id);
     components = addChildComponent(components, new_parent_id, component_id, new_order_id);
     return components;
