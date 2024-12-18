@@ -6,7 +6,8 @@ const useLocalStorage = () => {
     const [components, changeComponents] = useState(() => {
         // Seeds data into local storage when first loading app.
         const localComponents = JSON.parse(localStorage.getItem('components'));
-        if (localComponents === null) seedPages();
+        if (localComponents === null) 
+            seedPages();
         return localComponents;
     })
 

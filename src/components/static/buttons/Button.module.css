@@ -4,10 +4,16 @@
     background: var(--highlight-grey);
     border-radius: 5px;
     padding: 5px;
+    margin-left: 2px;
+    margin-right: 2px;
     cursor: pointer;
+    /* border: 1px solid red; */
 }
 
 
 .inactive {
+    margin-left: 2px;
+    margin-right: 2px;
     padding: 5px;
+    /* border: 1px solid red; */
 }

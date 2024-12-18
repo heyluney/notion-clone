@@ -26,7 +26,7 @@ const SlideOut = () => {
             className={styles.slideout}>
 
             <div className={styles.draggable}
-                draggable={true}
+                // draggable={true}
                 onDrag={(e) => {
                     e.stopPropagation();
                     e.preventDefault();

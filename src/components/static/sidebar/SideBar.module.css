@@ -1,11 +1,20 @@
+@import '../../../standard.module.css';
+
 .sidebar {
+    display: flex;
+    flex-direction: horizontal;
     color: rgb(55, 53, 47);
     background-color: rgb(251, 251, 250);
-    width: 30%;
     margin: 0;
     padding-left: 5px;
     padding-right: 5px;
-    padding-top: 15px;
+    cursor: pointer;
+}
+
+.sidebar_edge {
+    width: 3px;
+    background-color: var(--highlight-grey-darker);
+    cursor: move;
 }
 
 .profile {
@@ -15,8 +24,9 @@
     border-radius: 2.5px;
 }
 
-@media (max-width: 800px) {
+
+/* @media (max-width: 800px) {
     .sidebar {
         display: none;
     }
-}
+} */    

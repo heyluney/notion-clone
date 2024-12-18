@@ -20,9 +20,7 @@
     line-height: .9;
     padding: 5px 5px 5px 5px;
     background: var(--highlight-grey-darker);
-    cursor: pointer;
     border-radius: 5px;
-    cursor: pointer;
 }
 
 .additional_options {
@@ -36,6 +34,11 @@
 }
 
 .droppable_area {
+    height: 2px;
+    background: rgb(251, 251, 250)
+}
+
+.droppable_area_active {
     height: 2px;
     background: var(--highlight-grey);
 }

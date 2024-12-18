@@ -9,18 +9,25 @@ import { PageContext } from '../../../App';
 
 import Popup from "../popups/Popup";
 
-const Button = ({ type, id, parentId }) => {
+const Button = ({ type, id }) => {
     const { 
         clickState, changeClickState,
-        hoverState, hoverStateHandlers: 
-        { handleMouseEnter, handleMouseLeave } } = useContext(PageContext);
+        hoverState, updateHoverState } = useContext(PageContext);
 
     const Button = map[type];
 
     return (
-        <div className={hoverState === id ? styles.active : styles.inactive}
-            onMouseEnter={(e) => handleMouseEnter(e, id)}
-            onMouseLeave={(e) => handleMouseLeave(e, parentId)}
+        <div className={hoverState.has(id) ? 
+            styles.active : styles.inactive
+        }
+            onMouseEnter={() => {
+                updateHoverState(new Set([...hoverState, id]))
+            }}
+            onMouseLeave={() => {
+                const updatedSet = new Set(hoverState);
+                updatedSet.delete(id);
+                updateHoverState(updatedSet);
+            }}
             onClick={() => changeClickState(id)}
         >
             <Button />

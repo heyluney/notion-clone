@@ -18,13 +18,13 @@ import Overlay from './components/static/overlays/Overlay'
 const App = () => { 
   const [components, changeComponents] = useLocalStorage();
   const [clickState, changeClickState] = useClickable();
-  const {hoverState, hoverStateHandlers} = useHoverable();
+  const [hoverState, updateHoverState] = useHoverable();
 
   return (
     <PageContext.Provider value={{
       components, changeComponents,
       clickState, changeClickState,
-      hoverState, hoverStateHandlers
+      hoverState, updateHoverState
       }}>
       <div className={styles.app}>
         <Overlay visible={clickState}/>

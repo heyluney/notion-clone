@@ -19,30 +19,31 @@ const SideBarItem = ({
         handleDrop
     }) => {
     const navigate = useNavigate();
-    const { hoverStateHandlers: { handleMouseEnter, handleMouseLeave }  }
-        = useContext(PageContext);
+    const { hoverState, updateHoverState } = useContext(PageContext);
 
     return (
         <div>
-            {
-            draggableState.dropPageIdx === idx && 
-            <div className={styles.droppable_area} />
-            }
+            {<div className={draggableState.dropPageIdx === idx ? styles.droppable_area_active : styles.droppable_area} />}
                 
             <div className={
                 active ? styles.sidebar_item_hover : styles.sidebar_item}
-
                 draggable={true}
                 onDragOver={(e) => handleDragOver(e, idx)}
                 onDragStart={() => handleDragStart(page.id)}
                 onDrag={(e) => handleDrag(e)}
                 onDrop={handleDrop}
-                onClick={(e) => {
-                    if (e.target === e.currentTarget)
-                        navigate(`/${page.id}`);
+                // onClick={(e) => {
+                //     if (e.target === e.currentTarget)
+                //         navigate(`/${page.id}`);
+                // }}
+                onMouseEnter={() => {
+                    updateHoverState(new Set([...hoverState, page.id]))
                 }}
-                onMouseEnter={(e) => handleMouseEnter(e, page.id)}
-                onMouseLeave={handleMouseLeave}
+                onMouseLeave={() => {
+                    const updatedSet = new Set(hoverState);
+                    updatedSet.delete(page.id);
+                    updateHoverState(updatedSet);
+                }}
             >
                 <div className={styles.title}>
                     <Emoji emoji={page.content.emoji}/>
