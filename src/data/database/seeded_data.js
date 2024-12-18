@@ -218,9 +218,16 @@ const ballTask = createComponent("task", yesCategory.id, {
 
 // defaultComponents = createDefaultTaskList(defaultComponents, 2);
 
+
+export const seedStyles = () => {
+    localStorage.setItem('global_styles', JSON.stringify({
+        "sideBarWidth": 300
+    }));
+}
+// console.log('styles', styles)
+// console.log('components', components)
 export const seedPages = () => {
     localStorage.setItem('components', JSON.stringify(components));
-
 }
 
 // const homePage = createComponent({

@@ -10,28 +10,17 @@
     align-items: center;
     line-height: .9;
     padding: 5px 5px 5px 5px;
-}
-.sidebar_item_hover {
-    display: flex;
-    justify-content: space-between;
-    margin-left: 5px;
-    margin-right: 5px;
-    align-items: center;
-    line-height: .9;
-    padding: 5px 5px 5px 5px;
-    background: var(--highlight-grey-darker);
     border-radius: 5px;
 }
 
-.additional_options {
-    display: flex;
-    box-sizing: border-box;
-
+.highlight {
+    background: var(--highlight-grey-darker);
 }
 
-.additional_options_none {
-    display: none;
+.sidebar_item:hover {
+    background: var(--highlight-grey-darker);
 }
+
 
 .droppable_area {
     height: 2px;
@@ -41,19 +30,6 @@
 .droppable_area_active {
     height: 2px;
     background: var(--highlight-grey);
-}
-
-.ellipses, .ellipses:hover {
-    border-radius: 4px;
-    padding: 4px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-.ellipses:hover {
-    cursor: pointer;
-    background: rgb(229, 229, 228);
 }
 
 .title {

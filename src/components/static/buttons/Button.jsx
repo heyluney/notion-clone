@@ -11,23 +11,12 @@ import Popup from "../popups/Popup";
 
 const Button = ({ type, id }) => {
     const { 
-        clickState, changeClickState,
-        hoverState, updateHoverState } = useContext(PageContext);
+        clickState, changeClickState } = useContext(PageContext);
 
     const Button = map[type];
 
     return (
-        <div className={hoverState.has(id) ? 
-            styles.active : styles.inactive
-        }
-            onMouseEnter={() => {
-                updateHoverState(new Set([...hoverState, id]))
-            }}
-            onMouseLeave={() => {
-                const updatedSet = new Set(hoverState);
-                updatedSet.delete(id);
-                updateHoverState(updatedSet);
-            }}
+        <div className={styles.button}
             onClick={() => changeClickState(id)}
         >
             <Button />

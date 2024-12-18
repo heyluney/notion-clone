@@ -11,9 +11,7 @@ import useDraggable from '../../../hooks/useDraggable';
 import useSlideable from '../../../hooks/useSlideable';
 
 const SideBar = () => {
-    const {components, changeComponents,
-        hoverState
-    }  = useContext(PageContext);
+    const {components, changeComponents }  = useContext(PageContext);
     const { 
         draggableState, draggableHandlers: {handleDragStart,
         handleDrag,
@@ -23,8 +21,8 @@ const SideBar = () => {
 
     const { width } = useSlideable(ref)
     
-    const currentPageId = parseInt(window.location.hash.substring(2));
     // The current sidebar item is highlighted if it is (1) equal to the current page being displayed or (2) hovered over.
+    const currentPageId = parseInt(window.location.hash.substring(2));
     return (
         <div style={{ 
                 width: `${width}px`,
@@ -36,7 +34,7 @@ const SideBar = () => {
                 {components[0].children.map((page_id, idx) =>
                     <SideBarItem
                         key={page_id}
-                        active={currentPageId === page_id || hoverState.has(page_id)}
+                        active={currentPageId === page_id}
                         idx={idx}
                         page={components[page_id]}
                         draggableState={draggableState}

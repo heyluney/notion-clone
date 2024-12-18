@@ -7,7 +7,6 @@ import { Routes, Route } from 'react-router-dom';
 import { addFaviconToPage } from './utils/generate_favicon';
 import useLocalStorage from './hooks/useLocalStorage';
 import useClickable from './hooks/useClickable';
-import useHoverable from './hooks/useHoverable'
 
 import ErrorPage from './pages/Error/ErrorPage';
 import HomePage from './pages/Home/HomePage';
@@ -16,15 +15,20 @@ import Page from './components/Page';
 import Overlay from './components/static/overlays/Overlay'
 
 const App = () => { 
-  const [components, changeComponents] = useLocalStorage();
+  const [
+    components, changeComponents, 
+    globalStyles, changeGlobalStyles
+  ] = useLocalStorage();
+
+  console.log('styles', globalStyles.sideBarWidth)
+  // clickState stores the id of the component that was clicked. This ensures that only one popup (or other component dependency) is rendered per click. In the example of a popup, clicking on the overlay will transform clickState back to null.
   const [clickState, changeClickState] = useClickable();
-  const [hoverState, updateHoverState] = useHoverable();
 
   return (
     <PageContext.Provider value={{
       components, changeComponents,
+      globalStyles, changeGlobalStyles,
       clickState, changeClickState,
-      hoverState, updateHoverState
       }}>
       <div className={styles.app}>
         <Overlay visible={clickState}/>

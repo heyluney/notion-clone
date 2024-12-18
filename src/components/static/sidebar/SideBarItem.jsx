@@ -1,14 +1,12 @@
 import { useNavigate  } from 'react-router-dom';
-import { useContext, useId } from 'react';
+import { useId } from 'react';
 
 import styles from './SideBarItem.module.css';
 
 import Emoji from '../header/Emoji';
 import Button from '../buttons/Button';
 
-import { PageContext } from '../../../App';
-
-const SideBarItem = ({ 
+const SideBarItem = ({
         active,
         page, 
         idx, 
@@ -19,30 +17,20 @@ const SideBarItem = ({
         handleDrop
     }) => {
     const navigate = useNavigate();
-    const { hoverState, updateHoverState } = useContext(PageContext);
 
     return (
         <div>
             {<div className={draggableState.dropPageIdx === idx ? styles.droppable_area_active : styles.droppable_area} />}
                 
-            <div className={
-                active ? styles.sidebar_item_hover : styles.sidebar_item}
+            <div className={`${styles.sidebar_item} ${active ? styles.highlight : ''}`}
                 draggable={true}
                 onDragOver={(e) => handleDragOver(e, idx)}
                 onDragStart={() => handleDragStart(page.id)}
                 onDrag={(e) => handleDrag(e)}
                 onDrop={handleDrop}
-                // onClick={(e) => {
-                //     if (e.target === e.currentTarget)
-                //         navigate(`/${page.id}`);
-                // }}
-                onMouseEnter={() => {
-                    updateHoverState(new Set([...hoverState, page.id]))
-                }}
-                onMouseLeave={() => {
-                    const updatedSet = new Set(hoverState);
-                    updatedSet.delete(page.id);
-                    updateHoverState(updatedSet);
+                onClick={(e) => {
+                    if (e.target === e.currentTarget)
+                        navigate(`/${page.id}`);
                 }}
             >
                 <div className={styles.title}>

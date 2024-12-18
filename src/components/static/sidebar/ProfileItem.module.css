@@ -16,7 +16,6 @@
 .active {
     background-color: rgb(241, 241, 240, 1);
     color: rgba(55, 53, 47, 1);
-    cursor: pointer;
 }
 
 .profile_img {

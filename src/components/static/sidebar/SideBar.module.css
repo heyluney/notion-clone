@@ -12,9 +12,18 @@
 }
 
 .sidebar_edge {
-    width: 3px;
+    width: 2px;
     background-color: var(--highlight-grey-darker);
     cursor: move;
+}
+
+.sidebar_edge:hover {
+    width: 4px;
+    background-color: var(--black)
+}
+.sidebar_edge:active {
+    width: 4px;
+    background-color: var(--black)
 }
 
 .profile {
