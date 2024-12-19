@@ -1,0 +1,15 @@
+/* Color schemes for light and dark mode */
+.day_scheme {
+    --hover-grey: #f0f0ef;
+    --hover-grey-2: #e5e5e5;
+    --sidebar: #f8f8f7;
+    --page: #ffffff;
+    --text: #37352f;
+  }
+.night_scheme {
+    --hover-grey: #2c2c2c;
+    --hover-grey-2: #373737;
+    --sidebar: #202020;
+    --page: #191919;
+    --text: #d4d4d4;
+}

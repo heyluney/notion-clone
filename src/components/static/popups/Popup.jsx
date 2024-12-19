@@ -1,5 +1,6 @@
 import MorePopup from './MorePopup';
 import NewPopup from './NewPopup';
+import InfoPopup from './InfoPopup';
 
 import styles from './Popup.module.css'
 
@@ -9,7 +10,8 @@ const Popup = ({type, visible}) => {
     // Renders popup dynamically based on type (string).
     const map = {
         "more": MorePopup,
-        "new": NewPopup
+        "new": NewPopup,
+        "info": InfoPopup
     };
 
     const Popup = map[type];

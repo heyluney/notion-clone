@@ -4,9 +4,10 @@ import { seedPages, seedStyles } from '../data/database/seeded_data'
 // Synchronizes app's version of components with local storage. 
 const useLocalStorage = () => {
     const [globalStyles, changeGlobalStyles] = useState(() => {
-        const styles = JSON.parse(localStorage.getItem('global_styles'))
-        if (styles === null) seedStyles();
-        return styles;
+        const globalStyles = JSON.parse(localStorage.getItem('global_styles'))
+        if (globalStyles === null) 
+            seedStyles();
+        return globalStyles;
     })
 
     const [components, changeComponents] = useState(() => {
@@ -19,8 +20,9 @@ const useLocalStorage = () => {
 
     useEffect(() => {
         localStorage.setItem('components', JSON.stringify(components));
-        localStorage.setItem('global_styles', JSON.stringify(globalStyles))
+        localStorage.setItem('global_styles', JSON.stringify(globalStyles));
       }, [components, globalStyles])
+
 
     return [components, changeComponents, globalStyles, changeGlobalStyles];
 }

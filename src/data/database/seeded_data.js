@@ -221,11 +221,11 @@ const ballTask = createComponent("task", yesCategory.id, {
 
 export const seedStyles = () => {
     localStorage.setItem('global_styles', JSON.stringify({
-        "sideBarWidth": 300
+        "sideBarWidth": 300,
+        "nightMode": false,
     }));
 }
-// console.log('styles', styles)
-// console.log('components', components)
+
 export const seedPages = () => {
     localStorage.setItem('components', JSON.stringify(components));
 }

@@ -8,16 +8,6 @@
     padding-bottom: 8px;
 }
 
-.inactive {
-    background-color: rgba(251, 251, 250, 1);
-    color: rgba(55, 53, 47, 1);
-}
-
-.active {
-    background-color: rgb(241, 241, 240, 1);
-    color: rgba(55, 53, 47, 1);
-}
-
 .profile_img {
     height: 30px;
     width: 30px;

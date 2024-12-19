@@ -1,5 +1,6 @@
-import { useNavigate  } from 'react-router-dom';
-import { useId } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { PageContext } from '../../../App';
+import { useContext, useId } from 'react';
 
 import styles from './SideBarItem.module.css';
 
@@ -18,6 +19,7 @@ const SideBarItem = ({
     }) => {
     const navigate = useNavigate();
 
+    const { changePageId } = useContext(PageContext);
     return (
         <div>
             {<div className={draggableState.dropPageIdx === idx ? styles.droppable_area_active : styles.droppable_area} />}
@@ -29,8 +31,11 @@ const SideBarItem = ({
                 onDrag={(e) => handleDrag(e)}
                 onDrop={handleDrop}
                 onClick={(e) => {
-                    if (e.target === e.currentTarget)
+                    if (e.target === e.currentTarget) {
                         navigate(`/${page.id}`);
+                        changePageId(page.id);
+                    }
+                        
                 }}
             >
                 <div className={styles.title}>

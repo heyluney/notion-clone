@@ -1,14 +1,16 @@
-@import '../../../standard.module.css';
+/* @import '../../../standard.module.css'; */
 
 .button {
     margin-left: 2px;
     margin-right: 2px;
     padding: 5px;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .button:hover {
-    background: var(--highlight-grey);
+    background: var(--hover-grey-2);
     cursor: pointer;
 }
+
 

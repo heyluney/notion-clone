@@ -6,34 +6,9 @@
   overflow-x: hidden;
 }
 
-.app_disabled {
-  /* display: none; */
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: green;
-  z-index: 9999;
-  /* display: flex;
-  flex-direction: row;
-  font-family: 'Roboto', sans-serif;
-  margin: 0;
-  overflow-x: hidden;
-  /* display: none; */
-  /* position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(90, 90, 90, 0.5);
-  opacity: 1;
-  z-index: 9999;  */
-}
-
 .main {
-  background-color: white;
-  color: rgb(55, 53, 47);
+  background-color: var(--page);
+  color: var(--text);
   width: 100%;
   margin: 0;
   display: flex;
@@ -60,3 +35,22 @@ textarea, textarea:focus {
 [contenteditable] {
   outline: 0px solid transparent;
 }
+
+  /* Pastels */
+  /* --pastel-yelow: #faedcb;
+  --pastel-green:  #c9e4de;
+  --pastel-blue: #c6def1;
+  --pastel-purple: #dbcdf0;
+  --pastel-pink: #f2c6de;
+  --pastel-orange: #f7d9c4; */
+
+
+    /* --highlight-grey: rgb(234, 234, 233); */
+    /* --highlight-grey-darker: rgb(223, 223, 222);
+    --light-grey: rgba(55, 53, 47, 0.65);
+    --medium-grey: rgba(124, 123, 117, 1);
+    --grey: #5F5E5B;
+    --black: #1D1B16;
+    --box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, 
+    rgba(15, 15, 15, 0.1) 0px 5px 10px,
+     rgba(15, 15, 15, 0.2) 0px 15px 40px; */

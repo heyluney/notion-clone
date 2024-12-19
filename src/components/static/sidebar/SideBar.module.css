@@ -1,29 +1,29 @@
-@import '../../../standard.module.css';
-
 .sidebar {
     display: flex;
     flex-direction: horizontal;
-    color: rgb(55, 53, 47);
-    background-color: rgb(251, 251, 250);
+    background: var(--sidebar);
+    color: var(--text);
     margin: 0;
-    padding-left: 5px;
-    padding-right: 5px;
     cursor: pointer;
+}
+
+.highlight {
+    background-color: var(--hover-grey);
 }
 
 .sidebar_edge {
     width: 2px;
-    background-color: var(--highlight-grey-darker);
+    background-color: var(--hover-grey);
     cursor: move;
 }
 
 .sidebar_edge:hover {
     width: 4px;
-    background-color: var(--black)
+    background-color: var(--hover-grey)
 }
 .sidebar_edge:active {
     width: 4px;
-    background-color: var(--black)
+    background-color: var(--hover-grey)
 }
 
 .profile {

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 
 import styles from './Button.module.css';
 
@@ -10,15 +10,12 @@ import { PageContext } from '../../../App';
 import Popup from "../popups/Popup";
 
 const Button = ({ type, id }) => {
-    const { 
-        clickState, changeClickState } = useContext(PageContext);
+    const { clickState, changeClickState } = useContext(PageContext);
 
     const Button = map[type];
-
     return (
         <div className={styles.button}
-            onClick={() => changeClickState(id)}
-        >
+            onClick={() => changeClickState(id)}>
             <Button />
             <Popup type={"new"} visible={id === clickState} />
         </div>

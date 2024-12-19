@@ -11,25 +11,25 @@
     line-height: .9;
     padding: 5px 5px 5px 5px;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .highlight {
-    background: var(--highlight-grey-darker);
+    background: var(--hover-grey);
 }
 
 .sidebar_item:hover {
-    background: var(--highlight-grey-darker);
+    background: var(--hover-grey);
 }
 
 
 .droppable_area {
     height: 2px;
-    background: rgb(251, 251, 250)
 }
 
 .droppable_area_active {
     height: 2px;
-    background: var(--highlight-grey);
+    background: var(--hover-grey);
 }
 
 .title {
