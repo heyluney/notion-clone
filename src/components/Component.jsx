@@ -1,23 +1,13 @@
-import TaskList from "./dynamic/tasklist/TaskList"
-import Journal from "./dynamic/journal/Journal";
-import Comment from "./dynamic/comments/Comment";
-
 import styles from './Component.module.css'
+import DynamicComponent from "../hooks/DynamicComponent";
 
-// Abstract "Component" component.
+// Abstract "Component" component. Will dynamically render component based on component's component_type attribute.
 const Component = ({component}) => {
-    // Maps component_type (a string) to a React component in order to render the correct React component dynamically.
-    const map = {
-        "journal": Journal,
-        "tasklist": TaskList,
-        "comment": Comment
-    };
-
-    const Component = map[component.component_type];
-
+    console.log('component', component)
     return (
         <div className={styles.component}>
-            <Component component={component} />        
+            <DynamicComponent 
+                componentName={component.component_type} />        
         </div>
     )
     

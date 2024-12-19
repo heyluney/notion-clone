@@ -9,6 +9,11 @@ import { PageContext } from '../../../App';
 
 import Popup from "../popups/Popup";
 
+const map = {
+    "ellipses": Ellipses,
+    "plus": Plus
+}
+
 const Button = ({ type, id }) => {
     const { clickState, changeClickState } = useContext(PageContext);
 
@@ -17,14 +22,12 @@ const Button = ({ type, id }) => {
         <div className={styles.button}
             onClick={() => changeClickState(id)}>
             <Button />
-            <Popup type={"new"} visible={id === clickState} />
+            <Popup componentName="newPopup" 
+            visible={id === clickState} 
+            text={[["Close", "Click or ⌘"], ["Resize", "Drag"]]}/>
         </div>
     )
 }
 
-const map = {
-    "ellipses": Ellipses,
-    "plus": Plus
-}
 
 export default Button;

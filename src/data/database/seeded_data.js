@@ -39,40 +39,40 @@ const createComponent =
 // createBlah(componentType, parentId) 
 // if id, parent_id, children are all shared across the objects, 
 
-const app = createComponent("app", null, {title: "Temp title"});
-const homePage = createComponent("page", app.id, {
+const app = createComponent("App", null, {title: "Temp title"});
+const homePage = createComponent("Page", app.id, {
     title: "Home",
     emoji: getEmoji("sushi")
 })
-const quickNotePage = createComponent("page", app.id, {
+const quickNotePage = createComponent("Page", app.id, {
     title: "Quick Note",
     emoji: getEmoji("notebook")
 })
-const taskListPage = createComponent("page", app.id, {
+const taskListPage = createComponent("Page", app.id, {
     title: "Task List",
     emoji: getEmoji("scroll")
 })
-const journalPage = createComponent("page", app.id, {
+const journalPage = createComponent("Page", app.id, {
     title: "Journal",
     emoji: getEmoji("full moon")
 })
-const noteCardPage = createComponent("page", app.id, {
+const noteCardPage = createComponent("Page", app.id, {
     title: "French Notecards",
     emoji: getEmoji("France")
 })
-const clarksTaskList = createComponent("tasklist", taskListPage.id, {
+const clarksTaskList = createComponent("TaskList", taskListPage.id, {
     title: "Clark's Todos of today"
 })
-const noCategory = createComponent("category", clarksTaskList.id, {
+const noCategory = createComponent("Category", clarksTaskList.id, {
     title: "Nah not feeling it"
 })
-const maybeCategory = createComponent("category", clarksTaskList.id, {
+const maybeCategory = createComponent("Category", clarksTaskList.id, {
     title: "maybeehhh"
 })
-const yesCategory = createComponent("category", clarksTaskList.id, {
+const yesCategory = createComponent("Category", clarksTaskList.id, {
     title: "Yayyy!"
 })
-const ballTask = createComponent("task", yesCategory.id, {
+const ballTask = createComponent("Task", yesCategory.id, {
     title: "Get mom to throw me the ball...about a million times!",
     body: "She's too busy staring at her laptop...:("
 })
@@ -226,7 +226,8 @@ export const seedStyles = () => {
     }));
 }
 
-export const seedPages = () => {
+export const seedComponents = () => {
+    // console.log('components in seeded', components)
     localStorage.setItem('components', JSON.stringify(components));
 }
 

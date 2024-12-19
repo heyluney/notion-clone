@@ -1,6 +1,3 @@
-@import '../../../standard.module.css';
-
-
 .popup { 
     display: flex;
     flex-direction: column;
@@ -10,10 +7,10 @@
     padding: 5px;
     padding-left: 8px;
     padding-right: 8px;
-    background: var(--black);
+    background: var(--info);
     box-shadow: var(--box-shadow);
     border-radius: 5px;
-    color: var(--grey);
+    color: var(--highlight-text);
 }
 
 .emphasize {

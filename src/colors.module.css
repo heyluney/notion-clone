@@ -1,15 +1,27 @@
-/* Color schemes for light and dark mode */
+/* Unified color schemes in one location. */
+/* Light mode. Everything in this class has an equivalent corollary in .night_scheme, so when updating a CSS-attribute do so in both .day_scheme and .night_scheme classes */
+
 .day_scheme {
-    --hover-grey: #f0f0ef;
-    --hover-grey-2: #e5e5e5;
     --sidebar: #f8f8f7;
     --page: #ffffff;
+    /* Primary font color */
     --text: #37352f;
-  }
+    --highlight-text: #5f5e5b;
+    --info: #1D1B16;
+
+    /* Color scheme for hovering effect. Secondary scheme for hovering on an HTML element with a hoverable parent */
+    --hover-grey: #f0f0ef;
+    --hover-grey-2: #e5e5e5;
+}
+
+/* Dark mode */
 .night_scheme {
-    --hover-grey: #2c2c2c;
-    --hover-grey-2: #373737;
     --sidebar: #202020;
     --page: #191919;
     --text: #d4d4d4;
+    --highlight-text: #5f5e5b;
+    --info: #2a2a2a;
+
+    --hover-grey: #2c2c2c;
+    --hover-grey-2: #373737;
 }

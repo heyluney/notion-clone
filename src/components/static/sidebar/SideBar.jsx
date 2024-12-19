@@ -64,7 +64,11 @@ const SideBar = () => {
                 </button>
             </div>
             <div ref={ref} className={styles.sidebar_edge}></div>
-            {hovered && <Popup type="info" visible={true} />}
+            {hovered && <Popup 
+            componentName="infoPopup" 
+            text={[["Close", "Click or ⌘"], ["Resize", "Drag"]]}
+            visible={true} 
+             />}
         </div>
     )
 }

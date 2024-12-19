@@ -1,4 +1,26 @@
 /* Color scheme. Root applies to the entire html element */
+/* #root {
+    --highlight-grey: rgb(234, 234, 233);
+    --highlight-grey-darker: rgb(223, 223, 222);
+    --light-grey: rgba(55, 53, 47, 0.65);
+    --medium-grey: rgba(124, 123, 117, 1);
+    --grey: #5F5E5B;
+    --black: #1D1B16;
+    --ivory: #FFFFF0;
+    --box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, 
+    rgba(15, 15, 15, 0.1) 0px 5px 10px,
+     rgba(15, 15, 15, 0.2) 0px 15px 40px;
+    
+    /* Night mode color scheme */
+    /* --night-highlight-grey: rgba(255, 255, 255, 0.055); */
 
+    /* Pastels */
+    /* --pastel-yelow: #faedcb;
+    --pastel-green:  #c9e4de;
+    --pastel-blue: #c6def1;
+    --pastel-purple: #dbcdf0;
+    --pastel-pink: #f2c6de;
+    --pastel-orange: #f7d9c4; */
+/* }  */ 
 
 

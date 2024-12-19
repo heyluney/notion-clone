@@ -1,27 +1,14 @@
-import MorePopup from './MorePopup';
-import NewPopup from './NewPopup';
-import InfoPopup from './InfoPopup';
 
-import styles from './Popup.module.css'
 
-// Abstract "Popup" component.
-const Popup = ({type, visible}) => {
-    if (!visible) return;
-    // Renders popup dynamically based on type (string).
-    const map = {
-        "more": MorePopup,
-        "new": NewPopup,
-        "info": InfoPopup
-    };
+import DynamicComponent from '../../../hooks/DynamicComponent';
 
-    const Popup = map[type];
+// Abstract "Popup" component, specific popup is dynamically rendered.
+const Popup = ({componentName, visible, text}) => {
+    return (visible && 
+        <DynamicComponent componentName={componentName} text={text}/>)
 
-    return (
-        <div className={styles.popup}>
-            <Popup />       
-        </div>
-    )
-    
 }
+
+
 
 export default Popup;

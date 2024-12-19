@@ -5,7 +5,7 @@ import colors from './colors.module.css';
 import SideBar from './components/static/sidebar/SideBar';
 import { Routes, Route } from 'react-router-dom';
 
-import useLocalStorage from './hooks/useLocalStorage';
+import { useLocalStorage, useDevelopmentLocalStorage } from './hooks/useLocalStorage';
 import useClickable from './hooks/useClickable';
 
 import ErrorPage from './pages/Error/ErrorPage';
@@ -15,6 +15,7 @@ import Page from './components/Page';
 import Overlay from './components/static/overlays/Overlay'
 
 const App = () => {
+  // useDevelopmentLocalStorage can be used instead for debugging (resets application across refreshes).
   const [
     components, changeComponents,
     globalStyles, changeGlobalStyles
