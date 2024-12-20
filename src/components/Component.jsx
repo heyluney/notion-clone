@@ -3,7 +3,6 @@ import DynamicComponent from "../hooks/DynamicComponent";
 
 // Abstract "Component" component. Will dynamically render component based on component's component_type attribute.
 const Component = ({component}) => {
-    console.log('component', component)
     return (
         <div className={styles.component}>
             <DynamicComponent 

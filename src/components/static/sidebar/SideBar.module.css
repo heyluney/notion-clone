@@ -15,6 +15,7 @@
     width: 2px;
     background-color: var(--hover-grey);
     cursor: move;
+    position: relative;
 }
 
 .sidebar_edge:hover {

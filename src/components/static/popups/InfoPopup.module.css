@@ -1,5 +1,6 @@
 .popup { 
     display: flex;
+    white-space: nowrap;
     flex-direction: column;
     position: absolute;
     top: 15%;

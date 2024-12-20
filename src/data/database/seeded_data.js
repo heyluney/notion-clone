@@ -4,6 +4,14 @@ import { calculateNextKey } from './database_functions';
 
 import { component_map, default_component_map } from './component_map';
 
+
+/* 
+Tips: Try to make sure typescript version is compatible with react version (since TSX and JSX are both used in this project), currently it says TS 4.6 is compatible with React 18.2, so that is used. To udpate the versions, go to package.json, and update manually, then run:
+
+ rm -rf node_modules
+ npm install
+*/
+
 // This seeds components across various pages using local storage (so data persists between clearing local storage).
 
 // Each component has the following data:
@@ -227,7 +235,6 @@ export const seedStyles = () => {
 }
 
 export const seedComponents = () => {
-    // console.log('components in seeded', components)
     localStorage.setItem('components', JSON.stringify(components));
 }
 
